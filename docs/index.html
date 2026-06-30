@@ -67,6 +67,7 @@ code{background:#f3f4f6;padding:1px 3px;border-radius:2px;font-size:.72rem;word-
 .provider-logo-lg{width:24px;height:24px;border-radius:4px;margin-right:6px}
 .provider-avatar{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:3px;background:var(--accent);color:#fff;font-size:.55rem;font-weight:700;vertical-align:middle;margin-right:4px}
 .provider-avatar-lg{width:24px;height:24px;border-radius:4px;font-size:.75rem;margin-right:6px}
+.mod-icon{width:14px;height:14px;vertical-align:middle;margin:0 1px;opacity:.45}
 </style>
 </head>
 <body>
@@ -104,8 +105,7 @@ function ft(n){if(n>=1e6)return(n/1e6).toFixed(1).replace(/\.0$/,'')+'M';if(n>=1
 function parseNum(s){s=s.replace(/[,\s¥]/g,'');if(s.endsWith('M'))return parseFloat(s)*1e6;if(s.endsWith('K'))return parseFloat(s)*1e3;return parseFloat(s)||0}
 const LAB={deepseek:'DeepSeek',alibaba:'阿里',zhipu:'智谱',baidu:'百度',moonshot:'月之暗面',iflytek:'讯飞',volcano:'火山',tencent:'腾讯',minimax:'MiniMax',yi:'零一',stepfun:'阶跃'};
 function labName(id){return LAB[id]||id}
-const MOD_ICON={text:'📝',image:'🖼️',video:'🎬',audio:'🎵'};
-function modIcons(arr){return arr.map(m=>MOD_ICON[m]||m).join('');}
+function modIcons(arr){return arr.map(m=>`<img class="mod-icon" src="icons/${m}.svg" alt="${m}" title="${m}">`).join('');}
 function prot(p){return p==='openai'?'OpenAI':p==='anthropic'?'Anthropic':p}
 function logo(id,name,cls){
   const svg=`logos/${id}.svg`;
