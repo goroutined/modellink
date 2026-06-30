@@ -49,5 +49,6 @@
       "source": "https://api-docs.deepseek.com/quick_start/pricing",
       "updated_at": "2026-06-30"
     }
-  ]
+  ],
+  "type": "api"
 }

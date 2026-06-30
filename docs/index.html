@@ -185,12 +185,14 @@ function renderProviders(){
   for(const p of D.providers){
     const protocols=[...new Set(p.models.map(pm=>prot(pm.api.protocol)))].join('/');
     const modelNames=p.models.map(pm=>{const m=M.get(pm.model_id);return m?m.name:pm.model_id}).slice(0,6).join('、')+(p.models.length>6?' 等':'');
+    const typeLabel=p.type==='plan'?'<span class="tag tag-accent">套餐</span>':'<span class="tag tag-green">API</span>';
     rows.push({
-      name:p.name,count:p.models.length,models:modelNames,proto:protocols,
+      name:p.name,count:p.models.length,models:modelNames,proto:protocols,type:p.type,
       html:`<tr data-q="${p.id} ${p.name}" style="cursor:pointer" onclick="goProvider('${p.id}')">
         <td>${logo(p.id,p.name,'provider-logo')}<a style="color:var(--link);font-weight:500">${h(p.name)}</a></td>
+        <td>${typeLabel}</td>
         <td class="num-col" style="font-weight:600;color:var(--accent)">${p.models.length}</td>
-        <td style="max-width:360px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)">${h(modelNames)}</td>
+        <td style="max-width:320px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)">${h(modelNames)}</td>
         <td>${protocols}</td>
         <td>${p.doc?`<a href="${h(p.doc)}" onclick="event.stopPropagation()" style="color:var(--link)">链接</a>`:'—'}</td>
       </tr>`
@@ -199,6 +201,7 @@ function renderProviders(){
   return `${toolbar('provider-search','搜索提供商…',rows.length)}
   <table><thead><tr>
     <th data-col="name" data-type="text">提供商<span class="sort"></span></th>
+    <th data-col="type" data-type="text">类型<span class="sort"></span></th>
     <th data-col="count" data-type="num" class="num-col">模型数<span class="sort"></span></th>
     <th data-col="models" data-type="text">典型模型<span class="sort"></span></th>
     <th data-col="proto" data-type="text">协议<span class="sort"></span></th>

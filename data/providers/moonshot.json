@@ -49,5 +49,6 @@
       "source": "https://platform.moonshot.cn/pricing",
       "updated_at": "2026-06-30"
     }
-  ]
+  ],
+  "type": "api"
 }

@@ -6,74 +6,179 @@
     {
       "model_id": "glm-5.2",
       "model_id_on_platform": "glm-5.2",
-      "cost": { "input": 8, "output": 28 },
-      "api": { "protocol": "openai", "base_url": "https://open.bigmodel.cn/api/paas/v4", "auth_type": "api_key" },
-      "streaming": true, "doc": "https://open.bigmodel.cn/pricing",
-      "access": { "requires_mainland_phone": true, "requires_enterprise": false, "compliance_status": "已备案" },
-      "source": "https://open.bigmodel.cn/pricing", "updated_at": "2026-06-30"
+      "cost": {
+        "input": 8,
+        "output": 28
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://open.bigmodel.cn/api/paas/v4",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://open.bigmodel.cn/pricing",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://open.bigmodel.cn/pricing",
+      "updated_at": "2026-06-30"
     },
     {
       "model_id": "glm-5.1",
       "model_id_on_platform": "glm-5.1",
-      "cost": { "input": 6, "output": 24 },
-      "api": { "protocol": "openai", "base_url": "https://open.bigmodel.cn/api/paas/v4", "auth_type": "api_key" },
-      "streaming": true, "doc": "https://open.bigmodel.cn/pricing",
-      "access": { "requires_mainland_phone": true, "requires_enterprise": false, "compliance_status": "已备案" },
-      "source": "https://open.bigmodel.cn/pricing", "updated_at": "2026-06-30"
+      "cost": {
+        "input": 6,
+        "output": 24
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://open.bigmodel.cn/api/paas/v4",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://open.bigmodel.cn/pricing",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://open.bigmodel.cn/pricing",
+      "updated_at": "2026-06-30"
     },
     {
       "model_id": "glm-5",
       "model_id_on_platform": "glm-5",
-      "cost": { "input": 4, "output": 18 },
-      "api": { "protocol": "openai", "base_url": "https://open.bigmodel.cn/api/paas/v4", "auth_type": "api_key" },
-      "streaming": true, "doc": "https://open.bigmodel.cn/pricing",
-      "access": { "requires_mainland_phone": true, "requires_enterprise": false, "compliance_status": "已备案" },
-      "source": "https://open.bigmodel.cn/pricing", "updated_at": "2026-06-30"
+      "cost": {
+        "input": 4,
+        "output": 18
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://open.bigmodel.cn/api/paas/v4",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://open.bigmodel.cn/pricing",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://open.bigmodel.cn/pricing",
+      "updated_at": "2026-06-30"
     },
     {
       "model_id": "glm-4.7",
       "model_id_on_platform": "glm-4.7",
-      "cost": { "input": 2, "output": 8 },
-      "api": { "protocol": "openai", "base_url": "https://open.bigmodel.cn/api/paas/v4", "auth_type": "api_key" },
-      "streaming": true, "doc": "https://open.bigmodel.cn/pricing",
-      "access": { "requires_mainland_phone": true, "requires_enterprise": false, "compliance_status": "已备案" },
-      "source": "https://open.bigmodel.cn/pricing", "updated_at": "2026-06-30"
+      "cost": {
+        "input": 2,
+        "output": 8
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://open.bigmodel.cn/api/paas/v4",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://open.bigmodel.cn/pricing",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://open.bigmodel.cn/pricing",
+      "updated_at": "2026-06-30"
     },
     {
       "model_id": "glm-4.7-flash",
       "model_id_on_platform": "glm-4.7-flash",
-      "cost": { "input": 0, "output": 0 },
-      "api": { "protocol": "openai", "base_url": "https://open.bigmodel.cn/api/paas/v4", "auth_type": "api_key" },
-      "streaming": true, "doc": "https://open.bigmodel.cn/pricing",
-      "access": { "requires_mainland_phone": true, "requires_enterprise": false, "compliance_status": "已备案" },
-      "source": "https://open.bigmodel.cn/pricing", "updated_at": "2026-06-30"
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://open.bigmodel.cn/api/paas/v4",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://open.bigmodel.cn/pricing",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://open.bigmodel.cn/pricing",
+      "updated_at": "2026-06-30"
     },
     {
       "model_id": "glm-4.5-air",
       "model_id_on_platform": "glm-4.5-air",
-      "cost": { "input": 0.8, "output": 2 },
-      "api": { "protocol": "openai", "base_url": "https://open.bigmodel.cn/api/paas/v4", "auth_type": "api_key" },
-      "streaming": true, "doc": "https://open.bigmodel.cn/pricing",
-      "access": { "requires_mainland_phone": true, "requires_enterprise": false, "compliance_status": "已备案" },
-      "source": "https://open.bigmodel.cn/pricing", "updated_at": "2026-06-30"
+      "cost": {
+        "input": 0.8,
+        "output": 2
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://open.bigmodel.cn/api/paas/v4",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://open.bigmodel.cn/pricing",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://open.bigmodel.cn/pricing",
+      "updated_at": "2026-06-30"
     },
     {
       "model_id": "glm-z1-air",
       "model_id_on_platform": "glm-z1-air",
-      "cost": { "input": 0.5, "output": 0.5 },
-      "api": { "protocol": "openai", "base_url": "https://open.bigmodel.cn/api/paas/v4", "auth_type": "api_key" },
-      "streaming": true, "doc": "https://open.bigmodel.cn/pricing",
-      "access": { "requires_mainland_phone": true, "requires_enterprise": false, "compliance_status": "已备案" },
-      "source": "https://open.bigmodel.cn/pricing", "updated_at": "2026-06-30"
+      "cost": {
+        "input": 0.5,
+        "output": 0.5
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://open.bigmodel.cn/api/paas/v4",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://open.bigmodel.cn/pricing",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://open.bigmodel.cn/pricing",
+      "updated_at": "2026-06-30"
     },
     {
       "model_id": "glm-4-flash",
       "model_id_on_platform": "glm-4-flash",
-      "cost": { "input": 0, "output": 0 },
-      "api": { "protocol": "openai", "base_url": "https://open.bigmodel.cn/api/paas/v4", "auth_type": "api_key" },
-      "streaming": true, "doc": "https://open.bigmodel.cn/pricing",
-      "access": { "requires_mainland_phone": true, "requires_enterprise": false, "compliance_status": "已备案" },
-      "source": "https://open.bigmodel.cn/pricing", "updated_at": "2026-06-30"
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://open.bigmodel.cn/api/paas/v4",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://open.bigmodel.cn/pricing",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://open.bigmodel.cn/pricing",
+      "updated_at": "2026-06-30"
     }
-  ]
+  ],
+  "type": "api"
 }
