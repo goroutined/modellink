@@ -1,5 +1,6 @@
 # Claude Code
 .claude/
+CLAUDE.md
 
 # CI-generated bundle
 docs/data.js
