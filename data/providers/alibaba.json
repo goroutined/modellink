@@ -1,0 +1,95 @@
+{
+  "id": "alibaba",
+  "name": "阿里云百炼",
+  "doc": "https://help.aliyun.com/zh/model-studio/",
+  "models": [
+    {
+      "model_id": "qwen3.7-max",
+      "model_id_on_platform": "qwen3.7-max",
+      "cost": {
+        "input": 12,
+        "output": 36
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "updated_at": "2026-06-30"
+    },
+    {
+      "model_id": "qwen3-max",
+      "model_id_on_platform": "qwen3-max",
+      "cost": {
+        "input": 2.5,
+        "output": 10
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "updated_at": "2026-06-30"
+    },
+    {
+      "model_id": "qwen-plus",
+      "model_id_on_platform": "qwen-plus",
+      "cost": {
+        "input": 0.8,
+        "output": 2
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "updated_at": "2026-06-30"
+    },
+    {
+      "model_id": "qwen-flash",
+      "model_id_on_platform": "qwen-flash",
+      "cost": {
+        "input": 0.2,
+        "output": 0.5
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "updated_at": "2026-06-30"
+    }
+  ]
+}

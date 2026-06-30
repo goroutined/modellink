@@ -1,0 +1,17 @@
+{
+  "id": "qwen3-max",
+  "name": "Qwen3-Max",
+  "family": "qwen",
+  "open_weights": false,
+  "tool_call": true,
+  "reasoning": true,
+  "structured_output": true,
+  "modalities": {
+    "input": ["text"],
+    "output": ["text"]
+  },
+  "limit": {
+    "context": 262144,
+    "output": 131072
+  }
+}
