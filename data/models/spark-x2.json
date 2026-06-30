@@ -1,0 +1,17 @@
+{
+  "id": "spark-x2",
+  "name": "Spark X2",
+  "family": "spark",
+  "open_weights": false,
+  "tool_call": true,
+  "reasoning": true,
+  "structured_output": true,
+  "modalities": {
+    "input": ["text"],
+    "output": ["text"]
+  },
+  "limit": {
+    "context": 131072,
+    "output": 16384
+  }
+}

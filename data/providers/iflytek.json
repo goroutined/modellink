@@ -1,0 +1,73 @@
+{
+  "id": "iflytek",
+  "name": "讯飞星火",
+  "doc": "https://xinghuo.xfyun.cn/",
+  "models": [
+    {
+      "model_id": "spark-x2",
+      "model_id_on_platform": "spark-x2",
+      "cost": {
+        "input": 3,
+        "output": 3
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://spark-api-open.xf-yun.com/v1",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://xinghuo.xfyun.cn/sparkapi",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://xinghuo.xfyun.cn/sparkapi",
+      "updated_at": "2026-06-30"
+    },
+    {
+      "model_id": "spark-ultra",
+      "model_id_on_platform": "spark-ultra",
+      "cost": {
+        "input": 0.8,
+        "output": 0.8
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://spark-api-open.xf-yun.com/v1",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://xinghuo.xfyun.cn/sparkapi",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://xinghuo.xfyun.cn/sparkapi",
+      "updated_at": "2026-06-30"
+    },
+    {
+      "model_id": "spark-lite",
+      "model_id_on_platform": "spark-lite",
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://spark-api-open.xf-yun.com/v1",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://xinghuo.xfyun.cn/sparkapi",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://xinghuo.xfyun.cn/sparkapi",
+      "updated_at": "2026-06-30"
+    }
+  ]
+}
