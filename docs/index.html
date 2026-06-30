@@ -102,8 +102,10 @@ function goProvider(id){location.hash='provider/'+id}
 function h(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function ft(n){if(n>=1e6)return(n/1e6).toFixed(1).replace(/\.0$/,'')+'M';if(n>=1e3)return Math.round(n/1e3)+'K';return''+n}
 function parseNum(s){s=s.replace(/[,\s¥]/g,'');if(s.endsWith('M'))return parseFloat(s)*1e6;if(s.endsWith('K'))return parseFloat(s)*1e3;return parseFloat(s)||0}
-const FAM={deepseek:'DeepSeek',qwen:'通义千问',glm:'GLM',ernie:'文心',spark:'星火',moonshot:'Kimi',doubao:'豆包',hunyuan:'混元',minimax:'MiniMax',yi:'Yi',step:'Step'};
-function fam(s){return FAM[s]||s}
+const LAB={deepseek:'DeepSeek',alibaba:'阿里',zhipu:'智谱',baidu:'百度',moonshot:'月之暗面',iflytek:'讯飞',volcano:'火山',tencent:'腾讯',minimax:'MiniMax',yi:'零一',stepfun:'阶跃'};
+function labName(id){return LAB[id]||id}
+const MOD_ICON={text:'📝',image:'🖼️',video:'🎬',audio:'🎵'};
+function modIcons(arr){return arr.map(m=>MOD_ICON[m]||m).join('');}
 function prot(p){return p==='openai'?'OpenAI':p==='anthropic'?'Anthropic':p}
 function logo(id,name,cls){
   const svg=`logos/${id}.svg`;
@@ -142,38 +144,37 @@ function renderModels(){
   for(const m of D.models){
     const cheap=cheapestOff(m.id);
     const offCount=offerings(m.id).length;
-    let caps=[];
-    if(m.tool_call)caps.push('<span class="tag tag-gray">工具</span>');
-    if(m.reasoning)caps.push('<span class="tag tag-accent">推理</span>');
-    if(m.structured_output)caps.push('<span class="tag tag-gray">JSON</span>');
-    caps.push(m.open_weights?'<span class="tag tag-green">开源</span>':'<span class="tag tag-red">闭源</span>');
+    let attrs=[];
+    if(m.tool_call)attrs.push('<span class="tag tag-gray">工具</span>');
+    if(m.reasoning)attrs.push('<span class="tag tag-accent">思考</span>');
+    if(m.structured_output)attrs.push('<span class="tag tag-gray">JSON</span>');
+    attrs.push(m.open_weights?'<span class="tag tag-green">开源</span>':'');
 
-    rows.push({
-      name:m.name,family:fam(m.family),date:m.release_date||'',
-      ctx:m.limit.context,out:m.limit.output,
-      caps:caps.join(''),offCount,price:cheap?cheap.cost.input+cheap.cost.output:Infinity,
-      html:`<tr data-q="${m.id} ${fam(m.family)} ${m.name}">
+    rows.push({name:m.name,lab:m.lab,date:m.release_date||'',ctx:m.limit.context,out:m.limit.output,offCount,price:cheap?cheap.cost.input+cheap.cost.output:Infinity,
+      html:`<tr data-q="${m.id} ${m.name}">
         <td><a onclick="goModel('${m.id}')" style="color:var(--link);font-weight:500;cursor:pointer">${h(m.name)}</a></td>
-        <td>${h(fam(m.family))}</td>
+        <td>${logo(m.lab,labName(m.lab),'provider-logo')}<span style="font-size:.8rem">${labName(m.lab)}</span></td>
+        <td class="num-col">${offCount}</td>
         <td class="num-col">${ft(m.limit.context)}</td>
         <td class="num-col">${ft(m.limit.output)}</td>
-        <td>${caps.join('')}</td>
-        <td class="num-col">${offCount}</td>
+        <td>${modIcons(m.modalities.input)}</td>
+        <td>${attrs.join('')}</td>
         <td class="num-col" style="white-space:nowrap">${cheap?`¥${cheap.cost.input.toFixed(2)}/¥${cheap.cost.output.toFixed(2)}`:'—'}</td>
         <td style="font-size:.75rem;color:var(--muted)">${m.release_date||'—'}</td>
       </tr>`
     });
   }
-  rows.sort((a,b)=>a.price-b.price); // default: cheapest first
+  rows.sort((a,b)=>a.price-b.price);
 
   return `${toolbar('model-search','搜索模型…',rows.length)}
   <table><thead><tr>
     <th data-col="name" data-type="text">模型<span class="sort"></span></th>
-    <th data-col="family" data-type="text">系列<span class="sort"></span></th>
+    <th data-col="lab" data-type="text">Lab<span class="sort"></span></th>
+    <th data-col="offCount" data-type="num" class="num-col">Providers<span class="sort"></span></th>
     <th data-col="ctx" data-type="num" class="num-col">上下文<span class="sort"></span></th>
-    <th data-col="out" data-type="num" class="num-col">最大输出<span class="sort"></span></th>
-    <th data-col="caps" data-type="text">能力<span class="sort"></span></th>
-    <th data-col="offCount" data-type="num" class="num-col">接入<span class="sort"></span></th>
+    <th data-col="out" data-type="num" class="num-col">输出<span class="sort"></span></th>
+    <th data-col="mod" data-type="text">输入<span class="sort"></span></th>
+    <th data-col="attrs" data-type="text">能力<span class="sort"></span></th>
     <th data-col="price" data-type="num" class="num-col">最低价<span class="sort"></span></th>
     <th data-col="date" data-type="text">发布时间<span class="sort"></span></th>
   </tr></thead><tbody>${rows.map(r=>r.html).join('')}</tbody></table>`;
@@ -278,10 +279,10 @@ function detailModel(id){
   const offs=offerings(m.id);
   let html=`<div class="back-link"><a onclick="goHome('models')">← 返回模型列表</a></div>
   <h2>${h(m.name)}</h2>
-  <p style="color:var(--muted);margin-bottom:.75rem">${h(fam(m.family))} · 发布: ${m.release_date||'—'}</p>
+  <p style="color:var(--muted);margin-bottom:.75rem">${h(labName(m.lab))} · 发布: ${m.release_date||'—'}</p>
   <div style="margin-bottom:.75rem">${badges.join('')}</div>
   <div class="card"><h3>能力详情</h3><table>
-    <tr><td>模型 ID</td><td>${h(m.id)}</td></tr><tr><td>系列</td><td>${h(fam(m.family))}</td></tr>
+    <tr><td>模型 ID</td><td>${h(m.id)}</td></tr><tr><td>系列</td><td>${h(labName(m.lab))}</td></tr>
     <tr><td>发布时间</td><td>${m.release_date||'—'}</td></tr>
     <tr><td>权重开放</td><td>${m.open_weights?'是':'否'}</td></tr>
     <tr><td>工具调用</td><td>${m.tool_call?'是':'否'}</td></tr>
