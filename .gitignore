@@ -1,5 +1,5 @@
-# Claude Code local settings/cache
-.claude/settings.local.json
+# Claude Code
+.claude/
 
 # CI-generated bundle
 docs/data.js
