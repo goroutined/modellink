@@ -1,0 +1,17 @@
+{
+  "id": "step-3.5-flash",
+  "name": "Step 3.5 Flash",
+  "family": "step",
+  "open_weights": false,
+  "tool_call": true,
+  "reasoning": false,
+  "structured_output": true,
+  "modalities": {
+    "input": ["text"],
+    "output": ["text"]
+  },
+  "limit": {
+    "context": 131072,
+    "output": 8192
+  }
+}
