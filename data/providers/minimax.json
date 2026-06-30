@@ -19,8 +19,7 @@
       "doc": "https://www.minimaxi.com/document",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://www.minimaxi.com/document",
       "updated_at": "2026-06-30"

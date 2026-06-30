@@ -18,11 +18,6 @@
       },
       "streaming": true,
       "doc": "https://api-docs.deepseek.com/quick_start/pricing",
-      "access": {
-        "requires_mainland_phone": false,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
-      },
       "source": "https://api-docs.deepseek.com/quick_start/pricing",
       "updated_at": "2026-06-30"
     },
@@ -41,11 +36,6 @@
       },
       "streaming": true,
       "doc": "https://api-docs.deepseek.com/quick_start/pricing",
-      "access": {
-        "requires_mainland_phone": false,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
-      },
       "source": "https://api-docs.deepseek.com/quick_start/pricing",
       "updated_at": "2026-06-30"
     }

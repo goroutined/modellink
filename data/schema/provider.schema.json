@@ -93,8 +93,7 @@
           "description": "合规与访问 (可选, 省略表示无特殊要求/未知).",
           "properties": {
             "requires_mainland_phone": { "type": "boolean", "description": "是否需要大陆手机号." },
-            "requires_enterprise": { "type": "boolean", "description": "是否需要企业资质." },
-            "compliance_status": { "type": "string", "description": "生成式 AI 备案情况, e.g. \"已备案\" / \"未备案\" / \"不适用\"." }
+            "requires_enterprise": { "type": "boolean", "description": "是否需要企业资质." }
           }
         },
         "source": {

@@ -20,8 +20,7 @@
       "doc": "https://platform.moonshot.cn/docs",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://platform.moonshot.cn/pricing",
       "updated_at": "2026-06-30"
@@ -43,8 +42,7 @@
       "doc": "https://platform.moonshot.cn/docs",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://platform.moonshot.cn/pricing",
       "updated_at": "2026-06-30"

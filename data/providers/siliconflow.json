@@ -20,8 +20,7 @@
       "doc": "https://docs.siliconflow.cn/cn/api-reference/chat-completions/chat-completions",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://siliconflow.cn/pricing",
       "updated_at": "2026-06-25"

@@ -19,8 +19,7 @@
       "doc": "https://platform.lingyiwanwu.com/docs",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://help.aliyun.com/zh/model-studio/billing-for-yi-large",
       "updated_at": "2026-06-30"
@@ -41,8 +40,7 @@
       "doc": "https://platform.lingyiwanwu.com/docs",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://help.aliyun.com/zh/model-studio/billing-for-yi-large",
       "updated_at": "2026-06-30"

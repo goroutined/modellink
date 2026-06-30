@@ -20,8 +20,7 @@
       "doc": "https://www.volcengine.com/docs/82379",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://www.volcengine.com/docs/6581/2389072",
       "updated_at": "2026-06-30"
@@ -43,8 +42,7 @@
       "doc": "https://www.volcengine.com/docs/82379",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://www.volcengine.com/docs/6581/2389072",
       "updated_at": "2026-06-30"
@@ -65,8 +63,7 @@
       "doc": "https://www.volcengine.com/docs/82379",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://www.volcengine.com/docs/6581/2389072",
       "updated_at": "2026-06-30"
@@ -87,8 +84,7 @@
       "doc": "https://www.volcengine.com/docs/82379",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://www.volcengine.com/docs/6581/2389072",
       "updated_at": "2026-06-30"
@@ -109,8 +105,7 @@
       "doc": "https://www.volcengine.com/docs/82379",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://www.volcengine.com/docs/6581/2389072",
       "updated_at": "2026-06-30"
@@ -131,8 +126,7 @@
       "doc": "https://www.volcengine.com/docs/82379",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://www.volcengine.com/docs/6581/2389072",
       "updated_at": "2026-06-30"

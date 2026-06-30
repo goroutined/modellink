@@ -19,8 +19,7 @@
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"
@@ -41,8 +40,7 @@
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"
@@ -63,8 +61,7 @@
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"
@@ -85,8 +82,7 @@
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"
@@ -107,8 +103,7 @@
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"
@@ -129,8 +124,7 @@
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"
@@ -151,8 +145,7 @@
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"
@@ -173,8 +166,7 @@
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"
@@ -195,8 +187,7 @@
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"
@@ -217,8 +208,7 @@
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"

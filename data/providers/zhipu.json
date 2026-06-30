@@ -19,8 +19,7 @@
       "doc": "https://open.bigmodel.cn/pricing",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://open.bigmodel.cn/pricing",
       "updated_at": "2026-06-30"
@@ -41,8 +40,7 @@
       "doc": "https://open.bigmodel.cn/pricing",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://open.bigmodel.cn/pricing",
       "updated_at": "2026-06-30"
@@ -63,8 +61,7 @@
       "doc": "https://open.bigmodel.cn/pricing",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://open.bigmodel.cn/pricing",
       "updated_at": "2026-06-30"
@@ -85,8 +82,7 @@
       "doc": "https://open.bigmodel.cn/pricing",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://open.bigmodel.cn/pricing",
       "updated_at": "2026-06-30"
@@ -107,8 +103,7 @@
       "doc": "https://open.bigmodel.cn/pricing",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://open.bigmodel.cn/pricing",
       "updated_at": "2026-06-30"
@@ -129,8 +124,7 @@
       "doc": "https://open.bigmodel.cn/pricing",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://open.bigmodel.cn/pricing",
       "updated_at": "2026-06-30"
@@ -151,8 +145,7 @@
       "doc": "https://open.bigmodel.cn/pricing",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://open.bigmodel.cn/pricing",
       "updated_at": "2026-06-30"
@@ -173,8 +166,7 @@
       "doc": "https://open.bigmodel.cn/pricing",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://open.bigmodel.cn/pricing",
       "updated_at": "2026-06-30"

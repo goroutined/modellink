@@ -20,8 +20,7 @@
       "doc": "https://cloud.tencent.cn/document/product/1729/97731",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://cloud.tencent.cn/document/product/1729/97731",
       "updated_at": "2026-06-30"
@@ -42,8 +41,7 @@
       "doc": "https://cloud.tencent.cn/document/product/1729/97731",
       "access": {
         "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
+        "requires_enterprise": false
       },
       "source": "https://cloud.tencent.cn/document/product/1729/97731",
       "updated_at": "2026-06-30"
