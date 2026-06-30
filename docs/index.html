@@ -14,7 +14,7 @@
   nav { display:inline-flex; gap:1rem; margin-left:2rem; }
   nav a { color:var(--muted); text-decoration:none; font-size:.8125rem; cursor:pointer; }
   nav a:hover, nav a.active { color:var(--accent); }
-  main { max-width:960px; margin:1.5rem auto; padding:0 1.5rem; }
+  main { max-width:1400px; margin:1.5rem auto; padding:0 2rem; }
   footer { text-align:center; color:var(--muted); font-size:.75rem; padding:1.5rem; }
   footer a { color:var(--link); }
 
@@ -157,7 +157,7 @@ function switchTab(tab) {
 
 // ---- model table ----
 function renderModelTable() {
-  let html = '<div id="model-list"><table><thead><tr><th>模型</th><th>系列</th><th>上下文</th><th>能力</th><th class="num-col">接入</th><th class="num-col">最低价 (输入/输出)</th></tr></thead><tbody>';
+  let html = '<div id="model-list"><table><thead><tr><th>模型</th><th>系列</th><th>发布时间</th><th>上下文</th><th>最大输出</th><th>能力</th><th class="num-col">接入</th><th class="num-col">最低价 (输入/输出 每百万token)</th></tr></thead><tbody>';
   for (const m of DATA.models) {
     const cheapest = cheapestOffering(m.id);
     const offCount = offerings(m.id).length;
@@ -176,10 +176,12 @@ function renderModelTable() {
     html += `<tr class="model-row" data-q="${m.id} ${fam(m.family)} ${m.name}">
       <td><a onclick="goModel('${m.id}')" style="cursor:pointer;color:var(--link);font-weight:500">${h(m.name)}</a></td>
       <td><span style="font-size:.8125rem;color:var(--muted)">${h(fam(m.family))}</span></td>
-      <td style="font-size:.75rem;color:var(--muted)">${fmtTok(m.limit.context)}</td>
+      <td style="font-size:.8125rem;color:var(--muted)">${m.release_date||'—'}</td>
+      <td style="font-size:.8125rem;color:var(--muted)">${fmtTok(m.limit.context)}</td>
+      <td style="font-size:.8125rem;color:var(--muted)">${fmtTok(m.limit.output)}</td>
       <td>${caps}</td>
       <td class="num-col" style="font-size:.8125rem">${offCount} 家</td>
-      <td class="num-col" style="font-size:.8125rem">${price}</td>
+      <td class="num-col" style="font-size:.8125rem;white-space:nowrap">${price}</td>
     </tr>`;
   }
   html += '</tbody></table></div>';
@@ -217,18 +219,22 @@ function offerings(modelId) {
 
 // ---- provider table ----
 function renderProviderTable() {
-  let html = '<div id="provider-list"><table><thead><tr><th>提供商</th><th>模型数</th><th>典型模型</th><th>文档</th></tr></thead><tbody>';
+  let html = '<div id="provider-list"><table><thead><tr><th>提供商</th><th class="num-col">模型数</th><th>典型模型</th><th>协议</th><th>文档</th></tr></thead><tbody>';
   for (const p of DATA.providers) {
     const count = p.models.length;
     const names = p.models.map(pm => {
       const m = modelMap.get(pm.model_id);
       return m ? m.name : pm.model_id;
-    }).slice(0, 5).join('、') + (count > 5 ? ' 等' : '');
+    }).slice(0, 6).join('、') + (count > 6 ? ' 等' : '');
+
+    // dedup protocols
+    const protocols = [...new Set(p.models.map(pm => prot(pm.api.protocol)))].join('、');
 
     html += `<tr class="provider-row" data-q="${p.id} ${p.name}" style="cursor:pointer" onclick="goProvider('${p.id}')">
       <td><a style="color:var(--link);font-weight:500">${h(p.name)}</a></td>
       <td class="num-col" style="font-weight:600;color:var(--accent)">${count}</td>
-      <td style="font-size:.8125rem;color:var(--muted);max-width:360px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${h(names)}</td>
+      <td style="font-size:.8125rem;color:var(--muted);max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${h(names)}</td>
+      <td style="font-size:.75rem;color:var(--muted)">${protocols}</td>
       <td style="font-size:.8125rem">${p.doc ? '<a href="'+h(p.doc)+'" onclick="event.stopPropagation()" style="color:var(--link)">链接</a>' : '<span style="color:var(--muted)">—</span>'}</td>
     </tr>`;
   }

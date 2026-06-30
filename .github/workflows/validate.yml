@@ -38,19 +38,12 @@ jobs:
           FAIL=0
           for f in data/providers/*.json; do
             echo "Checking references in $f ..."
-            # Extract all model_id values from provider and verify each exists as data/models/<id>.json
-            while IFS= read -r mid; do
+            for mid in $(python3 -c "import json; p=json.load(open('$f')); print(' '.join(m.get('model_id','') for m in p.get('models',[])))"); do
               if [ -n "$mid" ] && [ ! -f "data/models/${mid}.json" ]; then
                 echo "::error file=$f::model_id '${mid}' not found: data/models/${mid}.json does not exist"
                 FAIL=1
               fi
-            done < <(python3 -c "
-import json, sys
-with open('$f') as fp:
-    p = json.load(fp)
-for m in p.get('models', []):
-    print(m.get('model_id', ''))
-")
+            done
           done
           exit $FAIL
           echo "::endgroup::"
