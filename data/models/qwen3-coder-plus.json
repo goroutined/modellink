@@ -2,10 +2,20 @@
   "id": "qwen3-coder-plus",
   "name": "Qwen3-Coder-Plus",
   "family": "qwen",
-  "open_weights": false,
+  "open_weights": true,
   "tool_call": true,
   "reasoning": true,
   "structured_output": true,
-  "modalities": { "input": ["text"], "output": ["text"] },
-  "limit": { "context": 131072, "output": 32768 }
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "limit": {
+    "context": 131072,
+    "output": 32768
+  }
 }

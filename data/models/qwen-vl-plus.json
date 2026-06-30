@@ -2,10 +2,22 @@
   "id": "qwen-vl-plus",
   "name": "Qwen-VL-Plus",
   "family": "qwen",
-  "open_weights": false,
+  "open_weights": true,
   "tool_call": false,
   "reasoning": false,
   "structured_output": false,
-  "modalities": { "input": ["text", "image", "video"], "output": ["text"] },
-  "limit": { "context": 131072, "output": 4096 }
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "video"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "limit": {
+    "context": 131072,
+    "output": 4096
+  }
 }

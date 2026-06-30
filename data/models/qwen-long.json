@@ -2,10 +2,20 @@
   "id": "qwen-long",
   "name": "Qwen-Long",
   "family": "qwen",
-  "open_weights": false,
+  "open_weights": true,
   "tool_call": false,
   "reasoning": false,
   "structured_output": false,
-  "modalities": { "input": ["text"], "output": ["text"] },
-  "limit": { "context": 10485760, "output": 8192 }
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "limit": {
+    "context": 10485760,
+    "output": 8192
+  }
 }

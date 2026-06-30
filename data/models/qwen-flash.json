@@ -2,13 +2,17 @@
   "id": "qwen-flash",
   "name": "Qwen-Flash",
   "family": "qwen",
-  "open_weights": false,
+  "open_weights": true,
   "tool_call": true,
   "reasoning": false,
   "structured_output": true,
   "modalities": {
-    "input": ["text"],
-    "output": ["text"]
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
   },
   "limit": {
     "context": 131072,

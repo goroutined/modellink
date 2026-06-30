@@ -2,13 +2,17 @@
   "id": "qwen3.7-max",
   "name": "Qwen3.7-Max",
   "family": "qwen",
-  "open_weights": false,
+  "open_weights": true,
   "tool_call": true,
   "reasoning": true,
   "structured_output": true,
   "modalities": {
-    "input": ["text"],
-    "output": ["text"]
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
   },
   "limit": {
     "context": 1048576,
