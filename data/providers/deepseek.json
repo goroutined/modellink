@@ -1,0 +1,53 @@
+{
+  "id": "deepseek",
+  "name": "DeepSeek",
+  "doc": "https://api-docs.deepseek.com/",
+  "models": [
+    {
+      "model_id": "deepseek-v4-flash",
+      "model_id_on_platform": "deepseek-v4-flash",
+      "cost": {
+        "input": 1.01,
+        "output": 2.02,
+        "cache_read": 0.02
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://api.deepseek.com/v1",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://api-docs.deepseek.com/quick_start/pricing",
+      "access": {
+        "requires_mainland_phone": false,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://api-docs.deepseek.com/quick_start/pricing",
+      "updated_at": "2026-06-30"
+    },
+    {
+      "model_id": "deepseek-v4-pro",
+      "model_id_on_platform": "deepseek-v4-pro",
+      "cost": {
+        "input": 3.13,
+        "output": 6.26,
+        "cache_read": 0.03
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://api.deepseek.com/v1",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://api-docs.deepseek.com/quick_start/pricing",
+      "access": {
+        "requires_mainland_phone": false,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://api-docs.deepseek.com/quick_start/pricing",
+      "updated_at": "2026-06-30"
+    }
+  ]
+}
