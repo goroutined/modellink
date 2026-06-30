@@ -4,9 +4,11 @@ on:
   push:
     paths:
       - 'data/**'
+      - '.github/workflows/validate.yml'
   pull_request:
     paths:
       - 'data/**'
+      - '.github/workflows/validate.yml'
 
 jobs:
   validate:
