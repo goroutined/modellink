@@ -1,0 +1,11 @@
+{
+  "id": "qwen3.7-plus",
+  "name": "Qwen3.7-Plus",
+  "family": "qwen",
+  "open_weights": false,
+  "tool_call": true,
+  "reasoning": true,
+  "structured_output": true,
+  "modalities": { "input": ["text", "image"], "output": ["text"] },
+  "limit": { "context": 131072, "output": 8192 }
+}
