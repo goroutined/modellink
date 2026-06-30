@@ -54,6 +54,10 @@
   code { background:#f3f4f6; padding:1px 4px; border-radius:3px; font-size:.75rem; word-break:break-all; }
   .hidden { display:none; }
   .num-col { text-align:right; white-space:nowrap; }
+  .provider-logo { width:20px; height:20px; border-radius:4px; vertical-align:middle; margin-right:6px; }
+  .provider-logo-lg { width:32px; height:32px; border-radius:6px; vertical-align:middle; margin-right:10px; }
+  .provider-avatar { display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:4px; background:var(--accent); color:#fff; font-size:.625rem; font-weight:700; vertical-align:middle; margin-right:6px; }
+  .provider-avatar-lg { width:32px; height:32px; border-radius:6px; font-size:.875rem; margin-right:10px; }
 </style>
 </head>
 <body>
@@ -99,6 +103,13 @@ const FAMILY = { deepseek:'DeepSeek', qwen:'通义千问', glm:'智谱 GLM', ern
 function fam(s) { return FAMILY[s] || s; }
 function prot(p) { return p==='openai'?'OpenAI 兼容':p==='anthropic'?'Anthropic 兼容':p; }
 function authLab(a) { return a==='api_key'?'API Key':a==='bearer_token'?'Bearer Token':a==='aksk'?'AKSK':a; }
+
+function providerLogo(id, name, cls) {
+  const svg = `logos/${id}.svg`;
+  // Use onerror fallback: if SVG doesn't exist, show text avatar instead
+  return `<img class="${cls}" src="${svg}" alt="${h(name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" style="object-fit:contain">
+<span class="${cls.replace('logo','avatar')}" style="display:none">${h(name.charAt(0))}</span>`;
+}
 
 // ---- home ----
 function renderHome(tab) {
@@ -231,7 +242,7 @@ function renderProviderTable() {
     const protocols = [...new Set(p.models.map(pm => prot(pm.api.protocol)))].join('、');
 
     html += `<tr class="provider-row" data-q="${p.id} ${p.name}" style="cursor:pointer" onclick="goProvider('${p.id}')">
-      <td><a style="color:var(--link);font-weight:500">${h(p.name)}</a></td>
+      <td>${providerLogo(p.id, p.name, 'provider-logo')}<a style="color:var(--link);font-weight:500">${h(p.name)}</a></td>
       <td class="num-col" style="font-weight:600;color:var(--accent)">${count}</td>
       <td style="font-size:.8125rem;color:var(--muted);max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${h(names)}</td>
       <td style="font-size:.75rem;color:var(--muted)">${protocols}</td>
@@ -338,7 +349,7 @@ function renderProvider(id) {
   document.title = p.name + ' — ModelLink';
 
   let html = `<div class="back-link"><a onclick="goHome('providers')">← 返回提供商列表</a></div>
-  <h2>${h(p.name)}</h2>`;
+  <h2>${providerLogo(p.id, p.name, 'provider-logo-lg')}${h(p.name)}</h2>`;
   if (p.doc) html += `<p style="color:var(--muted);margin-bottom:1rem;font-size:.8125rem"><a href="${h(p.doc)}">${h(p.doc)}</a></p>`;
 
   html += `<div class="section-title">提供的模型 (${p.models.length})</div>`;
