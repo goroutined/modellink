@@ -5,64 +5,73 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ModelLink — 中国 AI 模型索引</title>
 <style>
-  :root { --bg:#fafafa; --card:#fff; --border:#e5e7eb; --text:#1f2937; --muted:#6b7280; --green:#059669; --red:#dc2626; --link:#2563eb; --accent:#7c3aed; }
-  * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans SC",sans-serif; background:var(--bg); color:var(--text); line-height:1.5; }
-  header { background:var(--card); border-bottom:1px solid var(--border); padding:.75rem 1.5rem; position:sticky; top:0; z-index:10; }
-  header h1 { font-size:1.125rem; display:inline; }
-  header h1 a { color:inherit; text-decoration:none; cursor:pointer; }
-  nav { display:inline-flex; gap:1rem; margin-left:2rem; }
-  nav a { color:var(--muted); text-decoration:none; font-size:.8125rem; cursor:pointer; }
-  nav a:hover, nav a.active { color:var(--accent); }
-  main { max-width:1400px; margin:1.5rem auto; padding:0 2rem; }
-  footer { text-align:center; color:var(--muted); font-size:.75rem; padding:1.5rem; }
-  footer a { color:var(--link); }
+:root{--bg:#f8f9fa;--card:#fff;--border:#dee2e6;--text:#212529;--muted:#6c757d;--green:#198754;--red:#dc3545;--link:#0d6efd;--accent:#6f42c1;--hover:#f1f3f5}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.4;font-size:13px}
+header{background:var(--card);border-bottom:1px solid var(--border);padding:.5rem 1.25rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:1.5rem}
+header h1{font-size:1rem;white-space:nowrap}
+header h1 a{color:inherit;text-decoration:none;cursor:pointer}
+nav{display:flex;gap:1rem}
+nav a{color:var(--muted);text-decoration:none;font-size:.8rem;cursor:pointer}
+nav a:hover,nav a.active{color:var(--accent)}
+main{max-width:1400px;margin:1rem auto;padding:0 1.25rem}
+footer{text-align:center;color:var(--muted);font-size:.7rem;padding:1rem}
 
-  .card { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:1rem 1.25rem; margin-bottom:.75rem; }
-  .card h3 { font-size:.9375rem; margin-bottom:.25rem; }
-  .card h3 a { color:var(--link); text-decoration:none; cursor:pointer; }
-  .tag { display:inline-block; padding:0 .375rem; border-radius:3px; font-size:.6875rem; font-weight:500; margin-right:.25rem; margin-bottom:.125rem; line-height:1.4; }
-  .tag-green { background:#d1fae5; color:var(--green); }
-  .tag-red { background:#fee2e2; color:var(--red); }
-  .tag-gray { background:#f3f4f6; color:var(--muted); }
-  .tag-accent { background:#ede9fe; color:var(--accent); }
-  .tabs { display:flex; gap:0; margin-bottom:1rem; border-bottom:2px solid var(--border); }
-  .tabs button { padding:.375rem 1rem; border:none; background:none; font-size:.8125rem; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; }
-  .tabs button:hover { color:var(--text); }
-  .tabs button.active { color:var(--accent); border-bottom-color:var(--accent); font-weight:600; }
-  table { width:100%; border-collapse:collapse; font-size:.8125rem; }
-  th, td { padding:.4rem .5rem; text-align:left; border-bottom:1px solid var(--border); }
-  th { color:var(--muted); font-weight:500; font-size:.75rem; white-space:nowrap; }
-  tr:hover td { background:#f9fafb; }
-  .search-bar { margin-bottom:.75rem; }
-  .search-bar input { width:100%; padding:.375rem .625rem; border:1px solid var(--border); border-radius:6px; font-size:.8125rem; }
-  .search-bar input:focus { outline:none; border-color:var(--accent); }
-  .hero { text-align:center; padding:1.5rem 0 1rem; }
-  .hero h2 { font-size:1.25rem; margin-bottom:.25rem; }
-  .hero p { color:var(--muted); max-width:560px; margin:0 auto .75rem; font-size:.875rem; }
-  .stats { display:flex; justify-content:center; gap:1.5rem; }
-  .stat { text-align:center; cursor:pointer; }
-  .stat .num { font-size:1.5rem; font-weight:700; color:var(--accent); }
-  .stat .lbl { font-size:.6875rem; color:var(--muted); }
-  .empty { text-align:center; color:var(--muted); padding:2rem 0; }
-  .back-link { font-size:.8125rem; margin-bottom:1rem; }
-  .back-link a { color:var(--link); text-decoration:none; cursor:pointer; }
-  .section-title { font-size:1rem; font-weight:600; margin:1.5rem 0 .75rem; }
-  .pc { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:.5rem; }
-  .pc .price { text-align:right; font-size:.8125rem; min-width:140px; }
-  .pc .price .big { font-size:1.125rem; font-weight:700; }
-  code { background:#f3f4f6; padding:1px 4px; border-radius:3px; font-size:.75rem; word-break:break-all; }
-  .hidden { display:none; }
-  .num-col { text-align:right; white-space:nowrap; }
-  .provider-logo { width:20px; height:20px; border-radius:4px; vertical-align:middle; margin-right:6px; }
-  .provider-logo-lg { width:32px; height:32px; border-radius:6px; vertical-align:middle; margin-right:10px; }
-  .provider-avatar { display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:4px; background:var(--accent); color:#fff; font-size:.625rem; font-weight:700; vertical-align:middle; margin-right:6px; }
-  .provider-avatar-lg { width:32px; height:32px; border-radius:6px; font-size:.875rem; margin-right:10px; }
+.tabs{display:flex;gap:0;margin-bottom:.75rem;border-bottom:2px solid var(--border)}
+.tabs button{padding:.3rem .9rem;border:none;background:none;font-size:.8rem;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px}
+.tabs button:hover{color:var(--text)}
+.tabs button.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+
+.toolbar{display:flex;gap:.5rem;margin-bottom:.75rem;align-items:center;flex-wrap:wrap}
+.toolbar input{padding:.3rem .5rem;border:1px solid var(--border);border-radius:4px;font-size:.8rem;width:200px}
+.toolbar input:focus{outline:none;border-color:var(--accent)}
+.toolbar select{padding:.3rem .5rem;border:1px solid var(--border);border-radius:4px;font-size:.8rem;background:var(--card);cursor:pointer}
+.toolbar .count{color:var(--muted);font-size:.75rem;margin-left:auto}
+
+table{width:100%;border-collapse:collapse;font-size:.8rem}
+thead{position:sticky;top:72px;z-index:50}
+th{background:var(--card);color:var(--muted);font-weight:500;padding:.35rem .4rem;text-align:left;border-bottom:2px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none;position:relative}
+th:hover{color:var(--text)}
+th .sort{font-size:.65rem;margin-left:2px;opacity:.4}
+th.sorted .sort{opacity:1;color:var(--accent)}
+th .flt{display:inline-block;margin-left:4px;width:0;height:0;border-left:3px solid transparent;border-right:3px solid transparent;border-top:4px solid var(--muted);vertical-align:middle;cursor:pointer;opacity:.4}
+th .flt:hover{opacity:1}
+td{padding:.3rem .4rem;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:hover td{background:var(--hover)}
+.num-col{text-align:right;white-space:nowrap}
+
+.filter-dropdown{position:absolute;top:100%;left:0;background:var(--card);border:1px solid var(--border);border-radius:4px;box-shadow:0 4px 12px rgba(0,0,0,.1);z-index:200;min-width:160px;max-height:250px;overflow-y:auto;display:none;font-weight:400;font-size:.75rem}
+.filter-dropdown.show{display:block}
+.filter-dropdown label{display:flex;align-items:center;gap:4px;padding:.25rem .5rem;cursor:pointer;white-space:nowrap}
+.filter-dropdown label:hover{background:var(--hover)}
+.filter-dropdown input[type=checkbox]{margin:0}
+.filter-dropdown .actions{padding:.25rem .5rem;border-top:1px solid var(--border);display:flex;gap:.5rem}
+.filter-dropdown .actions button{font-size:.7rem;padding:1px 6px;border:1px solid var(--border);border-radius:3px;background:var(--card);cursor:pointer}
+
+.tag{display:inline-block;padding:0 .3rem;border-radius:3px;font-size:.65rem;font-weight:500;margin-right:2px;line-height:1.5}
+.tag-green{background:#d1fae5;color:var(--green)}.tag-red{background:#fee2e2;color:var(--red)}
+.tag-gray{background:#f3f4f6;color:var(--muted)}.tag-accent{background:#ede9fe;color:var(--accent)}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:.75rem 1rem;margin-bottom:.5rem}
+.card h3{font-size:.9rem;margin-bottom:.25rem}
+.card h3 a{color:var(--link);text-decoration:none;cursor:pointer}
+.back-link{font-size:.8rem;margin-bottom:.75rem}
+.back-link a{color:var(--link);text-decoration:none;cursor:pointer}
+.section-title{font-size:.95rem;font-weight:600;margin:1.25rem 0 .5rem}
+.pc{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem}
+.pc .price{text-align:right;font-size:.8rem;min-width:130px}
+.pc .price .big{font-size:1rem;font-weight:700}
+code{background:#f3f4f6;padding:1px 3px;border-radius:2px;font-size:.72rem;word-break:break-all}
+.hidden{display:none}
+.provider-logo{width:16px;height:16px;border-radius:3px;vertical-align:middle;margin-right:4px;object-fit:contain}
+.provider-logo-lg{width:24px;height:24px;border-radius:4px;margin-right:6px}
+.provider-avatar{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:3px;background:var(--accent);color:#fff;font-size:.55rem;font-weight:700;vertical-align:middle;margin-right:4px}
+.provider-avatar-lg{width:24px;height:24px;border-radius:4px;font-size:.75rem;margin-right:6px}
 </style>
 </head>
 <body>
 <header>
-  <h1><a onclick="goHome('models')">🔗 ModelLink</a></h1>
+  <h1><a onclick="goHome('models')">ModelLink</a></h1>
   <nav>
     <a id="nav-models" onclick="goHome('models')">模型</a>
     <a id="nav-providers" onclick="goHome('providers')">提供商</a>
@@ -71,338 +80,289 @@
 </header>
 <main id="main"></main>
 <footer>
-  <p>数据来自社区贡献，仅供参考。使用前请以提供商官网为准。</p>
-  <p><a href="https://github.com/goroutined/modellink">ModelLink</a> — MIT 开源 | 仿 <a href="https://models.dev">models.dev</a></p>
+  数据来自社区贡献，仅供参考 | <a href="https://github.com/goroutined/modellink">ModelLink</a> MIT
 </footer>
 
 <script src="data.js"></script>
 <script>
-const DATA = window.MODELLINK || { models:[], providers:[] };
-const modelMap = new Map(DATA.models.map(m => [m.id, m]));
-const providerMap = new Map(DATA.providers.map(p => [p.id, p]));
+const D=window.MODELLINK||{models:[],providers:[]};
+const M=new Map(D.models.map(m=>[m.id,m]));
+const PV=new Map(D.providers.map(p=>[p.id,p]));
+
+let tab='models',sortKey='',sortDir=1,filters={},activeDropdown=null;
 
 // ---- routing ----
-let currentTab = 'models';
-function route() {
-  const h = location.hash;
-  if (h.startsWith('#model/')) renderModel(h.slice(7));
-  else if (h.startsWith('#provider/')) renderProvider(h.slice(10));
-  else if (h === '#providers') renderHome('providers');
-  else renderHome('models');
-}
-window.onhashchange = route;
-function goHome(tab) { currentTab = tab||'models'; location.hash = tab==='providers' ? '#providers' : ''; }
-function goModel(id) { location.hash = 'model/' + id; }
-function goProvider(id) { location.hash = 'provider/' + id; }
+function route(){const h=location.hash;if(h.startsWith('#model/'))detailModel(h.slice(7));else if(h.startsWith('#provider/'))detailProvider(h.slice(10));else{tab=h==='#providers'?'providers':'models';renderHome()}}
+window.onhashchange=route;
+function goHome(t){tab=t||'models';location.hash=t==='providers'?'#providers':''}
+function goModel(id){location.hash='model/'+id}
+function goProvider(id){location.hash='provider/'+id}
 
 // ---- helpers ----
-function h(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function yes(b) { return b ? '是' : '否'; }
-function fmtTok(n) { return n>=1e6?(n/1e6).toFixed(0)+'M':n>=1e3?(n/1e3)+'K':''+n; }
-const FAMILY = { deepseek:'DeepSeek', qwen:'通义千问', glm:'智谱 GLM', ernie:'文心一言', spark:'讯飞星火', moonshot:'月之暗面', yi:'零一万物 Yi', minimax:'MiniMax', step:'阶跃星辰' };
-function fam(s) { return FAMILY[s] || s; }
-function prot(p) { return p==='openai'?'OpenAI 兼容':p==='anthropic'?'Anthropic 兼容':p; }
-function authLab(a) { return a==='api_key'?'API Key':a==='bearer_token'?'Bearer Token':a==='aksk'?'AKSK':a; }
-
-function providerLogo(id, name, cls) {
-  const svg = `logos/${id}.svg`;
-  // Use onerror fallback: if SVG doesn't exist, show text avatar instead
-  return `<img class="${cls}" src="${svg}" alt="${h(name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" style="object-fit:contain">
-<span class="${cls.replace('logo','avatar')}" style="display:none">${h(name.charAt(0))}</span>`;
+function h(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function ft(n){return n>=1e6?(n/1e6).toFixed(0)+'M':n>=1e3?(n/1e3)+'K':''+n}
+const FAM={deepseek:'DeepSeek',qwen:'通义千问',glm:'GLM',ernie:'文心',spark:'星火',moonshot:'Kimi',doubao:'豆包',hunyuan:'混元',minimax:'MiniMax',yi:'Yi',step:'Step'};
+function fam(s){return FAM[s]||s}
+function prot(p){return p==='openai'?'OpenAI':p==='anthropic'?'Anthropic':p}
+function logo(id,name,cls){
+  const svg=`logos/${id}.svg`;
+  return `<img class="${cls}" src="${svg}" alt="${h(name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'"><span class="${cls.replace('logo','avatar')}" style="display:none">${h(name.charAt(0))}</span>`;
 }
+
+// ---- offerings ----
+function cheapestOff(modelId){let b=null;for(const p of D.providers)for(const pm of p.models)if(pm.model_id===modelId&&(!b||pm.cost.input+pm.cost.output<b.price))b={pname:p.name,pid:p.id,cost:pm.cost,price:pm.cost.input+pm.cost.output};return b}
+function offerings(modelId){const r=[];for(const p of D.providers)for(const pm of p.models)if(pm.model_id===modelId)r.push({...pm,pname:p.name,pid:p.id,pdoc:p.doc});return r}
 
 // ---- home ----
-function renderHome(tab) {
-  tab = tab || currentTab || 'models';
-  currentTab = tab;
-  document.title = 'ModelLink — 中国 AI 模型索引';
+function renderHome(){
+  document.title='ModelLink';
+  document.getElementById('nav-models').className=tab==='models'?'active':'';
+  document.getElementById('nav-providers').className=tab==='providers'?'active':'';
 
-  let totalOfferings = 0;
-  for (const m of DATA.models) {
-    for (const p of DATA.providers) {
-      for (const pm of p.models) if (pm.model_id === m.id) totalOfferings++;
-    }
-  }
+  let totalOff=0;
+  for(const m of D.models)for(const p of D.providers)for(const pm of p.models)if(pm.model_id===m.id)totalOff++;
 
-  let html = `<section class="hero">
-  <h2>中国 AI 模型开源索引</h2>
-  <p>收录国内各平台 AI 模型信息——定价、能力、调用方式，方便开发者选型和接入</p>
-  <div class="stats">
-    <div class="stat" onclick="goHome('models')"><div class="num">${DATA.models.length}</div><div class="lbl">模型</div></div>
-    <div class="stat" onclick="goHome('providers')"><div class="num">${DATA.providers.length}</div><div class="lbl">提供商</div></div>
-    <div class="stat"><div class="num">${totalOfferings}</div><div class="lbl">接入方式</div></div>
-  </div></section>
-  <div class="tabs">
-    <button class="${tab==='models'?'active':''}" onclick="switchTab('models')">📋 模型</button>
-    <button class="${tab==='providers'?'active':''}" onclick="switchTab('providers')">🏢 提供商</button>
+  let html=`<div class="tabs">
+    <button class="${tab==='models'?'active':''}" onclick="switchTab('models')">模型</button>
+    <button class="${tab==='providers'?'active':''}" onclick="switchTab('providers')">提供商</button>
   </div>`;
 
-  if (tab === 'providers') {
-    document.getElementById('nav-models').className = '';
-    document.getElementById('nav-providers').className = 'active';
-    html += `<div class="search-bar"><input type="text" placeholder="搜索提供商…" oninput="filterProviders(this.value.toLowerCase())"></div>`;
-    if (!DATA.providers.length) {
-      html += `<div class="empty">暂无提供商数据，欢迎 <a href="https://github.com/goroutined/modellink">贡献</a>。</div>`;
-    } else {
-      html += renderProviderTable();
-    }
-  } else {
-    document.getElementById('nav-models').className = 'active';
-    document.getElementById('nav-providers').className = '';
-    html += `<div class="search-bar"><input type="text" placeholder="搜索模型名称、系列…" oninput="filterModels(this.value.toLowerCase())"></div>`;
-    if (!DATA.models.length) {
-      html += `<div class="empty">暂无模型数据，欢迎 <a href="https://github.com/goroutined/modellink">贡献</a>。</div>`;
-    } else {
-      html += renderModelTable();
-    }
-  }
-  document.getElementById('main').innerHTML = html;
+  if(tab==='providers') html+=renderProviders();
+  else html+=renderModels();
+  document.getElementById('main').innerHTML=html;
+  bindFilters();
 }
 
-function switchTab(tab) {
-  currentTab = tab;
-  location.hash = tab === 'providers' ? '#providers' : '';
-  renderHome(tab);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+function switchTab(t){tab=t;filters={};sortKey='';sortDir=1;location.hash=t==='providers'?'#providers':'';renderHome();window.scrollTo(0,0)}
 
 // ---- model table ----
-function renderModelTable() {
-  let html = '<div id="model-list"><table><thead><tr><th>模型</th><th>系列</th><th>发布时间</th><th>上下文</th><th>最大输出</th><th>能力</th><th class="num-col">接入</th><th class="num-col">最低价 (输入/输出 每百万token)</th></tr></thead><tbody>';
-  for (const m of DATA.models) {
-    const cheapest = cheapestOffering(m.id);
-    const offCount = offerings(m.id).length;
+function renderModels(){
+  let rows=[];
+  for(const m of D.models){
+    const cheap=cheapestOff(m.id);
+    const offCount=offerings(m.id).length;
+    let caps=[];
+    if(m.tool_call)caps.push('<span class="tag tag-gray">工具</span>');
+    if(m.reasoning)caps.push('<span class="tag tag-accent">推理</span>');
+    if(m.structured_output)caps.push('<span class="tag tag-gray">JSON</span>');
+    caps.push(m.open_weights?'<span class="tag tag-green">开源</span>':'<span class="tag tag-red">闭源</span>');
 
-    let caps = '';
-    if (m.tool_call) caps += '<span class="tag tag-gray">工具</span>';
-    if (m.reasoning) caps += '<span class="tag tag-accent">推理</span>';
-    if (m.structured_output) caps += '<span class="tag tag-gray">JSON</span>';
-    caps += m.open_weights ? '<span class="tag tag-green">开源</span>' : '<span class="tag tag-red">闭源</span>';
-
-    let price = '<span style="color:var(--muted)">—</span>';
-    if (cheapest) {
-      price = `<span style="font-weight:500">¥${cheapest.cost.input.toFixed(2)} / ¥${cheapest.cost.output.toFixed(2)}</span>`;
-    }
-
-    html += `<tr class="model-row" data-q="${m.id} ${fam(m.family)} ${m.name}">
-      <td><a onclick="goModel('${m.id}')" style="cursor:pointer;color:var(--link);font-weight:500">${h(m.name)}</a></td>
-      <td><span style="font-size:.8125rem;color:var(--muted)">${h(fam(m.family))}</span></td>
-      <td style="font-size:.8125rem;color:var(--muted)">${m.release_date||'—'}</td>
-      <td style="font-size:.8125rem;color:var(--muted)">${fmtTok(m.limit.context)}</td>
-      <td style="font-size:.8125rem;color:var(--muted)">${fmtTok(m.limit.output)}</td>
-      <td>${caps}</td>
-      <td class="num-col" style="font-size:.8125rem">${offCount} 家</td>
-      <td class="num-col" style="font-size:.8125rem;white-space:nowrap">${price}</td>
-    </tr>`;
+    rows.push({
+      name:m.name,family:fam(m.family),date:m.release_date||'',
+      ctx:m.limit.context,out:m.limit.output,
+      caps:caps.join(''),offCount,price:cheap?cheap.cost.input+cheap.cost.output:Infinity,
+      html:`<tr data-q="${m.id} ${fam(m.family)} ${m.name}">
+        <td><a onclick="goModel('${m.id}')" style="color:var(--link);font-weight:500;cursor:pointer">${h(m.name)}</a></td>
+        <td>${h(fam(m.family))}</td>
+        <td>${m.release_date||'—'}</td>
+        <td class="num-col">${ft(m.limit.context)}</td>
+        <td class="num-col">${ft(m.limit.output)}</td>
+        <td>${caps.join('')}</td>
+        <td class="num-col">${offCount}</td>
+        <td class="num-col" style="white-space:nowrap">${cheap?`¥${cheap.cost.input.toFixed(2)}/¥${cheap.cost.output.toFixed(2)}`:'—'}</td>
+      </tr>`
+    });
   }
-  html += '</tbody></table></div>';
-  return html;
-}
+  rows.sort((a,b)=>a.price-b.price); // default: cheapest first
 
-function filterModels(q) {
-  document.querySelectorAll('#model-list .model-row').forEach(r => {
-    r.classList.toggle('hidden', !r.dataset.q.includes(q));
-  });
-}
-
-function cheapestOffering(modelId) {
-  let best = null;
-  for (const p of DATA.providers) {
-    for (const pm of p.models) {
-      if (pm.model_id !== modelId) continue;
-      if (!best || pm.cost.input+pm.cost.output < best.price) {
-        best = { pname:p.name, pid:p.id, cost:pm.cost, price:pm.cost.input+pm.cost.output };
-      }
-    }
-  }
-  return best;
-}
-
-function offerings(modelId) {
-  const res = [];
-  for (const p of DATA.providers) {
-    for (const pm of p.models) {
-      if (pm.model_id === modelId) res.push({ ...pm, pname:p.name, pid:p.id, pdoc:p.doc });
-    }
-  }
-  return res;
+  return `${toolbar('model-search','搜索模型…',rows.length)}
+  <table><thead><tr>
+    <th data-col="name" data-type="text">模型<span class="sort"></span></th>
+    <th data-col="family" data-type="text">系列<span class="sort"></span></th>
+    <th data-col="date" data-type="text">发布时间<span class="sort"></span></th>
+    <th data-col="ctx" data-type="num" class="num-col">上下文<span class="sort"></span></th>
+    <th data-col="out" data-type="num" class="num-col">最大输出<span class="sort"></span></th>
+    <th data-col="caps" data-type="text">能力<span class="sort"></span></th>
+    <th data-col="offCount" data-type="num" class="num-col">接入<span class="sort"></span></th>
+    <th data-col="price" data-type="num" class="num-col">最低价 (输入/输出)<span class="sort"></span></th>
+  </tr></thead><tbody>${rows.map(r=>r.html).join('')}</tbody></table>`;
 }
 
 // ---- provider table ----
-function renderProviderTable() {
-  let html = '<div id="provider-list"><table><thead><tr><th>提供商</th><th class="num-col">模型数</th><th>典型模型</th><th>协议</th><th>文档</th></tr></thead><tbody>';
-  for (const p of DATA.providers) {
-    const count = p.models.length;
-    const names = p.models.map(pm => {
-      const m = modelMap.get(pm.model_id);
-      return m ? m.name : pm.model_id;
-    }).slice(0, 6).join('、') + (count > 6 ? ' 等' : '');
-
-    // dedup protocols
-    const protocols = [...new Set(p.models.map(pm => prot(pm.api.protocol)))].join('、');
-
-    html += `<tr class="provider-row" data-q="${p.id} ${p.name}" style="cursor:pointer" onclick="goProvider('${p.id}')">
-      <td>${providerLogo(p.id, p.name, 'provider-logo')}<a style="color:var(--link);font-weight:500">${h(p.name)}</a></td>
-      <td class="num-col" style="font-weight:600;color:var(--accent)">${count}</td>
-      <td style="font-size:.8125rem;color:var(--muted);max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${h(names)}</td>
-      <td style="font-size:.75rem;color:var(--muted)">${protocols}</td>
-      <td style="font-size:.8125rem">${p.doc ? '<a href="'+h(p.doc)+'" onclick="event.stopPropagation()" style="color:var(--link)">链接</a>' : '<span style="color:var(--muted)">—</span>'}</td>
-    </tr>`;
+function renderProviders(){
+  let rows=[];
+  for(const p of D.providers){
+    const protocols=[...new Set(p.models.map(pm=>prot(pm.api.protocol)))].join('/');
+    const modelNames=p.models.map(pm=>{const m=M.get(pm.model_id);return m?m.name:pm.model_id}).slice(0,6).join('、')+(p.models.length>6?' 等':'');
+    rows.push({
+      name:p.name,count:p.models.length,models:modelNames,proto:protocols,
+      html:`<tr data-q="${p.id} ${p.name}" style="cursor:pointer" onclick="goProvider('${p.id}')">
+        <td>${logo(p.id,p.name,'provider-logo')}<a style="color:var(--link);font-weight:500">${h(p.name)}</a></td>
+        <td class="num-col" style="font-weight:600;color:var(--accent)">${p.models.length}</td>
+        <td style="max-width:360px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)">${h(modelNames)}</td>
+        <td>${protocols}</td>
+        <td>${p.doc?`<a href="${h(p.doc)}" onclick="event.stopPropagation()" style="color:var(--link)">链接</a>`:'—'}</td>
+      </tr>`
+    });
   }
-  html += '</tbody></table></div>';
-  return html;
+  return `${toolbar('provider-search','搜索提供商…',rows.length)}
+  <table><thead><tr>
+    <th data-col="name" data-type="text">提供商<span class="sort"></span></th>
+    <th data-col="count" data-type="num" class="num-col">模型数<span class="sort"></span></th>
+    <th data-col="models" data-type="text">典型模型<span class="sort"></span></th>
+    <th data-col="proto" data-type="text">协议<span class="sort"></span></th>
+    <th data-col="doc" data-type="text">文档<span class="sort"></span></th>
+  </tr></thead><tbody>${rows.map(r=>r.html).join('')}</tbody></table>`;
 }
 
-function filterProviders(q) {
-  document.querySelectorAll('#provider-list .provider-row').forEach(r => {
-    r.classList.toggle('hidden', !r.dataset.q.includes(q));
+function toolbar(id,placeholder,count){
+  return `<div class="toolbar">
+    <input id="${id}" type="text" placeholder="${placeholder}" oninput="applyFilters()">
+    <span class="count" id="${id}-count">${count} 条</span>
+  </div>`;
+}
+
+// ---- sorting & filtering ----
+function bindFilters(){
+  document.querySelectorAll('th').forEach(th=>{
+    th.addEventListener('click',e=>{
+      if(e.target.closest('.filter-dropdown'))return;
+      sort(th.dataset.col,th.dataset.type);
+    });
   });
+  document.getElementById(tab==='providers'?'provider-search':'model-search').addEventListener('input',applyFilters);
+}
+
+let sortState=new Map();
+function sort(col,type){
+  const dir=sortState.get(col)===1?-1:1;
+  sortState.set(col,dir);
+  document.querySelectorAll('th').forEach(th=>{
+    th.classList.toggle('sorted',th.dataset.col===col);
+    const s=th.querySelector('.sort');
+    if(th.dataset.col===col)s.textContent=dir===1?' ▲':' ▼';
+    else s.textContent='';
+  });
+
+  const tbody=document.querySelector('tbody');
+  const rows=[...tbody.querySelectorAll('tr')];
+  rows.sort((a,b)=>{
+    let va=a.cells[[...a.parentElement.parentElement.querySelectorAll('th')].findIndex(th=>th.dataset.col===col)].textContent.trim();
+    let vb=b.cells[[...a.parentElement.parentElement.querySelectorAll('th')].findIndex(th=>th.dataset.col===col)].textContent.trim();
+    if(type==='num'){va=parseFloat(va.replace(/[^0-9.]/g,''))||0;vb=parseFloat(vb.replace(/[^0-9.]/g,''))||0}
+    return (va>vb?1:va<vb?-1:0)*dir;
+  });
+  rows.forEach(r=>tbody.appendChild(r));
+}
+
+function applyFilters(){
+  const search=document.getElementById(tab==='providers'?'provider-search':'model-search');
+  const q=search?search.value.toLowerCase():'';
+  let visible=0;
+  document.querySelectorAll('tbody tr').forEach(r=>{
+    const match=!q||r.dataset.q.includes(q);
+    r.classList.toggle('hidden',!match);
+    if(match)visible++;
+  });
+  const cnt=document.getElementById(tab==='providers'?'provider-search-count':'model-search-count');
+  if(cnt)cnt.textContent=(q?'匹配 '+visible+'/'+document.querySelectorAll('tbody tr').length+' ':'')+document.querySelectorAll('tbody tr').length+' 条';
 }
 
 // ---- model detail ----
-function renderModel(id) {
-  const m = modelMap.get(id);
-  if (!m) return renderHome();
-  document.getElementById('nav-models').className = '';
-  document.getElementById('nav-providers').className = '';
-  document.title = m.name + ' — ModelLink';
+function detailModel(id){
+  const m=M.get(id);if(!m)return goHome('models');
+  document.getElementById('nav-models').className='';
+  document.getElementById('nav-providers').className='';
+  document.title=m.name+' — ModelLink';
 
-  let badges = '';
-  badges += m.open_weights ? '<span class="tag tag-green">开源</span>' : '<span class="tag tag-red">闭源</span>';
-  if (m.tool_call) badges += '<span class="tag tag-gray">工具调用</span>';
-  if (m.reasoning) badges += '<span class="tag tag-accent">内置思考</span>';
-  if (m.structured_output) badges += '<span class="tag tag-gray">结构化输出</span>';
+  let badges=[];
+  badges.push(m.open_weights?'<span class="tag tag-green">开源</span>':'<span class="tag tag-red">闭源</span>');
+  if(m.tool_call)badges.push('<span class="tag tag-gray">工具调用</span>');
+  if(m.reasoning)badges.push('<span class="tag tag-accent">内置思考</span>');
+  if(m.structured_output)badges.push('<span class="tag tag-gray">结构化输出</span>');
 
-  let html = `<div class="back-link"><a onclick="goHome('models')">← 返回模型列表</a></div>
+  const offs=offerings(m.id);
+  let html=`<div class="back-link"><a onclick="goHome('models')">← 返回模型列表</a></div>
   <h2>${h(m.name)}</h2>
-  <p style="color:var(--muted);margin-bottom:1rem">${h(fam(m.family))} · 发布: ${m.release_date||'—'}</p>
-  <div style="margin-bottom:1rem">${badges}</div>
+  <p style="color:var(--muted);margin-bottom:.75rem">${h(fam(m.family))} · 发布: ${m.release_date||'—'}</p>
+  <div style="margin-bottom:.75rem">${badges.join('')}</div>
   <div class="card"><h3>能力详情</h3><table>
-    <tr><td>模型 ID</td><td>${h(m.id)}</td></tr>
-    <tr><td>系列</td><td>${h(fam(m.family))}</td></tr>
+    <tr><td>模型 ID</td><td>${h(m.id)}</td></tr><tr><td>系列</td><td>${h(fam(m.family))}</td></tr>
     <tr><td>发布时间</td><td>${m.release_date||'—'}</td></tr>
-    <tr><td>权重开放</td><td>${yes(m.open_weights)}</td></tr>
-    <tr><td>工具调用</td><td>${yes(m.tool_call)}</td></tr>
-    <tr><td>内置思考</td><td>${yes(m.reasoning)}</td></tr>
-    <tr><td>结构化输出</td><td>${yes(m.structured_output)}</td></tr>
+    <tr><td>权重开放</td><td>${m.open_weights?'是':'否'}</td></tr>
+    <tr><td>工具调用</td><td>${m.tool_call?'是':'否'}</td></tr>
+    <tr><td>内置思考</td><td>${m.reasoning?'是':'否'}</td></tr>
+    <tr><td>结构化输出</td><td>${m.structured_output?'是':'否'}</td></tr>
     <tr><td>输入模态</td><td>${m.modalities.input.join('、')||'—'}</td></tr>
     <tr><td>输出模态</td><td>${m.modalities.output.join('、')||'—'}</td></tr>
-    <tr><td>上下文长度</td><td>${fmtTok(m.limit.context)}</td></tr>
-    <tr><td>最大输出</td><td>${fmtTok(m.limit.output)}</td></tr>
+    <tr><td>上下文长度</td><td>${ft(m.limit.context)}</td></tr>
+    <tr><td>最大输出</td><td>${ft(m.limit.output)}</td></tr>
   </table></div>
-
   <div class="section-title">接入方式</div>`;
 
-  const offs = offerings(m.id);
-  if (!offs.length) {
-    html += '<div class="empty">暂无知名的国内提供商接入此模型。</div>';
-  } else {
-    html += `<p style="color:var(--muted);margin-bottom:.75rem;font-size:.8125rem">${offs.length} 家提供商提供此模型：</p>`;
-    for (const o of offs) html += offeringCard(o, m);
-  }
-  document.getElementById('main').innerHTML = html;
+  if(!offs.length){html+='<div class="empty" style="text-align:center;color:var(--muted);padding:2rem 0">暂无知名的国内提供商接入此模型。</div>'}
+  else{html+=`<p style="color:var(--muted);margin-bottom:.5rem;font-size:.8rem">${offs.length} 家提供商：</p>`;for(const o of offs)html+=offeringCard(o,m)}
+  document.getElementById('main').innerHTML=html;
 }
 
-function offeringCard(o, m) {
-  const limit = o.limit_override || m.limit;
-  let limitBadge = o.limit_override ? '<span class="tag tag-red">平台限制</span>' : '';
-
-  let access = '';
-  if (!o.streaming) access += '<span class="tag tag-red">无流式</span>';
-  if (o.access) {
-    if (o.access.requires_mainland_phone) access += '<span class="tag tag-gray">需大陆手机号</span>';
-    if (o.access.requires_enterprise) access += '<span class="tag tag-gray">需企业资质</span>';
-    if (o.access.compliance_status) access += `<span class="tag tag-green">${h(o.access.compliance_status)}</span>`;
+function offeringCard(o,m){
+  const lim=o.limit_override||m.limit;
+  let tags='';
+  if(!o.streaming)tags+='<span class="tag tag-red">无流式</span>';
+  if(o.access){
+    if(o.access.requires_mainland_phone)tags+='<span class="tag tag-gray">需大陆手机号</span>';
+    if(o.access.requires_enterprise)tags+='<span class="tag tag-gray">需企业资质</span>';
   }
+  let costEx='';
+  if(o.cost.reasoning)costEx+=`<div style="font-size:.7rem">思考:¥${o.cost.reasoning.toFixed(2)}</div>`;
+  if(o.cost.cache_read)costEx+=`<div style="font-size:.7rem">缓存:¥${o.cost.cache_read.toFixed(2)}</div>`;
 
-  let costExtra = '';
-  if (o.cost.reasoning) costExtra += `<div style="font-size:.75rem">思考 token: ¥${o.cost.reasoning.toFixed(2)}</div>`;
-  if (o.cost.cache_read) costExtra += `<div style="font-size:.75rem">缓存读取: ¥${o.cost.cache_read.toFixed(2)}</div>`;
-
-  let docLink = o.doc ? `<a href="${h(o.doc)}" style="color:var(--link);font-size:.8125rem">📄 文档</a>` : '';
-
-  return `<div class="card">
-  <div class="pc">
-    <div style="flex:1;min-width:0">
-      <h3><a onclick="goProvider('${o.pid}')">${h(o.pname)}</a></h3>
-      <div style="font-size:.75rem;color:var(--muted);margin:.25rem 0">调用 ID: <code>${h(o.model_id_on_platform)}</code></div>
-      <div style="font-size:.8125rem;margin:.25rem 0"><span style="color:var(--muted)">协议</span> ${prot(o.api.protocol)} <span style="color:var(--muted);margin-left:.75rem">Base URL</span> <code style="font-size:.75rem">${h(o.api.base_url)}</code></div>
-      <div style="font-size:.75rem;margin:.25rem 0"><span style="color:var(--muted)">上下文</span> ${fmtTok(limit.context)} <span style="color:var(--muted);margin-left:.75rem">最大输出</span> ${fmtTok(limit.output)} ${limitBadge}</div>
-      <div style="margin-top:.25rem">${access}</div>
-    </div>
-    <div class="price">
-      <div style="font-size:.75rem;color:var(--muted)">输入/输出 每百万token</div>
-      <div class="big">¥${o.cost.input.toFixed(2)} / ¥${o.cost.output.toFixed(2)}</div>
-      ${costExtra}
-      <div style="margin-top:.25rem">${docLink}</div>
-    </div>
-  </div>
-</div>`;
+  return `<div class="card"><div class="pc"><div style="flex:1;min-width:0">
+    <h3>${logo(o.pid,o.pname,'provider-logo')}<a onclick="goProvider('${o.pid}')" style="cursor:pointer">${h(o.pname)}</a></h3>
+    <div style="font-size:.72rem;color:var(--muted)">调用 ID: <code>${h(o.model_id_on_platform)}</code></div>
+    <div style="font-size:.78rem;margin:.25rem 0"><span style="color:var(--muted)">协议</span> ${prot(o.api.protocol)} · <span style="color:var(--muted)">Base URL</span> <code>${h(o.api.base_url)}</code></div>
+    <div style="font-size:.72rem;margin:.25rem 0"><span style="color:var(--muted)">上下文</span> ${ft(lim.context)} <span style="color:var(--muted);margin-left:.75rem">最大输出</span> ${ft(lim.output)} ${o.limit_override?'<span class="tag tag-red">平台限制</span>':''}</div>
+    <div>${tags}</div></div>
+    <div class="price"><div style="font-size:.7rem;color:var(--muted)">输入/输出 每百万token</div>
+    <div class="big">¥${o.cost.input.toFixed(2)} / ¥${o.cost.output.toFixed(2)}</div>${costEx}
+    <div style="margin-top:.25rem">${o.doc?`<a href="${h(o.doc)}" style="color:var(--link);font-size:.75rem">📄 文档</a>`:''}</div></div>
+  </div></div>`;
 }
 
 // ---- provider detail ----
-function renderProvider(id) {
-  const p = providerMap.get(id);
-  if (!p) return renderHome();
-  document.getElementById('nav-models').className = '';
-  document.getElementById('nav-providers').className = '';
-  document.title = p.name + ' — ModelLink';
+function detailProvider(id){
+  const p=PV.get(id);if(!p)return goHome('providers');
+  document.getElementById('nav-models').className='';
+  document.getElementById('nav-providers').className='';
+  document.title=p.name+' — ModelLink';
 
-  let html = `<div class="back-link"><a onclick="goHome('providers')">← 返回提供商列表</a></div>
-  <h2>${providerLogo(p.id, p.name, 'provider-logo-lg')}${h(p.name)}</h2>`;
-  if (p.doc) html += `<p style="color:var(--muted);margin-bottom:1rem;font-size:.8125rem"><a href="${h(p.doc)}">${h(p.doc)}</a></p>`;
+  let html=`<div class="back-link"><a onclick="goHome('providers')">← 返回提供商列表</a></div>
+  <h2>${logo(p.id,p.name,'provider-logo-lg')}${h(p.name)}</h2>`;
+  if(p.doc)html+=`<p style="color:var(--muted);margin-bottom:.75rem;font-size:.8rem"><a href="${h(p.doc)}">${h(p.doc)}</a></p>`;
 
-  html += `<div class="section-title">提供的模型 (${p.models.length})</div>`;
-  if (!p.models.length) {
-    html += '<div class="empty">暂无模型数据。</div>';
-  } else {
-    for (const pm of p.models) {
-      const m = modelMap.get(pm.model_id);
-      html += providerModelCard(pm, p, m);
-    }
-  }
-  document.getElementById('main').innerHTML = html;
+  html+=`<div class="section-title">提供的模型 (${p.models.length})</div>`;
+  if(!p.models.length){html+='<div class="empty" style="text-align:center;color:var(--muted);padding:2rem 0">暂无模型数据。</div>'}
+  else{for(const pm of p.models){const m=M.get(pm.model_id);html+=providerModelRow(pm,p,m)}}
+  document.getElementById('main').innerHTML=html;
 }
 
-function providerModelCard(pm, p, m) {
-  const limit = pm.limit_override || (m ? m.limit : { context:'—', output:'—' });
-  const modelName = m ? m.name : pm.model_id;
-  let limitBadge = pm.limit_override ? '<span class="tag tag-red">平台限制</span>' : '';
-
-  let tags = '';
-  tags += pm.streaming ? '<span class="tag tag-green">流式</span>' : '<span class="tag tag-red">无流式</span>';
-  if (pm.access) {
-    if (pm.access.requires_mainland_phone) tags += '<span class="tag tag-gray">需大陆手机号</span>';
-    if (pm.access.requires_enterprise) tags += '<span class="tag tag-gray">需企业资质</span>';
-    if (pm.access.compliance_status) tags += `<span class="tag tag-green">${h(pm.access.compliance_status)}</span>`;
+function providerModelRow(pm,p,m){
+  const lim=pm.limit_override||(m?m.limit:{context:'—',output:'—'});
+  let tags='';
+  tags+=pm.streaming?'<span class="tag tag-green">流式</span>':'<span class="tag tag-red">无流式</span>';
+  if(pm.access){
+    if(pm.access.requires_mainland_phone)tags+='<span class="tag tag-gray">需大陆手机号</span>';
+    if(pm.access.requires_enterprise)tags+='<span class="tag tag-gray">需企业资质</span>';
   }
+  let costEx='';
+  if(pm.cost.reasoning)costEx+=`<div style="font-size:.7rem">思考:¥${pm.cost.reasoning.toFixed(2)}</div>`;
+  if(pm.cost.cache_read)costEx+=`<div style="font-size:.7rem">缓存:¥${pm.cost.cache_read.toFixed(2)}</div>`;
 
-  let costExtra = '';
-  if (pm.cost.reasoning) costExtra += `<div style="font-size:.75rem">思考 token: ¥${pm.cost.reasoning.toFixed(2)}</div>`;
-  if (pm.cost.cache_read) costExtra += `<div style="font-size:.75rem">缓存读取: ¥${pm.cost.cache_read.toFixed(2)}</div>`;
+  const mn=m?m.name:pm.model_id;
+  const mlink=m?`<a onclick="goModel('${pm.model_id}')" style="cursor:pointer;color:var(--link)">${h(mn)}</a>`:h(mn);
 
-  let docLink = pm.doc ? `<a href="${h(pm.doc)}" style="color:var(--link);font-size:.8125rem">📄 文档</a>` : '';
-  let modelLink = m ? `<a onclick="goModel('${pm.model_id}')" style="cursor:pointer;color:var(--link)">${h(modelName)}</a>` : h(modelName);
-
-  return `<div class="card">
-  <div class="pc">
-    <div style="flex:1;min-width:0">
-      <h3>${modelLink}</h3>
-      <div style="font-size:.75rem;color:var(--muted);margin:.25rem 0">调用 ID: <code>${h(pm.model_id_on_platform)}</code></div>
-      <div style="font-size:.8125rem;margin:.25rem 0"><span style="color:var(--muted)">协议</span> ${prot(pm.api.protocol)} <span style="color:var(--muted);margin-left:.75rem">认证</span> ${authLab(pm.api.auth_type)}</div>
-      <div style="font-size:.8125rem;margin:.25rem 0"><span style="color:var(--muted)">Base URL</span> <code style="font-size:.75rem">${h(pm.api.base_url)}</code></div>
-      <div style="font-size:.75rem;margin:.25rem 0"><span style="color:var(--muted)">上下文</span> ${typeof limit.context==='number'?fmtTok(limit.context):limit.context} <span style="color:var(--muted);margin-left:.75rem">最大输出</span> ${typeof limit.output==='number'?fmtTok(limit.output):limit.output} ${limitBadge}</div>
-      <div style="margin-top:.25rem">${tags}</div>
-      <div style="font-size:.75rem;color:var(--muted);margin-top:.25rem">来源: <a href="${h(pm.source)}">${h(pm.source)}</a> · 更新: ${pm.updated_at}</div>
-    </div>
-    <div class="price">
-      <div style="font-size:.75rem;color:var(--muted)">输入/输出 每百万token</div>
-      <div class="big">¥${pm.cost.input.toFixed(2)} / ¥${pm.cost.output.toFixed(2)}</div>
-      ${costExtra}
-      <div style="margin-top:.25rem">${docLink}</div>
-    </div>
-  </div>
-</div>`;
+  return `<div class="card"><div class="pc"><div style="flex:1;min-width:0">
+    <h3>${mlink}</h3>
+    <div style="font-size:.72rem;color:var(--muted)">调用 ID: <code>${h(pm.model_id_on_platform)}</code></div>
+    <div style="font-size:.78rem;margin:.25rem 0"><span style="color:var(--muted)">协议</span> ${prot(pm.api.protocol)} · <span style="color:var(--muted)">认证</span> ${pm.api.auth_type==='api_key'?'API Key':pm.api.auth_type==='bearer_token'?'Bearer':'AKSK'}</div>
+    <div style="font-size:.78rem;margin:.25rem 0"><span style="color:var(--muted)">Base URL</span> <code>${h(pm.api.base_url)}</code></div>
+    <div style="font-size:.72rem;margin:.25rem 0"><span style="color:var(--muted)">上下文</span> ${typeof lim.context==='number'?ft(lim.context):lim.context} · <span style="color:var(--muted)">最大输出</span> ${typeof lim.output==='number'?ft(lim.output):lim.output} ${pm.limit_override?'<span class="tag tag-red">平台限制</span>':''}</div>
+    <div>${tags}</div>
+    <div style="font-size:.7rem;color:var(--muted);margin-top:.25rem">来源: <a href="${h(pm.source)}">${h(pm.source)}</a> · 更新: ${pm.updated_at}</div></div>
+    <div class="price"><div style="font-size:.7rem;color:var(--muted)">输入/输出 每百万token</div>
+    <div class="big">¥${pm.cost.input.toFixed(2)} / ¥${pm.cost.output.toFixed(2)}</div>${costEx}
+    <div style="margin-top:.25rem">${pm.doc?`<a href="${h(pm.doc)}" style="color:var(--link);font-size:.75rem">📄 文档</a>`:''}</div></div>
+  </div></div>`;
 }
 
 // ---- boot ----
