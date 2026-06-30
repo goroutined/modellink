@@ -1,0 +1,17 @@
+{
+  "id": "kimi-k2.6",
+  "name": "Kimi K2.6",
+  "family": "moonshot",
+  "open_weights": false,
+  "tool_call": true,
+  "reasoning": true,
+  "structured_output": true,
+  "modalities": {
+    "input": ["text", "image", "video"],
+    "output": ["text"]
+  },
+  "limit": {
+    "context": 262144,
+    "output": 16384
+  }
+}

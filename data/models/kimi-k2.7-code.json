@@ -1,0 +1,17 @@
+{
+  "id": "kimi-k2.7-code",
+  "name": "Kimi K2.7 Code",
+  "family": "moonshot",
+  "open_weights": false,
+  "tool_call": true,
+  "reasoning": true,
+  "structured_output": true,
+  "modalities": {
+    "input": ["text"],
+    "output": ["text"]
+  },
+  "limit": {
+    "context": 262144,
+    "output": 32768
+  }
+}
