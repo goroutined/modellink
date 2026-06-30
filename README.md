@@ -2,6 +2,8 @@
 
 > 中国 AI 模型与提供商的开源索引。
 
+🔗 **在线浏览：[goroutined.github.io/modellink](https://goroutined.github.io/modellink/)**
+
 收录国内各平台的 AI 模型信息——定价、能力、调用方式等。类似 [models.dev](https://models.dev)，专为中国 AI 生态打造。
 
 ## 为什么做这个
