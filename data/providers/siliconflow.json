@@ -12,19 +12,15 @@
         "cache_read": 1
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://api.siliconflow.cn/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://docs.siliconflow.cn/cn/api-reference/chat-completions/chat-completions",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://siliconflow.cn/pricing",
       "updated_at": "2026-06-25"
     }
   ],
-  "type": "api"
+  "type": "api",
+  "base_url": "https://api.siliconflow.cn/v1",
+  "auth_type": "api_key"
 }

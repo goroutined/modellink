@@ -11,17 +11,11 @@
         "output": 18
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://qianfan.baidubce.com/v2",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
       "source": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "updated_at": "2026-06-30"
     },
     {
@@ -32,17 +26,11 @@
         "output": 24
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://qianfan.baidubce.com/v2",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
       "source": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "updated_at": "2026-06-30"
     },
     {
@@ -54,17 +42,11 @@
         "cache_read": 0.2
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://qianfan.baidubce.com/v2",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
       "source": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "updated_at": "2026-06-30"
     },
     {
@@ -76,17 +58,11 @@
         "cache_read": 0.75
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://qianfan.baidubce.com/v2",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
       "source": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "updated_at": "2026-06-30"
     },
     {
@@ -97,17 +73,11 @@
         "output": 0.6
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://qianfan.baidubce.com/v2",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
       "source": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "updated_at": "2026-06-30"
     },
     {
@@ -118,17 +88,11 @@
         "output": 0.6
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://qianfan.baidubce.com/v2",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
       "source": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "updated_at": "2026-06-30"
     },
     {
@@ -139,19 +103,15 @@
         "output": 0.4
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://qianfan.baidubce.com/v2",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
       "source": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "updated_at": "2026-06-30"
     }
   ],
-  "type": "api"
+  "type": "api",
+  "base_url": "https://qianfan.baidubce.com/v2",
+  "auth_type": "api_key"
 }

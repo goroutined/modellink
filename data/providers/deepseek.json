@@ -12,9 +12,7 @@
         "cache_read": 0.02
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://api.deepseek.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://api-docs.deepseek.com/quick_start/pricing",
@@ -30,9 +28,7 @@
         "cache_read": 0.03
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://api.deepseek.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://api-docs.deepseek.com/quick_start/pricing",
@@ -40,5 +36,7 @@
       "updated_at": "2026-06-30"
     }
   ],
-  "type": "api"
+  "type": "api",
+  "base_url": "https://api.deepseek.com/v1",
+  "auth_type": "api_key"
 }

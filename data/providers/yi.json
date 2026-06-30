@@ -11,16 +11,10 @@
         "output": 20
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://api.lingyiwanwu.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://platform.lingyiwanwu.com/docs",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://help.aliyun.com/zh/model-studio/billing-for-yi-large",
       "updated_at": "2026-06-30"
     },
@@ -32,19 +26,15 @@
         "output": 0.99
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://api.lingyiwanwu.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://platform.lingyiwanwu.com/docs",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://help.aliyun.com/zh/model-studio/billing-for-yi-large",
       "updated_at": "2026-06-30"
     }
   ],
-  "type": "api"
+  "type": "api",
+  "base_url": "https://api.lingyiwanwu.com/v1",
+  "auth_type": "api_key"
 }

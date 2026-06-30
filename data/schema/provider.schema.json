@@ -4,7 +4,7 @@
   "title": "Provider",
   "description": "One file per provider at data/providers/<id>.json. Holds everything that depends on who is serving the model: pricing, the exact API call string, base URL, auth, compliance/access requirements. Each entry in `models` references a model fact-file in data/models/ via model_id.",
   "type": "object",
-  "required": ["id", "name", "type", "models"],
+  "required": ["id", "name", "type", "base_url", "auth_type", "models"],
   "additionalProperties": false,
   "properties": {
     "id": {
@@ -24,7 +24,17 @@
     "doc": {
       "type": "string",
       "format": "uri",
-      "description": "提供商总文档/官网地址 (optional; per-model doc links go on each model entry)."
+      "description": "提供商总文档/官网地址."
+    },
+    "base_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "API 请求地址 (提供商级别，所有模型共用)."
+    },
+    "auth_type": {
+      "type": "string",
+      "enum": ["api_key", "bearer_token", "aksk"],
+      "description": "认证方式 (提供商级别，所有模型共用)."
     },
     "models": {
       "type": "array",
@@ -69,13 +79,11 @@
         },
         "api": {
           "type": "object",
-          "required": ["protocol", "base_url", "auth_type"],
+          "required": ["protocol"],
           "additionalProperties": false,
-          "description": "调用信息.",
+          "description": "调用协议 (base_url 和 auth_type 在 provider 顶层).",
           "properties": {
-            "protocol": { "type": "string", "enum": ["openai", "anthropic"], "description": "调用协议: OpenAI 兼容 / Anthropic 兼容." },
-            "base_url": { "type": "string", "format": "uri", "description": "API 请求地址." },
-            "auth_type": { "type": "string", "enum": ["api_key", "bearer_token", "aksk"], "description": "认证方式." }
+            "protocol": { "type": "string", "enum": ["openai", "anthropic"], "description": "调用协议: OpenAI 兼容 / Anthropic 兼容." }
           }
         },
         "streaming": {
@@ -86,15 +94,6 @@
           "type": "string",
           "format": "uri",
           "description": "该模型在该平台的文档/介绍页链接."
-        },
-        "access": {
-          "type": "object",
-          "additionalProperties": false,
-          "description": "合规与访问 (可选, 省略表示无特殊要求/未知).",
-          "properties": {
-            "requires_mainland_phone": { "type": "boolean", "description": "是否需要大陆手机号." },
-            "requires_enterprise": { "type": "boolean", "description": "是否需要企业资质." }
-          }
         },
         "source": {
           "type": "string",

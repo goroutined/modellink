@@ -11,16 +11,10 @@
         "output": 36
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"
     },
@@ -32,16 +26,10 @@
         "output": 14
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"
     },
@@ -53,16 +41,10 @@
         "output": 10
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"
     },
@@ -74,16 +56,10 @@
         "output": 14
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"
     },
@@ -95,16 +71,10 @@
         "output": 2
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"
     },
@@ -116,16 +86,10 @@
         "output": 0.5
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"
     },
@@ -137,16 +101,10 @@
         "output": 2
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"
     },
@@ -158,16 +116,10 @@
         "output": 12
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"
     },
@@ -179,16 +131,10 @@
         "output": 16
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"
     },
@@ -200,19 +146,15 @@
         "output": 8
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://help.aliyun.com/zh/model-studio/getting-started/models",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "updated_at": "2026-06-30"
     }
   ],
-  "type": "api"
+  "type": "api",
+  "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  "auth_type": "api_key"
 }

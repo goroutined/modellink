@@ -7,14 +7,14 @@
 <style>
 :root{--bg:#f8f9fa;--card:#fff;--border:#dee2e6;--text:#212529;--muted:#6c757d;--green:#198754;--red:#dc3545;--link:#0d6efd;--accent:#6f42c1;--hover:#f1f3f5}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.4;font-size:13px}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.4;font-size:1rem}
 header{background:var(--card);border-bottom:1px solid var(--border);padding:.5rem 1.25rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:1.5rem}
 header h1{font-size:1rem;white-space:nowrap}
 header h1 a{color:inherit;text-decoration:none;cursor:pointer}
 nav{display:flex;gap:1rem}
 nav a{color:var(--muted);text-decoration:none;font-size:.8rem;cursor:pointer}
 nav a:hover,nav a.active{color:var(--accent)}
-main{max-width:1400px;margin:1rem auto;padding:0 1.25rem}
+main{margin:1rem 0;padding:0 1.5rem}
 footer{text-align:center;color:var(--muted);font-size:.7rem;padding:1rem}
 
 .tabs{display:flex;gap:0;margin-bottom:.75rem;border-bottom:2px solid var(--border)}
@@ -28,8 +28,8 @@ footer{text-align:center;color:var(--muted);font-size:.7rem;padding:1rem}
 .toolbar select{padding:.3rem .5rem;border:1px solid var(--border);border-radius:4px;font-size:.8rem;background:var(--card);cursor:pointer}
 .toolbar .count{color:var(--muted);font-size:.75rem;margin-left:auto}
 
-table{width:100%;border-collapse:collapse;font-size:.8rem}
-thead{position:sticky;top:72px;z-index:50}
+table{width:100%;border-collapse:collapse;font-size:1rem}
+thead{position:sticky;top:33px;z-index:50}
 th{background:var(--card);color:var(--muted);font-weight:500;padding:.35rem .4rem;text-align:left;border-bottom:2px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none;position:relative}
 th:hover{color:var(--text)}
 th .sort{font-size:.65rem;margin-left:2px;opacity:.4}
@@ -55,6 +55,10 @@ tr:hover td{background:var(--hover)}
 .card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:.75rem 1rem;margin-bottom:.5rem}
 .card h3{font-size:.9rem;margin-bottom:.25rem}
 .card h3 a{color:var(--link);text-decoration:none;cursor:pointer}
+.attr-grid{display:flex;flex-wrap:wrap;gap:.25rem 1.5rem;font-size:.85rem;align-items:center}
+.attr-grid .attr-item{display:flex;gap:.3rem;align-items:center}
+.attr-grid .attr-label{color:var(--muted);font-size:.8rem}
+.attr-grid code{font-size:.8rem}
 .back-link{font-size:.8rem;margin-bottom:.75rem}
 .back-link a{color:var(--link);text-decoration:none;cursor:pointer}
 .section-title{font-size:.95rem;font-weight:600;margin:1.25rem 0 .5rem}
@@ -68,20 +72,27 @@ code{background:#f3f4f6;padding:1px 3px;border-radius:2px;font-size:.72rem;word-
 .provider-avatar{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:3px;background:var(--accent);color:#fff;font-size:.55rem;font-weight:700;vertical-align:middle;margin-right:4px}
 .provider-avatar-lg{width:24px;height:24px;border-radius:4px;font-size:.75rem;margin-right:6px}
 .mod-icon{width:14px;height:14px;vertical-align:middle;margin:0 1px;opacity:.45}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:.35rem .75rem;border-radius:4px;font-size:.75rem;z-index:999;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+.copy-btn{display:none;position:absolute;right:2px;top:50%;transform:translateY(-50%);font-size:.7rem;color:var(--muted);cursor:pointer;line-height:1;background:var(--hover);padding:1px 4px;border-radius:3px;z-index:1}
+tr:hover .copy-btn{display:inline}
+tr:hover td.url-cell::after{content:'';position:absolute;right:0;top:0;bottom:0;width:60px;background:linear-gradient(to right,transparent,var(--hover) 60%,var(--hover));pointer-events:none;z-index:0}
+.copy-btn:hover{color:var(--accent)}
 </style>
 </head>
 <body>
+<div class="toast" id="toast"></div>
 <header>
   <h1><a onclick="goHome('models')">ModelLink</a></h1>
   <nav>
     <a id="nav-models" onclick="goHome('models')">模型</a>
     <a id="nav-providers" onclick="goHome('providers')">提供商</a>
-    <a href="https://github.com/goroutined/modellink">GitHub</a>
+    <a href="https://github.com/goroutined/modellink" target="_blank">GitHub</a>
   </nav>
 </header>
 <main id="main"></main>
 <footer>
-  数据来自社区贡献，仅供参考 | <a href="https://github.com/goroutined/modellink">ModelLink</a> MIT
+  数据来自社区贡献，仅供参考 | <a href="https://github.com/goroutined/modellink" target="_blank">ModelLink</a> MIT
 </footer>
 
 <script src="data.js"></script>
@@ -101,6 +112,7 @@ function goProvider(id){location.hash='provider/'+id}
 
 // ---- helpers ----
 function h(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function copyToast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),1500)}
 function ft(n){if(n>=1e6)return(n/1e6).toFixed(1).replace(/\.0$/,'')+'M';if(n>=1e3)return Math.round(n/1e3)+'K';return''+n}
 function parseNum(s){s=s.replace(/[,\s¥]/g,'');if(s.endsWith('M'))return parseFloat(s)*1e6;if(s.endsWith('K'))return parseFloat(s)*1e3;return parseFloat(s)||0}
 const LAB={deepseek:'DeepSeek',alibaba:'阿里',zhipu:'智谱',baidu:'百度',moonshot:'月之暗面',iflytek:'讯飞',volcano:'火山',tencent:'腾讯',minimax:'MiniMax',yi:'零一',stepfun:'阶跃'};
@@ -195,7 +207,7 @@ function renderProviders(){
         <td class="num-col" style="font-weight:600;color:var(--accent)">${p.models.length}</td>
         <td style="max-width:320px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)">${h(modelNames)}</td>
         <td>${protocols}</td>
-        <td>${p.doc?`<a href="${h(p.doc)}" onclick="event.stopPropagation()" style="color:var(--link)">链接</a>`:'—'}</td>
+        <td>${p.doc?`<a href="${h(p.doc)}" target="_blank" onclick="event.stopPropagation()" style="color:var(--link)">链接</a>`:'—'}</td>
       </tr>`
     });
   }
@@ -306,9 +318,6 @@ function offeringTable(offs,m){
     const lim=o.limit_override||m.limit;
     let tags='';
     if(!o.streaming)tags+='<span class="tag tag-red">无流式</span>';
-    if(o.access){
-      if(o.access.requires_enterprise)tags+='<span class="tag tag-gray">企业</span>';
-    }
     let price=o.cost.input>0?`¥${o.cost.input.toFixed(2)} / ¥${o.cost.output.toFixed(2)}`:'套餐';
     if(o.cost.cache_read)price+=`<br><span style="font-size:.65rem;color:var(--muted)">缓存 ¥${o.cost.cache_read.toFixed(2)}</span>`;
     if(o.cost.reasoning)price+=`<br><span style="font-size:.65rem;color:var(--muted)">思考 ¥${o.cost.reasoning.toFixed(2)}</span>`;
@@ -320,11 +329,10 @@ function offeringTable(offs,m){
       <td>${ft(lim.context)}${o.limit_override?' <span class="tag tag-red">限制</span>':''}</td>
       <td class="num-col" style="white-space:nowrap">${price}</td>
       <td>${tags}</td>
-      <td>${o.doc?`<a href="${h(o.doc)}" style="color:var(--link)">📄</a>`:'—'}</td>
     </tr>`;
   }
   return `<table><thead><tr>
-    <th>提供商</th><th>平台调用ID</th><th>协议</th><th>上下文</th><th class="num-col">价格</th><th>条件</th><th>文档</th>
+    <th>提供商</th><th>平台调用ID</th><th>协议</th><th>上下文</th><th class="num-col">价格</th><th>条件</th>
   </tr></thead><tbody>${rows}</tbody></table>`;
 }
 
@@ -335,11 +343,19 @@ function detailProvider(id){
   document.getElementById('nav-providers').className='';
   document.title=p.name+' — ModelLink';
 
-  let html=`<div class="back-link"><a onclick="goHome('providers')">← 返回提供商列表</a></div>
-  <h2>${logo(p.id,p.name,'provider-logo-lg')}${h(p.name)}</h2>`;
-  if(p.doc)html+=`<p style="color:var(--muted);margin-bottom:.75rem;font-size:.8rem"><a href="${h(p.doc)}">${h(p.doc)}</a></p>`;
+  const typeLabel=p.type==='plan'?'<span class="tag tag-accent">套餐计划</span>':'<span class="tag tag-green">API</span>';
 
-  html+=`<div class="section-title">提供的模型 (${p.models.length})</div>`;
+  let html=`<div class="back-link"><a onclick="goHome('providers')">← 返回提供商列表</a></div>
+  <h2>${logo(p.id,p.name,'provider-logo-lg')}${h(p.name)}</h2>
+  <div class="card">
+    <div class="attr-grid">
+      <div class="attr-item"><span class="attr-label">类型</span>${typeLabel}</div>
+      <div class="attr-item"><span class="attr-label">认证</span>${p.auth_type==='api_key'?'API Key':p.auth_type==='bearer_token'?'Bearer Token':p.auth_type==='aksk'?'AK/SK':p.auth_type||'—'}</div>
+      <div class="attr-item"><span class="attr-label">Base URL</span><span class="url-cell" style="position:relative"><code>${h(p.base_url)}</code><span class="copy-btn" onclick="event.stopPropagation();navigator.clipboard.writeText('${p.base_url.replace(/'/g,"\\'")}').then(()=>copyToast('已复制'))" title="复制"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span></span></div>
+      ${p.doc?`<div class="attr-item"><span class="attr-label">文档</span><a href="${h(p.doc)}" target="_blank" style="color:var(--link)">${h(p.doc)}</a></div>`:''}
+    </div>
+  </div>
+  <div class="section-title">提供的模型 (${p.models.length})</div>`;
   if(!p.models.length){html+='<div class="empty" style="text-align:center;color:var(--muted);padding:2rem 0">暂无模型数据。</div>'}
   else{html+=providerModelTable(p)}
   document.getElementById('main').innerHTML=html;
@@ -358,11 +374,7 @@ function providerModelTable(p){
       if(m.reasoning)caps.push('<span class="tag tag-accent">推理</span>');
       if(m.structured_output)caps.push('<span class="tag tag-gray">JSON</span>');
     }
-    if(pm.streaming)caps.push('<span class="tag tag-green">流式</span>');
-    else caps.push('<span class="tag tag-red">无流式</span>');
-    if(pm.access){
-      if(pm.access.requires_enterprise)caps.push('<span class="tag tag-gray">企业</span>');
-    }
+    if(!pm.streaming)caps.push('<span class="tag tag-red">无流式</span>');
     let price=pm.cost.input>0?`¥${pm.cost.input.toFixed(2)} / ¥${pm.cost.output.toFixed(2)}`:'套餐';
     if(pm.cost.cache_read)price+=`<br><span style="font-size:.65rem;color:var(--muted)">缓存 ¥${pm.cost.cache_read.toFixed(2)}</span>`;
     if(pm.cost.reasoning)price+=`<br><span style="font-size:.65rem;color:var(--muted)">思考 ¥${pm.cost.reasoning.toFixed(2)}</span>`;
@@ -375,11 +387,12 @@ function providerModelTable(p){
       <td class="num-col">${typeof lim.output==='number'?ft(lim.output):lim.output}</td>
       <td class="num-col" style="white-space:nowrap">${price}</td>
       <td>${caps.join('')}</td>
-      <td>${pm.doc?`<a href="${h(pm.doc)}" style="color:var(--link)">📄</a>`:'—'}</td>
+      <td>${pm.doc?`<a href="${h(pm.doc)}" target="_blank" style="color:var(--link)">链接</a>`:'—'}</td>
+      <td>${pm.source?`<a href="${h(pm.source)}" target="_blank" style="color:var(--link)">来源</a>`:'—'}</td>
     </tr>`;
   }
   return `<table><thead><tr>
-    <th>模型</th><th>平台调用ID</th><th>协议</th><th class="num-col">上下文</th><th class="num-col">最大输出</th><th class="num-col">价格</th><th>能力/条件</th><th>文档</th>
+    <th>模型</th><th>平台调用ID</th><th>协议</th><th class="num-col">上下文</th><th class="num-col">最大输出</th><th class="num-col">价格</th><th>能力/条件</th><th>文档</th><th>来源</th>
   </tr></thead><tbody>${rows}</tbody></table>`;
 }
 

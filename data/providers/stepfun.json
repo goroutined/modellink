@@ -12,16 +12,10 @@
         "cache_read": 0.27
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://api.stepfun.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://platform.stepfun.com/docs/zh/guides/pricing/details",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://platform.stepfun.com/docs/zh/guides/pricing/details",
       "updated_at": "2026-06-30"
     },
@@ -34,19 +28,15 @@
         "cache_read": 0.14
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://api.stepfun.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://platform.stepfun.com/docs/zh/guides/pricing/details",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://platform.stepfun.com/docs/zh/guides/pricing/details",
       "updated_at": "2026-06-30"
     }
   ],
-  "type": "api"
+  "type": "api",
+  "base_url": "https://api.stepfun.com/v1",
+  "auth_type": "api_key"
 }

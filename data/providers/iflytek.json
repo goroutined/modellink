@@ -11,16 +11,10 @@
         "output": 0
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://spark-api-open.xf-yun.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://xinghuo.xfyun.cn/sparkapi",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://xinghuo.xfyun.cn/sparkapi",
       "updated_at": "2026-06-30"
     },
@@ -32,16 +26,10 @@
         "output": 0
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://spark-api-open.xf-yun.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://xinghuo.xfyun.cn/sparkapi",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://xinghuo.xfyun.cn/sparkapi",
       "updated_at": "2026-06-30"
     },
@@ -53,16 +41,10 @@
         "output": 0
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://spark-api-open.xf-yun.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://xinghuo.xfyun.cn/sparkapi",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://xinghuo.xfyun.cn/sparkapi",
       "updated_at": "2026-06-30"
     },
@@ -74,16 +56,10 @@
         "output": 0
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://spark-api-open.xf-yun.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://xinghuo.xfyun.cn/sparkapi",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://xinghuo.xfyun.cn/sparkapi",
       "updated_at": "2026-06-30"
     },
@@ -95,16 +71,10 @@
         "output": 0
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://spark-api-open.xf-yun.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://xinghuo.xfyun.cn/sparkapi",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://xinghuo.xfyun.cn/sparkapi",
       "updated_at": "2026-06-30"
     },
@@ -116,16 +86,10 @@
         "output": 0
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://spark-api-open.xf-yun.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://xinghuo.xfyun.cn/sparkapi",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://xinghuo.xfyun.cn/sparkapi",
       "updated_at": "2026-06-30"
     },
@@ -137,16 +101,10 @@
         "output": 0
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://spark-api-open.xf-yun.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://xinghuo.xfyun.cn/sparkapi",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://xinghuo.xfyun.cn/sparkapi",
       "updated_at": "2026-06-30"
     },
@@ -158,16 +116,10 @@
         "output": 0
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://spark-api-open.xf-yun.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://xinghuo.xfyun.cn/sparkapi",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://xinghuo.xfyun.cn/sparkapi",
       "updated_at": "2026-06-30"
     },
@@ -179,16 +131,10 @@
         "output": 0
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://spark-api-open.xf-yun.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://xinghuo.xfyun.cn/sparkapi",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://xinghuo.xfyun.cn/sparkapi",
       "updated_at": "2026-06-30"
     },
@@ -200,16 +146,10 @@
         "output": 0
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://spark-api-open.xf-yun.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://xinghuo.xfyun.cn/sparkapi",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://xinghuo.xfyun.cn/sparkapi",
       "updated_at": "2026-06-30"
     },
@@ -221,16 +161,10 @@
         "output": 0
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://spark-api-open.xf-yun.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://xinghuo.xfyun.cn/sparkapi",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://xinghuo.xfyun.cn/sparkapi",
       "updated_at": "2026-06-30"
     },
@@ -242,16 +176,10 @@
         "output": 0
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://spark-api-open.xf-yun.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://xinghuo.xfyun.cn/sparkapi",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://xinghuo.xfyun.cn/sparkapi",
       "updated_at": "2026-06-30"
     },
@@ -263,16 +191,10 @@
         "output": 0
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://spark-api-open.xf-yun.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://xinghuo.xfyun.cn/sparkapi",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://xinghuo.xfyun.cn/sparkapi",
       "updated_at": "2026-06-30"
     },
@@ -284,16 +206,10 @@
         "output": 0
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://spark-api-open.xf-yun.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://xinghuo.xfyun.cn/sparkapi",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://xinghuo.xfyun.cn/sparkapi",
       "updated_at": "2026-06-30"
     },
@@ -305,16 +221,10 @@
         "output": 0
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://spark-api-open.xf-yun.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://xinghuo.xfyun.cn/sparkapi",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://xinghuo.xfyun.cn/sparkapi",
       "updated_at": "2026-06-30"
     },
@@ -326,19 +236,15 @@
         "output": 0
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://spark-api-open.xf-yun.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://xinghuo.xfyun.cn/sparkapi",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://xinghuo.xfyun.cn/sparkapi",
       "updated_at": "2026-06-30"
     }
   ],
-  "type": "plan"
+  "type": "plan",
+  "base_url": "https://spark-api-open.xf-yun.com/v1",
+  "auth_type": "api_key"
 }

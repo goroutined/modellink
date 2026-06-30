@@ -11,19 +11,15 @@
         "output": 2.1
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://api.minimax.chat/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://www.minimaxi.com/document",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://www.minimaxi.com/document",
       "updated_at": "2026-06-30"
     }
   ],
-  "type": "api"
+  "type": "api",
+  "base_url": "https://api.minimax.chat/v1",
+  "auth_type": "api_key"
 }

@@ -11,16 +11,10 @@
         "output": 28
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://open.bigmodel.cn/api/paas/v4",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://open.bigmodel.cn/pricing",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://open.bigmodel.cn/pricing",
       "updated_at": "2026-06-30"
     },
@@ -32,16 +26,10 @@
         "output": 24
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://open.bigmodel.cn/api/paas/v4",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://open.bigmodel.cn/pricing",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://open.bigmodel.cn/pricing",
       "updated_at": "2026-06-30"
     },
@@ -53,16 +41,10 @@
         "output": 18
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://open.bigmodel.cn/api/paas/v4",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://open.bigmodel.cn/pricing",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://open.bigmodel.cn/pricing",
       "updated_at": "2026-06-30"
     },
@@ -74,16 +56,10 @@
         "output": 8
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://open.bigmodel.cn/api/paas/v4",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://open.bigmodel.cn/pricing",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://open.bigmodel.cn/pricing",
       "updated_at": "2026-06-30"
     },
@@ -95,16 +71,10 @@
         "output": 0
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://open.bigmodel.cn/api/paas/v4",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://open.bigmodel.cn/pricing",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://open.bigmodel.cn/pricing",
       "updated_at": "2026-06-30"
     },
@@ -116,16 +86,10 @@
         "output": 2
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://open.bigmodel.cn/api/paas/v4",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://open.bigmodel.cn/pricing",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://open.bigmodel.cn/pricing",
       "updated_at": "2026-06-30"
     },
@@ -137,16 +101,10 @@
         "output": 0.5
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://open.bigmodel.cn/api/paas/v4",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://open.bigmodel.cn/pricing",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://open.bigmodel.cn/pricing",
       "updated_at": "2026-06-30"
     },
@@ -158,19 +116,15 @@
         "output": 0
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://open.bigmodel.cn/api/paas/v4",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://open.bigmodel.cn/pricing",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://open.bigmodel.cn/pricing",
       "updated_at": "2026-06-30"
     }
   ],
-  "type": "api"
+  "type": "api",
+  "base_url": "https://open.bigmodel.cn/api/paas/v4",
+  "auth_type": "api_key"
 }

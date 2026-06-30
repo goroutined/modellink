@@ -12,16 +12,10 @@
         "cache_read": 0.4
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://api.hunyuan.cloud.tencent.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://cloud.tencent.cn/document/product/1729/97731",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://cloud.tencent.cn/document/product/1729/97731",
       "updated_at": "2026-06-30"
     },
@@ -33,19 +27,15 @@
         "output": 2
       },
       "api": {
-        "protocol": "openai",
-        "base_url": "https://api.hunyuan.cloud.tencent.com/v1",
-        "auth_type": "api_key"
+        "protocol": "openai"
       },
       "streaming": true,
       "doc": "https://cloud.tencent.cn/document/product/1729/97731",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false
-      },
       "source": "https://cloud.tencent.cn/document/product/1729/97731",
       "updated_at": "2026-06-30"
     }
   ],
-  "type": "api"
+  "type": "api",
+  "base_url": "https://api.hunyuan.cloud.tencent.com/v1",
+  "auth_type": "api_key"
 }
