@@ -1,0 +1,10 @@
+# Claude Code local settings/cache
+.claude/settings.local.json
+
+# CI-generated bundle
+docs/data.js
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/

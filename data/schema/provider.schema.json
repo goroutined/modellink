@@ -1,0 +1,108 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/goroutined/modellink/data/schema/provider.schema.json",
+  "title": "Provider",
+  "description": "One file per provider at data/providers/<id>.json. Holds everything that depends on who is serving the model: pricing, the exact API call string, base URL, auth, compliance/access requirements. Each entry in `models` references a model fact-file in data/models/ via model_id.",
+  "type": "object",
+  "required": ["id", "name", "models"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Canonical slug for this provider. Must match the filename (data/providers/<id>.json)."
+    },
+    "name": {
+      "type": "string",
+      "description": "提供商展示名称, e.g. \"硅基流动\"."
+    },
+    "doc": {
+      "type": "string",
+      "format": "uri",
+      "description": "提供商总文档/官网地址 (optional; per-model doc links go on each model entry)."
+    },
+    "models": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/providerModel" }
+    }
+  },
+  "definitions": {
+    "providerModel": {
+      "type": "object",
+      "required": ["model_id", "model_id_on_platform", "cost", "api", "streaming", "source", "updated_at"],
+      "additionalProperties": false,
+      "properties": {
+        "model_id": {
+          "type": "string",
+          "description": "引用 data/models/<model_id>.json 里的 id. 该模型的能力/上下文长度等事实以那个文件为准。"
+        },
+        "model_id_on_platform": {
+          "type": "string",
+          "description": "模型 ID: 调用该提供商 API 时使用的精确字符串 (可能与 model_id 不同, 例如 \"deepseek-ai/DeepSeek-V3\")."
+        },
+        "cost": {
+          "type": "object",
+          "required": ["input", "output"],
+          "additionalProperties": false,
+          "description": "价格, 单位: 元 / 每百万 token.",
+          "properties": {
+            "input": { "type": "number", "minimum": 0, "description": "输入价格." },
+            "output": { "type": "number", "minimum": 0, "description": "输出价格." },
+            "reasoning": { "type": "number", "minimum": 0, "description": "思考 token 价格 (可选, 思考模型专有)." },
+            "cache_read": { "type": "number", "minimum": 0, "description": "缓存读取价格 (可选)." }
+          }
+        },
+        "limit_override": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "可选: 该提供商实际提供的上下文/输出上限低于模型本身能力时填写, 否则省略 (以 data/models/ 里的 limit 为准).",
+          "properties": {
+            "context": { "type": "integer", "minimum": 1 },
+            "output": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "api": {
+          "type": "object",
+          "required": ["protocol", "base_url", "auth_type"],
+          "additionalProperties": false,
+          "description": "调用信息.",
+          "properties": {
+            "protocol": { "type": "string", "enum": ["openai", "anthropic"], "description": "调用协议: OpenAI 兼容 / Anthropic 兼容." },
+            "base_url": { "type": "string", "format": "uri", "description": "API 请求地址." },
+            "auth_type": { "type": "string", "enum": ["api_key", "bearer_token", "aksk"], "description": "认证方式." }
+          }
+        },
+        "streaming": {
+          "type": "boolean",
+          "description": "流式输出 (SSE Streaming) 支持."
+        },
+        "doc": {
+          "type": "string",
+          "format": "uri",
+          "description": "该模型在该平台的文档/介绍页链接."
+        },
+        "access": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "合规与访问 (可选, 省略表示无特殊要求/未知).",
+          "properties": {
+            "requires_mainland_phone": { "type": "boolean", "description": "是否需要大陆手机号." },
+            "requires_enterprise": { "type": "boolean", "description": "是否需要企业资质." },
+            "compliance_status": { "type": "string", "description": "生成式 AI 备案情况, e.g. \"已备案\" / \"未备案\" / \"不适用\"." }
+          }
+        },
+        "source": {
+          "type": "string",
+          "format": "uri",
+          "description": "数据来源链接 (定价页/文档), 用于核实和后续更新."
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date",
+          "description": "该条目最后核实/更新日期 (YYYY-MM-DD)."
+        }
+      }
+    }
+  }
+}

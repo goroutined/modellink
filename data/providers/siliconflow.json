@@ -1,0 +1,30 @@
+{
+  "id": "siliconflow",
+  "name": "硅基流动",
+  "doc": "https://docs.siliconflow.cn",
+  "models": [
+    {
+      "model_id": "deepseek-v3",
+      "model_id_on_platform": "deepseek-ai/DeepSeek-V3",
+      "cost": {
+        "input": 2,
+        "output": 8,
+        "cache_read": 1
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://api.siliconflow.cn/v1",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://docs.siliconflow.cn/cn/api-reference/chat-completions/chat-completions",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://siliconflow.cn/pricing",
+      "updated_at": "2026-06-25"
+    }
+  ]
+}

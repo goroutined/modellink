@@ -1,0 +1,56 @@
+name: Validate data
+
+on:
+  push:
+    paths:
+      - 'data/**'
+  pull_request:
+    paths:
+      - 'data/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate model files against schema
+        run: |
+          echo "::group::Model schema validation"
+          for f in data/models/*.json; do
+            echo "Checking $f ..."
+            npx --yes ajv-cli validate -s data/schema/model.schema.json -d "$f" --strict=false --errors=text
+          done
+          echo "::endgroup::"
+
+      - name: Validate provider files against schema
+        run: |
+          echo "::group::Provider schema validation"
+          for f in data/providers/*.json; do
+            echo "Checking $f ..."
+            npx --yes ajv-cli validate -s data/schema/provider.schema.json -d "$f" --strict=false --errors=text
+          done
+          echo "::endgroup::"
+
+      - name: Check model_id references
+        run: |
+          echo "::group::Cross-reference check"
+          FAIL=0
+          for f in data/providers/*.json; do
+            echo "Checking references in $f ..."
+            # Extract all model_id values from provider and verify each exists as data/models/<id>.json
+            while IFS= read -r mid; do
+              if [ -n "$mid" ] && [ ! -f "data/models/${mid}.json" ]; then
+                echo "::error file=$f::model_id '${mid}' not found: data/models/${mid}.json does not exist"
+                FAIL=1
+              fi
+            done < <(python3 -c "
+import json, sys
+with open('$f') as fp:
+    p = json.load(fp)
+for m in p.get('models', []):
+    print(m.get('model_id', ''))
+")
+          done
+          exit $FAIL
+          echo "::endgroup::"

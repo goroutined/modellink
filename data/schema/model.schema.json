@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/goroutined/modellink/data/schema/model.schema.json",
+  "title": "Model",
+  "description": "Provider-agnostic facts about a model. One file per model at data/models/<id>.json. These are properties of the model itself — capability and architecture facts that do not change depending on who serves it.",
+  "type": "object",
+  "required": ["id", "name", "family", "open_weights", "tool_call", "reasoning", "structured_output", "modalities", "limit"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Canonical slug for this model, referenced by providers/*.json as model_id. Must match the filename (data/models/<id>.json)."
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name, e.g. \"DeepSeek-V3\"."
+    },
+    "family": {
+      "type": "string",
+      "description": "Model family/series slug, e.g. \"deepseek\", \"qwen\", \"glm\"."
+    },
+    "release_date": {
+      "type": "string",
+      "format": "date",
+      "description": "First public release date of this model (YYYY-MM-DD), independent of any provider."
+    },
+    "open_weights": {
+      "type": "boolean",
+      "description": "权重开放: true = 开源, false = 闭源."
+    },
+    "tool_call": {
+      "type": "boolean",
+      "description": "支持 Function Calling / 工具调用."
+    },
+    "reasoning": {
+      "type": "boolean",
+      "description": "内置思考 (extended thinking), e.g. DeepSeek-R1, QwQ."
+    },
+    "structured_output": {
+      "type": "boolean",
+      "description": "支持结构化输出 (JSON Mode)."
+    },
+    "modalities": {
+      "type": "object",
+      "required": ["input", "output"],
+      "additionalProperties": false,
+      "description": "多模态支持.",
+      "properties": {
+        "input": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["text", "image", "video", "audio"] },
+          "minItems": 1
+        },
+        "output": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["text", "image", "video", "audio"] },
+          "minItems": 1
+        }
+      }
+    },
+    "limit": {
+      "type": "object",
+      "required": ["context", "output"],
+      "additionalProperties": false,
+      "description": "上下文长度 / 最大输出长度 (单位: token). Providers may only offer a lower limit than the model supports — that goes in providers/*.json as an override, not here.",
+      "properties": {
+        "context": { "type": "integer", "minimum": 1, "description": "最大上下文窗口 (token)." },
+        "output": { "type": "integer", "minimum": 1, "description": "最大输出长度 (token)." }
+      }
+    }
+  }
+}
