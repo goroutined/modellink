@@ -101,6 +101,7 @@ function goProvider(id){location.hash='provider/'+id}
 // ---- helpers ----
 function h(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function ft(n){if(n>=1e6)return(n/1e6).toFixed(1).replace(/\.0$/,'')+'M';if(n>=1e3)return Math.round(n/1e3)+'K';return''+n}
+function parseNum(s){s=s.replace(/[,\s¥]/g,'');if(s.endsWith('M'))return parseFloat(s)*1e6;if(s.endsWith('K'))return parseFloat(s)*1e3;return parseFloat(s)||0}
 const FAM={deepseek:'DeepSeek',qwen:'通义千问',glm:'GLM',ernie:'文心',spark:'星火',moonshot:'Kimi',doubao:'豆包',hunyuan:'混元',minimax:'MiniMax',yi:'Yi',step:'Step'};
 function fam(s){return FAM[s]||s}
 function prot(p){return p==='openai'?'OpenAI':p==='anthropic'?'Anthropic':p}
@@ -239,7 +240,7 @@ function sort(col,type){
   rows.sort((a,b)=>{
     let va=a.cells[[...a.parentElement.parentElement.querySelectorAll('th')].findIndex(th=>th.dataset.col===col)].textContent.trim();
     let vb=b.cells[[...a.parentElement.parentElement.querySelectorAll('th')].findIndex(th=>th.dataset.col===col)].textContent.trim();
-    if(type==='num'){va=parseFloat(va.replace(/[^0-9.]/g,''))||0;vb=parseFloat(vb.replace(/[^0-9.]/g,''))||0}
+    if(type==='num'){va=parseNum(va);vb=parseNum(vb)}
     return (va>vb?1:va<vb?-1:0)*dir;
   });
   rows.forEach(r=>tbody.appendChild(r));
