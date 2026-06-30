@@ -155,12 +155,12 @@ function renderModels(){
       html:`<tr data-q="${m.id} ${fam(m.family)} ${m.name}">
         <td><a onclick="goModel('${m.id}')" style="color:var(--link);font-weight:500;cursor:pointer">${h(m.name)}</a></td>
         <td>${h(fam(m.family))}</td>
-        <td>${m.release_date||'—'}</td>
         <td class="num-col">${ft(m.limit.context)}</td>
         <td class="num-col">${ft(m.limit.output)}</td>
         <td>${caps.join('')}</td>
         <td class="num-col">${offCount}</td>
         <td class="num-col" style="white-space:nowrap">${cheap?`¥${cheap.cost.input.toFixed(2)}/¥${cheap.cost.output.toFixed(2)}`:'—'}</td>
+        <td style="font-size:.75rem;color:var(--muted)">${m.release_date||'—'}</td>
       </tr>`
     });
   }
@@ -170,12 +170,12 @@ function renderModels(){
   <table><thead><tr>
     <th data-col="name" data-type="text">模型<span class="sort"></span></th>
     <th data-col="family" data-type="text">系列<span class="sort"></span></th>
-    <th data-col="date" data-type="text">发布时间<span class="sort"></span></th>
     <th data-col="ctx" data-type="num" class="num-col">上下文<span class="sort"></span></th>
     <th data-col="out" data-type="num" class="num-col">最大输出<span class="sort"></span></th>
     <th data-col="caps" data-type="text">能力<span class="sort"></span></th>
     <th data-col="offCount" data-type="num" class="num-col">接入<span class="sort"></span></th>
-    <th data-col="price" data-type="num" class="num-col">最低价 (输入/输出)<span class="sort"></span></th>
+    <th data-col="price" data-type="num" class="num-col">最低价<span class="sort"></span></th>
+    <th data-col="date" data-type="text">发布时间<span class="sort"></span></th>
   </tr></thead><tbody>${rows.map(r=>r.html).join('')}</tbody></table>`;
 }
 
