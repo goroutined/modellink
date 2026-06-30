@@ -3,72 +3,33 @@
   "name": "百度千帆",
   "doc": "https://cloud.baidu.com/doc/qianfan/",
   "models": [
-    {
-      "model_id": "ernie-5.1",
-      "model_id_on_platform": "ernie-5.1",
-      "cost": {
-        "input": 4,
-        "output": 18
-      },
-      "api": {
-        "protocol": "openai",
-        "base_url": "https://qianfan.baidubce.com/v2",
-        "auth_type": "api_key"
-      },
-      "streaming": true,
-      "doc": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
-      },
-      "source": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
-      "updated_at": "2026-06-30"
-    },
-    {
-      "model_id": "ernie-4.5-turbo",
-      "model_id_on_platform": "ernie-4.5-turbo",
-      "cost": {
-        "input": 0.8,
-        "output": 3.2,
-        "cache_read": 0.2
-      },
-      "api": {
-        "protocol": "openai",
-        "base_url": "https://qianfan.baidubce.com/v2",
-        "auth_type": "api_key"
-      },
-      "streaming": true,
-      "doc": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
-      },
-      "source": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
-      "updated_at": "2026-06-30"
-    },
-    {
-      "model_id": "ernie-speed-pro",
-      "model_id_on_platform": "ernie-speed-pro",
-      "cost": {
-        "input": 0.3,
-        "output": 0.6
-      },
-      "api": {
-        "protocol": "openai",
-        "base_url": "https://qianfan.baidubce.com/v2",
-        "auth_type": "api_key"
-      },
-      "streaming": true,
-      "doc": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
-      "access": {
-        "requires_mainland_phone": true,
-        "requires_enterprise": false,
-        "compliance_status": "已备案"
-      },
-      "source": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
-      "updated_at": "2026-06-30"
-    }
+    { "model_id": "ernie-5.1", "model_id_on_platform": "ernie-5.1", "cost": { "input": 4, "output": 18 },
+      "api": { "protocol": "openai", "base_url": "https://qianfan.baidubce.com/v2", "auth_type": "api_key" }, "streaming": true,
+      "doc": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya", "source": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "access": { "requires_mainland_phone": true, "requires_enterprise": false, "compliance_status": "已备案" }, "updated_at": "2026-06-30" },
+    { "model_id": "ernie-5.0", "model_id_on_platform": "ernie-5.0", "cost": { "input": 6, "output": 24 },
+      "api": { "protocol": "openai", "base_url": "https://qianfan.baidubce.com/v2", "auth_type": "api_key" }, "streaming": true,
+      "doc": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya", "source": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "access": { "requires_mainland_phone": true, "requires_enterprise": false, "compliance_status": "已备案" }, "updated_at": "2026-06-30" },
+    { "model_id": "ernie-4.5-turbo", "model_id_on_platform": "ernie-4.5-turbo", "cost": { "input": 0.8, "output": 3.2, "cache_read": 0.2 },
+      "api": { "protocol": "openai", "base_url": "https://qianfan.baidubce.com/v2", "auth_type": "api_key" }, "streaming": true,
+      "doc": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya", "source": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "access": { "requires_mainland_phone": true, "requires_enterprise": false, "compliance_status": "已备案" }, "updated_at": "2026-06-30" },
+    { "model_id": "ernie-4.5-turbo-vl", "model_id_on_platform": "ernie-4.5-turbo-vl", "cost": { "input": 3, "output": 9, "cache_read": 0.75 },
+      "api": { "protocol": "openai", "base_url": "https://qianfan.baidubce.com/v2", "auth_type": "api_key" }, "streaming": true,
+      "doc": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya", "source": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "access": { "requires_mainland_phone": true, "requires_enterprise": false, "compliance_status": "已备案" }, "updated_at": "2026-06-30" },
+    { "model_id": "ernie-speed-pro", "model_id_on_platform": "ernie-speed-pro", "cost": { "input": 0.3, "output": 0.6 },
+      "api": { "protocol": "openai", "base_url": "https://qianfan.baidubce.com/v2", "auth_type": "api_key" }, "streaming": true,
+      "doc": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya", "source": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "access": { "requires_mainland_phone": true, "requires_enterprise": false, "compliance_status": "已备案" }, "updated_at": "2026-06-30" },
+    { "model_id": "ernie-speed", "model_id_on_platform": "ernie-speed", "cost": { "input": 0.3, "output": 0.6 },
+      "api": { "protocol": "openai", "base_url": "https://qianfan.baidubce.com/v2", "auth_type": "api_key" }, "streaming": true,
+      "doc": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya", "source": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "access": { "requires_mainland_phone": true, "requires_enterprise": false, "compliance_status": "已备案" }, "updated_at": "2026-06-30" },
+    { "model_id": "ernie-lite", "model_id_on_platform": "ernie-lite", "cost": { "input": 0.2, "output": 0.4 },
+      "api": { "protocol": "openai", "base_url": "https://qianfan.baidubce.com/v2", "auth_type": "api_key" }, "streaming": true,
+      "doc": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya", "source": "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+      "access": { "requires_mainland_phone": true, "requires_enterprise": false, "compliance_status": "已备案" }, "updated_at": "2026-06-30" }
   ]
 }

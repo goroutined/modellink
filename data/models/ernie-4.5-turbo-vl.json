@@ -1,0 +1,11 @@
+{
+  "id": "ernie-4.5-turbo-vl",
+  "name": "ERNIE 4.5 Turbo VL",
+  "family": "ernie",
+  "open_weights": false,
+  "tool_call": true,
+  "reasoning": false,
+  "structured_output": true,
+  "modalities": { "input": ["text", "image", "video"], "output": ["text"] },
+  "limit": { "context": 131072, "output": 8192 }
+}

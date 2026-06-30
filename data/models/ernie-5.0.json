@@ -1,0 +1,11 @@
+{
+  "id": "ernie-5.0",
+  "name": "ERNIE 5.0",
+  "family": "ernie",
+  "open_weights": false,
+  "tool_call": true,
+  "reasoning": true,
+  "structured_output": true,
+  "modalities": { "input": ["text"], "output": ["text"] },
+  "limit": { "context": 131072, "output": 16384 }
+}
