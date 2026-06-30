@@ -1,0 +1,17 @@
+{
+  "id": "hunyuan-hy3",
+  "name": "混元 Hy3 Preview",
+  "family": "hunyuan",
+  "open_weights": true,
+  "tool_call": true,
+  "reasoning": true,
+  "structured_output": true,
+  "modalities": {
+    "input": ["text"],
+    "output": ["text"]
+  },
+  "limit": {
+    "context": 262144,
+    "output": 16384
+  }
+}

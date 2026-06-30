@@ -1,0 +1,17 @@
+{
+  "id": "abab6.5t",
+  "name": "abab6.5t-chat",
+  "family": "minimax",
+  "open_weights": false,
+  "tool_call": true,
+  "reasoning": false,
+  "structured_output": true,
+  "modalities": {
+    "input": ["text"],
+    "output": ["text"]
+  },
+  "limit": {
+    "context": 262144,
+    "output": 8192
+  }
+}

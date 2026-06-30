@@ -1,0 +1,51 @@
+{
+  "id": "yi",
+  "name": "零一万物",
+  "doc": "https://platform.lingyiwanwu.com/",
+  "models": [
+    {
+      "model_id": "yi-large",
+      "model_id_on_platform": "yi-large",
+      "cost": {
+        "input": 20,
+        "output": 20
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://api.lingyiwanwu.com/v1",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://platform.lingyiwanwu.com/docs",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://help.aliyun.com/zh/model-studio/billing-for-yi-large",
+      "updated_at": "2026-06-30"
+    },
+    {
+      "model_id": "yi-lightning",
+      "model_id_on_platform": "yi-lightning",
+      "cost": {
+        "input": 0.99,
+        "output": 0.99
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://api.lingyiwanwu.com/v1",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://platform.lingyiwanwu.com/docs",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://help.aliyun.com/zh/model-studio/billing-for-yi-large",
+      "updated_at": "2026-06-30"
+    }
+  ]
+}

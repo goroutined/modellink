@@ -1,0 +1,29 @@
+{
+  "id": "minimax",
+  "name": "MiniMax",
+  "doc": "https://www.minimaxi.com/",
+  "models": [
+    {
+      "model_id": "abab6.5t",
+      "model_id_on_platform": "abab6.5t-chat",
+      "cost": {
+        "input": 0.7,
+        "output": 2.1
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://api.minimax.chat/v1",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://www.minimaxi.com/document",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://www.minimaxi.com/document",
+      "updated_at": "2026-06-30"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "yi-lightning",
+  "name": "Yi-Lightning",
+  "family": "yi",
+  "open_weights": false,
+  "tool_call": true,
+  "reasoning": false,
+  "structured_output": true,
+  "modalities": {
+    "input": ["text"],
+    "output": ["text"]
+  },
+  "limit": {
+    "context": 16384,
+    "output": 4096
+  }
+}

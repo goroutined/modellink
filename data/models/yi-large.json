@@ -1,0 +1,17 @@
+{
+  "id": "yi-large",
+  "name": "Yi-Large",
+  "family": "yi",
+  "open_weights": false,
+  "tool_call": true,
+  "reasoning": false,
+  "structured_output": true,
+  "modalities": {
+    "input": ["text"],
+    "output": ["text"]
+  },
+  "limit": {
+    "context": 32768,
+    "output": 4096
+  }
+}

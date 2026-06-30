@@ -1,0 +1,52 @@
+{
+  "id": "tencent",
+  "name": "腾讯混元",
+  "doc": "https://cloud.tencent.com/product/hunyuan",
+  "models": [
+    {
+      "model_id": "hunyuan-hy3",
+      "model_id_on_platform": "hy3-preview",
+      "cost": {
+        "input": 1.2,
+        "output": 4,
+        "cache_read": 0.4
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://api.hunyuan.cloud.tencent.com/v1",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://cloud.tencent.cn/document/product/1729/97731",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://cloud.tencent.cn/document/product/1729/97731",
+      "updated_at": "2026-06-30"
+    },
+    {
+      "model_id": "hunyuan-a13b",
+      "model_id_on_platform": "hunyuan-a13b",
+      "cost": {
+        "input": 0.5,
+        "output": 2
+      },
+      "api": {
+        "protocol": "openai",
+        "base_url": "https://api.hunyuan.cloud.tencent.com/v1",
+        "auth_type": "api_key"
+      },
+      "streaming": true,
+      "doc": "https://cloud.tencent.cn/document/product/1729/97731",
+      "access": {
+        "requires_mainland_phone": true,
+        "requires_enterprise": false,
+        "compliance_status": "已备案"
+      },
+      "source": "https://cloud.tencent.cn/document/product/1729/97731",
+      "updated_at": "2026-06-30"
+    }
+  ]
+}
