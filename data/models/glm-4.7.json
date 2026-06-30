@@ -1,0 +1,11 @@
+{
+  "id": "glm-4.7",
+  "name": "GLM-4.7",
+  "family": "glm",
+  "open_weights": false,
+  "tool_call": true,
+  "reasoning": true,
+  "structured_output": true,
+  "modalities": { "input": ["text"], "output": ["text"] },
+  "limit": { "context": 204800, "output": 131072 }
+}

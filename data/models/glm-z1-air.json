@@ -1,0 +1,11 @@
+{
+  "id": "glm-z1-air",
+  "name": "GLM-Z1-Air",
+  "family": "glm",
+  "open_weights": false,
+  "tool_call": false,
+  "reasoning": true,
+  "structured_output": false,
+  "modalities": { "input": ["text"], "output": ["text"] },
+  "limit": { "context": 131072, "output": 32768 }
+}
