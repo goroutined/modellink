@@ -100,7 +100,7 @@ function goProvider(id){location.hash='provider/'+id}
 
 // ---- helpers ----
 function h(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-function ft(n){return n>=1e6?(n/1e6).toFixed(0)+'M':n>=1e3?(n/1e3)+'K':''+n}
+function ft(n){if(n>=1e6)return(n/1e6).toFixed(1).replace(/\.0$/,'')+'M';if(n>=1e3)return Math.round(n/1e3)+'K';return''+n}
 const FAM={deepseek:'DeepSeek',qwen:'通义千问',glm:'GLM',ernie:'文心',spark:'星火',moonshot:'Kimi',doubao:'豆包',hunyuan:'混元',minimax:'MiniMax',yi:'Yi',step:'Step'};
 function fam(s){return FAM[s]||s}
 function prot(p){return p==='openai'?'OpenAI':p==='anthropic'?'Anthropic':p}
@@ -110,7 +110,7 @@ function logo(id,name,cls){
 }
 
 // ---- offerings ----
-function cheapestOff(modelId){let b=null;for(const p of D.providers)for(const pm of p.models)if(pm.model_id===modelId&&(!b||pm.cost.input+pm.cost.output<b.price))b={pname:p.name,pid:p.id,cost:pm.cost,price:pm.cost.input+pm.cost.output};return b}
+function cheapestOff(modelId){let b=null;for(const p of D.providers)for(const pm of p.models)if(pm.model_id===modelId&&(pm.cost.input+pm.cost.output>0)&&(!b||pm.cost.input+pm.cost.output<b.price))b={pname:p.name,pid:p.id,cost:pm.cost,price:pm.cost.input+pm.cost.output};return b}
 function offerings(modelId){const r=[];for(const p of D.providers)for(const pm of p.models)if(pm.model_id===modelId)r.push({...pm,pname:p.name,pid:p.id,pdoc:p.doc});return r}
 
 // ---- home ----
@@ -291,32 +291,37 @@ function detailModel(id){
   <div class="section-title">接入方式</div>`;
 
   if(!offs.length){html+='<div class="empty" style="text-align:center;color:var(--muted);padding:2rem 0">暂无知名的国内提供商接入此模型。</div>'}
-  else{html+=`<p style="color:var(--muted);margin-bottom:.5rem;font-size:.8rem">${offs.length} 家提供商：</p>`;for(const o of offs)html+=offeringCard(o,m)}
+  else{html+=`<p style="color:var(--muted);margin-bottom:.5rem;font-size:.8rem">${offs.length} 家提供商：</p>`+offeringTable(offs,m)}
   document.getElementById('main').innerHTML=html;
 }
 
-function offeringCard(o,m){
-  const lim=o.limit_override||m.limit;
-  let tags='';
-  if(!o.streaming)tags+='<span class="tag tag-red">无流式</span>';
-  if(o.access){
-    if(o.access.requires_mainland_phone)tags+='<span class="tag tag-gray">需大陆手机号</span>';
-    if(o.access.requires_enterprise)tags+='<span class="tag tag-gray">需企业资质</span>';
-  }
-  let costEx='';
-  if(o.cost.reasoning)costEx+=`<div style="font-size:.7rem">思考:¥${o.cost.reasoning.toFixed(2)}</div>`;
-  if(o.cost.cache_read)costEx+=`<div style="font-size:.7rem">缓存:¥${o.cost.cache_read.toFixed(2)}</div>`;
+function offeringTable(offs,m){
+  let rows='';
+  for(const o of offs){
+    const lim=o.limit_override||m.limit;
+    let tags='';
+    if(!o.streaming)tags+='<span class="tag tag-red">无流式</span>';
+    if(o.access){
+      if(o.access.requires_mainland_phone)tags+='<span class="tag tag-gray">手机号</span>';
+      if(o.access.requires_enterprise)tags+='<span class="tag tag-gray">企业</span>';
+    }
+    let costEx='';if(o.cost.cache_read)costEx+=`<span style="font-size:.65rem;color:var(--muted)">/缓存¥${o.cost.cache_read.toFixed(2)}</span>`;
+    if(o.cost.reasoning)costEx+=`<span style="font-size:.65rem;color:var(--muted)">/思考¥${o.cost.reasoning.toFixed(2)}</span>`;
 
-  return `<div class="card"><div class="pc"><div style="flex:1;min-width:0">
-    <h3>${logo(o.pid,o.pname,'provider-logo')}<a onclick="goProvider('${o.pid}')" style="cursor:pointer">${h(o.pname)}</a></h3>
-    <div style="font-size:.72rem;color:var(--muted)">调用 ID: <code>${h(o.model_id_on_platform)}</code></div>
-    <div style="font-size:.78rem;margin:.25rem 0"><span style="color:var(--muted)">协议</span> ${prot(o.api.protocol)} · <span style="color:var(--muted)">Base URL</span> <code>${h(o.api.base_url)}</code></div>
-    <div style="font-size:.72rem;margin:.25rem 0"><span style="color:var(--muted)">上下文</span> ${ft(lim.context)} <span style="color:var(--muted);margin-left:.75rem">最大输出</span> ${ft(lim.output)} ${o.limit_override?'<span class="tag tag-red">平台限制</span>':''}</div>
-    <div>${tags}</div></div>
-    <div class="price"><div style="font-size:.7rem;color:var(--muted)">输入/输出 每百万token</div>
-    <div class="big">¥${o.cost.input.toFixed(2)} / ¥${o.cost.output.toFixed(2)}</div>${costEx}
-    <div style="margin-top:.25rem">${o.doc?`<a href="${h(o.doc)}" style="color:var(--link);font-size:.75rem">📄 文档</a>`:''}</div></div>
-  </div></div>`;
+    rows+=`<tr>
+      <td>${logo(o.pid,o.pname,'provider-logo')}<a onclick="goProvider('${o.pid}')" style="color:var(--link);font-weight:500;cursor:pointer">${h(o.pname)}</a></td>
+      <td><code>${h(o.model_id_on_platform)}</code></td>
+      <td>${prot(o.api.protocol)}</td>
+      <td>${ft(lim.context)}${o.limit_override?' <span class="tag tag-red">限制</span>':''}</td>
+      <td class="num-col">${o.cost.input>0?'¥'+o.cost.input.toFixed(2):'套餐'}</td>
+      <td class="num-col">${o.cost.output>0?'¥'+o.cost.output.toFixed(2):'套餐'}${costEx}</td>
+      <td>${tags}</td>
+      <td>${o.doc?`<a href="${h(o.doc)}" style="color:var(--link)">📄</a>`:'—'}</td>
+    </tr>`;
+  }
+  return `<table><thead><tr>
+    <th>提供商</th><th>平台调用ID</th><th>协议</th><th>上下文</th><th class="num-col">输入</th><th class="num-col">输出</th><th>条件</th><th>文档</th>
+  </tr></thead><tbody>${rows}</tbody></table>`;
 }
 
 // ---- provider detail ----
@@ -332,37 +337,47 @@ function detailProvider(id){
 
   html+=`<div class="section-title">提供的模型 (${p.models.length})</div>`;
   if(!p.models.length){html+='<div class="empty" style="text-align:center;color:var(--muted);padding:2rem 0">暂无模型数据。</div>'}
-  else{for(const pm of p.models){const m=M.get(pm.model_id);html+=providerModelRow(pm,p,m)}}
+  else{html+=providerModelTable(p)}
   document.getElementById('main').innerHTML=html;
 }
 
-function providerModelRow(pm,p,m){
-  const lim=pm.limit_override||(m?m.limit:{context:'—',output:'—'});
-  let tags='';
-  tags+=pm.streaming?'<span class="tag tag-green">流式</span>':'<span class="tag tag-red">无流式</span>';
-  if(pm.access){
-    if(pm.access.requires_mainland_phone)tags+='<span class="tag tag-gray">需大陆手机号</span>';
-    if(pm.access.requires_enterprise)tags+='<span class="tag tag-gray">需企业资质</span>';
+function providerModelTable(p){
+  let rows='';
+  for(const pm of p.models){
+    const m=M.get(pm.model_id);
+    const lim=pm.limit_override||(m?m.limit:{context:'—',output:'—'});
+    const mn=m?m.name:pm.model_id;
+    const mlink=m?`<a onclick="goModel('${pm.model_id}')" style="cursor:pointer;color:var(--link);font-weight:500">${h(mn)}</a>`:h(mn);
+    let caps=[];
+    if(m){
+      if(m.tool_call)caps.push('<span class="tag tag-gray">工具</span>');
+      if(m.reasoning)caps.push('<span class="tag tag-accent">推理</span>');
+      if(m.structured_output)caps.push('<span class="tag tag-gray">JSON</span>');
+    }
+    if(pm.streaming)caps.push('<span class="tag tag-green">流式</span>');
+    else caps.push('<span class="tag tag-red">无流式</span>');
+    if(pm.access){
+      if(pm.access.requires_mainland_phone)caps.push('<span class="tag tag-gray">手机号</span>');
+      if(pm.access.requires_enterprise)caps.push('<span class="tag tag-gray">企业</span>');
+    }
+    let costEx='';if(pm.cost.cache_read)costEx+=`<span style="font-size:.65rem;color:var(--muted)">/缓存¥${pm.cost.cache_read.toFixed(2)}</span>`;
+    if(pm.cost.reasoning)costEx+=`<span style="font-size:.65rem;color:var(--muted)">/思考¥${pm.cost.reasoning.toFixed(2)}</span>`;
+
+    rows+=`<tr>
+      <td>${mlink}</td>
+      <td><code>${h(pm.model_id_on_platform)}</code></td>
+      <td>${prot(pm.api.protocol)}</td>
+      <td class="num-col">${typeof lim.context==='number'?ft(lim.context):lim.context}${pm.limit_override?'<span class="tag tag-red" style="margin-left:2px">限</span>':''}</td>
+      <td class="num-col">${typeof lim.output==='number'?ft(lim.output):lim.output}</td>
+      <td class="num-col">${pm.cost.input>0?'¥'+pm.cost.input.toFixed(2):'套餐'}</td>
+      <td class="num-col">${pm.cost.output>0?'¥'+pm.cost.output.toFixed(2):'套餐'}${costEx}</td>
+      <td>${caps.join('')}</td>
+      <td>${pm.doc?`<a href="${h(pm.doc)}" style="color:var(--link)">📄</a>`:'—'}</td>
+    </tr>`;
   }
-  let costEx='';
-  if(pm.cost.reasoning)costEx+=`<div style="font-size:.7rem">思考:¥${pm.cost.reasoning.toFixed(2)}</div>`;
-  if(pm.cost.cache_read)costEx+=`<div style="font-size:.7rem">缓存:¥${pm.cost.cache_read.toFixed(2)}</div>`;
-
-  const mn=m?m.name:pm.model_id;
-  const mlink=m?`<a onclick="goModel('${pm.model_id}')" style="cursor:pointer;color:var(--link)">${h(mn)}</a>`:h(mn);
-
-  return `<div class="card"><div class="pc"><div style="flex:1;min-width:0">
-    <h3>${mlink}</h3>
-    <div style="font-size:.72rem;color:var(--muted)">调用 ID: <code>${h(pm.model_id_on_platform)}</code></div>
-    <div style="font-size:.78rem;margin:.25rem 0"><span style="color:var(--muted)">协议</span> ${prot(pm.api.protocol)} · <span style="color:var(--muted)">认证</span> ${pm.api.auth_type==='api_key'?'API Key':pm.api.auth_type==='bearer_token'?'Bearer':'AKSK'}</div>
-    <div style="font-size:.78rem;margin:.25rem 0"><span style="color:var(--muted)">Base URL</span> <code>${h(pm.api.base_url)}</code></div>
-    <div style="font-size:.72rem;margin:.25rem 0"><span style="color:var(--muted)">上下文</span> ${typeof lim.context==='number'?ft(lim.context):lim.context} · <span style="color:var(--muted)">最大输出</span> ${typeof lim.output==='number'?ft(lim.output):lim.output} ${pm.limit_override?'<span class="tag tag-red">平台限制</span>':''}</div>
-    <div>${tags}</div>
-    <div style="font-size:.7rem;color:var(--muted);margin-top:.25rem">来源: <a href="${h(pm.source)}">${h(pm.source)}</a> · 更新: ${pm.updated_at}</div></div>
-    <div class="price"><div style="font-size:.7rem;color:var(--muted)">输入/输出 每百万token</div>
-    <div class="big">¥${pm.cost.input.toFixed(2)} / ¥${pm.cost.output.toFixed(2)}</div>${costEx}
-    <div style="margin-top:.25rem">${pm.doc?`<a href="${h(pm.doc)}" style="color:var(--link);font-size:.75rem">📄 文档</a>`:''}</div></div>
-  </div></div>`;
+  return `<table><thead><tr>
+    <th>模型</th><th>平台调用ID</th><th>协议</th><th class="num-col">上下文</th><th class="num-col">最大输出</th><th class="num-col">输入</th><th class="num-col">输出</th><th>能力/条件</th><th>文档</th>
+  </tr></thead><tbody>${rows}</tbody></table>`;
 }
 
 // ---- boot ----
