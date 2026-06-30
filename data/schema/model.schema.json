@@ -4,7 +4,7 @@
   "title": "Model",
   "description": "Provider-agnostic facts about a model. One file per model at data/models/<id>.json. These are properties of the model itself — capability and architecture facts that do not change depending on who serves it.",
   "type": "object",
-  "required": ["id", "name", "family", "open_weights", "tool_call", "reasoning", "structured_output", "modalities", "limit"],
+  "required": ["id", "name", "family", "lab", "open_weights", "tool_call", "reasoning", "structured_output", "modalities", "limit"],
   "additionalProperties": false,
   "properties": {
     "id": {
@@ -19,6 +19,10 @@
     "family": {
       "type": "string",
       "description": "Model family/series slug, e.g. \"deepseek\", \"qwen\", \"glm\"."
+    },
+    "lab": {
+      "type": "string",
+      "description": "组织/实验室 slug, 对应 data/providers/<lab>.json 中的 id, 表示该模型的创造者."
     },
     "release_date": {
       "type": "string",

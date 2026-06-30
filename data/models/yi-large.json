@@ -7,11 +7,16 @@
   "reasoning": false,
   "structured_output": true,
   "modalities": {
-    "input": ["text"],
-    "output": ["text"]
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
   },
   "limit": {
     "context": 32768,
     "output": 4096
-  }
+  },
+  "lab": "yi"
 }

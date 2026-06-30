@@ -7,11 +7,16 @@
   "reasoning": true,
   "structured_output": true,
   "modalities": {
-    "input": ["text"],
-    "output": ["text"]
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
   },
   "limit": {
     "context": 262144,
     "output": 32768
-  }
+  },
+  "lab": "moonshot"
 }

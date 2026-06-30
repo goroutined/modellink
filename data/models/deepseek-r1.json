@@ -8,11 +8,16 @@
   "reasoning": true,
   "structured_output": false,
   "modalities": {
-    "input": ["text"],
-    "output": ["text"]
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
   },
   "limit": {
     "context": 131072,
     "output": 8192
-  }
+  },
+  "lab": "deepseek"
 }

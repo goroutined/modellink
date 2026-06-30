@@ -7,11 +7,17 @@
   "reasoning": true,
   "structured_output": true,
   "modalities": {
-    "input": ["text", "image"],
-    "output": ["text"]
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
   },
   "limit": {
     "context": 262144,
     "output": 16384
-  }
+  },
+  "lab": "volcano"
 }

@@ -6,6 +6,19 @@
   "tool_call": true,
   "reasoning": false,
   "structured_output": true,
-  "modalities": { "input": ["text", "image", "video"], "output": ["text"] },
-  "limit": { "context": 131072, "output": 8192 }
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "video"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "limit": {
+    "context": 131072,
+    "output": 8192
+  },
+  "lab": "baidu"
 }

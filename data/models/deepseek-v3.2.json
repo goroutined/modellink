@@ -1,1 +1,22 @@
-{"id":"deepseek-v3.2","name":"DeepSeek V3.2","family":"deepseek","open_weights":true,"tool_call":true,"reasoning":false,"structured_output":true,"modalities":{"input":["text"],"output":["text"]},"limit":{"context":131072,"output":8192}}
+{
+  "id": "deepseek-v3.2",
+  "name": "DeepSeek V3.2",
+  "family": "deepseek",
+  "open_weights": true,
+  "tool_call": true,
+  "reasoning": false,
+  "structured_output": true,
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "limit": {
+    "context": 131072,
+    "output": 8192
+  },
+  "lab": "deepseek"
+}

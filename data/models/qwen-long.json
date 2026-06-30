@@ -17,5 +17,6 @@
   "limit": {
     "context": 10485760,
     "output": 8192
-  }
+  },
+  "lab": "alibaba"
 }

@@ -1,1 +1,22 @@
-{"id":"minimax-m2.5","name":"MiniMax M2.5","family":"minimax","open_weights":false,"tool_call":true,"reasoning":false,"structured_output":true,"modalities":{"input":["text"],"output":["text"]},"limit":{"context":262144,"output":8192}}
+{
+  "id": "minimax-m2.5",
+  "name": "MiniMax M2.5",
+  "family": "minimax",
+  "open_weights": false,
+  "tool_call": true,
+  "reasoning": false,
+  "structured_output": true,
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "limit": {
+    "context": 262144,
+    "output": 8192
+  },
+  "lab": "minimax"
+}

@@ -1,1 +1,22 @@
-{"id":"kimi-k2.5","name":"Kimi K2.5","family":"moonshot","open_weights":false,"tool_call":true,"reasoning":true,"structured_output":true,"modalities":{"input":["text"],"output":["text"]},"limit":{"context":131072,"output":8192}}
+{
+  "id": "kimi-k2.5",
+  "name": "Kimi K2.5",
+  "family": "moonshot",
+  "open_weights": false,
+  "tool_call": true,
+  "reasoning": true,
+  "structured_output": true,
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "limit": {
+    "context": 131072,
+    "output": 8192
+  },
+  "lab": "moonshot"
+}

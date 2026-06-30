@@ -1,1 +1,22 @@
-{"id":"qwen3-coder-next","name":"Qwen3-Coder-Next","family":"qwen","open_weights":true,"tool_call":true,"reasoning":true,"structured_output":true,"modalities":{"input":["text"],"output":["text"]},"limit":{"context":131072,"output":32768}}
+{
+  "id": "qwen3-coder-next",
+  "name": "Qwen3-Coder-Next",
+  "family": "qwen",
+  "open_weights": true,
+  "tool_call": true,
+  "reasoning": true,
+  "structured_output": true,
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "limit": {
+    "context": 131072,
+    "output": 32768
+  },
+  "lab": "alibaba"
+}

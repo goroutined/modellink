@@ -6,6 +6,17 @@
   "tool_call": true,
   "reasoning": false,
   "structured_output": true,
-  "modalities": { "input": ["text"], "output": ["text"] },
-  "limit": { "context": 204800, "output": 131072 }
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "limit": {
+    "context": 204800,
+    "output": 131072
+  },
+  "lab": "zhipu"
 }
