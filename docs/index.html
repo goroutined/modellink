@@ -305,22 +305,22 @@ function offeringTable(offs,m){
       if(o.access.requires_mainland_phone)tags+='<span class="tag tag-gray">手机号</span>';
       if(o.access.requires_enterprise)tags+='<span class="tag tag-gray">企业</span>';
     }
-    let costEx='';if(o.cost.cache_read)costEx+=`<span style="font-size:.65rem;color:var(--muted)">/缓存¥${o.cost.cache_read.toFixed(2)}</span>`;
-    if(o.cost.reasoning)costEx+=`<span style="font-size:.65rem;color:var(--muted)">/思考¥${o.cost.reasoning.toFixed(2)}</span>`;
+    let price=o.cost.input>0?`¥${o.cost.input.toFixed(2)} / ¥${o.cost.output.toFixed(2)}`:'套餐';
+    if(o.cost.cache_read)price+=`<br><span style="font-size:.65rem;color:var(--muted)">缓存 ¥${o.cost.cache_read.toFixed(2)}</span>`;
+    if(o.cost.reasoning)price+=`<br><span style="font-size:.65rem;color:var(--muted)">思考 ¥${o.cost.reasoning.toFixed(2)}</span>`;
 
     rows+=`<tr>
       <td>${logo(o.pid,o.pname,'provider-logo')}<a onclick="goProvider('${o.pid}')" style="color:var(--link);font-weight:500;cursor:pointer">${h(o.pname)}</a></td>
       <td><code>${h(o.model_id_on_platform)}</code></td>
       <td>${prot(o.api.protocol)}</td>
       <td>${ft(lim.context)}${o.limit_override?' <span class="tag tag-red">限制</span>':''}</td>
-      <td class="num-col">${o.cost.input>0?'¥'+o.cost.input.toFixed(2):'套餐'}</td>
-      <td class="num-col">${o.cost.output>0?'¥'+o.cost.output.toFixed(2):'套餐'}${costEx}</td>
+      <td class="num-col" style="white-space:nowrap">${price}</td>
       <td>${tags}</td>
       <td>${o.doc?`<a href="${h(o.doc)}" style="color:var(--link)">📄</a>`:'—'}</td>
     </tr>`;
   }
   return `<table><thead><tr>
-    <th>提供商</th><th>平台调用ID</th><th>协议</th><th>上下文</th><th class="num-col">输入</th><th class="num-col">输出</th><th>条件</th><th>文档</th>
+    <th>提供商</th><th>平台调用ID</th><th>协议</th><th>上下文</th><th class="num-col">价格</th><th>条件</th><th>文档</th>
   </tr></thead><tbody>${rows}</tbody></table>`;
 }
 
@@ -360,8 +360,9 @@ function providerModelTable(p){
       if(pm.access.requires_mainland_phone)caps.push('<span class="tag tag-gray">手机号</span>');
       if(pm.access.requires_enterprise)caps.push('<span class="tag tag-gray">企业</span>');
     }
-    let costEx='';if(pm.cost.cache_read)costEx+=`<span style="font-size:.65rem;color:var(--muted)">/缓存¥${pm.cost.cache_read.toFixed(2)}</span>`;
-    if(pm.cost.reasoning)costEx+=`<span style="font-size:.65rem;color:var(--muted)">/思考¥${pm.cost.reasoning.toFixed(2)}</span>`;
+    let price=pm.cost.input>0?`¥${pm.cost.input.toFixed(2)} / ¥${pm.cost.output.toFixed(2)}`:'套餐';
+    if(pm.cost.cache_read)price+=`<br><span style="font-size:.65rem;color:var(--muted)">缓存 ¥${pm.cost.cache_read.toFixed(2)}</span>`;
+    if(pm.cost.reasoning)price+=`<br><span style="font-size:.65rem;color:var(--muted)">思考 ¥${pm.cost.reasoning.toFixed(2)}</span>`;
 
     rows+=`<tr>
       <td>${mlink}</td>
@@ -369,14 +370,13 @@ function providerModelTable(p){
       <td>${prot(pm.api.protocol)}</td>
       <td class="num-col">${typeof lim.context==='number'?ft(lim.context):lim.context}${pm.limit_override?'<span class="tag tag-red" style="margin-left:2px">限</span>':''}</td>
       <td class="num-col">${typeof lim.output==='number'?ft(lim.output):lim.output}</td>
-      <td class="num-col">${pm.cost.input>0?'¥'+pm.cost.input.toFixed(2):'套餐'}</td>
-      <td class="num-col">${pm.cost.output>0?'¥'+pm.cost.output.toFixed(2):'套餐'}${costEx}</td>
+      <td class="num-col" style="white-space:nowrap">${price}</td>
       <td>${caps.join('')}</td>
       <td>${pm.doc?`<a href="${h(pm.doc)}" style="color:var(--link)">📄</a>`:'—'}</td>
     </tr>`;
   }
   return `<table><thead><tr>
-    <th>模型</th><th>平台调用ID</th><th>协议</th><th class="num-col">上下文</th><th class="num-col">最大输出</th><th class="num-col">输入</th><th class="num-col">输出</th><th>能力/条件</th><th>文档</th>
+    <th>模型</th><th>平台调用ID</th><th>协议</th><th class="num-col">上下文</th><th class="num-col">最大输出</th><th class="num-col">价格</th><th>能力/条件</th><th>文档</th>
   </tr></thead><tbody>${rows}</tbody></table>`;
 }
 
