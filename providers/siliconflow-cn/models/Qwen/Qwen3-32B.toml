@@ -1,0 +1,12 @@
+base_model = "alibaba/qwen3-32b"
+name = "Qwen3 32B on SiliconFlow"
+reasoning_options = [{ type = "toggle" }, { type = "budget_tokens", min = 128, max = 32_768 }]
+structured_output = true
+
+[cost]
+input = 0.14
+output = 0.57
+
+[limit]
+context = 131_000
+output = 131_000

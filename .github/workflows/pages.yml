@@ -4,8 +4,14 @@ on:
   push:
     branches: [main]
     paths:
-      - 'data/**'
-      - 'docs/index.html'
+      - 'labs/**'
+      - 'models/**'
+      - 'providers/**'
+      - 'packages/core/**'
+      - 'scripts/**'
+      - 'docs/**'
+      - 'package.json'
+      - 'bun.lock'
       - '.github/workflows/pages.yml'
 
 permissions:
@@ -25,34 +31,14 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-
-      - name: Bundle data into data.js
-        run: |
-          python3 -c "
-          import json, os, pathlib
-
-          models = []
-          for f in pathlib.Path('data/models').glob('*.json'):
-              models.append(json.loads(f.read_text()))
-
-          providers = []
-          for f in pathlib.Path('data/providers').glob('*.json'):
-              providers.append(json.loads(f.read_text()))
-
-          js = 'window.MODELLINK = ' + json.dumps({
-              'models': models,
-              'providers': providers
-          }, ensure_ascii=False) + ';'
-
-          pathlib.Path('docs/data.js').write_text(js, encoding='utf-8')
-          print(f'Bundled {len(models)} models, {len(providers)} providers ({len(js)} bytes)')
-          "
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+      - run: bun install --frozen-lockfile
+      - run: bun run check
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: docs
-
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4

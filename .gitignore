@@ -4,6 +4,14 @@ CLAUDE.md
 
 # CI-generated bundle
 docs/data.js
+docs/api.json
+docs/catalog.json
+docs/models.json
+docs/site-data.json
+docs/logos/
+
+# Dependencies
+node_modules/
 
 # OS / editor
 .DS_Store

@@ -1,13 +1,25 @@
-name: Validate data
+name: Validate catalog
 
 on:
   push:
     paths:
-      - 'data/**'
+      - 'labs/**'
+      - 'models/**'
+      - 'providers/**'
+      - 'packages/core/**'
+      - 'scripts/**'
+      - 'package.json'
+      - 'bun.lock'
       - '.github/workflows/validate.yml'
   pull_request:
     paths:
-      - 'data/**'
+      - 'labs/**'
+      - 'models/**'
+      - 'providers/**'
+      - 'packages/core/**'
+      - 'scripts/**'
+      - 'package.json'
+      - 'bun.lock'
       - '.github/workflows/validate.yml'
 
 jobs:
@@ -15,37 +27,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Validate model files against schema
-        run: |
-          echo "::group::Model schema validation"
-          for f in data/models/*.json; do
-            echo "Checking $f ..."
-            npx --yes ajv-cli validate -s data/schema/model.schema.json -d "$f" --strict=false --errors=text
-          done
-          echo "::endgroup::"
-
-      - name: Validate provider files against schema
-        run: |
-          echo "::group::Provider schema validation"
-          for f in data/providers/*.json; do
-            echo "Checking $f ..."
-            npx --yes ajv-cli validate -s data/schema/provider.schema.json -d "$f" --strict=false --errors=text
-          done
-          echo "::endgroup::"
-
-      - name: Check model_id references
-        run: |
-          echo "::group::Cross-reference check"
-          FAIL=0
-          for f in data/providers/*.json; do
-            echo "Checking references in $f ..."
-            for mid in $(python3 -c "import json; p=json.load(open('$f')); print(' '.join(m.get('model_id','') for m in p.get('models',[])))"); do
-              if [ -n "$mid" ] && [ ! -f "data/models/${mid}.json" ]; then
-                echo "::error file=$f::model_id '${mid}' not found: data/models/${mid}.json does not exist"
-                FAIL=1
-              fi
-            done
-          done
-          exit $FAIL
-          echo "::endgroup::"
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+      - run: bun install --frozen-lockfile
+      - run: bun run check

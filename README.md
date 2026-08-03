@@ -1,70 +1,65 @@
 # ModelLink
 
-> 中国 AI 模型与提供商的开源索引。
+中国 AI 模型与推理服务商的开源目录，并保持与 [models.dev](https://models.dev) 的数据格式兼容。
 
-🔗 **在线浏览：[goroutined.github.io/modellink](https://goroutined.github.io/modellink/)**
+当前阶段只定义基础数据结构和兼容输出，暂不加入 ModelLink 专属字段。仓库仅保留少量样例数据；完整中国区数据将在结构稳定后分批同步。
 
-收录国内各平台的 AI 模型信息——定价、能力、调用方式等。类似 [models.dev](https://models.dev)，专为中国 AI 生态打造。
+## 数据结构
 
-## 为什么做这个
+ModelLink 沿用 models.dev 的三层目录：
 
-国内 AI 发展太快。模型每周都在更新，定价随时在变，却没有一个地方能统一比较阿里云百炼、智谱AI、月之暗面、百度千帆、讯飞星火等几十家提供商。
+```text
+labs/<lab-id>/
+  lab.toml
+  logo.svg
 
-ModelLink 就是这个地方。
+models/<lab-id>/<model-id>.toml
 
-## 收录内容
+providers/<provider-id>/
+  provider.toml
+  logo.svg
+  models/<provider-model-id>.toml
+```
 
-### 基本信息
+- `labs/`：模型研发组织。
+- `models/`：与服务商无关的 canonical model metadata。
+- `providers/`：具体 API 服务及其模型、价格、限制和调用方式。
+- 第三方 provider 使用 `base_model = "<lab>/<model>"` 继承模型事实，只声明真实差异。
 
-- **提供商** — 提供 API 的平台
-- **模型名称** — 模型的展示名称
-- **模型 ID** — 调用 API 时使用的精确字符串
-- **发布时间**
+文件路径决定 ID，TOML 中不写 `id`。
 
-### 价格（人民币）
+## 兼容输出
 
-- **输入价格** — 每百万 token 费用（元）
-- **输出价格** — 每百万 token 费用（元）
-- **思考 token 价格** — 内置思考模型的思考部分费用（如有）
-- **缓存读取价格** — KV Cache 命中费用（如有）
+构建后在 `docs/` 生成：
 
-### 能力
+- `api.json`：完整展开的 provider map，与 models.dev `/api.json` 同形。
+- `models.json`：canonical model map，与 models.dev `/models.json` 同形。
+- `catalog.json`：`{ models, providers }`，与 models.dev `/catalog.json` 同形。
+- `logos/<provider>.svg` 和 `logos/labs/<lab>.svg`。
 
-- **工具调用** — 是否支持 Function Calling
-- **内置思考** — 是否为思考模型（如 DeepSeek-R1、QwQ 等有 extended thinking 的模型）
-- **多模态支持** — 输入/输出支持的模态：`text` `image` `video` `audio`
-- **结构化输出** — 是否支持 JSON Mode
-- **流式输出** — 是否支持 SSE Streaming
-- **上下文长度** — 最大上下文窗口
-- **最大输出长度**
-- **权重开放** — 开源 / 闭源
+源码中的 `base_model` 和 `base_model_omit` 只参与构建，不会出现在输出 JSON 中。
 
-### 调用信息
+## 本地开发
 
-- **调用协议** — `OpenAI` 兼容 / `Anthropic` 兼容（可直接接入 Claude Code 的提供商）
-- **Base URL** — API 请求地址
-- **认证方式** — API Key / Bearer Token / AKSK
-- **文档地址** — 模型官方文档或介绍页链接
+需要 [Bun](https://bun.sh/)：
 
-### 合规与访问
+```bash
+bun install
+bun run check
+```
 
-- **访问要求** — 是否需要大陆手机号 / 企业资质
-- **合规状态** — 生成式 AI 备案情况
+常用命令：
 
-## 数据
+```bash
+bun run validate  # 校验 TOML、引用和最终模型约束
+bun test          # 运行继承与输出测试
+bun run build     # 生成三个兼容 JSON 和 logo
+```
 
-所有数据以 JSON 格式存放于 [`/data`](./data) 目录，每个提供商一个文件。易读、易 diff、易贡献。
+## 当前范围
 
-## 如何贡献
+现阶段的验收目标是：使用 models.dev HTTP API 或官方 SDK 的项目，仅替换 `baseUrl` 即可读取 ModelLink。中国特有字段、人民币价格和额外数据将在兼容基线稳定后设计。
 
-发现定价过时？知道我们遗漏了某个提供商？欢迎提 PR。
+## 许可
 
-1. Fork 本仓库
-2. 编辑或新增 `/data` 下的文件
-3. 附上数据来源链接，提交 PR
-
-完整的字段规范见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
-
-## 开源协议
-
-[MIT](./LICENSE)
+[MIT](./LICENSE)。兼容 schema 和部分样例数据基于 [models.dev](https://github.com/anomalyco/models.dev)（MIT，Copyright © 2025 models.dev）。

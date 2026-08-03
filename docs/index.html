@@ -1,403 +1,50 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ModelLink — 中国 AI 模型索引</title>
-<style>
-:root{--bg:#f8f9fa;--card:#fff;--border:#dee2e6;--text:#212529;--muted:#6c757d;--green:#198754;--red:#dc3545;--link:#0d6efd;--accent:#6f42c1;--hover:#f1f3f5}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.4;font-size:1rem}
-header{background:var(--card);border-bottom:1px solid var(--border);padding:.5rem 1.25rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:1.5rem}
-header h1{font-size:1rem;white-space:nowrap}
-header h1 a{color:inherit;text-decoration:none;cursor:pointer}
-nav{display:flex;gap:1rem}
-nav a{color:var(--muted);text-decoration:none;font-size:.8rem;cursor:pointer}
-nav a:hover,nav a.active{color:var(--accent)}
-main{margin:1rem 0;padding:0 1.5rem}
-footer{text-align:center;color:var(--muted);font-size:.7rem;padding:1rem}
-
-.tabs{display:flex;gap:0;margin-bottom:.75rem;border-bottom:2px solid var(--border)}
-.tabs button{padding:.3rem .9rem;border:none;background:none;font-size:.8rem;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px}
-.tabs button:hover{color:var(--text)}
-.tabs button.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
-
-.toolbar{display:flex;gap:.5rem;margin-bottom:.75rem;align-items:center;flex-wrap:wrap}
-.toolbar input{padding:.3rem .5rem;border:1px solid var(--border);border-radius:4px;font-size:.8rem;width:200px}
-.toolbar input:focus{outline:none;border-color:var(--accent)}
-.toolbar select{padding:.3rem .5rem;border:1px solid var(--border);border-radius:4px;font-size:.8rem;background:var(--card);cursor:pointer}
-.toolbar .count{color:var(--muted);font-size:.75rem;margin-left:auto}
-
-table{width:100%;border-collapse:collapse;font-size:1rem}
-thead{position:sticky;top:33px;z-index:50}
-th{background:var(--card);color:var(--muted);font-weight:500;padding:.35rem .4rem;text-align:left;border-bottom:2px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none;position:relative}
-th:hover{color:var(--text)}
-th .sort{font-size:.65rem;margin-left:2px;opacity:.4}
-th.sorted .sort{opacity:1;color:var(--accent)}
-th .flt{display:inline-block;margin-left:4px;width:0;height:0;border-left:3px solid transparent;border-right:3px solid transparent;border-top:4px solid var(--muted);vertical-align:middle;cursor:pointer;opacity:.4}
-th .flt:hover{opacity:1}
-td{padding:.3rem .4rem;border-bottom:1px solid var(--border);vertical-align:middle}
-tr:hover td{background:var(--hover)}
-.num-col{text-align:right;white-space:nowrap}
-
-.filter-dropdown{position:absolute;top:100%;left:0;background:var(--card);border:1px solid var(--border);border-radius:4px;box-shadow:0 4px 12px rgba(0,0,0,.1);z-index:200;min-width:160px;max-height:250px;overflow-y:auto;display:none;font-weight:400;font-size:.75rem}
-.filter-dropdown.show{display:block}
-.filter-dropdown label{display:flex;align-items:center;gap:4px;padding:.25rem .5rem;cursor:pointer;white-space:nowrap}
-.filter-dropdown label:hover{background:var(--hover)}
-.filter-dropdown input[type=checkbox]{margin:0}
-.filter-dropdown .actions{padding:.25rem .5rem;border-top:1px solid var(--border);display:flex;gap:.5rem}
-.filter-dropdown .actions button{font-size:.7rem;padding:1px 6px;border:1px solid var(--border);border-radius:3px;background:var(--card);cursor:pointer}
-
-.tag{display:inline-block;padding:0 .3rem;border-radius:3px;font-size:.65rem;font-weight:500;margin-right:2px;line-height:1.5}
-.tag-green{background:#d1fae5;color:var(--green)}.tag-red{background:#fee2e2;color:var(--red)}
-.tag-gray{background:#f3f4f6;color:var(--muted)}.tag-accent{background:#ede9fe;color:var(--accent)}
-
-.card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:.75rem 1rem;margin-bottom:.5rem}
-.card h3{font-size:.9rem;margin-bottom:.25rem}
-.card h3 a{color:var(--link);text-decoration:none;cursor:pointer}
-.attr-grid{display:flex;flex-wrap:wrap;gap:.25rem 1.5rem;font-size:.85rem;align-items:center}
-.attr-grid .attr-item{display:flex;gap:.3rem;align-items:center}
-.attr-grid .attr-label{color:var(--muted);font-size:.8rem}
-.attr-grid code{font-size:.8rem}
-.back-link{font-size:.8rem;margin-bottom:.75rem}
-.back-link a{color:var(--link);text-decoration:none;cursor:pointer}
-.section-title{font-size:.95rem;font-weight:600;margin:1.25rem 0 .5rem}
-.pc{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem}
-.pc .price{text-align:right;font-size:.8rem;min-width:130px}
-.pc .price .big{font-size:1rem;font-weight:700}
-code{background:#f3f4f6;padding:1px 3px;border-radius:2px;font-size:.72rem;word-break:break-all}
-.hidden{display:none}
-.provider-logo{width:16px;height:16px;border-radius:3px;vertical-align:middle;margin-right:4px;object-fit:contain}
-.provider-logo-lg{width:24px;height:24px;border-radius:4px;margin-right:6px}
-.provider-avatar{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:3px;background:var(--accent);color:#fff;font-size:.55rem;font-weight:700;vertical-align:middle;margin-right:4px}
-.provider-avatar-lg{width:24px;height:24px;border-radius:4px;font-size:.75rem;margin-right:6px}
-.mod-icon{width:14px;height:14px;vertical-align:middle;margin:0 1px;opacity:.45}
-.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:.35rem .75rem;border-radius:4px;font-size:.75rem;z-index:999;opacity:0;transition:opacity .2s;pointer-events:none}
-.toast.show{opacity:1}
-.copy-btn{display:none;position:absolute;right:2px;top:50%;transform:translateY(-50%);font-size:.7rem;color:var(--muted);cursor:pointer;line-height:1;background:var(--hover);padding:1px 4px;border-radius:3px;z-index:1}
-tr:hover .copy-btn{display:inline}
-tr:hover td.url-cell::after{content:'';position:absolute;right:0;top:0;bottom:0;width:60px;background:linear-gradient(to right,transparent,var(--hover) 60%,var(--hover));pointer-events:none;z-index:0}
-.copy-btn:hover{color:var(--accent)}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="ModelLink：中国 AI 模型与服务商的开源目录">
+  <meta name="theme-color" content="#f6f7f3">
+  <title>ModelLink · 中国 AI 模型与服务商目录</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="toast" id="toast"></div>
-<header>
-  <h1><a onclick="goHome('models')">ModelLink</a></h1>
-  <nav>
-    <a id="nav-models" onclick="goHome('models')">模型</a>
-    <a id="nav-providers" onclick="goHome('providers')">提供商</a>
-    <a href="https://github.com/goroutined/modellink" target="_blank">GitHub</a>
-  </nav>
-</header>
-<main id="main"></main>
-<footer>
-  数据来自社区贡献，仅供参考 | <a href="https://github.com/goroutined/modellink" target="_blank">ModelLink</a> MIT
-</footer>
-
-<script src="data.js"></script>
-<script>
-const D=window.MODELLINK||{models:[],providers:[]};
-const M=new Map(D.models.map(m=>[m.id,m]));
-const PV=new Map(D.providers.map(p=>[p.id,p]));
-
-let tab='models',sortKey='',sortDir=1,filters={},activeDropdown=null;
-
-// ---- routing ----
-function route(){const h=location.hash;if(h.startsWith('#model/'))detailModel(h.slice(7));else if(h.startsWith('#provider/'))detailProvider(h.slice(10));else{tab=h==='#providers'?'providers':'models';renderHome()}}
-window.onhashchange=route;
-function goHome(t){tab=t||'models';location.hash=t==='providers'?'#providers':''}
-function goModel(id){location.hash='model/'+id}
-function goProvider(id){location.hash='provider/'+id}
-
-// ---- helpers ----
-function h(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-function copyToast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),1500)}
-function ft(n){if(n>=1e6)return(n/1e6).toFixed(1).replace(/\.0$/,'')+'M';if(n>=1e3)return Math.round(n/1e3)+'K';return''+n}
-function parseNum(s){s=s.replace(/[,\s¥]/g,'');if(s.endsWith('M'))return parseFloat(s)*1e6;if(s.endsWith('K'))return parseFloat(s)*1e3;return parseFloat(s)||0}
-const LAB={deepseek:'DeepSeek',alibaba:'阿里',zhipu:'智谱',baidu:'百度',moonshot:'月之暗面',iflytek:'讯飞',volcano:'火山',tencent:'腾讯',minimax:'MiniMax',yi:'零一',stepfun:'阶跃'};
-function labName(id){return LAB[id]||id}
-function modIcons(arr){return arr.map(m=>`<img class="mod-icon" src="icons/${m}.svg" alt="${m}" title="${m}">`).join('');}
-function prot(p){return p==='openai'?'OpenAI':p==='anthropic'?'Anthropic':p}
-function logo(id,name,cls){
-  const svg=`logos/${id}.svg`;
-  return `<img class="${cls}" src="${svg}" alt="${h(name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'"><span class="${cls.replace('logo','avatar')}" style="display:none">${h(name.charAt(0))}</span>`;
-}
-
-// ---- offerings ----
-function cheapestOff(modelId){let b=null;for(const p of D.providers)for(const pm of p.models)if(pm.model_id===modelId&&(pm.cost.input+pm.cost.output>0)&&(!b||pm.cost.input+pm.cost.output<b.price))b={pname:p.name,pid:p.id,cost:pm.cost,price:pm.cost.input+pm.cost.output};return b}
-function offerings(modelId){const r=[];for(const p of D.providers)for(const pm of p.models)if(pm.model_id===modelId)r.push({...pm,pname:p.name,pid:p.id,pdoc:p.doc});return r}
-
-// ---- home ----
-function renderHome(){
-  document.title='ModelLink';
-  document.getElementById('nav-models').className=tab==='models'?'active':'';
-  document.getElementById('nav-providers').className=tab==='providers'?'active':'';
-
-  let totalOff=0;
-  for(const m of D.models)for(const p of D.providers)for(const pm of p.models)if(pm.model_id===m.id)totalOff++;
-
-  let html=`<div class="tabs">
-    <button class="${tab==='models'?'active':''}" onclick="switchTab('models')">模型</button>
-    <button class="${tab==='providers'?'active':''}" onclick="switchTab('providers')">提供商</button>
-  </div>`;
-
-  if(tab==='providers') html+=renderProviders();
-  else html+=renderModels();
-  document.getElementById('main').innerHTML=html;
-  bindFilters();
-}
-
-function switchTab(t){tab=t;filters={};sortKey='';sortDir=1;location.hash=t==='providers'?'#providers':'';renderHome();window.scrollTo(0,0)}
-
-// ---- model table ----
-function renderModels(){
-  let rows=[];
-  for(const m of D.models){
-    const cheap=cheapestOff(m.id);
-    const offCount=offerings(m.id).length;
-    let attrs=[];
-    if(m.tool_call)attrs.push('<span class="tag tag-gray">工具</span>');
-    if(m.reasoning)attrs.push('<span class="tag tag-accent">思考</span>');
-    if(m.structured_output)attrs.push('<span class="tag tag-gray">JSON</span>');
-    attrs.push(m.open_weights?'<span class="tag tag-green">开源</span>':'');
-
-    rows.push({name:m.name,lab:m.lab,date:m.release_date||'',ctx:m.limit.context,out:m.limit.output,offCount,price:cheap?cheap.cost.input+cheap.cost.output:Infinity,
-      html:`<tr data-q="${m.id} ${m.name}">
-        <td><a onclick="goModel('${m.id}')" style="color:var(--link);font-weight:500;cursor:pointer">${h(m.name)}</a></td>
-        <td>${logo(m.lab,labName(m.lab),'provider-logo')}<span style="font-size:.8rem">${labName(m.lab)}</span></td>
-        <td class="num-col">${offCount}</td>
-        <td class="num-col">${ft(m.limit.context)}</td>
-        <td class="num-col">${ft(m.limit.output)}</td>
-        <td>${modIcons(m.modalities.input)}</td>
-        <td>${attrs.join('')}</td>
-        <td class="num-col" style="white-space:nowrap">${cheap?`¥${cheap.cost.input.toFixed(2)}/¥${cheap.cost.output.toFixed(2)}`:'—'}</td>
-        <td style="font-size:.75rem;color:var(--muted)">${m.release_date||'—'}</td>
-      </tr>`
-    });
-  }
-  rows.sort((a,b)=>a.price-b.price);
-
-  return `${toolbar('model-search','搜索模型…',rows.length)}
-  <table><thead><tr>
-    <th data-col="name" data-type="text">模型<span class="sort"></span></th>
-    <th data-col="lab" data-type="text">Lab<span class="sort"></span></th>
-    <th data-col="offCount" data-type="num" class="num-col">Providers<span class="sort"></span></th>
-    <th data-col="ctx" data-type="num" class="num-col">上下文<span class="sort"></span></th>
-    <th data-col="out" data-type="num" class="num-col">输出<span class="sort"></span></th>
-    <th data-col="mod" data-type="text">输入<span class="sort"></span></th>
-    <th data-col="attrs" data-type="text">能力<span class="sort"></span></th>
-    <th data-col="price" data-type="num" class="num-col">最低价<span class="sort"></span></th>
-    <th data-col="date" data-type="text">发布时间<span class="sort"></span></th>
-  </tr></thead><tbody>${rows.map(r=>r.html).join('')}</tbody></table>`;
-}
-
-// ---- provider table ----
-function renderProviders(){
-  let rows=[];
-  for(const p of D.providers){
-    const protocols=[...new Set(p.models.map(pm=>prot(pm.api.protocol)))].join('/');
-    const modelNames=p.models.map(pm=>{const m=M.get(pm.model_id);return m?m.name:pm.model_id}).slice(0,6).join('、')+(p.models.length>6?' 等':'');
-    const typeLabel=p.type==='plan'?'<span class="tag tag-accent">套餐</span>':'<span class="tag tag-green">API</span>';
-    rows.push({
-      name:p.name,count:p.models.length,models:modelNames,proto:protocols,type:p.type,
-      html:`<tr data-q="${p.id} ${p.name}" style="cursor:pointer" onclick="goProvider('${p.id}')">
-        <td>${logo(p.id,p.name,'provider-logo')}<a style="color:var(--link);font-weight:500">${h(p.name)}</a></td>
-        <td>${typeLabel}</td>
-        <td class="num-col" style="font-weight:600;color:var(--accent)">${p.models.length}</td>
-        <td style="max-width:320px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)">${h(modelNames)}</td>
-        <td>${protocols}</td>
-        <td>${p.doc?`<a href="${h(p.doc)}" target="_blank" onclick="event.stopPropagation()" style="color:var(--link)">链接</a>`:'—'}</td>
-      </tr>`
-    });
-  }
-  return `${toolbar('provider-search','搜索提供商…',rows.length)}
-  <table><thead><tr>
-    <th data-col="name" data-type="text">提供商<span class="sort"></span></th>
-    <th data-col="type" data-type="text">类型<span class="sort"></span></th>
-    <th data-col="count" data-type="num" class="num-col">模型数<span class="sort"></span></th>
-    <th data-col="models" data-type="text">典型模型<span class="sort"></span></th>
-    <th data-col="proto" data-type="text">协议<span class="sort"></span></th>
-    <th data-col="doc" data-type="text">文档<span class="sort"></span></th>
-  </tr></thead><tbody>${rows.map(r=>r.html).join('')}</tbody></table>`;
-}
-
-function toolbar(id,placeholder,count){
-  return `<div class="toolbar">
-    <input id="${id}" type="text" placeholder="${placeholder}" oninput="applyFilters()">
-    <span class="count" id="${id}-count">${count} 条</span>
-  </div>`;
-}
-
-// ---- sorting & filtering ----
-function bindFilters(){
-  document.querySelectorAll('th').forEach(th=>{
-    th.addEventListener('click',e=>{
-      if(e.target.closest('.filter-dropdown'))return;
-      sort(th.dataset.col,th.dataset.type);
-    });
-  });
-  document.getElementById(tab==='providers'?'provider-search':'model-search').addEventListener('input',applyFilters);
-}
-
-let sortState=new Map();
-function sort(col,type){
-  const dir=sortState.get(col)===1?-1:1;
-  sortState.set(col,dir);
-  document.querySelectorAll('th').forEach(th=>{
-    th.classList.toggle('sorted',th.dataset.col===col);
-    const s=th.querySelector('.sort');
-    if(th.dataset.col===col)s.textContent=dir===1?' ▲':' ▼';
-    else s.textContent='';
-  });
-
-  const tbody=document.querySelector('tbody');
-  const rows=[...tbody.querySelectorAll('tr')];
-  rows.sort((a,b)=>{
-    let va=a.cells[[...a.parentElement.parentElement.querySelectorAll('th')].findIndex(th=>th.dataset.col===col)].textContent.trim();
-    let vb=b.cells[[...a.parentElement.parentElement.querySelectorAll('th')].findIndex(th=>th.dataset.col===col)].textContent.trim();
-    if(type==='num'){va=parseNum(va);vb=parseNum(vb)}
-    return (va>vb?1:va<vb?-1:0)*dir;
-  });
-  rows.forEach(r=>tbody.appendChild(r));
-}
-
-function applyFilters(){
-  const search=document.getElementById(tab==='providers'?'provider-search':'model-search');
-  const q=search?search.value.toLowerCase():'';
-  let visible=0;
-  document.querySelectorAll('tbody tr').forEach(r=>{
-    const match=!q||r.dataset.q.includes(q);
-    r.classList.toggle('hidden',!match);
-    if(match)visible++;
-  });
-  const cnt=document.getElementById(tab==='providers'?'provider-search-count':'model-search-count');
-  if(cnt)cnt.textContent=(q?'匹配 '+visible+'/'+document.querySelectorAll('tbody tr').length+' ':'')+document.querySelectorAll('tbody tr').length+' 条';
-}
-
-// ---- model detail ----
-function detailModel(id){
-  const m=M.get(id);if(!m)return goHome('models');
-  document.getElementById('nav-models').className='';
-  document.getElementById('nav-providers').className='';
-  document.title=m.name+' — ModelLink';
-
-  let badges=[];
-  badges.push(m.open_weights?'<span class="tag tag-green">开源</span>':'<span class="tag tag-red">闭源</span>');
-  if(m.tool_call)badges.push('<span class="tag tag-gray">工具调用</span>');
-  if(m.reasoning)badges.push('<span class="tag tag-accent">内置思考</span>');
-  if(m.structured_output)badges.push('<span class="tag tag-gray">结构化输出</span>');
-
-  const offs=offerings(m.id);
-  let html=`<div class="back-link"><a onclick="goHome('models')">← 返回模型列表</a></div>
-  <h2>${h(m.name)}</h2>
-  <p style="color:var(--muted);margin-bottom:.75rem">${h(labName(m.lab))} · 发布: ${m.release_date||'—'}</p>
-  <div style="margin-bottom:.75rem">${badges.join('')}</div>
-  <div class="card"><h3>能力详情</h3><table>
-    <tr><td>模型 ID</td><td>${h(m.id)}</td></tr><tr><td>系列</td><td>${h(labName(m.lab))}</td></tr>
-    <tr><td>发布时间</td><td>${m.release_date||'—'}</td></tr>
-    <tr><td>权重开放</td><td>${m.open_weights?'是':'否'}</td></tr>
-    <tr><td>工具调用</td><td>${m.tool_call?'是':'否'}</td></tr>
-    <tr><td>内置思考</td><td>${m.reasoning?'是':'否'}</td></tr>
-    <tr><td>结构化输出</td><td>${m.structured_output?'是':'否'}</td></tr>
-    <tr><td>输入模态</td><td>${m.modalities.input.join('、')||'—'}</td></tr>
-    <tr><td>输出模态</td><td>${m.modalities.output.join('、')||'—'}</td></tr>
-    <tr><td>上下文长度</td><td>${ft(m.limit.context)}</td></tr>
-    <tr><td>最大输出</td><td>${ft(m.limit.output)}</td></tr>
-  </table></div>
-  <div class="section-title">接入方式</div>`;
-
-  if(!offs.length){html+='<div class="empty" style="text-align:center;color:var(--muted);padding:2rem 0">暂无知名的国内提供商接入此模型。</div>'}
-  else{html+=`<p style="color:var(--muted);margin-bottom:.5rem;font-size:.8rem">${offs.length} 家提供商：</p>`+offeringTable(offs,m)}
-  document.getElementById('main').innerHTML=html;
-}
-
-function offeringTable(offs,m){
-  let rows='';
-  for(const o of offs){
-    const lim=o.limit_override||m.limit;
-    let tags='';
-    if(!o.streaming)tags+='<span class="tag tag-red">无流式</span>';
-    let price=o.cost.input>0?`¥${o.cost.input.toFixed(2)} / ¥${o.cost.output.toFixed(2)}`:'套餐';
-    if(o.cost.cache_read)price+=`<br><span style="font-size:.65rem;color:var(--muted)">缓存 ¥${o.cost.cache_read.toFixed(2)}</span>`;
-    if(o.cost.reasoning)price+=`<br><span style="font-size:.65rem;color:var(--muted)">思考 ¥${o.cost.reasoning.toFixed(2)}</span>`;
-
-    rows+=`<tr>
-      <td>${logo(o.pid,o.pname,'provider-logo')}<a onclick="goProvider('${o.pid}')" style="color:var(--link);font-weight:500;cursor:pointer">${h(o.pname)}</a></td>
-      <td><code>${h(o.model_id_on_platform)}</code></td>
-      <td>${prot(o.api.protocol)}</td>
-      <td>${ft(lim.context)}${o.limit_override?' <span class="tag tag-red">限制</span>':''}</td>
-      <td class="num-col" style="white-space:nowrap">${price}</td>
-      <td>${tags}</td>
-    </tr>`;
-  }
-  return `<table><thead><tr>
-    <th>提供商</th><th>平台调用ID</th><th>协议</th><th>上下文</th><th class="num-col">价格</th><th>条件</th>
-  </tr></thead><tbody>${rows}</tbody></table>`;
-}
-
-// ---- provider detail ----
-function detailProvider(id){
-  const p=PV.get(id);if(!p)return goHome('providers');
-  document.getElementById('nav-models').className='';
-  document.getElementById('nav-providers').className='';
-  document.title=p.name+' — ModelLink';
-
-  const typeLabel=p.type==='plan'?'<span class="tag tag-accent">套餐计划</span>':'<span class="tag tag-green">API</span>';
-
-  let html=`<div class="back-link"><a onclick="goHome('providers')">← 返回提供商列表</a></div>
-  <h2>${logo(p.id,p.name,'provider-logo-lg')}${h(p.name)}</h2>
-  <div class="card">
-    <div class="attr-grid">
-      <div class="attr-item"><span class="attr-label">类型</span>${typeLabel}</div>
-      <div class="attr-item"><span class="attr-label">认证</span>${p.auth_type==='api_key'?'API Key':p.auth_type==='bearer_token'?'Bearer Token':p.auth_type==='aksk'?'AK/SK':p.auth_type||'—'}</div>
-      <div class="attr-item"><span class="attr-label">Base URL</span><span class="url-cell" style="position:relative"><code>${h(p.base_url)}</code><span class="copy-btn" onclick="event.stopPropagation();navigator.clipboard.writeText('${p.base_url.replace(/'/g,"\\'")}').then(()=>copyToast('已复制'))" title="复制"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span></span></div>
-      ${p.doc?`<div class="attr-item"><span class="attr-label">文档</span><a href="${h(p.doc)}" target="_blank" style="color:var(--link)">${h(p.doc)}</a></div>`:''}
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#/models" aria-label="ModelLink 首页">
+        <span class="brand-mark">M</span>
+        <span><strong>ModelLink</strong><small>中国 AI 模型与服务商目录</small></span>
+      </a>
+      <nav class="main-nav" aria-label="主导航">
+        <a href="#/models" data-nav="models">模型</a>
+        <a href="#/providers" data-nav="providers">服务商</a>
+        <a href="#/labs" data-nav="labs">研发机构</a>
+      </nav>
+      <label class="global-search">
+        <span>搜索</span>
+        <input id="global-search" type="search" placeholder="模型、服务商或机构" autocomplete="off">
+        <kbd>⌘ K</kbd>
+      </label>
     </div>
-  </div>
-  <div class="section-title">提供的模型 (${p.models.length})</div>`;
-  if(!p.models.length){html+='<div class="empty" style="text-align:center;color:var(--muted);padding:2rem 0">暂无模型数据。</div>'}
-  else{html+=providerModelTable(p)}
-  document.getElementById('main').innerHTML=html;
-}
+  </header>
 
-function providerModelTable(p){
-  let rows='';
-  for(const pm of p.models){
-    const m=M.get(pm.model_id);
-    const lim=pm.limit_override||(m?m.limit:{context:'—',output:'—'});
-    const mn=m?m.name:pm.model_id;
-    const mlink=m?`<a onclick="goModel('${pm.model_id}')" style="cursor:pointer;color:var(--link);font-weight:500">${h(mn)}</a>`:h(mn);
-    let caps=[];
-    if(m){
-      if(m.tool_call)caps.push('<span class="tag tag-gray">工具</span>');
-      if(m.reasoning)caps.push('<span class="tag tag-accent">推理</span>');
-      if(m.structured_output)caps.push('<span class="tag tag-gray">JSON</span>');
-    }
-    if(!pm.streaming)caps.push('<span class="tag tag-red">无流式</span>');
-    let price=pm.cost.input>0?`¥${pm.cost.input.toFixed(2)} / ¥${pm.cost.output.toFixed(2)}`:'套餐';
-    if(pm.cost.cache_read)price+=`<br><span style="font-size:.65rem;color:var(--muted)">缓存 ¥${pm.cost.cache_read.toFixed(2)}</span>`;
-    if(pm.cost.reasoning)price+=`<br><span style="font-size:.65rem;color:var(--muted)">思考 ¥${pm.cost.reasoning.toFixed(2)}</span>`;
+  <main id="app" class="app-shell" aria-live="polite">
+    <section class="loading-state">正在加载模型目录…</section>
+  </main>
 
-    rows+=`<tr>
-      <td>${mlink}</td>
-      <td><code>${h(pm.model_id_on_platform)}</code></td>
-      <td>${prot(pm.api.protocol)}</td>
-      <td class="num-col">${typeof lim.context==='number'?ft(lim.context):lim.context}${pm.limit_override?'<span class="tag tag-red" style="margin-left:2px">限</span>':''}</td>
-      <td class="num-col">${typeof lim.output==='number'?ft(lim.output):lim.output}</td>
-      <td class="num-col" style="white-space:nowrap">${price}</td>
-      <td>${caps.join('')}</td>
-      <td>${pm.doc?`<a href="${h(pm.doc)}" target="_blank" style="color:var(--link)">链接</a>`:'—'}</td>
-      <td>${pm.source?`<a href="${h(pm.source)}" target="_blank" style="color:var(--link)">来源</a>`:'—'}</td>
-    </tr>`;
-  }
-  return `<table><thead><tr>
-    <th>模型</th><th>平台调用ID</th><th>协议</th><th class="num-col">上下文</th><th class="num-col">最大输出</th><th class="num-col">价格</th><th>能力/条件</th><th>文档</th><th>来源</th>
-  </tr></thead><tbody>${rows}</tbody></table>`;
-}
+  <footer class="site-footer">
+    <div>
+      <strong>ModelLink</strong> 是面向中国开发者的开源 AI 模型与服务商目录。
+    </div>
+    <div class="footer-links">
+      <a href="https://models.dev" target="_blank" rel="noreferrer">数据格式兼容 models.dev</a>
+      <a href="https://github.com/goroutined/modellink" target="_blank" rel="noreferrer">查看 ModelLink GitHub 源码</a>
+      <a href="catalog.json">下载 catalog.json</a>
+    </div>
+  </footer>
 
-// ---- boot ----
-route();
-</script>
+  <noscript>此页面需要启用 JavaScript 才能浏览模型目录。</noscript>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
