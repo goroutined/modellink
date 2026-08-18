@@ -1,0 +1,6 @@
+name = "智谱 AI"
+env = ["ZAI_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+doc = "https://docs.bigmodel.cn/cn/guide/start/model-overview"
+api = "https://open.bigmodel.cn/api/paas/v4"

@@ -1,0 +1,19 @@
+name = "MiMo V2.5 Pro"
+description = "小米推出的长上下文文本模型，面向复杂推理、编程、工具调用与智能体任务。"
+family = "mimo-v2.5-pro"
+release_date = "2026-05-18"
+last_updated = "2026-05-18"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 1_048_576
+output = 131_072
+
+[modalities]
+input = ["text"]
+output = ["text"]

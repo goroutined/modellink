@@ -1,0 +1,22 @@
+base_model = "zhipu/glm-5-turbo"
+doc = "https://docs.bigmodel.cn/cn/guide/models/text/glm-5-turbo"
+
+[[reasoning_options]]
+type = "toggle"
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 5
+output = 22
+cache_read = 1.2
+
+[[cost_cn.tiers]]
+input = 7
+output = 26
+cache_read = 1.8
+
+[cost_cn.tiers.tier]
+type = "context"
+size = 32_000

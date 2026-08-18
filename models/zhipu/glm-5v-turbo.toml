@@ -1,0 +1,22 @@
+name = "GLM-5V-Turbo"
+description = "智谱面向视觉编程打造的多模态 Coding 基座模型，支持长程规划、复杂编程和动作执行。"
+family = "glm"
+release_date = "2026-04-02"
+last_updated = "2026-04-02"
+attachment = true
+reasoning = true
+tool_call = true
+open_weights = false
+
+[limit]
+context = 204_800
+output = 131_072
+
+[modalities]
+input = ["text", "image", "video", "pdf"]
+output = ["text"]
+
+[[links]]
+label = "智谱模型详情"
+url = "https://docs.bigmodel.cn/cn/guide/models/vlm/glm-5v-turbo"
+type = "docs"

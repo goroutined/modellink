@@ -1,0 +1,14 @@
+base_model = "moonshot/kimi-k3"
+doc = "https://platform.kimi.com/docs/guide/kimi-k3-quickstart"
+
+[[reasoning_options]]
+type = "effort"
+values = ["low", "high", "max"]
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 20
+output = 100
+cache_read = 2

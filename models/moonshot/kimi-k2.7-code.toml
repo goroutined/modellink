@@ -1,0 +1,29 @@
+name = "Kimi K2.7 Code"
+description = "月之暗面面向编程与智能体任务推出的多模态 Coding 模型，强化长上下文指令遵循与复杂任务交付。"
+family = "kimi-k2"
+release_date = "2026-07-22"
+last_updated = "2026-07-22"
+attachment = true
+reasoning = true
+temperature = false
+tool_call = true
+structured_output = false
+open_weights = true
+
+[limit]
+context = 262_144
+output = 262_144
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[[links]]
+label = "Kimi K2.7 Code 官方介绍"
+url = "https://www.kimi.com/zh-cn/resources/kimi-k2-7-code"
+type = "announcement"
+
+[[links]]
+label = "Kimi K2.7 Code API 文档"
+url = "https://platform.kimi.com/docs/guide/kimi-k2-7-code-quickstart"
+type = "docs"

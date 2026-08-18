@@ -1,0 +1,24 @@
+name = "GLM-4.5-AirX"
+description = "智谱 GLM-4.5 系列低延迟版本，适合对响应速度要求较高的编码和智能体任务。"
+family = "glm"
+release_date = "2025-07-28"
+last_updated = "2025-07-28"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 131_072
+output = 98_304
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "智谱模型详情"
+url = "https://docs.bigmodel.cn/cn/guide/models/text/glm-4.5"
+type = "docs"

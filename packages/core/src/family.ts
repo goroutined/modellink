@@ -58,6 +58,8 @@ export const ModelFamilyValues = [
   "qwen3.6",
   "qwen3.7-plus",
   "qwen3.7-max",
+  "qwen3.7-flash",
+  "qwen3.8-max",
   "qwen-free",
 
   // DeepReinforce
@@ -69,6 +71,9 @@ export const ModelFamilyValues = [
   "deepseek-flash",
   "deepseek-flash-free",
   "deepseek-flash-think",
+
+  // ByteDance Doubao
+  "doubao-seed",
 
   // Microsoft Phi
   "phi",

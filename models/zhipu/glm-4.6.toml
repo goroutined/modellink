@@ -1,0 +1,24 @@
+name = "GLM-4.6"
+description = "智谱面向高级编码、复杂推理和工具调用优化的开放权重语言模型。"
+family = "glm"
+release_date = "2025-09-30"
+last_updated = "2025-09-30"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = true
+
+[limit]
+context = 204_800
+output = 131_072
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "智谱模型详情"
+url = "https://docs.bigmodel.cn/cn/guide/models/text/glm-4.6"
+type = "docs"

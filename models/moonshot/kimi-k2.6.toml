@@ -1,0 +1,29 @@
+name = "Kimi K2.6"
+description = "月之暗面推出的通用多模态模型，强化长程编程、指令遵循、自我纠错和智能体任务执行。"
+family = "kimi-k2"
+release_date = "2026-04"
+last_updated = "2026-04"
+attachment = true
+reasoning = true
+temperature = false
+tool_call = true
+structured_output = false
+open_weights = true
+
+[limit]
+context = 262_144
+output = 262_144
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[[links]]
+label = "Kimi K2.6 官方介绍"
+url = "https://www.kimi.com/blog/kimi-k2-6"
+type = "announcement"
+
+[[links]]
+label = "Kimi K2.6 API 文档"
+url = "https://platform.kimi.com/docs/guide/kimi-k2-6-quickstart"
+type = "docs"

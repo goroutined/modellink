@@ -1,0 +1,6 @@
+name = "Kimi 开放平台"
+env = ["MOONSHOT_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+doc = "https://platform.kimi.com/docs/models"
+api = "https://api.moonshot.cn/v1"

@@ -1,0 +1,20 @@
+name = "Qwen3.7 Plus"
+description = "Qwen3.7 系列高性价比多模态模型，面向编程、工具使用、视觉理解与生产力智能体任务。"
+family = "qwen3.7-plus"
+release_date = "2026-05-26"
+last_updated = "2026-05-26"
+attachment = true
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 1_000_000
+input = 983_616
+output = 65_536
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]

@@ -1,0 +1,13 @@
+base_model = "moonshot/kimi-k2.6"
+doc = "https://platform.kimi.com/docs/guide/kimi-k2-6-quickstart"
+
+[[reasoning_options]]
+type = "toggle"
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 6.5
+output = 27
+cache_read = 1.1

@@ -1,0 +1,24 @@
+name = "GLM-4.7-Flash"
+description = "智谱免费开放的轻量模型，面向 Agentic Coding 强化编码、长程规划和工具协同能力。"
+family = "glm"
+release_date = "2026-01-19"
+last_updated = "2026-01-19"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = true
+
+[limit]
+context = 204_800
+output = 131_072
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "智谱模型详情"
+url = "https://docs.bigmodel.cn/cn/guide/models/free/glm-4.7-flash"
+type = "docs"

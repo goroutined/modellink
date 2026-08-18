@@ -1,0 +1,20 @@
+base_model = "deepseek/deepseek-v4-flash"
+doc = "https://help.aliyun.com/zh/model-studio/deepseek-v4-flash"
+name = "DeepSeek V4 Flash"
+structured_output = true
+
+[[reasoning_options]]
+type = "toggle"
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 1_000_000
+input = 1_000_000
+output = 393_216
+
+[cost_cn]
+input = 1
+output = 2
+cache_read = 0.2

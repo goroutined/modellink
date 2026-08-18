@@ -1,0 +1,24 @@
+name = "DeepSeek V4 Pro"
+description = "DeepSeek V4 系列旗舰开放权重模型，面向复杂推理、智能体编程与超长上下文任务。"
+family = "deepseek-thinking"
+release_date = "2026-04-24"
+last_updated = "2026-04-24"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = true
+license = "MIT"
+
+[limit]
+context = 1_000_000
+output = 384_000
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro"

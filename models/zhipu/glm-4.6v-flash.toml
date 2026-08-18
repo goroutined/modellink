@@ -1,0 +1,22 @@
+name = "GLM-4.6V-Flash"
+description = "智谱免费开放的多模态视觉推理模型，支持思考开关、工具调用和长上下文处理。"
+family = "glm"
+release_date = "2025-12-08"
+last_updated = "2025-12-08"
+attachment = true
+reasoning = true
+tool_call = true
+open_weights = true
+
+[limit]
+context = 131_072
+output = 32_768
+
+[modalities]
+input = ["text", "image", "video", "pdf"]
+output = ["text"]
+
+[[links]]
+label = "智谱模型详情"
+url = "https://docs.bigmodel.cn/cn/guide/models/free/glm-4.6v-flash"
+type = "docs"

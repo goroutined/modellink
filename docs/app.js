@@ -1,5 +1,6 @@
 const app = document.querySelector("#app");
 const searchInput = document.querySelector("#global-search");
+const siteHeader = document.querySelector(".site-header");
 
 const FIELD_LABELS = {
   id: "ID", name: "名称", description: "描述", family: "模型家族",
@@ -8,11 +9,14 @@ const FIELD_LABELS = {
   temperature: "温度参数", knowledge: "知识截止日期", release_date: "发布日期",
   last_updated: "更新时间", modalities: "输入输出模态", open_weights: "开放权重",
   limit: "限制", context: "上下文窗口", input: "输入", output: "输出",
-  cost: "价格（每百万 Token / 美元）", cache_read: "缓存读取价格",
+  cost: "美元价格（每百万 Token）", cost_cn: "人民币价格（元 / 百万 Token）",
+  cache_read: "缓存读取价格", thinking: "思考模式价格",
   cache_write: "缓存写入价格", status: "生命周期状态", provider: "服务商调用配置",
   experimental: "实验性配置", weights: "权重", benchmarks: "评测", links: "相关链接",
-  api: "API 地址", env: "环境变量", npm: "SDK 包", doc: "官方文档", models: "模型",
+  api: "API 地址", env: "环境变量", npm: "兼容 SDK 包", protocol: "调用协议",
+  doc: "模型详情页", models: "模型",
   label: "标签", url: "链接", type: "类型", min: "最小值", max: "最大值",
+  tiers: "阶梯价格", tier: "计费阶梯", size: "输入长度阈值",
 };
 
 const BOOLEAN_LABELS = { true: "是", false: "否" };
@@ -29,14 +33,53 @@ const escapeHtml = (value) => String(value)
   .replaceAll('"', "&quot;").replaceAll("'", "&#039;");
 const routeHref = (section, id) => `#/${section}${id === undefined ? "" : `/${encodeURIComponent(id)}`}`;
 const formatNumber = (value) => value == null ? "—" : new Intl.NumberFormat("zh-CN").format(value);
+const compactTokenLimit = (value) => {
+  if (value >= 1_048_576 && value % 1_048_576 === 0) return `${value / 1_048_576}M`;
+  if (value >= 1_000_000 && value % 1_000_000 === 0) return `${value / 1_000_000}M`;
+  const binaryK = value / 1_024;
+  if (Number.isInteger(binaryK)) return `${binaryK}K`;
+  if (value >= 1_000 && value % 1_000 === 0) return `${value / 1_000}K`;
+  if (value >= 1_000) return `${Math.floor(value / 1_000)}K`;
+  return null;
+};
+const formatTokenLimit = (value) => {
+  if (value == null) return '<span class="pending-value">-</span>';
+  const compact = compactTokenLimit(value);
+  if (!compact) return `<span class="token-limit"><span class="token-exact only">${formatNumber(value)}</span></span>`;
+  return `<span class="token-limit"><span class="token-compact">${compact}</span><span class="token-exact">${formatNumber(value)}</span></span>`;
+};
 const isUrl = (value) => typeof value === "string" && /^https?:\/\//i.test(value);
 const labIdFor = (modelId) => modelId.split("/")[0];
 const labFor = (id) => state.siteData.labs?.[id] ?? { id, name: id };
-const providerFor = (id) => state.catalog.providers[id] ?? { id, name: id, models: {} };
 const boolBadge = (value) => value === undefined
   ? '<span class="badge unknown">未知</span>'
   : `<span class="badge ${value ? "yes" : "no"}">${BOOLEAN_LABELS[value]}</span>`;
 const logo = (kind, id, large = false) => `<img class="logo${large ? " large" : ""}" src="logos/${kind === "labs" ? "labs/" : ""}${escapeHtml(id)}.svg" alt="" onerror="this.hidden=true">`;
+
+const MODALITY_LABELS = { text: "文本", image: "图片", audio: "音频", video: "视频", pdf: "PDF" };
+const MODALITY_ICONS = {
+  text: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h12M10 3.5v13M7 16.5h6"/></svg>',
+  image: '<svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.75" y="3" width="14.5" height="14" rx="2"/><circle cx="7" cy="7.25" r="1.25"/><path d="m4.5 15 3.75-4 2.5 2.5 1.75-2 3 3.5"/></svg>',
+  audio: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 8.25v3.5M6.5 5.5v9M10 3v14M13.5 6v8M17 8.25v3.5"/></svg>',
+  video: '<svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="4" width="15" height="12" rx="2"/><path d="m8.5 7.5 4.5 2.5-4.5 2.5Z"/></svg>',
+  pdf: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 2.5h6l4 4v11H5zM11 2.5v4h4"/><path d="M7 13h6M7 10h4"/></svg>',
+};
+
+function renderModalities(modalities) {
+  const input = modalities?.input ?? [];
+  const output = modalities?.output ?? [];
+  const values = [...new Set([...input, ...output])];
+  if (!values.length) return '<span class="pending-value">-</span>';
+  return `<span class="modality-icons">${values.map((value) => {
+    const hasInput = input.includes(value);
+    const hasOutput = output.includes(value);
+    const direction = hasInput && hasOutput ? "both" : hasInput ? "input" : "output";
+    const directionLabel = direction === "both" ? "输入与输出" : direction === "input" ? "仅输入" : "仅输出";
+    const label = `${MODALITY_LABELS[value] ?? value}：${directionLabel}`;
+    const icon = MODALITY_ICONS[value] ?? MODALITY_ICONS.text;
+    return `<span class="modality-icon ${direction}" role="img" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}">${icon}</span>`;
+  }).join("")}</span>`;
+}
 
 function route() {
   const parts = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean);
@@ -59,27 +102,99 @@ function modelOfferings(modelId) {
   });
 }
 
-function minimumPrice(modelId) {
-  const prices = modelOfferings(modelId).flatMap(({ model }) => Object.values(model.cost ?? {}).filter((x) => typeof x === "number"));
-  return prices.length ? `$${Math.min(...prices).toLocaleString("zh-CN")}` : "未公布";
+function formatCny(value) {
+  return value == null ? '<span class="pending-value">-</span>' : `¥${formatNumber(value)}`;
 }
 
-function renderMetrics() {
+function formatCnyPair(first, second) {
+  return `<span class="price-pair"><span>${formatCny(first)}</span><span class="price-separator">/</span><span>${formatCny(second)}</span></span>`;
+}
+
+function formatCnyModes(cost, firstKey, secondKey) {
+  if (!cost?.thinking) return formatCnyPair(cost?.[firstKey], cost?.[secondKey]);
+  return `<span class="mode-prices"><span><small>普通</small>${formatCnyPair(cost?.[firstKey], cost?.[secondKey])}</span><span><small>思考</small>${formatCnyPair(cost.thinking?.[firstKey], cost.thinking?.[secondKey])}</span></span>`;
+}
+
+function compactTokens(value) {
+  return compactTokenLimit(value) ?? formatNumber(value);
+}
+
+function tokenBoundary(value) {
+  const compact = compactTokens(value);
+  return value < 1_000 ? `${compact} Token` : compact;
+}
+
+function formatTokenRange(range) {
+  if (range.gte === 0 && range.lt !== undefined) return `<${tokenBoundary(range.lt)}`;
+  if (range.gte !== undefined && range.lt !== undefined) {
+    return `≥${tokenBoundary(range.gte)} · <${tokenBoundary(range.lt)}`;
+  }
+  if (range.gte !== undefined) return `≥${tokenBoundary(range.gte)}`;
+  return `<${tokenBoundary(range.lt)}`;
+}
+
+function formatConditionalTier(tier) {
+  const parts = [];
+  if (tier.label) parts.push(tier.label);
+  if (tier.input) parts.push(`输入 ${formatTokenRange(tier.input)}`);
+  if (tier.output) parts.push(`输出 ${formatTokenRange(tier.output)}`);
+  if (tier.time) {
+    const windows = tier.time.windows
+      .map((window) => `${window.start}–${window.end}`)
+      .join("、");
+    parts.push(`${windows}（${tier.time.timezone}）`);
+  }
+  return parts.join(" · ");
+}
+
+function priceHelp(detail) {
+  const label = `查看计费条件：${detail}`;
+  return `<span class="price-help" tabindex="0" role="img" aria-label="${escapeHtml(label)}" data-tooltip="${escapeHtml(detail)}">?</span>`;
+}
+
+function formatCnyTiered(cost, firstKey, secondKey) {
+  const tiers = [...(cost?.tiers ?? [])];
+  if (!tiers.length) return formatCnyModes(cost, firstKey, secondKey);
+  const contextOnly = tiers.every((tier) => tier.tier.type === "context");
+  const rows = contextOnly
+    ? (() => {
+        const sorted = tiers.sort((left, right) => left.tier.size - right.tier.size);
+        return [{ detail: `上下文 <${compactTokens(sorted[0].tier.size)}`, cost }, ...sorted.map((tier, index) => ({
+          detail: sorted[index + 1]
+            ? `上下文 ≥${compactTokens(tier.tier.size)} · <${compactTokens(sorted[index + 1].tier.size)}`
+            : `上下文 ≥${compactTokens(tier.tier.size)}`,
+          cost: tier,
+        }))];
+      })()
+    : tiers.map((tier) => ({
+        label: tier.tier.label,
+        detail: formatConditionalTier(tier.tier),
+        cost: tier,
+      }));
+  return `<span class="tier-prices">${rows.map(({ label, detail, cost: tierCost }, index) => `<span><small class="price-tier-summary"><span>${escapeHtml(label ?? `阶梯 ${index + 1}`)}</span>${priceHelp(detail)}</small>${formatCnyModes(tierCost, firstKey, secondKey)}</span>`).join("")}</span>`;
+}
+
+function catalogSummary() {
   const offerings = Object.values(state.catalog.providers).reduce((sum, provider) => sum + Object.keys(provider.models ?? {}).length, 0);
-  const values = [
-    [Object.keys(state.catalog.models).length, "规范模型"],
-    [Object.keys(state.catalog.providers).length, "服务商"],
-    [Object.keys(state.siteData.labs ?? {}).length, "研发机构"],
-    [offerings, "可调用模型"],
-  ];
-  return `<div class="metrics">${values.map(([value, label]) => `<div class="metric-card"><strong>${formatNumber(value)}</strong><span>${label}</span></div>`).join("")}</div>`;
+  return `${formatNumber(Object.keys(state.catalog.models).length)} 规范模型 · ${formatNumber(Object.keys(state.catalog.providers).length)} 服务商 · ${formatNumber(Object.keys(state.siteData.labs ?? {}).length)} 研发机构 · ${formatNumber(offerings)} 可调用`;
+}
+
+function modelPrices(modelId) {
+  const offerings = modelOfferings(modelId);
+  if (!offerings.length) return '<span class="pending-value">-</span>';
+  return `<span class="model-price-list">${offerings.map(({ providerId, provider, model }) => `<span><a class="interactive-link" href="${routeHref("providers", providerId)}">${escapeHtml(provider.name ?? providerId)}</a>${formatCnyTiered(model.cost_cn, "input", "output")}</span>`).join("")}</span>`;
 }
 
 function modelSortValue([id, model], key) {
   if (key === "lab") return labFor(labIdFor(id)).name;
   if (key === "providers") return modelOfferings(id).length;
   if (key === "context") return model.limit?.context ?? -1;
-  if (key === "price") return Math.min(...modelOfferings(id).flatMap(({ model: offering }) => Object.values(offering.cost ?? {})).filter(Number.isFinite), Infinity);
+  if (key === "price") return Math.min(...modelOfferings(id)
+    .map(({ model: offering }) => {
+      const input = offering.cost_cn?.input;
+      const output = offering.cost_cn?.output;
+      return Number.isFinite(input) && Number.isFinite(output) ? input + output : Infinity;
+    }), Infinity);
   return model[key] ?? "";
 }
 
@@ -105,8 +220,7 @@ function renderModels() {
     return (typeof a === "number" && typeof b === "number" ? a - b : String(a).localeCompare(String(b), "zh-CN")) * state.modelSort.direction;
   });
 
-  app.innerHTML = pageHeading("MODELS", "模型", "统一查看中国开发者常用模型的能力、上下文、开放权重和各服务商价格。", `显示 ${rows.length} / ${Object.keys(state.catalog.models).length}`)
-    + renderMetrics()
+  app.innerHTML = pageHeading("MODELS", "模型", "统一查看中国开发者常用模型的能力、上下文、开放权重和各服务商价格。", `${rows.length} / ${Object.keys(state.catalog.models).length} · ${catalogSummary()}`)
     + `<div class="toolbar">
         <input data-local-search type="search" value="${escapeHtml(state.query)}" placeholder="筛选模型名称、ID、家族或机构">
         <select data-filter="lab"><option value="all">全部研发机构</option>${labs.map((id) => `<option value="${escapeHtml(id)}"${state.modelFilters.lab === id ? " selected" : ""}>${escapeHtml(labFor(id).name)}</option>`).join("")}</select>
@@ -115,27 +229,26 @@ function renderModels() {
       </div>`
     + (rows.length ? `<div class="table-panel"><div class="table-scroll"><table><thead><tr>
         <th>${sortHeader("name", "模型")}</th><th>${sortHeader("lab", "研发机构")}</th><th>${sortHeader("providers", "服务商")}</th>
-        <th>${sortHeader("context", "上下文窗口")}</th><th>最大输出</th><th>推理能力</th><th>工具调用</th><th>结构化输出</th><th>温度参数</th><th>开放权重</th>
-        <th>${sortHeader("price", "最低价格")}</th><th>${sortHeader("release_date", "发布日期")}</th><th>${sortHeader("last_updated", "更新时间")}</th>
+        <th>${sortHeader("context", "上下文窗口")}</th><th>最大输入</th><th>最大输出</th><th>模态</th><th>推理能力</th><th>工具调用</th><th>结构化输出</th><th>温度参数</th><th>开放权重</th>
+        <th>${sortHeader("price", "服务商价格（输入 / 输出）")}</th><th>${sortHeader("release_date", "发布日期")}</th><th>${sortHeader("last_updated", "更新时间")}</th>
       </tr></thead><tbody>${rows.map(([id, model]) => `<tr>
         <td><a class="primary-cell row-link" href="${routeHref("models", id)}">${logo("labs", labIdFor(id))}<span><strong>${escapeHtml(model.name)}</strong><small>${escapeHtml(id)}</small></span></a></td>
         <td><a href="${routeHref("labs", labIdFor(id))}">${escapeHtml(labFor(labIdFor(id)).name)}</a></td><td class="number">${modelOfferings(id).length}</td>
-        <td class="number">${formatNumber(model.limit?.context)}</td><td class="number">${formatNumber(model.limit?.output)}</td>
+        <td class="number">${formatTokenLimit(model.limit?.context)}</td><td class="number">${formatTokenLimit(model.limit?.input)}</td><td class="number">${formatTokenLimit(model.limit?.output)}</td><td>${renderModalities(model.modalities)}</td>
         <td>${boolBadge(model.reasoning)}</td><td>${boolBadge(model.tool_call)}</td><td>${boolBadge(model.structured_output)}</td><td>${boolBadge(model.temperature)}</td><td>${boolBadge(model.open_weights)}</td>
-        <td class="number">${minimumPrice(id)}</td><td>${escapeHtml(model.release_date ?? "—")}</td><td>${escapeHtml(model.last_updated ?? "—")}</td>
+        <td class="model-prices-cell">${modelPrices(id)}</td><td>${escapeHtml(model.release_date ?? "—")}</td><td>${escapeHtml(model.last_updated ?? "—")}</td>
       </tr>`).join("")}</tbody></table></div></div>` : '<div class="empty-state">没有符合当前条件的模型。</div>');
   bindListControls();
 }
 
 function renderProviders() {
   const q = state.query.toLowerCase();
-  const providers = Object.entries(state.catalog.providers).filter(([id, provider]) => `${id} ${provider.name ?? ""} ${provider.api ?? ""} ${provider.npm ?? ""}`.toLowerCase().includes(q));
-  app.innerHTML = pageHeading("PROVIDERS", "服务商", "比较国内模型服务商的可调用模型、API 入口、SDK 与官方文档。", `显示 ${providers.length} / ${Object.keys(state.catalog.providers).length}`)
-    + renderMetrics()
-    + `<div class="toolbar"><input data-local-search type="search" value="${escapeHtml(state.query)}" placeholder="筛选服务商名称、ID、API 或 SDK"></div>`
-    + (providers.length ? `<div class="table-panel"><div class="table-scroll"><table><thead><tr><th>服务商</th><th>模型数</th><th>SDK 包</th><th>API 地址</th><th>官方文档</th></tr></thead><tbody>${providers.map(([id, provider]) => `<tr>
+  const providers = Object.entries(state.catalog.providers).filter(([id, provider]) => `${id} ${provider.name ?? ""} ${provider.api ?? ""} ${provider.protocol ?? ""}`.toLowerCase().includes(q));
+  app.innerHTML = pageHeading("PROVIDERS", "服务商", "比较国内模型服务商的可调用模型、API 入口、调用协议与官方文档。", `${providers.length} / ${Object.keys(state.catalog.providers).length} · ${catalogSummary()}`)
+    + `<div class="toolbar"><input data-local-search type="search" value="${escapeHtml(state.query)}" placeholder="筛选服务商名称、ID、API 或协议"></div>`
+    + (providers.length ? `<div class="table-panel"><div class="table-scroll"><table><thead><tr><th>服务商</th><th>模型数</th><th>调用协议</th><th>API 地址</th><th>官方文档</th></tr></thead><tbody>${providers.map(([id, provider]) => `<tr>
       <td><a class="primary-cell row-link" href="${routeHref("providers", id)}">${logo("providers", id)}<span><strong>${escapeHtml(provider.name ?? id)}</strong><small>${escapeHtml(id)}</small></span></a></td>
-      <td class="number">${Object.keys(provider.models ?? {}).length}</td><td><code>${escapeHtml(provider.npm ?? "—")}</code></td>
+      <td class="number">${Object.keys(provider.models ?? {}).length}</td><td><code>${escapeHtml(provider.protocol ?? "-")}</code></td>
       <td>${provider.api ? `<code class="api-address">${escapeHtml(provider.api)}</code>` : "—"}</td>
       <td>${provider.doc ? `<a href="${escapeHtml(provider.doc)}" target="_blank" rel="noreferrer">查看文档</a>` : "—"}</td></tr>`).join("")}</tbody></table></div></div>` : '<div class="empty-state">没有符合当前条件的服务商。</div>');
   bindListControls();
@@ -148,8 +261,7 @@ function labModelEntries(id) {
 function renderLabs() {
   const q = state.query.toLowerCase();
   const labs = Object.entries(state.siteData.labs ?? {}).filter(([id, lab]) => `${id} ${lab.name ?? ""} ${lab.description ?? ""}`.toLowerCase().includes(q));
-  app.innerHTML = pageHeading("LABS", "研发机构", "按研发机构浏览模型家族与规范模型。", `显示 ${labs.length} / ${Object.keys(state.siteData.labs ?? {}).length}`)
-    + renderMetrics()
+  app.innerHTML = pageHeading("LABS", "研发机构", "按研发机构浏览模型家族与规范模型。", `${labs.length} / ${Object.keys(state.siteData.labs ?? {}).length} · ${catalogSummary()}`)
     + `<div class="toolbar"><input data-local-search type="search" value="${escapeHtml(state.query)}" placeholder="筛选机构名称、ID 或描述"></div>`
     + (labs.length ? `<div class="lab-grid">${labs.map(([id, lab]) => `<a class="data-card" href="${routeHref("labs", id)}">${logo("labs", id, true)}<span><strong>${escapeHtml(lab.name ?? id)}</strong><span>${labModelEntries(id).length} 个模型 · ${escapeHtml(id)}</span></span></a>`).join("")}</div>` : '<div class="empty-state">没有符合当前条件的研发机构。</div>');
   bindListControls();
@@ -207,9 +319,12 @@ function renderModelDetail(id) {
   app.innerHTML = `<nav class="breadcrumb"><a href="#/models">模型</a><span>›</span><a href="${routeHref("labs", labId)}">${escapeHtml(lab.name)}</a><span>›</span><span>${escapeHtml(model.name)}</span></nav>
     <header class="page-heading"><div class="detail-title">${logo("labs", labId, true)}<div><p class="eyebrow">MODEL</p><h1>${escapeHtml(model.name)}</h1><p class="lead">${escapeHtml(model.description ?? "暂无中文描述")}</p><code>${escapeHtml(id)}</code></div></div></header>
     <div class="detail-grid"><section class="panel"><h2>核心参数</h2><div class="stat-grid">
-      <div class="stat"><span>上下文窗口</span><strong>${formatNumber(model.limit?.context)}</strong></div><div class="stat"><span>最大输出</span><strong>${formatNumber(model.limit?.output)}</strong></div><div class="stat"><span>发布日期</span><strong>${escapeHtml(model.release_date ?? "未知")}</strong></div>
+      <div class="stat"><span>上下文窗口</span><strong>${formatTokenLimit(model.limit?.context)}</strong></div><div class="stat"><span>最大输入</span><strong>${formatTokenLimit(model.limit?.input)}</strong></div><div class="stat"><span>最大输出</span><strong>${formatTokenLimit(model.limit?.output)}</strong></div><div class="stat"><span>发布日期</span><strong>${escapeHtml(model.release_date ?? "未知")}</strong></div>
     </div></section><aside class="panel"><h2>能力与模态</h2><div class="badge-group">${[["推理", model.reasoning], ["工具调用", model.tool_call], ["结构化输出", model.structured_output], ["开放权重", model.open_weights]].map(([label, value]) => `<span class="capability ${value ? "yes" : ""}">${label}：${value === undefined ? "未知" : BOOLEAN_LABELS[value]}</span>`).join("")}${modalities.map((x) => `<span class="modality">${escapeHtml(x)}</span>`).join("")}</div></aside></div>
-    <section class="section"><div class="section-heading"><h2>服务商与价格</h2><span>${offerings.length} 个可调用版本</span></div>${offerings.length ? `<div class="table-panel"><div class="table-scroll"><table><thead><tr><th>服务商</th><th>调用模型 ID</th><th>输入价格</th><th>输出价格</th><th>上下文窗口</th><th>官方文档</th></tr></thead><tbody>${offerings.map(({ providerId, modelId, provider, model: offering }) => `<tr><td><a href="${routeHref("providers", providerId)}">${escapeHtml(provider.name ?? providerId)}</a></td><td><code>${escapeHtml(modelId)}</code></td><td>${offering.cost?.input == null ? "未公布" : `$${formatNumber(offering.cost.input)}`}</td><td>${offering.cost?.output == null ? "未公布" : `$${formatNumber(offering.cost.output)}`}</td><td>${formatNumber(offering.limit?.context)}</td><td>${provider.doc ? `<a href="${escapeHtml(provider.doc)}" target="_blank" rel="noreferrer">查看文档</a>` : "—"}</td></tr>`).join("")}</tbody></table></div></div>` : '<div class="empty-state">暂未录入可调用此模型的服务商。</div>'}</section>
+    <section class="section"><div class="section-heading"><h2>服务商与价格</h2><span>人民币价格单位：元 / 百万 Token</span></div>${offerings.length ? `<div class="table-panel"><div class="table-scroll"><table class="offering-table"><thead><tr><th>服务商与调用 ID</th><th>上下文窗口</th><th>最大输入</th><th>最大输出</th><th>输入 / 输出</th><th>缓存读 / 写</th><th class="secondary-cell">工具调用</th><th class="secondary-cell">结构化输出</th><th class="secondary-cell">温度参数</th><th class="secondary-cell">模型详情</th></tr></thead><tbody>${offerings.map(({ providerId, modelId, provider, model: offering }) => `<tr>
+      <td class="model-call-cell"><a class="interactive-link" href="${routeHref("providers", providerId)}">${escapeHtml(provider.name ?? providerId)}</a><span class="call-id"><code>${escapeHtml(modelId)}</code><button class="copy-button" type="button" data-copy="${escapeHtml(modelId)}" aria-label="复制调用模型 ID" title="复制调用模型 ID">⧉</button></span></td>
+      <td class="key-cell number">${formatTokenLimit(offering.limit?.context)}</td><td class="key-cell number">${formatTokenLimit(offering.limit?.input)}</td><td class="key-cell number">${formatTokenLimit(offering.limit?.output)}</td><td class="key-cell number">${formatCnyTiered(offering.cost_cn, "input", "output")}</td><td class="key-cell number">${formatCnyTiered(offering.cost_cn, "cache_read", "cache_write")}</td>
+      <td class="secondary-cell">${boolBadge(offering.tool_call)}</td><td class="secondary-cell">${boolBadge(offering.structured_output)}</td><td class="secondary-cell">${boolBadge(offering.temperature)}</td><td class="secondary-cell">${offering.doc ? `<a class="interactive-link" href="${escapeHtml(offering.doc)}" target="_blank" rel="noreferrer">模型详情</a>` : provider.doc ? `<a class="interactive-link" href="${escapeHtml(provider.doc)}" target="_blank" rel="noreferrer">服务商文档</a>` : "-"}</td></tr>`).join("")}</tbody></table></div></div>` : '<div class="empty-state">暂未录入可调用此模型的服务商。</div>'}</section>
     ${fullDataSection(model, "模型全部字段")}`;
   bindTabs();
 }
@@ -224,10 +339,22 @@ function renderProviderDetail(id) {
   const provider = state.catalog.providers[id];
   if (!provider) return renderNotFound("服务商", id, "providers");
   const models = Object.entries(provider.models ?? {});
-  app.innerHTML = `<nav class="breadcrumb"><a href="#/providers">服务商</a><span>›</span><span>${escapeHtml(provider.name ?? id)}</span></nav>
-    <header class="page-heading"><div class="detail-title">${logo("providers", id, true)}<div><p class="eyebrow">PROVIDER</p><h1>${escapeHtml(provider.name ?? id)}</h1><p class="lead">共录入 ${models.length} 个可调用模型。</p><code>${escapeHtml(id)}</code></div></div><div class="detail-actions">${provider.doc ? `<a class="button-link" href="${escapeHtml(provider.doc)}" target="_blank" rel="noreferrer">官方文档</a>` : ""}</div></header>
-    <div class="detail-grid"><section class="panel"><h2>接入信息</h2><div class="field-tree">${renderFieldRows({ api: provider.api, npm: provider.npm, env: provider.env })}</div></section><aside class="panel"><h2>目录统计</h2><div class="stat-grid"><div class="stat"><span>模型数</span><strong>${models.length}</strong></div><div class="stat"><span>SDK</span><strong>${escapeHtml(provider.npm ?? "未提供")}</strong></div><div class="stat"><span>环境变量</span><strong>${formatNumber(provider.env?.length ?? 0)}</strong></div></div></aside></div>
-    <section class="section"><div class="section-heading"><h2>可调用模型</h2><span>${models.length} 个版本</span></div>${models.length ? `<div class="table-panel"><div class="table-scroll"><table><thead><tr><th>模型</th><th>调用模型 ID</th><th>输入价格</th><th>输出价格</th><th>上下文窗口</th><th>推理能力</th></tr></thead><tbody>${models.map(([modelId, model]) => { const canonical = canonicalForOffering(id, modelId); return `<tr><td>${canonical ? `<a class="row-link" href="${routeHref("models", canonical)}"><strong>${escapeHtml(model.name ?? canonical)}</strong><small>${escapeHtml(canonical)}</small></a>` : `<strong>${escapeHtml(model.name ?? modelId)}</strong><small>服务商专属模型</small>`}</td><td><code>${escapeHtml(modelId)}</code></td><td>${model.cost?.input == null ? "未公布" : `$${formatNumber(model.cost.input)}`}</td><td>${model.cost?.output == null ? "未公布" : `$${formatNumber(model.cost.output)}`}</td><td>${formatNumber(model.limit?.context)}</td><td>${boolBadge(model.reasoning)}</td></tr>`; }).join("")}</tbody></table></div></div>` : '<div class="empty-state">暂未录入该服务商的模型。</div>'}</section>
+  app.innerHTML = `<nav class="breadcrumb provider-breadcrumb"><a href="#/providers">服务商</a><span>›</span><span>${escapeHtml(provider.name ?? id)}</span></nav>
+    <header class="page-heading provider-heading"><div class="detail-title">${logo("providers", id, true)}<div><p class="eyebrow">PROVIDER</p><h1>${escapeHtml(provider.name ?? id)}</h1><p class="lead">${escapeHtml(id)} · ${models.length} 个可调用模型</p></div></div><div class="detail-actions">${provider.doc ? `<a class="button-link" href="${escapeHtml(provider.doc)}" target="_blank" rel="noreferrer">官方文档</a>` : ""}</div></header>
+    <div class="detail-grid provider-overview"><section class="panel"><div class="field-tree">${renderFieldRows({ api: provider.api, protocol: provider.protocol, env: provider.env })}</div></section><aside class="panel"><div class="stat-grid"><div class="stat"><span>模型数</span><strong>${models.length}</strong></div><div class="stat"><span>调用协议</span><strong>${escapeHtml(provider.protocol ?? "-")}</strong></div><div class="stat"><span>环境变量</span><strong>${formatNumber(provider.env?.length ?? 0)}</strong></div></div></aside></div>
+    <section class="section"><div class="section-heading"><h2>可调用模型</h2><span>人民币价格单位：元 / 百万 Token</span></div>${models.length ? `<div class="table-panel"><div class="table-scroll"><table class="offering-table"><thead><tr>
+      <th>模型与调用 ID</th><th>上下文窗口</th><th>最大输入</th><th>最大输出</th><th>模态</th><th>输入 / 输出</th><th>缓存读 / 写</th>
+      <th class="secondary-cell">推理</th><th class="secondary-cell">工具调用</th><th class="secondary-cell">结构化输出</th><th class="secondary-cell">温度参数</th><th class="secondary-cell">模型详情</th>
+    </tr></thead><tbody>${models.map(([modelId, model]) => {
+      const canonical = canonicalForOffering(id, modelId);
+      const cny = model.cost_cn;
+      return `<tr>
+        <td class="model-call-cell">${canonical ? `<a class="interactive-link" href="${routeHref("models", canonical)}">${escapeHtml(model.name ?? canonical)}</a>` : `<strong>${escapeHtml(model.name ?? modelId)}</strong>`}<span class="call-id"><code>${escapeHtml(modelId)}</code><button class="copy-button" type="button" data-copy="${escapeHtml(modelId)}" aria-label="复制调用模型 ID" title="复制调用模型 ID">⧉</button></span></td>
+        <td class="key-cell number">${formatTokenLimit(model.limit?.context)}</td><td class="key-cell number">${formatTokenLimit(model.limit?.input)}</td><td class="key-cell number">${formatTokenLimit(model.limit?.output)}</td><td class="key-cell">${renderModalities(model.modalities)}</td>
+        <td class="key-cell number">${formatCnyTiered(cny, "input", "output")}</td><td class="key-cell number">${formatCnyTiered(cny, "cache_read", "cache_write")}</td>
+        <td class="secondary-cell">${boolBadge(model.reasoning)}</td><td class="secondary-cell">${boolBadge(model.tool_call)}</td><td class="secondary-cell">${boolBadge(model.structured_output)}</td><td class="secondary-cell">${boolBadge(model.temperature)}</td><td class="secondary-cell">${model.doc ? `<a class="interactive-link" href="${escapeHtml(model.doc)}" target="_blank" rel="noreferrer">模型详情</a>` : provider.doc ? `<a class="interactive-link" href="${escapeHtml(provider.doc)}" target="_blank" rel="noreferrer">服务商文档</a>` : "-"}</td>
+      </tr>`;
+    }).join("")}</tbody></table></div></div>` : '<div class="empty-state">暂未录入该服务商的模型。</div>'}</section>
     ${fullDataSection(provider, "服务商全部字段")}`;
   bindTabs();
 }
@@ -298,6 +425,51 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && document.activeElement === searchInput) { state.query = ""; searchInput.value = ""; render(); }
 });
 window.addEventListener("hashchange", render);
+
+function syncTableStickyTop() {
+  const height = siteHeader?.getBoundingClientRect().height ?? 0;
+  document.documentElement.style.setProperty("--table-sticky-top", `${Math.ceil(height)}px`);
+}
+
+syncTableStickyTop();
+window.addEventListener("resize", syncTableStickyTop);
+if (siteHeader && "ResizeObserver" in window) {
+  new ResizeObserver(syncTableStickyTop).observe(siteHeader);
+}
+
+async function copyToClipboard(value) {
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(value);
+      return;
+    } catch {
+      // file:// 页面可能无法使用 Clipboard API，继续使用兼容方案。
+    }
+  }
+  const textarea = document.createElement("textarea");
+  textarea.value = value;
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+  document.body.append(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  textarea.remove();
+}
+
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) return;
+  await copyToClipboard(button.dataset.copy);
+  button.classList.add("copied");
+  button.textContent = "✓";
+  button.setAttribute("aria-label", "已复制调用模型 ID");
+  window.setTimeout(() => {
+    if (!button.isConnected) return;
+    button.classList.remove("copied");
+    button.textContent = "⧉";
+    button.setAttribute("aria-label", "复制调用模型 ID");
+  }, 1400);
+});
 
 async function boot() {
   try {

@@ -1,0 +1,18 @@
+# API 模型 deepseek-v4-flash 当前对应官方 DeepSeek-V4-Flash 版本。
+base_model = "deepseek/deepseek-v4-flash"
+doc = "https://api-docs.deepseek.com/zh-cn/quick_start/pricing"
+
+[[reasoning_options]]
+type = "toggle"
+
+[[reasoning_options]]
+type = "effort"
+values = ["low", "high", "max"]
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 1
+output = 2
+cache_read = 0.02

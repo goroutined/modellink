@@ -1,0 +1,22 @@
+name = "GLM-4.6V"
+description = "智谱原生支持工具调用的开放权重视觉推理模型，针对视觉 Agent 和前端代码复刻优化。"
+family = "glm"
+release_date = "2025-12-08"
+last_updated = "2025-12-08"
+attachment = true
+reasoning = true
+tool_call = true
+open_weights = true
+
+[limit]
+context = 131_072
+output = 32_768
+
+[modalities]
+input = ["text", "image", "video", "pdf"]
+output = ["text"]
+
+[[links]]
+label = "智谱模型详情"
+url = "https://docs.bigmodel.cn/cn/guide/models/vlm/glm-4.6v"
+type = "docs"

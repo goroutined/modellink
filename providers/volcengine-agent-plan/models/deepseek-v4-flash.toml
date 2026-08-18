@@ -1,0 +1,12 @@
+base_model = "deepseek/deepseek-v4-flash-0731"
+base_model_omit = ["reasoning", "temperature", "tool_call", "structured_output"]
+name = "DeepSeek V4 Flash"
+doc = "https://www.volcengine.com/docs/82379/2366394?lang=zh"
+
+[limit]
+context = 1_024_000
+output = 384_000
+
+[modalities]
+input = ["text"]
+output = ["text"]

@@ -1,0 +1,11 @@
+base_model = "bytedance/doubao-seed-2.1-turbo"
+base_model_omit = ["limit.input", "reasoning", "temperature", "tool_call", "structured_output"]
+doc = "https://www.volcengine.com/docs/82379/2366394?lang=zh"
+
+[limit]
+context = 256_000
+output = 262_144
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]

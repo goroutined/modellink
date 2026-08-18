@@ -1,0 +1,23 @@
+base_model = "alibaba/qwen3.7-plus"
+doc = "https://bailian.console.aliyun.com/cn-beijing/?tab=model#/model-market/detail/qwen3.7-plus"
+
+[[reasoning_options]]
+type = "toggle"
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 2
+output = 8
+cache_read = 0.4
+cache_write = 2.5
+
+[[cost_cn.tiers]]
+input = 6
+output = 24
+cache_read = 1.2
+cache_write = 7.5
+
+[cost_cn.tiers.tier]
+size = 256_000

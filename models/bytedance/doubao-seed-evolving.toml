@@ -1,0 +1,30 @@
+name = "Doubao Seed Evolving"
+description = "面向 Coding 与 Agent 场景持续升级的滚动模型，强化复杂任务编排、长程规划、代码生成与工具调用；默认开启 high 强度思考。"
+family = "doubao-seed"
+release_date = "2026-08-01"
+last_updated = "2026-08-01"
+attachment = true
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 1_048_576
+input = 1_048_576
+output = 262_144
+
+[modalities]
+input = ["text", "image", "video", "pdf"]
+output = ["text"]
+
+[[links]]
+label = "火山方舟模型列表"
+url = "https://www.volcengine.com/docs/82379/1330310?lang=zh&redirect=1"
+type = "docs"
+
+[[links]]
+label = "火山方舟模型详情"
+url = "https://console.volcengine.com/ark/region:cn-beijing/model/detail?Id=doubao-seed-evolving"
+type = "model_card"

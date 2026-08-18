@@ -1,0 +1,15 @@
+base_model = "moonshot/kimi-k2.7-code"
+name = "Kimi K2.7 Code HighSpeed"
+doc = "https://platform.kimi.com/docs/guide/kimi-k2-7-code-quickstart"
+
+[[reasoning_options]]
+type = "effort"
+values = ["default"]
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 13
+output = 54
+cache_read = 2.6

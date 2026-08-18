@@ -1,0 +1,20 @@
+base_model = "zhipu/glm-5.2"
+doc = "https://bailian.console.aliyun.com/cn-beijing/?tab=model#/model-market/detail/glm-5.2"
+
+[[reasoning_options]]
+type = "toggle"
+
+[[reasoning_options]]
+type = "effort"
+values = ["none", "minimal", "low", "medium", "high", "xhigh", "max"]
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+input = 1_048_576
+
+[cost_cn]
+input = 8
+output = 28
+cache_read = 2

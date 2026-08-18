@@ -1,0 +1,24 @@
+name = "GLM-5.2"
+description = "智谱 AI 面向长程任务推出的开放权重旗舰模型，支持百万级上下文、推理、编程与工具调用。"
+family = "glm"
+release_date = "2026-06-16"
+last_updated = "2026-06-16"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = true
+
+[limit]
+context = 1_048_576
+output = 131_072
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "智谱模型详情"
+url = "https://docs.bigmodel.cn/cn/guide/models/text/glm-5.2"
+type = "docs"

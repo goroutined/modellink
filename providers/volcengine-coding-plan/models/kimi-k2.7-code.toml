@@ -1,0 +1,10 @@
+base_model = "moonshot/kimi-k2.7-code"
+doc = "https://www.volcengine.com/docs/82379/1925114"
+
+[[reasoning_options]]
+type = "effort"
+values = ["default"]
+
+[limit]
+context = 256_000
+output = 32_000

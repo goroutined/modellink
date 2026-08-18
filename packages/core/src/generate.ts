@@ -228,11 +228,11 @@ function applyOmit(target: Record<string, unknown>, paths: string[]) {
 }
 
 function normalizeModelCost(model: z.infer<typeof AuthoredModel>): Model {
-  return normalizeCost(model) as Model;
+  return normalizeCost(model, "cost") as Model;
 }
 
-function normalizeCost(model: Record<string, unknown>) {
-  const cost = model.cost;
+function normalizeCost(model: Record<string, unknown>, field: "cost" | "cost_cn") {
+  const cost = model[field];
   if (cost === undefined || cost === null || typeof cost !== "object" || Array.isArray(cost)) {
     return model;
   }
@@ -268,7 +268,7 @@ function normalizeCost(model: Record<string, unknown>) {
   const { tier: _tier, ...legacyCost } = contextOver200k as Record<string, unknown>;
   return {
     ...model,
-    cost: {
+    [field]: {
       ...(cost as Record<string, unknown>),
       context_over_200k: legacyCost,
     },

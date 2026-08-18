@@ -1,0 +1,63 @@
+base_model = "deepseek/deepseek-v4-pro-0813"
+doc = "https://bailian.console.aliyun.com/cn-beijing/?tab=model#/model-market/detail/deepseek-v4-pro-0813"
+name = "DeepSeek V4 Pro 0813"
+
+[[reasoning_options]]
+type = "toggle"
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 1_000_000
+input = 1_000_000
+output = 393_216
+
+[cost_cn]
+input = 4.5
+output = 13.5
+cache_read = 0.15
+
+[[cost_cn.tiers]]
+input = 4.5
+output = 13.5
+cache_read = 0.15
+
+[cost_cn.tiers.tier]
+type = "conditional"
+label = "闲时"
+
+[cost_cn.tiers.tier.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.tier.time.windows]]
+start = "00:00"
+end = "09:00"
+
+[[cost_cn.tiers.tier.time.windows]]
+start = "12:00"
+end = "14:00"
+
+[[cost_cn.tiers.tier.time.windows]]
+start = "18:00"
+end = "00:00"
+
+[[cost_cn.tiers]]
+input = 9
+output = 27
+cache_read = 0.3
+
+[cost_cn.tiers.tier]
+type = "conditional"
+label = "忙时"
+
+[cost_cn.tiers.tier.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.tier.time.windows]]
+start = "09:00"
+end = "12:00"
+
+[[cost_cn.tiers.tier.time.windows]]
+start = "14:00"
+end = "18:00"

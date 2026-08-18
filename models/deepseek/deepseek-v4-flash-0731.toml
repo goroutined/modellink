@@ -1,0 +1,24 @@
+name = "DeepSeek V4 Flash 0731"
+description = "DeepSeek V4 Flash 的正式开放权重版本，面向高效推理、智能体编程与长上下文任务。"
+family = "deepseek-flash"
+release_date = "2026-07-31"
+last_updated = "2026-07-31"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = true
+license = "MIT"
+
+[limit]
+context = 1_000_000
+output = 384_000
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731"

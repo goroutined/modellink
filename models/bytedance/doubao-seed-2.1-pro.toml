@@ -1,0 +1,30 @@
+name = "Doubao Seed 2.1 Pro"
+description = "豆包旗舰级 Agent 通用模型，面向生产级任务，强化编程、智能体与多模态能力。"
+family = "doubao-seed"
+release_date = "2026-06-28"
+last_updated = "2026-06-28"
+attachment = true
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 262_144
+input = 262_144
+output = 262_144
+
+[modalities]
+input = ["text", "image", "video", "pdf"]
+output = ["text"]
+
+[[links]]
+label = "火山方舟模型列表"
+url = "https://www.volcengine.com/docs/82379/1330310?lang=zh&redirect=1"
+type = "docs"
+
+[[links]]
+label = "火山方舟模型详情"
+url = "https://console.volcengine.com/ark/region:cn-beijing/model/detail?Id=doubao-seed-2-1-pro"
+type = "model_card"

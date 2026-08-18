@@ -1,0 +1,21 @@
+name = "Doubao Seed 2.0 Mini"
+description = "豆包 Seed 2.0 系列极速多模态模型，优先优化响应速度与调用成本，适合高并发 Agent 和通用生产任务。"
+family = "doubao-seed"
+release_date = "2026-04-28"
+last_updated = "2026-04-28"
+attachment = true
+reasoning = true
+open_weights = false
+
+[limit]
+context = 262_144
+output = 131_072
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[[links]]
+label = "火山方舟 Agent Plan 套餐概览"
+url = "https://www.volcengine.com/docs/82379/2366394?lang=zh"
+type = "docs"

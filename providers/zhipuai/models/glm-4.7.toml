@@ -1,0 +1,56 @@
+base_model = "zhipu/glm-4.7"
+doc = "https://docs.bigmodel.cn/cn/guide/models/text/glm-4.7"
+
+[[reasoning_options]]
+type = "toggle"
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 2
+output = 8
+cache_read = 0.4
+
+[[cost_cn.tiers]]
+input = 2
+output = 8
+cache_read = 0.4
+
+[cost_cn.tiers.tier]
+type = "conditional"
+
+[cost_cn.tiers.tier.input]
+gte = 0
+lt = 32_000
+
+[cost_cn.tiers.tier.output]
+gte = 0
+lt = 200
+
+[[cost_cn.tiers]]
+input = 3
+output = 14
+cache_read = 0.6
+
+[cost_cn.tiers.tier]
+type = "conditional"
+
+[cost_cn.tiers.tier.input]
+gte = 0
+lt = 32_000
+
+[cost_cn.tiers.tier.output]
+gte = 200
+
+[[cost_cn.tiers]]
+input = 4
+output = 16
+cache_read = 0.8
+
+[cost_cn.tiers.tier]
+type = "conditional"
+
+[cost_cn.tiers.tier.input]
+gte = 32_000
+lt = 200_000

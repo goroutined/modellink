@@ -1,5 +1,6 @@
-name = "Alibaba (China)"
+name = "阿里云百炼"
 env = ["DASHSCOPE_API_KEY"]
 npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
 api = "https://dashscope.aliyuncs.com/compatible-mode/v1"
-doc = "https://www.alibabacloud.com/help/en/model-studio/models"
+doc = "https://help.aliyun.com/zh/model-studio/getting-started/models"

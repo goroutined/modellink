@@ -1,0 +1,20 @@
+base_model = "alibaba/qwen3.8-max"
+doc = "https://bailian.console.aliyun.com/cn-beijing/?tab=model#/model-market/detail/qwen3.8-max"
+
+[[reasoning_options]]
+type = "effort"
+values = ["low", "medium", "xhigh"]
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 1_000_000
+input = 983_616
+output = 131_072
+
+[cost_cn]
+input = 12
+output = 36
+cache_read = 1.5
+cache_write = 15

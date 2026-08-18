@@ -64,7 +64,10 @@ for (const offerings of Object.values(modelProviders)) {
 await Bun.write(path.join(root, "docs", "api.json"), JSON.stringify(providers, null, 2) + "\n");
 await Bun.write(path.join(root, "docs", "models.json"), JSON.stringify(models, null, 2) + "\n");
 await Bun.write(path.join(root, "docs", "catalog.json"), JSON.stringify(catalog, null, 2) + "\n");
-const siteData = { labs: sortRecord(labs), model_providers: sortRecord(modelProviders) };
+const siteData = {
+  labs: sortRecord(labs),
+  model_providers: sortRecord(modelProviders),
+};
 await Bun.write(path.join(root, "docs", "site-data.json"), JSON.stringify(siteData, null, 2) + "\n");
 await Bun.write(
   path.join(root, "docs", "data.js"),

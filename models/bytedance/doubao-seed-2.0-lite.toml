@@ -1,0 +1,30 @@
+name = "Doubao Seed 2.0 Lite"
+description = "豆包 Seed 2.0 系列高性价比多模态模型，面向通用对话、内容生成、工具调用与智能体任务。"
+family = "doubao-seed"
+release_date = "2026-04-28"
+last_updated = "2026-04-28"
+attachment = true
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 262_144
+input = 229_376
+output = 131_072
+
+[modalities]
+input = ["text", "image", "video", "pdf"]
+output = ["text"]
+
+[[links]]
+label = "火山方舟模型列表"
+url = "https://www.volcengine.com/docs/82379/1330310?lang=zh&redirect=1"
+type = "docs"
+
+[[links]]
+label = "火山方舟模型详情"
+url = "https://console.volcengine.com/ark/region:cn-beijing/model/detail?Id=doubao-seed-2-0-lite"
+type = "model_card"
