@@ -12,6 +12,7 @@ open_weights = false
 
 [limit]
 context = 1_000_000
+output = 524_288
 
 [modalities]
 input = ["text", "image", "video"]

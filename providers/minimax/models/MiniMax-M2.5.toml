@@ -1,5 +1,5 @@
 base_model = "minimax/minimax-m2.5"
-endpoints = ["openai", "anthropic"]
+endpoints = ["openai", "anthropic", "responses"]
 doc = "https://platform.minimaxi.com/docs/guides/text-generation"
 
 [[reasoning_options]]

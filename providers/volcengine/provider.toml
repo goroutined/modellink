@@ -10,3 +10,8 @@ id = "openai"
 protocol = "openai-compatible"
 api = "https://ark.cn-beijing.volces.com/api/v3"
 default = true
+
+[[endpoints]]
+id = "responses"
+protocol = "openai-responses"
+api = "https://ark.cn-beijing.volces.com/api/v3"

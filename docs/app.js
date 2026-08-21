@@ -37,7 +37,7 @@ const state = {
   siteData: { labs: {}, model_providers: {} },
   query: "",
   modelFilters: { lab: "all", reasoning: "all", weights: "all" },
-  modelSort: { key: "name", direction: 1 },
+  modelSort: { key: "release_date", direction: -1 },
   expandedSeries: new Set(),
 };
 
@@ -364,7 +364,15 @@ function renderModels() {
   }).sort((left, right) => {
     const a = modelSortValue(left.representative, state.modelSort.key);
     const b = modelSortValue(right.representative, state.modelSort.key);
-    return (typeof a === "number" && typeof b === "number" ? a - b : String(a).localeCompare(String(b), "zh-CN")) * state.modelSort.direction;
+    if (state.modelSort.key === "release_date") {
+      if (!a && b) return 1;
+      if (a && !b) return -1;
+    }
+    const primary = (typeof a === "number" && typeof b === "number" ? a - b : String(a).localeCompare(String(b), "zh-CN")) * state.modelSort.direction;
+    if (primary) return primary;
+    const name = String(left.representative[1].name ?? left.representative[0])
+      .localeCompare(String(right.representative[1].name ?? right.representative[0]), "zh-CN");
+    return name || left.representative[0].localeCompare(right.representative[0]);
   });
   const visibleModelCount = groups.reduce((sum, group) => sum + group.visibleMembers.length, 0);
 

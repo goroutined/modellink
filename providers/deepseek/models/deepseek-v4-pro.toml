@@ -1,5 +1,5 @@
 base_model = "deepseek/deepseek-v4-pro-0813"
-endpoints = ["openai", "anthropic"]
+endpoints = ["openai", "anthropic", "responses"]
 doc = "https://api-docs.deepseek.com/zh-cn/quick_start/pricing"
 
 [[reasoning_options]]

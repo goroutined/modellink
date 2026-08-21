@@ -2,7 +2,16 @@
 
 中国 AI 模型与推理服务商的开源目录，并保持与 [models.dev](https://models.dev) 的数据格式兼容。
 
-ModelLink 保留 models.dev 核心字段，并增加适合中国开发者的扩展字段。仓库当前仅保留已核验数据和少量结构样例，完整中国区数据将分批录入。
+[在线浏览](https://goroutined.github.io/modellink/) · [兼容输出](#兼容输出) · [参与贡献](./CONTRIBUTING.md)
+
+ModelLink 不只是 models.dev 的中国镜像。它保留 models.dev 核心结构，让现有工具可以低成本迁移，同时围绕中国开发者和 Agent 应用补充更实用的数据：
+
+- **中国区官方数据**：收录国内主流模型、API 服务与订阅套餐，价格以中国区官网人民币原价为准，不做美元换算。
+- **面向 Agent 开发**：重点整理上下文、最大输入输出、推理模式、工具调用、结构化输出和多模态能力。
+- **多协议与多入口**：统一记录 OpenAI Chat、Anthropic Messages、OpenAI Responses 及各自 Base URL。
+- **真实计费模型**：支持缓存、阶梯、分时、思考模式、积分和 Token Plan，不把复杂价格压成一个失真的数字。
+- **兼容且可扩展**：提供 models.dev 兼容输出，也提供包含中国区特色字段的完整目录和中文可视化页面。
+- **官网优先、持续核验**：模型参数、调用 ID 和价格直接依据服务商当前官方文档维护，社区可以共同补充与纠错。
 
 ## 数据结构
 
@@ -40,22 +49,9 @@ providers/<provider-id>/
 
 源码中的 `base_model` 和 `base_model_omit` 只参与构建，不会出现在输出 JSON 中。
 
-## 本地开发
+## 参与贡献
 
-需要 [Bun](https://bun.sh/)：
-
-```bash
-bun install
-bun run check
-```
-
-常用命令：
-
-```bash
-bun run validate  # 校验 TOML、引用和最终模型约束
-bun test          # 运行继承与输出测试
-bun run build     # 生成三个兼容 JSON 和 logo
-```
+欢迎提交新的模型、服务商、官方价格与数据修正。开发环境、录入规则和校验方式请参阅 [贡献指南](./CONTRIBUTING.md)。
 
 ## 当前范围
 

@@ -15,3 +15,8 @@ default = true
 id = "anthropic"
 protocol = "anthropic-compatible"
 api = "https://api.deepseek.com/anthropic"
+
+[[endpoints]]
+id = "responses"
+protocol = "openai-responses"
+api = "https://api.deepseek.com"

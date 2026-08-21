@@ -1,11 +1,26 @@
 # 贡献指南
 
-ModelLink 当前的数据格式与 models.dev catalog 保持一致。提交数据前请先运行：
+感谢你帮助 ModelLink 完善中国 AI 模型与服务商数据。项目使用 [Bun](https://bun.sh/) 进行开发，首次运行先安装依赖：
 
 ```bash
 bun install
+```
+
+提交数据前请运行完整检查：
+
+```bash
 bun run check
 ```
+
+常用命令：
+
+```bash
+bun run validate  # 校验 TOML、引用和最终模型约束
+bun test          # 运行继承、扩展和输出测试
+bun run build     # 生成兼容 JSON、完整目录和 logo
+```
+
+ModelLink 保持 models.dev 核心格式兼容，并通过扩展字段补充中国区协议、人民币价格和订阅套餐等信息。请勿手工编辑构建产物，数据录入规则见下文。
 
 ## 添加 canonical model
 

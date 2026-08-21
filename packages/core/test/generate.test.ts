@@ -291,12 +291,33 @@ describe("catalog generation", () => {
     });
 
     const canonicalMinimaxM3 = catalog.models["minimax/minimax-m3"];
-    expect(canonicalMinimaxM3?.limit).toEqual({ context: 1_000_000 });
+    expect(canonicalMinimaxM3?.limit).toEqual({
+      context: 1_000_000,
+      output: 524_288,
+    });
     expect(canonicalMinimaxM3?.temperature).toBe(true);
 
     const minimaxApi = catalog.providers.minimax;
     expect(minimaxApi?.api).toBe("https://api.minimaxi.com/v1");
     expect(minimaxApi?.name).toBe("MiniMax");
+    expect(minimaxApi?.endpoints).toEqual([
+      {
+        id: "openai",
+        protocol: "openai-compatible",
+        api: "https://api.minimaxi.com/v1",
+        default: true,
+      },
+      {
+        id: "anthropic",
+        protocol: "anthropic-compatible",
+        api: "https://api.minimaxi.com/anthropic",
+      },
+      {
+        id: "responses",
+        protocol: "openai-responses",
+        api: "https://api.minimaxi.com/v1",
+      },
+    ]);
     expect(Object.keys(minimaxApi?.models ?? {}).sort()).toEqual([
       "MiniMax-M2",
       "MiniMax-M2.1",
@@ -313,6 +334,15 @@ describe("catalog generation", () => {
     expect(minimaxApi?.models["MiniMax-M3"]?.provider).toEqual({
       body: { reasoning_split: true },
     });
+    expect(minimaxApi?.models["MiniMax-M3"]?.limit).toEqual({
+      context: 1_000_000,
+      output: 524_288,
+    });
+    expect(minimaxApi?.models["MiniMax-M3"]?.endpoints).toEqual([
+      "openai",
+      "anthropic",
+      "responses",
+    ]);
     expect(minimaxApi?.models["MiniMax-M3"]?.cost_cn).toEqual({
       input: 2.1,
       output: 8.4,
@@ -347,7 +377,7 @@ describe("catalog generation", () => {
     ];
     for (const id of minimaxCanonicalIds) {
       const model = catalog.models[id];
-      expect(model?.limit).toEqual({ context: 204_800 });
+      expect(model?.limit).toEqual({ context: 204_800, output: 204_800 });
       expect(model?.open_weights).toBe(true);
       expect(model?.tool_call).toBe(true);
       expect(model?.modalities).toEqual({ input: ["text"], output: ["text"] });
@@ -404,6 +434,10 @@ describe("catalog generation", () => {
     ]);
     expect(minimaxTokenPlan?.models["MiniMax-M3"]).not.toHaveProperty("cost_cn");
     expect(minimaxTokenPlan?.models["MiniMax-M3"]).not.toHaveProperty("cost_points");
+    expect(minimaxTokenPlan?.models["MiniMax-M3"]?.limit).toEqual({
+      context: 1_000_000,
+      output: 524_288,
+    });
 
     const mimo =
       catalog.providers["alibaba-cn"]?.models["xiaomi/mimo-v2.5-pro"];
@@ -440,10 +474,16 @@ describe("catalog generation", () => {
         protocol: "anthropic-compatible",
         api: "https://api.deepseek.com/anthropic",
       },
+      {
+        id: "responses",
+        protocol: "openai-responses",
+        api: "https://api.deepseek.com",
+      },
     ]);
     expect(deepseek?.models["deepseek-v4-flash"]?.endpoints).toEqual([
       "openai",
       "anthropic",
+      "responses",
     ]);
     expect(deepseek?.models["deepseek-v4-flash"]?.cost_cn).toEqual({
       input: 1,
@@ -472,6 +512,19 @@ describe("catalog generation", () => {
     const volcengine = catalog.providers.volcengine;
     expect(volcengine?.api).toBe("https://ark.cn-beijing.volces.com/api/v3");
     expect(volcengine?.protocol).toBe("openai-compatible");
+    expect(volcengine?.endpoints).toEqual([
+      {
+        id: "openai",
+        protocol: "openai-compatible",
+        api: "https://ark.cn-beijing.volces.com/api/v3",
+        default: true,
+      },
+      {
+        id: "responses",
+        protocol: "openai-responses",
+        api: "https://ark.cn-beijing.volces.com/api/v3",
+      },
+    ]);
     expect(Object.keys(volcengine?.models ?? {}).sort()).toEqual(
       [
         "deepseek-v4-flash-260425",
@@ -691,6 +744,24 @@ describe("catalog generation", () => {
       "https://ark.cn-beijing.volces.com/api/coding/v3",
     );
     expect(codingPlan?.protocol).toBe("openai-compatible");
+    expect(codingPlan?.endpoints).toEqual([
+      {
+        id: "openai",
+        protocol: "openai-compatible",
+        api: "https://ark.cn-beijing.volces.com/api/coding/v3",
+        default: true,
+      },
+      {
+        id: "anthropic",
+        protocol: "anthropic-compatible",
+        api: "https://ark.cn-beijing.volces.com/api/coding",
+      },
+      {
+        id: "responses",
+        protocol: "openai-responses",
+        api: "https://ark.cn-beijing.volces.com/api/coding/v3",
+      },
+    ]);
     expect(Object.keys(codingPlan?.models ?? {}).sort()).toEqual([
       "deepseek-v4-flash",
       "deepseek-v4-pro",
@@ -776,6 +847,19 @@ describe("catalog generation", () => {
       "https://ark.cn-beijing.volces.com/api/plan/v3",
     );
     expect(agentPlan?.protocol).toBe("openai-compatible");
+    expect(agentPlan?.endpoints).toEqual([
+      {
+        id: "openai",
+        protocol: "openai-compatible",
+        api: "https://ark.cn-beijing.volces.com/api/plan/v3",
+        default: true,
+      },
+      {
+        id: "responses",
+        protocol: "openai-responses",
+        api: "https://ark.cn-beijing.volces.com/api/plan/v3",
+      },
+    ]);
     expect(Object.keys(agentPlan?.models ?? {}).sort()).toEqual([
       "deepseek-v4-flash",
       "deepseek-v4-pro",
