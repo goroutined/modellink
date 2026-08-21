@@ -1,4 +1,5 @@
 base_model = "deepseek/deepseek-v4-flash"
+endpoints = ["openai", "anthropic", "responses"]
 doc = "https://help.aliyun.com/zh/model-studio/deepseek-v4-flash"
 name = "DeepSeek V4 Flash"
 structured_output = true

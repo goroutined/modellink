@@ -5,13 +5,13 @@ release_date = "2026-06-01"
 last_updated = "2026-06-01"
 attachment = true
 reasoning = true
-temperature = false
+temperature = true
 tool_call = true
 structured_output = false
 open_weights = false
 
 [limit]
-context = 1_048_576
+context = 1_000_000
 
 [modalities]
 input = ["text", "image", "video"]

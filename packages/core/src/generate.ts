@@ -124,6 +124,26 @@ async function generateProviders(
       }
       provider.data.models[modelID] = normalizeModelCost(model.data);
     }
+
+    const endpointIDs = new Set(
+      provider.data.endpoints?.map((endpoint) => endpoint.id) ?? [],
+    );
+    for (const [modelID, model] of Object.entries(provider.data.models)) {
+      if (model.endpoints === undefined) continue;
+      if (provider.data.endpoints === undefined) {
+        throw new Error(
+          `Model "${modelID}" declares endpoints but provider "${providerID}" does not`,
+          { cause: { providerID, modelID, endpoints: model.endpoints } },
+        );
+      }
+      const unknown = model.endpoints.filter((endpoint) => !endpointIDs.has(endpoint));
+      if (unknown.length > 0) {
+        throw new Error(
+          `Model "${modelID}" references unknown provider endpoints: ${unknown.join(", ")}`,
+          { cause: { providerID, modelID, endpoints: model.endpoints } },
+        );
+      }
+    }
     result[providerID] = provider.data;
   }
 

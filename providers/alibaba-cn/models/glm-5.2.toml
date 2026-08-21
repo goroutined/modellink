@@ -1,4 +1,5 @@
 base_model = "zhipu/glm-5.2"
+endpoints = ["openai", "anthropic", "responses"]
 doc = "https://bailian.console.aliyun.com/cn-beijing/?tab=model#/model-market/detail/glm-5.2"
 
 [[reasoning_options]]

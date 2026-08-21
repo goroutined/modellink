@@ -1,6 +1,7 @@
 name = "DeepSeek V4 Flash"
 description = "DeepSeek V4 Flash 的预览版本，面向高效推理、智能体编程与百万 Token 长上下文任务。"
 family = "deepseek-flash"
+series = "deepseek-v4-flash"
 release_date = "2026-04-25"
 last_updated = "2026-04-25"
 attachment = false

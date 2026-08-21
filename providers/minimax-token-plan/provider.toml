@@ -1,0 +1,40 @@
+name = "MiniMax Token Plan"
+env = ["MINIMAX_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://api.minimaxi.com/v1"
+doc = "https://platform.minimaxi.com/docs/token-plan/intro"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://api.minimaxi.com/v1"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://api.minimaxi.com/anthropic"
+
+[[plans_cn]]
+name = "Plus"
+price_month = 49
+usage = "轻量个人开发与日常试用"
+quota_windows = ["5 小时固定窗口", "周窗口"]
+
+[[plans_cn]]
+name = "Max"
+price_month = 119
+usage = "高频编程 Agent 与多模态调用"
+quota_windows = ["5 小时固定窗口", "周窗口"]
+
+[[plans_cn]]
+name = "Ultra"
+price_month = 469
+usage = "重度 Agent 工作流与更长时间使用"
+quota_windows = ["5 小时固定窗口", "周窗口"]
+
+[credits_cn]
+points = 1_000
+cny = 7
+valid_days = 365

@@ -1,4 +1,5 @@
 base_model = "alibaba/qwen3-32b"
+endpoints = ["openai", "anthropic"]
 doc = "https://api-docs.siliconflow.cn/docs/api/chat-completions-post"
 name = "Qwen3 32B on SiliconFlow"
 reasoning_options = [{ type = "toggle" }, { type = "budget_tokens", min = 128, max = 32_768 }]

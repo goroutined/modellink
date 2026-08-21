@@ -137,6 +137,8 @@ export const ModelFamilyValues = [
 
   // MiniMax
   "minimax",
+  "minimax-m2",
+  "minimax-m2.1",
   "minimax-m2.5",
   "minimax-m2.7",
   "minimax-m3",

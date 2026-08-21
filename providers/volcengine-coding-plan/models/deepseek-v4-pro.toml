@@ -1,4 +1,5 @@
 base_model = "deepseek/deepseek-v4-pro"
+endpoints = ["openai", "anthropic"]
 doc = "https://www.volcengine.com/docs/82379/1925114"
 structured_output = false
 

@@ -4,3 +4,9 @@ npm = "@ai-sdk/openai-compatible"
 protocol = "openai-compatible"
 api = "https://ark.cn-beijing.volces.com/api/v3"
 doc = "https://www.volcengine.com/docs/82379/1330310?lang=zh&redirect=1"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://ark.cn-beijing.volces.com/api/v3"
+default = true

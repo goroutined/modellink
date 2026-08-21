@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test";
 import path from "node:path";
 
 import { generateCatalog } from "../src/generate.js";
-import { CostTierSelector } from "../src/schema.js";
+import { CostTierSelector, Provider } from "../src/schema.js";
 
 const root = path.join(import.meta.dirname, "..", "..", "..");
 
@@ -29,6 +29,76 @@ describe("catalog generation", () => {
         ],
       },
     });
+  });
+
+  test("accepts explicit inclusive and exclusive token boundaries", () => {
+    expect(
+      CostTierSelector.parse({
+        type: "conditional",
+        input: { lte: 512_000 },
+      }),
+    ).toEqual({ type: "conditional", input: { lte: 512_000 } });
+    expect(
+      CostTierSelector.parse({
+        type: "conditional",
+        input: { gt: 512_000 },
+      }),
+    ).toEqual({ type: "conditional", input: { gt: 512_000 } });
+    expect(() =>
+      CostTierSelector.parse({
+        type: "conditional",
+        input: { gt: 512_000, gte: 512_001 },
+      }),
+    ).toThrow();
+    expect(() =>
+      CostTierSelector.parse({
+        type: "conditional",
+        input: { lt: 512_000, lte: 512_000 },
+      }),
+    ).toThrow();
+  });
+
+  test("validates provider endpoints against the legacy default", () => {
+    const provider = {
+      id: "example",
+      name: "Example",
+      env: ["EXAMPLE_API_KEY"],
+      npm: "@ai-sdk/openai-compatible",
+      protocol: "openai-compatible",
+      api: "https://api.example.com/v1",
+      doc: "https://docs.example.com/models",
+      models: {},
+      endpoints: [
+        {
+          id: "openai",
+          protocol: "openai-compatible",
+          api: "https://api.example.com/v1",
+          default: true,
+        },
+        {
+          id: "anthropic",
+          protocol: "anthropic-compatible",
+          api: "https://api.example.com/anthropic",
+        },
+      ],
+    } as const;
+
+    expect(Provider.parse(provider).endpoints).toHaveLength(2);
+    expect(() =>
+      Provider.parse({
+        ...provider,
+        endpoints: provider.endpoints.map((endpoint) => ({
+          ...endpoint,
+          default: undefined,
+        })),
+      }),
+    ).toThrow();
+    expect(() =>
+      Provider.parse({
+        ...provider,
+        api: "https://api.example.com/other",
+      }),
+    ).toThrow();
   });
 
   test("keeps canonical models separate and expands provider models", async () => {
@@ -220,6 +290,121 @@ describe("catalog generation", () => {
       cache_read: 0.84,
     });
 
+    const canonicalMinimaxM3 = catalog.models["minimax/minimax-m3"];
+    expect(canonicalMinimaxM3?.limit).toEqual({ context: 1_000_000 });
+    expect(canonicalMinimaxM3?.temperature).toBe(true);
+
+    const minimaxApi = catalog.providers.minimax;
+    expect(minimaxApi?.api).toBe("https://api.minimaxi.com/v1");
+    expect(minimaxApi?.name).toBe("MiniMax");
+    expect(Object.keys(minimaxApi?.models ?? {}).sort()).toEqual([
+      "MiniMax-M2",
+      "MiniMax-M2.1",
+      "MiniMax-M2.1-highspeed",
+      "MiniMax-M2.5",
+      "MiniMax-M2.5-highspeed",
+      "MiniMax-M2.7",
+      "MiniMax-M2.7-highspeed",
+      "MiniMax-M3",
+    ]);
+    expect(minimaxApi?.models["MiniMax-M3"]?.interleaved).toEqual({
+      field: "reasoning_details",
+    });
+    expect(minimaxApi?.models["MiniMax-M3"]?.provider).toEqual({
+      body: { reasoning_split: true },
+    });
+    expect(minimaxApi?.models["MiniMax-M3"]?.cost_cn).toEqual({
+      input: 2.1,
+      output: 8.4,
+      cache_read: 0.42,
+      tiers: [
+        {
+          input: 2.1,
+          output: 8.4,
+          cache_read: 0.42,
+          tier: {
+            type: "conditional",
+            input: { lte: 512_000 },
+          },
+        },
+        {
+          input: 4.2,
+          output: 16.8,
+          cache_read: 0.84,
+          tier: {
+            type: "conditional",
+            input: { gt: 512_000 },
+          },
+        },
+      ],
+    });
+
+    const minimaxCanonicalIds = [
+      "minimax/minimax-m2",
+      "minimax/minimax-m2.1",
+      "minimax/minimax-m2.5",
+      "minimax/minimax-m2.7",
+    ];
+    for (const id of minimaxCanonicalIds) {
+      const model = catalog.models[id];
+      expect(model?.limit).toEqual({ context: 204_800 });
+      expect(model?.open_weights).toBe(true);
+      expect(model?.tool_call).toBe(true);
+      expect(model?.modalities).toEqual({ input: ["text"], output: ["text"] });
+    }
+
+    const minimaxModelPrices = {
+      "MiniMax-M2": { input: 2.1, output: 8.4, cache_read: 0.21, cache_write: 2.625 },
+      "MiniMax-M2.1": { input: 2.1, output: 8.4, cache_read: 0.21, cache_write: 2.625 },
+      "MiniMax-M2.1-highspeed": { input: 4.2, output: 16.8, cache_read: 0.21, cache_write: 2.625 },
+      "MiniMax-M2.5": { input: 2.1, output: 8.4, cache_read: 0.21, cache_write: 2.625 },
+      "MiniMax-M2.5-highspeed": { input: 4.2, output: 16.8, cache_read: 0.21, cache_write: 2.625 },
+      "MiniMax-M2.7": { input: 2.1, output: 8.4, cache_read: 0.42, cache_write: 2.625 },
+      "MiniMax-M2.7-highspeed": { input: 4.2, output: 16.8, cache_read: 0.42, cache_write: 2.625 },
+    } as const;
+    for (const [id, cost] of Object.entries(minimaxModelPrices)) {
+      const model = minimaxApi?.models[id];
+      expect(model?.cost_cn).toEqual(cost);
+      expect(model?.reasoning_options).toEqual([
+        { type: "effort", values: ["default"] },
+      ]);
+      expect(model?.interleaved).toEqual({ field: "reasoning_details" });
+    }
+
+    const minimaxTokenPlan = catalog.providers["minimax-token-plan"];
+    expect(minimaxTokenPlan?.api).toBe("https://api.minimaxi.com/v1");
+    expect(minimaxTokenPlan?.plans_cn).toEqual([
+      {
+        name: "Plus",
+        price_month: 49,
+        usage: "轻量个人开发与日常试用",
+        quota_windows: ["5 小时固定窗口", "周窗口"],
+      },
+      {
+        name: "Max",
+        price_month: 119,
+        usage: "高频编程 Agent 与多模态调用",
+        quota_windows: ["5 小时固定窗口", "周窗口"],
+      },
+      {
+        name: "Ultra",
+        price_month: 469,
+        usage: "重度 Agent 工作流与更长时间使用",
+        quota_windows: ["5 小时固定窗口", "周窗口"],
+      },
+    ]);
+    expect(minimaxTokenPlan?.credits_cn).toEqual({
+      points: 1_000,
+      cny: 7,
+      valid_days: 365,
+    });
+    expect(Object.keys(minimaxTokenPlan?.models ?? {}).sort()).toEqual([
+      "MiniMax-M2.7",
+      "MiniMax-M3",
+    ]);
+    expect(minimaxTokenPlan?.models["MiniMax-M3"]).not.toHaveProperty("cost_cn");
+    expect(minimaxTokenPlan?.models["MiniMax-M3"]).not.toHaveProperty("cost_points");
+
     const mimo =
       catalog.providers["alibaba-cn"]?.models["xiaomi/mimo-v2.5-pro"];
     expect(mimo?.limit).toEqual({
@@ -230,17 +415,50 @@ describe("catalog generation", () => {
     expect(mimo?.cost_cn).toEqual({ input: 7, output: 21, cache_read: 1.4 });
 
     const deepseek = catalog.providers.deepseek;
+    expect(catalog.models["deepseek/deepseek-v4-flash"]?.series).toBe(
+      "deepseek-v4-flash",
+    );
+    expect(catalog.models["deepseek/deepseek-v4-flash-0731"]?.series).toBe(
+      "deepseek-v4-flash",
+    );
+    expect(catalog.models["deepseek/deepseek-v4-pro"]?.series).toBe(
+      "deepseek-v4-pro",
+    );
+    expect(catalog.models["deepseek/deepseek-v4-pro-0813"]?.series).toBe(
+      "deepseek-v4-pro",
+    );
     expect(deepseek?.protocol).toBe("openai-compatible");
+    expect(deepseek?.endpoints).toEqual([
+      {
+        id: "openai",
+        protocol: "openai-compatible",
+        api: "https://api.deepseek.com",
+        default: true,
+      },
+      {
+        id: "anthropic",
+        protocol: "anthropic-compatible",
+        api: "https://api.deepseek.com/anthropic",
+      },
+    ]);
+    expect(deepseek?.models["deepseek-v4-flash"]?.endpoints).toEqual([
+      "openai",
+      "anthropic",
+    ]);
     expect(deepseek?.models["deepseek-v4-flash"]?.cost_cn).toEqual({
       input: 1,
       output: 2,
       cache_read: 0.02,
     });
+    expect(deepseek?.models["deepseek-v4-flash"]?.series).toBe(
+      "deepseek-v4-flash",
+    );
     expect(deepseek?.models["deepseek-v4-flash"]).not.toHaveProperty("cost");
 
     const deepseekV4Pro = deepseek?.models["deepseek-v4-pro"];
     expect(deepseekV4Pro?.name).toBe("DeepSeek V4 Pro 0813");
     expect(deepseekV4Pro?.last_updated).toBe("2026-08-13");
+    expect(deepseekV4Pro?.series).toBe("deepseek-v4-pro");
     expect(deepseekV4Pro?.reasoning_options).toEqual([
       { type: "toggle" },
       { type: "effort", values: ["low", "high", "max"] },
@@ -416,6 +634,57 @@ describe("catalog generation", () => {
     expect(volcengineGlm52?.doc).toBe(
       "https://console.volcengine.com/ark/region:cn-beijing/model/detail?Id=glm-5-2",
     );
+
+    const zhipuCodingPlan = catalog.providers["zhipuai-coding-plan"];
+    expect(zhipuCodingPlan?.api).toBe(
+      "https://open.bigmodel.cn/api/coding/paas/v4",
+    );
+    expect(zhipuCodingPlan?.protocol).toBe("openai-compatible");
+    expect(Object.keys(zhipuCodingPlan?.models ?? {}).sort()).toEqual([
+      "glm-4.7",
+      "glm-5-turbo",
+      "glm-5.3",
+    ]);
+
+    const peakWindow = {
+      days: ["monday", "tuesday", "wednesday", "thursday", "friday"],
+      start: "14:00",
+      end: "18:00",
+      timezone: "Asia/Shanghai",
+    } satisfies {
+      days: Array<"monday" | "tuesday" | "wednesday" | "thursday" | "friday">;
+      start: string;
+      end: string;
+      timezone: string;
+    };
+    expect(zhipuCodingPlan?.models["glm-5.3"]?.cost_points).toEqual({
+      per_tokens: 10_000,
+      input: 6.9,
+      cache_read: 1.7,
+      output: 24,
+      off_peak_multiplier: 0.5,
+      peak_window: peakWindow,
+    });
+    expect(zhipuCodingPlan?.models["glm-5-turbo"]?.cost_points).toEqual({
+      per_tokens: 10_000,
+      input: 5.7,
+      cache_read: 1.5,
+      output: 21,
+      off_peak_multiplier: 0.5,
+      peak_window: peakWindow,
+    });
+    expect(zhipuCodingPlan?.models["glm-4.7"]?.cost_points).toEqual({
+      per_tokens: 10_000,
+      input: 4.6,
+      cache_read: 1.2,
+      output: 16,
+      off_peak_multiplier: 0.5,
+      peak_window: peakWindow,
+    });
+    expect(zhipuCodingPlan?.models["glm-5.3"]?.reasoning_options).toEqual([
+      { type: "effort", values: ["low", "high", "max"] },
+    ]);
+    expect(zhipuCodingPlan?.models["glm-5.3"]).not.toHaveProperty("cost_cn");
 
     const codingPlan = catalog.providers["volcengine-coding-plan"];
     expect(codingPlan?.api).toBe(

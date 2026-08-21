@@ -1,6 +1,7 @@
 name = "DeepSeek V4 Pro 0813"
 description = "DeepSeek V4 Pro 的正式更新版本，重点增强复杂推理、智能体编程与工具调用能力。"
 family = "deepseek-thinking"
+series = "deepseek-v4-pro"
 release_date = "2026-08-13"
 last_updated = "2026-08-13"
 attachment = false

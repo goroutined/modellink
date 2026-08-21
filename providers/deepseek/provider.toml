@@ -4,3 +4,14 @@ npm = "@ai-sdk/openai-compatible"
 protocol = "openai-compatible"
 doc = "https://api-docs.deepseek.com/zh-cn/quick_start/pricing"
 api = "https://api.deepseek.com"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://api.deepseek.com"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://api.deepseek.com/anthropic"

@@ -1,0 +1,28 @@
+name = "MiniMax M2.1"
+description = "MiniMax 面向多语言编程、工具使用、指令遵循与长程规划优化的开放权重 Agent 模型。"
+family = "minimax-m2.1"
+release_date = "2025-12-23"
+last_updated = "2025-12-23"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = false
+open_weights = true
+
+[limit]
+context = 204_800
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "MiniMax M2.1 发布说明"
+url = "https://www.minimaxi.com/news/minimax-m21"
+type = "announcement"
+
+[[links]]
+label = "MiniMax M2.1 模型权重"
+url = "https://huggingface.co/MiniMaxAI/MiniMax-M2.1"
+type = "weights"

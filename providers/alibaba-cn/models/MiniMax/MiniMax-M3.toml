@@ -8,6 +8,7 @@ type = "toggle"
 field = "reasoning_content"
 
 [limit]
+context = 1_048_576
 input = 1_048_576
 
 [cost_cn]

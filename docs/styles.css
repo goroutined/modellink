@@ -180,6 +180,32 @@ tbody tr:hover { background: color-mix(in srgb, var(--accent-soft) 30%, transpar
 .primary-cell { display: flex; align-items: center; gap: 8px; min-width: 190px; }
 .primary-cell strong { display: block; }
 .primary-cell small, .subtle { display: block; color: var(--muted); font-size: 11px; }
+.series-model-cell { display: flex; align-items: center; gap: 5px; }
+.series-model-cell .primary-cell { min-width: 170px; max-width: 260px; }
+.series-model-cell .primary-cell > span { min-width: 0; }
+.series-model-cell .primary-cell small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.series-title-line { min-width: 0; display: flex; align-items: center; gap: 7px; }
+.series-title-line strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.series-toggle {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+}
+.series-toggle:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.series-count { padding: 1px 6px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-strong); font-size: 9.5px; font-weight: 650; }
+.series-row { background: color-mix(in srgb, var(--surface-soft) 42%, transparent); }
+.version-row { background: color-mix(in srgb, var(--surface-soft) 72%, transparent); }
+.version-row .series-model-cell { padding-left: 27px; }
+.version-row .primary-cell { position: relative; }
+.version-row .primary-cell::before { content: ""; position: absolute; left: -12px; width: 7px; height: 1px; background: var(--line-strong); }
 .row-link strong, .interactive-link {
   text-decoration: underline;
   text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
@@ -283,6 +309,17 @@ tbody tr:hover { background: color-mix(in srgb, var(--accent-soft) 30%, transpar
 }
 .price-help:hover, .price-help:focus { border-color: var(--accent); color: var(--accent-strong); }
 .price-help:hover::after, .price-help:focus::after { opacity: 1; transform: translate(-22%, 0); visibility: visible; }
+.point-cost { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.point-cost > span { display: inline-flex; align-items: baseline; gap: 4px; }
+.point-cost small { color: var(--faint); font-size: 9px; }
+.provider-plans { margin-top: 14px; }
+.plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 8px; }
+.plan-card { min-height: 92px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); }
+.plan-card > span { display: block; color: var(--muted); font-size: 10px; }
+.plan-card strong { display: flex; align-items: baseline; gap: 3px; margin-top: 5px; color: var(--ink); font-size: 18px; font-weight: 600; }
+.plan-card strong small { color: var(--faint); font-size: 9px; font-weight: 400; }
+.plan-card p, .plan-card > small { display: block; margin: 4px 0 0; color: var(--faint); font-size: 9px; line-height: 1.35; }
+.credit-card { background: var(--surface-soft); }
 .model-prices-cell { min-width: 165px; white-space: normal; }
 .model-price-list { display: grid; gap: 5px; }
 .model-price-list > span { display: grid; grid-template-columns: minmax(78px, auto) 1fr; align-items: start; gap: 8px; }
@@ -302,6 +339,22 @@ tbody tr:hover { background: color-mix(in srgb, var(--accent-soft) 30%, transpar
 .modality-icon.both { border-color: color-mix(in srgb, var(--accent) 28%, var(--line)); background: var(--accent-soft); color: var(--accent-strong); }
 .modality-icon.output { border-style: dashed; color: var(--ink); }
 .modality-icon svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+.protocol-list { display: flex; flex-wrap: wrap; gap: 4px; min-width: 112px; }
+.protocol-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 19px;
+  padding: 1px 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 9.5px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.protocol-badge.default { border-color: color-mix(in srgb, var(--accent) 28%, var(--line)); background: var(--accent-soft); color: var(--accent-strong); }
 
 .badge, .capability, .modality {
   display: inline-flex;
@@ -325,6 +378,11 @@ tbody tr:hover { background: color-mix(in srgb, var(--accent-soft) 30%, transpar
 .breadcrumb a:hover { color: var(--accent); }
 .detail-title { display: flex; align-items: flex-start; gap: 16px; }
 .detail-title code { color: var(--muted); }
+.version-switcher { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-top: 9px; }
+.version-switcher > span { margin-right: 2px; color: var(--faint); font-size: 10px; }
+.version-switcher a { padding: 3px 7px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--muted); font-size: 10px; }
+.version-switcher a:hover { border-color: var(--accent); color: var(--accent); }
+.version-switcher a.active { border-color: color-mix(in srgb, var(--accent) 35%, var(--line)); background: var(--accent-soft); color: var(--accent-strong); font-weight: 650; }
 .provider-breadcrumb { margin-bottom: 8px; }
 .provider-heading { align-items: center; margin-bottom: 10px; }
 .provider-heading .detail-title { align-items: center; gap: 11px; }
@@ -352,6 +410,12 @@ tbody tr:hover { background: color-mix(in srgb, var(--accent-soft) 30%, transpar
 .provider-overview .field-tree { gap: 2px; }
 .provider-overview .field-row { padding: 5px 0; }
 .provider-overview .stat { padding: 7px 9px; }
+.endpoint-list { display: grid; gap: 3px; }
+.endpoint-row { display: grid; grid-template-columns: minmax(132px, .4fr) minmax(0, 1fr); align-items: center; gap: 10px; min-height: 28px; padding: 3px 0; border-bottom: 1px solid var(--line); }
+.endpoint-row:last-child { border-bottom: 0; }
+.endpoint-row > span { display: flex; align-items: center; gap: 5px; color: var(--ink); font-size: 10.5px; }
+.endpoint-row small { padding: 1px 4px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-strong); font-size: 8.5px; }
+.endpoint-row .api-address { overflow: hidden; text-overflow: ellipsis; }
 .panel { padding: 14px; }
 .stat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .stat { padding: 9px; border-radius: 8px; background: var(--surface-soft); }

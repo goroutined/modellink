@@ -1,4 +1,5 @@
 base_model = "alibaba/qwen3.8-max"
+endpoints = ["openai", "anthropic", "responses"]
 doc = "https://bailian.console.aliyun.com/cn-beijing/?tab=model#/model-market/detail/qwen3.8-max"
 
 [[reasoning_options]]

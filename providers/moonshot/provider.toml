@@ -4,3 +4,9 @@ npm = "@ai-sdk/openai-compatible"
 protocol = "openai-compatible"
 doc = "https://platform.kimi.com/docs/models"
 api = "https://api.moonshot.cn/v1"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://api.moonshot.cn/v1"
+default = true

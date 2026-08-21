@@ -1,0 +1,17 @@
+name = "MiniMax"
+env = ["MINIMAX_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://api.minimaxi.com/v1"
+doc = "https://platform.minimaxi.com/docs/guides/text-generation"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://api.minimaxi.com/v1"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://api.minimaxi.com/anthropic"

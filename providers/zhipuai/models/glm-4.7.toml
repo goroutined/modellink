@@ -1,4 +1,5 @@
 base_model = "zhipu/glm-4.7"
+endpoints = ["openai", "anthropic"]
 doc = "https://docs.bigmodel.cn/cn/guide/models/text/glm-4.7"
 
 [[reasoning_options]]

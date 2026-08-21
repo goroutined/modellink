@@ -4,3 +4,19 @@ npm = "@ai-sdk/openai-compatible"
 protocol = "openai-compatible"
 api = "https://dashscope.aliyuncs.com/compatible-mode/v1"
 doc = "https://help.aliyun.com/zh/model-studio/getting-started/models"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://dashscope.aliyuncs.com/compatible-mode/v1"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://dashscope.aliyuncs.com/apps/anthropic"
+
+[[endpoints]]
+id = "responses"
+protocol = "openai-responses"
+api = "https://dashscope.aliyuncs.com/compatible-mode/v1"

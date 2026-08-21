@@ -1,0 +1,15 @@
+base_model = "zhipu/glm-5.3"
+endpoints = ["openai", "anthropic"]
+doc = "https://docs.bigmodel.cn/cn/guide/models/text/glm-5.3"
+
+[[reasoning_options]]
+type = "effort"
+values = ["low", "high", "max"]
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 8
+output = 28
+cache_read = 2

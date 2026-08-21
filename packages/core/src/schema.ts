@@ -100,17 +100,50 @@ const CnyCost = Cost.extend({
 const TokenRange = z
   .object({
     gte: z.number().int().min(0, "Token range minimum cannot be negative").optional(),
+    gt: z.number().int().min(0, "Token range minimum cannot be negative").optional(),
     lt: z.number().int().min(0, "Token range maximum cannot be negative").optional(),
+    lte: z.number().int().min(0, "Token range maximum cannot be negative").optional(),
   })
   .strict()
-  .refine((range) => range.gte !== undefined || range.lt !== undefined, {
-    message: "Token range must define gte or lt",
-  })
-  .refine(
-    (range) =>
-      range.gte === undefined || range.lt === undefined || range.gte < range.lt,
-    { message: "Token range gte must be less than lt" },
-  );
+  .superRefine((range, context) => {
+    if (
+      range.gte === undefined &&
+      range.gt === undefined &&
+      range.lt === undefined &&
+      range.lte === undefined
+    ) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Token range must define gt, gte, lt, or lte",
+      });
+    }
+    if (range.gte !== undefined && range.gt !== undefined) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Token range cannot define both gt and gte",
+        path: ["gt"],
+      });
+    }
+    if (range.lt !== undefined && range.lte !== undefined) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Token range cannot define both lt and lte",
+        path: ["lte"],
+      });
+    }
+
+    const lower = range.gte ?? range.gt;
+    const upper = range.lt ?? range.lte;
+    if (lower === undefined || upper === undefined) return;
+    const includesEqualBoundary =
+      lower === upper && range.gte !== undefined && range.lte !== undefined;
+    if (lower > upper || (lower === upper && !includesEqualBoundary)) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Token range lower bound must not exceed upper bound",
+      });
+    }
+  });
 
 const DailyTimeWindow = z
   .object({
@@ -179,6 +212,39 @@ const OutputCnyCost = CnyCost.extend({
   tiers: z.array(CnyCostTier).optional(),
 }).strict();
 
+const Weekday = z.enum([
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+  "sunday",
+]);
+
+const PointCost = z
+  .object({
+    per_tokens: z.number().int().positive("Point cost token unit must be positive"),
+    input: z.number().min(0, "Input point cost cannot be negative"),
+    output: z.number().min(0, "Output point cost cannot be negative"),
+    cache_read: z.number().min(0, "Cache read point cost cannot be negative").optional(),
+    off_peak_multiplier: z
+      .number()
+      .positive("Off-peak multiplier must be positive")
+      .max(1, "Off-peak multiplier cannot exceed 1")
+      .optional(),
+    peak_window: z
+      .object({
+        days: z.array(Weekday).min(1, "Peak window must contain at least one day"),
+        start: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Time must use HH:mm"),
+        end: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Time must use HH:mm"),
+        timezone: z.string().min(1, "Timezone cannot be empty"),
+      })
+      .strict()
+      .optional(),
+  })
+  .strict();
+
 const DateString = z
   .string()
   .regex(/^\d{4}-\d{2}(-\d{2})?$/, {
@@ -241,6 +307,23 @@ const ProviderModelLimit = LimitBase.extend({
 
 const UrlString = z.string().url("Must be a valid URL");
 
+export const Protocol = z.enum([
+  "openai-compatible",
+  "anthropic-compatible",
+  "openai-responses",
+]);
+
+export const ProviderEndpoint = z
+  .object({
+    id: z
+      .string()
+      .regex(/^[a-z][a-z0-9-]*$/, "Endpoint ID must use lowercase kebab-case"),
+    protocol: Protocol,
+    api: UrlString,
+    default: z.literal(true).optional(),
+  })
+  .strict();
+
 export const ModelLink = z
   .object({
     label: z.string().min(1, "Link label cannot be empty").optional(),
@@ -291,6 +374,7 @@ const ModelMetadataBase = z.object({
   name: z.string().min(1, "Model name cannot be empty"),
   description: z.string().min(1, "Model description cannot be empty"),
   family: ModelFamily.optional(),
+  series: z.string().min(1, "Model series cannot be empty").optional(),
   attachment: z.boolean().optional(),
   reasoning: z.boolean().optional(),
   tool_call: z.boolean().optional(),
@@ -317,6 +401,7 @@ const ModelBase = z.object({
   name: z.string().min(1, "Model name cannot be empty"),
   description: z.string().min(1, "Model description cannot be empty"),
   family: ModelFamily.optional(),
+  series: z.string().min(1, "Model series cannot be empty").optional(),
   attachment: z.boolean(),
   reasoning: z.boolean().optional(),
   reasoning_options: z.array(ReasoningOption).optional(),
@@ -340,6 +425,14 @@ const ModelBase = z.object({
   open_weights: z.boolean(),
   limit: ProviderModelLimit,
   doc: UrlString.optional(),
+  endpoints: z
+    .array(z.string().regex(/^[a-z][a-z0-9-]*$/, "Endpoint ID must use lowercase kebab-case"))
+    .min(1, "Model endpoints cannot be empty")
+    .refine((endpoints) => new Set(endpoints).size === endpoints.length, {
+      message: "Model endpoints cannot contain duplicates",
+    })
+    .optional(),
+  cost_points: PointCost.optional(),
   status: z.enum(["alpha", "beta", "deprecated"]).optional(),
   experimental: z
     .object({
@@ -470,7 +563,33 @@ export const Provider = z
     npm: z.string().min(1, "Provider npm module cannot be empty"),
     protocol: z.string().min(1, "Provider protocol cannot be empty"),
     api: z.string().optional(),
+    endpoints: z
+      .array(ProviderEndpoint)
+      .min(1, "Provider endpoints cannot be empty")
+      .optional(),
     name: z.string().min(1, "Provider name cannot be empty"),
+    plans_cn: z
+      .array(
+        z
+          .object({
+            name: z.string().min(1, "Plan name cannot be empty"),
+            price_month: z.number().min(0, "Monthly plan price cannot be negative"),
+            usage: z.string().min(1, "Plan usage description cannot be empty").optional(),
+            quota_windows: z
+              .array(z.string().min(1, "Quota window cannot be empty"))
+              .optional(),
+          })
+          .strict(),
+      )
+      .optional(),
+    credits_cn: z
+      .object({
+        points: z.number().int().positive("Credit points must be positive"),
+        cny: z.number().positive("Credit CNY value must be positive"),
+        valid_days: z.number().int().positive("Credit validity must be positive").optional(),
+      })
+      .strict()
+      .optional(),
     doc: z
       .string()
       .min(
@@ -489,6 +608,43 @@ export const Provider = z
       message: "'api' is required when protocol is openai-compatible",
       path: ["api"],
     },
-  );
+  )
+  .superRefine((data, context) => {
+    if (data.endpoints === undefined) return;
+
+    const endpointIDs = data.endpoints.map((endpoint) => endpoint.id);
+    if (new Set(endpointIDs).size !== endpointIDs.length) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Provider endpoint IDs must be unique",
+        path: ["endpoints"],
+      });
+    }
+
+    const defaults = data.endpoints.filter(
+      (endpoint) => endpoint.default === true,
+    );
+    if (defaults.length !== 1) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Provider endpoints must contain exactly one default endpoint",
+        path: ["endpoints"],
+      });
+      return;
+    }
+
+    const defaultEndpoint = defaults[0];
+    if (
+      defaultEndpoint !== undefined &&
+      (defaultEndpoint.protocol !== data.protocol ||
+        defaultEndpoint.api !== data.api)
+    ) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Default endpoint must match provider protocol and api",
+        path: ["endpoints"],
+      });
+    }
+  });
 
 export type Provider = z.infer<typeof Provider>;

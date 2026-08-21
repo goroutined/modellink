@@ -1,0 +1,17 @@
+name = "智谱 GLM Coding Plan"
+env = ["ZAI_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://open.bigmodel.cn/api/coding/paas/v4"
+doc = "https://docs.bigmodel.cn/cn/coding-plan/overview"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://open.bigmodel.cn/api/coding/paas/v4"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://open.bigmodel.cn/api/anthropic"

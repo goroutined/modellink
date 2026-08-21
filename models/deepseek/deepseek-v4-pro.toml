@@ -1,6 +1,7 @@
 name = "DeepSeek V4 Pro"
 description = "DeepSeek V4 系列旗舰开放权重模型，面向复杂推理、智能体编程与超长上下文任务。"
 family = "deepseek-thinking"
+series = "deepseek-v4-pro"
 release_date = "2026-04-24"
 last_updated = "2026-04-24"
 attachment = false

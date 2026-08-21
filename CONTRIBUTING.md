@@ -19,6 +19,14 @@ models/<lab-id>/<model-id>.toml
 
 完整模型至少应包含名称、描述、发布日期、更新时间、能力布尔值、模态和上下文限制。示例见 `models/alibaba/qwen3-32b.toml`。
 
+同一产品线存在多个需要独立审计的真实版本时，使用 ModelLink 可选扩展字段 `series` 建立展示关系：
+
+```toml
+series = "deepseek-v4-pro"
+```
+
+同一研发机构下、`series` 相同的 canonical model 会在页面中聚合展示，但发布 JSON 仍保留每个完整模型。只有独立发布、能力明显变化、存在独立调用 ID 或独立权重的版本才应拆成 canonical model；服务商别名和普通价格调整不创建新版本。
+
 ## 添加 provider
 
 ```text
@@ -30,13 +38,35 @@ providers/<provider-id>/
 
 兼容层的 `provider.toml` 包含名称、认证环境变量、AI SDK 包、文档地址，以及 OpenAI-compatible provider 的 API 地址。`npm` 仅用于保持 models.dev 兼容，不作为 ModelLink 的协议判断依据。
 
-每个 Provider 同时直接声明 ModelLink 协议扩展字段：
+每个 Provider 同时直接声明 ModelLink 默认协议扩展字段：
 
 ```toml
 protocol = "openai-compatible"
 ```
 
-如果服务商同时支持 OpenAI 与 Anthropic 协议，默认录入 OpenAI-compatible 地址。普通按量 API、Coding Plan、Token Plan 等服务只要接入地址、模型名称或计费方式不同，就分别建立独立 Provider，不能合并模型清单。
+`protocol` 与 `api` 必须保持为默认接入方式，以兼容原有单协议消费者。全部经官网确认的协议和 Base URL 使用 `endpoints` 记录，且必须恰好有一个端点声明 `default = true`，其 `protocol` 和 `api` 必须与 Provider 顶层字段一致：
+
+```toml
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://api.example.com/v1"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://api.example.com/anthropic"
+
+[[endpoints]]
+id = "responses"
+protocol = "openai-responses"
+api = "https://api.example.com/v1"
+```
+
+协议标识固定使用 `openai-compatible`、`anthropic-compatible` 和 `openai-responses`。不同协议即使共用同一个 Base URL，也应建立不同 endpoint；不要把完整请求路径（如 `/chat/completions`、`/messages`、`/responses`）误写成 SDK 所需的 Base URL。
+
+普通按量 API、Coding Plan、Token Plan 等服务只要接入地址、模型名称或计费方式不同，就分别建立独立 Provider，不能合并模型清单。
 
 ## 添加 provider model
 
@@ -44,11 +74,14 @@ protocol = "openai-compatible"
 
 ```toml
 base_model = "alibaba/qwen3-32b"
+endpoints = ["openai", "anthropic"]
 
 [cost_cn]
 input = 1
 output = 4
 ```
+
+Provider Model 的 `endpoints` 只能引用当前 Provider 已声明的 endpoint ID，并表示该模型经官网确认实际支持的协议。省略时只表示支持 Provider 的默认 endpoint，不得自动继承 Provider 的全部协议。Responses 等模型白名单协议必须逐个模型核对，不能因为 Provider 提供对应端点就批量推断全部模型支持。
 
 只写 provider 真实不同的字段。`cost_cn`、`reasoning_options`、`interleaved`、`status`、provider request shape 和 provider-specific limit 通常属于这一层。
 
@@ -77,6 +110,8 @@ Provider 数据必须逐项取自该服务商当前官网：模型是否可用�
 
 开发者社区文章、搜索结果摘要、API 示例、models.dev 和第三方聚合站只能用于发现线索或兼容性对比，不得直接作为模型可用性、调用参数或价格的录入依据。官网未明确公布的字段保持为空，由页面显示 `-`，不得推算或猜测。
 
+模型收录范围以“当前正式可调用且适合 Agent”为准，不限于官网首页推荐或最新一代模型。价格页折叠为“历史模型”但仍在正式模型列表中、有当前价格且没有下线公告的模型应继续收录；只有官网明确已经停用、即将下线，或明显面向角色扮演等非 Agent 场景的小模型才排除。
+
 ## 价格
 
 国内 Provider 模型使用 ModelLink 扩展字段 `cost_cn`，单位为人民币元/百万 Token：
@@ -91,6 +126,27 @@ cache_read = 0.02
 models.dev 的美元 `cost` 仍可被 schema 读取，但 ModelLink 国内数据不要求填写。`cost_cn` 必须来自该 Provider 官方网站中对应中国地域、对应调用 ID 的人民币原价；不得使用 models.dev、第三方聚合站或汇率换算生成中国区价格。没有经过官网核验的人民币价格不要换算或猜测，页面会显示 `-`。
 
 models.dev 只用于发现差异和验证兼容性，不能作为中国区价格的录入来源。
+
+Coding Plan、Token Plan 等订阅服务按积分抵扣时，使用 `cost_points`，不能将积分系数写入人民币 `cost_cn`：
+
+```toml
+[cost_points]
+per_tokens = 10_000
+input = 6.9
+cache_read = 1.7
+output = 24
+off_peak_multiplier = 0.5
+
+[cost_points.peak_window]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "14:00"
+end = "18:00"
+timezone = "Asia/Shanghai"
+```
+
+`per_tokens` 表示积分系数对应的 Token 数量；非高峰倍率与高峰窗口必须来自套餐当前官方规则。人民币订阅金额属于 Provider 套餐信息，不得换算成模型 Token 单价。
+
+Provider 官网直接公布固定人民币月费时，可以通过 `plans_cn` 记录套餐本身；预付积分与人民币存在官方固定兑换关系时使用 `credits_cn`。这两类信息只描述订阅和余额，不替代模型的 `cost_cn` 或 `cost_points`。
 
 价格只按单一输入长度阈值变化时，继续使用兼容的 `type = "context"` 阶梯。价格同时取决于输入量、输出量或每日时段时，使用 ModelLink 的条件阶梯扩展：
 
@@ -115,7 +171,35 @@ gte = 0
 lt = 200
 ```
 
-`gte` 表示包含下界，`lt` 表示不包含上界。条件阶梯应覆盖官网公布的全部计价情况，`cost_cn` 顶层价格作为默认值和兼容回退。按每日高峰、低谷时段计费时可增加以下条件；同一价格可以包含多个时间窗口，开始时间包含、结束时间不包含，开始时间晚于结束时间表示跨越午夜：
+Token 区间支持四种明确边界：`gt` 表示大于，`gte` 表示大于等于，`lt` 表示小于，`lte` 表示小于等于。同一侧只能选择一种边界，不能同时写 `gt` 与 `gte`，也不能同时写 `lt` 与 `lte`。必须原样表达官网的包含关系，不能用 `lt = 512_001` 间接模拟 `lte = 512_000`。
+
+纯输入量、输出量或上下文数值阶梯不要填写 `label`。页面会自动显示“阶梯 1”“阶梯 2”，并根据结构化边界在 `?` 悬浮详情中生成“输入 ≤512K”“输出 >200 Token”等条件：
+
+```toml
+[[cost_cn.tiers]]
+input = 2.1
+output = 8.4
+
+[cost_cn.tiers.tier]
+type = "conditional"
+
+[cost_cn.tiers.tier.input]
+lte = 512_000
+
+[[cost_cn.tiers]]
+input = 4.2
+output = 16.8
+
+[cost_cn.tiers.tier]
+type = "conditional"
+
+[cost_cn.tiers.tier.input]
+gt = 512_000
+```
+
+只有官网赋予计费条件明确且无法单纯由数值边界概括的业务名称时才使用 `label`，例如“高峰期”“低峰期”“优先服务”或“批量调用”。标签只负责概括业务模式，结构化的 Token、时间等条件仍必须完整填写，不能用标签替代真实条件。
+
+条件阶梯应覆盖官网公布的全部计价情况，`cost_cn` 顶层价格只作为兼容回退，不能依赖它补足页面未声明的阶梯。按每日高峰、低谷时段计费时可增加以下条件；同一价格可以包含多个时间窗口，开始时间包含、结束时间不包含，开始时间晚于结束时间表示跨越午夜：
 
 ```toml
 [cost_cn.tiers.tier.time]

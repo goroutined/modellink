@@ -1,0 +1,13 @@
+base_model = "minimax/minimax-m2.7"
+endpoints = ["openai", "anthropic"]
+doc = "https://platform.minimaxi.com/docs/token-plan/intro"
+
+[[reasoning_options]]
+type = "effort"
+values = ["default"]
+
+[interleaved]
+field = "reasoning_details"
+
+[provider.body]
+reasoning_split = true

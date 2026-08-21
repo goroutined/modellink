@@ -1,0 +1,19 @@
+base_model = "minimax/minimax-m2.1"
+endpoints = ["openai", "anthropic"]
+doc = "https://platform.minimaxi.com/docs/guides/text-generation"
+
+[[reasoning_options]]
+type = "effort"
+values = ["default"]
+
+[interleaved]
+field = "reasoning_details"
+
+[provider.body]
+reasoning_split = true
+
+[cost_cn]
+input = 2.1
+output = 8.4
+cache_read = 0.21
+cache_write = 2.625
