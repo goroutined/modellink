@@ -1,0 +1,25 @@
+name = "openPangu 2.0 Flash"
+description = "华为基于昇腾训练的 92B MoE 高性价比模型，每 Token 激活约 6B 参数，兼顾推理质量与生成速度。"
+family = "openpangu"
+release_date = "2026-06-30"
+last_updated = "2026-06-30"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = false
+open_weights = true
+
+[limit]
+context = 524_288
+input = 512_000
+output = 131_072
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "华为官方介绍"
+url = "https://www.huawei.com/cn/news/2026/6/open-pangu-flash-model"
+type = "announcement"

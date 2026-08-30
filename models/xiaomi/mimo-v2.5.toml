@@ -1,0 +1,29 @@
+name = "MiMo V2.5"
+description = "小米推出的原生全模态长上下文模型，面向多模态理解、复杂推理、工具调用与智能体任务。"
+family = "mimo-v2.5"
+release_date = "2026-04-23"
+last_updated = "2026-07"
+attachment = true
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = true
+license = "MIT"
+
+[limit]
+context = 1_048_576
+output = 131_072
+
+[modalities]
+input = ["text", "image", "video", "audio"]
+output = ["text"]
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/XiaomiMiMo/MiMo-V2.5"
+
+[[links]]
+label = "官方模型详情"
+url = "https://mimo.mi.com/models/zh-CN/mimo-v2.5"
+type = "docs"

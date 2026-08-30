@@ -12,7 +12,6 @@ open_weights = true
 
 [limit]
 context = 204_800
-output = 204_800
 
 [modalities]
 input = ["text"]

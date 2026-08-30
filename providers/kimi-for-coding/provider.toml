@@ -1,0 +1,17 @@
+name = "Kimi For Coding"
+env = ["KIMI_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://api.kimi.com/coding/v1"
+doc = "https://www.kimi.com/code/docs/"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://api.kimi.com/coding/v1"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://api.kimi.com/coding"

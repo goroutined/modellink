@@ -1,0 +1,9 @@
+base_model = "baichuan/baichuan3-turbo-128k"
+base_model_omit = ["reasoning"]
+endpoints = ["openai"]
+doc = "https://platform.baichuan-ai.com/prices"
+structured_output = true
+
+[cost_cn]
+input = 24
+output = 24

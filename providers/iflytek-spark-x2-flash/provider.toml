@@ -1,0 +1,17 @@
+name = "讯飞星火 X2 Flash API"
+env = ["IFLYTEK_SPARK_API_PASSWORD"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://spark-api-open.xf-yun.com/agent/v1"
+doc = "https://www.xfyun.cn/doc/spark/X2-Flash.html"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://spark-api-open.xf-yun.com/agent/v1"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://spark-api-open.xf-yun.com/anthropic/agent/v1"

@@ -1,0 +1,19 @@
+base_model = "minimax/minimax-m2.7"
+endpoints = ["openai", "responses", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/132246"
+
+[interleaved]
+field = "reasoning_content"
+
+[provider.body]
+reasoning_split = true
+
+[limit]
+context = 204_800
+input = 204_800
+output = 131_072
+
+[cost_cn]
+input = 2.1
+output = 8.4
+cache_read = 0.42

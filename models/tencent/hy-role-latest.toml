@@ -1,0 +1,20 @@
+name = "Hy-Role-Latest"
+description = "腾讯混元角色扮演模型的持续更新版本，面向数字分身、剧情互动与情感陪聊。"
+family = "hunyuan"
+series = "hy-role"
+release_date = "2026-04-29"
+last_updated = "2026-04-29"
+attachment = false
+reasoning = false
+tool_call = false
+structured_output = false
+open_weights = false
+
+[limit]
+context = 32_768
+input = 28_672
+output = 4_096
+
+[modalities]
+input = ["text"]
+output = ["text"]

@@ -1,0 +1,9 @@
+base_model = "moonshot/kimi-k2.7-code"
+endpoints = ["openai", "anthropic"]
+doc = "https://www.kimi.com/code/docs/kimi-code/models.html"
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 262_144

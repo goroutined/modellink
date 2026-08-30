@@ -1,0 +1,17 @@
+name = "硅基流动"
+env = ["SILICONFLOW_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://api.siliconflow.cn/v1"
+doc = "https://www.siliconflow.cn/models"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://api.siliconflow.cn/v1"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://api.siliconflow.cn/v1"

@@ -1,0 +1,25 @@
+name = "ERNIE 5.1"
+description = "百度面向自主决策 Agent、推理、知识与深度搜索任务推出的新一代文心旗舰模型。"
+family = "ernie"
+release_date = "2026-05-09"
+last_updated = "2026-05-09"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 128_000
+input = 119_000
+output = 65_536
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "文心 5.1 官方发布"
+url = "https://ernie.baidu.com/blog/zh/posts/ernie-5.1-0508-release/"
+type = "announcement"

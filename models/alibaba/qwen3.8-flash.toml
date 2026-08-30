@@ -1,0 +1,21 @@
+name = "Qwen3.8 Flash"
+description = "阿里巴巴推出的低成本多模态 MoE 模型，面向编程、办公、工具驱动工作流与高吞吐智能体场景。"
+family = "qwen"
+release_date = "2026-08-26"
+last_updated = "2026-08-26"
+attachment = true
+reasoning = true
+tool_call = true
+open_weights = false
+
+[limit]
+context = 1_000_000
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[[links]]
+label = "Qwen 官方发布说明"
+url = "https://qwen.ai/blog?id=qwen3.8-flash-next"
+type = "announcement"

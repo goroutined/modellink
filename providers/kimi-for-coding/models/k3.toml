@@ -1,0 +1,13 @@
+base_model = "moonshot/kimi-k3"
+endpoints = ["openai", "anthropic"]
+doc = "https://www.kimi.com/code/docs/kimi-code/models.html"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high", "max"]
+default = "high"
+
+[interleaved]
+field = "reasoning_content"

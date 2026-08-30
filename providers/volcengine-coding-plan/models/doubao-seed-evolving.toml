@@ -1,0 +1,12 @@
+base_model = "bytedance/doubao-seed-evolving"
+endpoints = ["openai", "anthropic"]
+base_model_omit = ["temperature", "structured_output", "limit.input"]
+doc = "https://www.volcengine.com/docs/82379/1925114"
+
+[limit]
+context = 1_024_000
+output = 262_144
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]

@@ -1,0 +1,8 @@
+base_model = "moonshot/kimi-k2.6"
+base_model_omit = ["temperature"]
+endpoints = ["openai"]
+doc = "https://docs.infini-ai.com/gen-studio/api/text-generation/tutorial-reasoning/kimi.html"
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]

@@ -1,0 +1,8 @@
+base_model = "alibaba/qwen3-coder-next"
+endpoints = ["openai", "anthropic"]
+doc = "https://help.aliyun.com/zh/model-studio/coding-plan-faq"
+
+[limit]
+context = 262_144
+input = 204_800
+output = 65_536

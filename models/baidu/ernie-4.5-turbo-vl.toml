@@ -1,0 +1,24 @@
+name = "ERNIE 4.5 Turbo VL"
+description = "百度推出的多模态文心模型，面向图像理解、图文问答、创作、翻译与代码任务。"
+family = "ernie"
+series = "ernie-4.5-turbo-vl"
+release_date = "2025-08-07"
+last_updated = "2025-08-07"
+attachment = true
+reasoning = false
+temperature = true
+open_weights = false
+
+[limit]
+context = 128_000
+input = 123_000
+output = 16_384
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[[links]]
+label = "千帆模型列表"
+url = "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+type = "docs"

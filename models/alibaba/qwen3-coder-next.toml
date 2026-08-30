@@ -1,0 +1,30 @@
+name = "Qwen3 Coder Next"
+description = "阿里巴巴开放权重的新一代代码模型，重点优化仓库级理解、多轮工具交互与 Agentic Coding。"
+family = "qwen"
+release_date = "2026-02-03"
+last_updated = "2026-02-03"
+attachment = false
+reasoning = false
+temperature = true
+tool_call = true
+structured_output = false
+open_weights = true
+
+[limit]
+context = 262_144
+input = 204_800
+output = 65_536
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "Qwen 官方模型卡"
+url = "https://huggingface.co/Qwen/Qwen3-Coder-Next"
+type = "model_card"
+
+[[links]]
+label = "阿里云百炼模型详情"
+url = "https://help.aliyun.com/zh/model-studio/qwen3-coder-next"
+type = "docs"

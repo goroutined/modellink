@@ -1,0 +1,37 @@
+name = "阶跃星辰 Step Plan"
+env = ["STEPFUN_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://api.stepfun.com/step_plan/v1"
+doc = "https://platform.stepfun.com/docs/zh/step-plan/overview"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://api.stepfun.com/step_plan/v1"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://api.stepfun.com/step_plan"
+
+[[plans_cn]]
+name = "Flash Mini"
+price_month = 49
+usage = "每月 400M Credits"
+
+[[plans_cn]]
+name = "Flash Plus"
+price_month = 99
+usage = "每月 1,600M Credits"
+
+[[plans_cn]]
+name = "Flash Pro"
+price_month = 199
+usage = "每月 8,000M Credits"
+
+[[plans_cn]]
+name = "Flash Max"
+price_month = 699
+usage = "每月 40,000M Credits"

@@ -1,0 +1,51 @@
+base_model = "deepseek/deepseek-v4-flash-0731"
+name = "DeepSeek V4 Flash 0731 正式版"
+endpoints = ["openai", "responses", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/132248"
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["openai"]
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["high", "max"]
+default = "high"
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 1_000_000
+input = 1_000_000
+output = 393_216
+
+[cost_cn]
+input = 1.5
+output = 4.5
+cache_read = 0.05
+
+[[cost_cn.tiers]]
+input = 1.5
+output = 4.5
+cache_read = 0.05
+[cost_cn.tiers.tier]
+type = "conditional"
+label = "闲时"
+[cost_cn.tiers.tier.time]
+timezone = "Asia/Shanghai"
+windows = [{ start = "00:00", end = "09:00" }, { start = "12:00", end = "14:00" }, { start = "18:00", end = "24:00" }]
+
+[[cost_cn.tiers]]
+input = 3
+output = 9
+cache_read = 0.1
+[cost_cn.tiers.tier]
+type = "conditional"
+label = "高峰时段"
+[cost_cn.tiers.tier.time]
+timezone = "Asia/Shanghai"
+windows = [{ start = "09:00", end = "12:00" }, { start = "14:00", end = "18:00" }]

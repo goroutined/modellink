@@ -1,0 +1,19 @@
+name = "Hy-MT2-Pro"
+description = "腾讯混元旗舰翻译模型，面向专业领域和高质量多语种翻译。"
+family = "hunyuan"
+release_date = "2026-05-14"
+last_updated = "2026-05-14"
+attachment = false
+reasoning = false
+tool_call = false
+structured_output = false
+open_weights = false
+
+[limit]
+context = 8_192
+input = 4_096
+output = 4_096
+
+[modalities]
+input = ["text"]
+output = ["text"]

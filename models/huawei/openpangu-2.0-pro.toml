@@ -1,0 +1,25 @@
+name = "openPangu 2.0 Pro"
+description = "华为基于昇腾训练的 505B MoE 旗舰模型，每 Token 激活约 18B 参数，面向复杂推理、编程与智能体任务。"
+family = "openpangu"
+release_date = "2026-07-31"
+last_updated = "2026-07-31"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = false
+open_weights = true
+
+[limit]
+context = 524_288
+input = 512_000
+output = 131_072
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "华为云官方介绍"
+url = "https://www.huaweicloud.com/news/2026/20260731095113610.html"
+type = "announcement"

@@ -1,0 +1,13 @@
+base_model = "zhipu/glm-5.3"
+base_model_omit = ["temperature", "interleaved"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ppio.com/llm/zai-org-glm-5.3"
+
+[limit]
+context = 1_048_576
+output = 131_072
+
+[cost_cn]
+input = 8
+output = 28
+cache_read = 2

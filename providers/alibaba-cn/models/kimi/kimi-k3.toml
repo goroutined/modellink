@@ -1,10 +1,6 @@
 base_model = "moonshot/kimi-k3"
 doc = "https://bailian.console.aliyun.com/cn-beijing/?tab=model#/model-market/detail/kimi%2Fkimi-k3?serviceSite=asia-pacific-china"
 
-[[reasoning_options]]
-type = "effort"
-values = ["max"]
-
 [interleaved]
 field = "reasoning_content"
 

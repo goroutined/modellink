@@ -1,0 +1,28 @@
+base_model = "alibaba/qwen3.5-27b"
+base_model_omit = ["temperature", "limit.output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.siliconflow.cn/models?target=Qwen%2FQwen3.5-27B"
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 0.6
+output = 4.8
+
+[[cost_cn.tiers]]
+input = 0.6
+output = 4.8
+[cost_cn.tiers.tier]
+type = "conditional"
+[cost_cn.tiers.tier.input]
+gte = 0
+lt = 128_000
+
+[[cost_cn.tiers]]
+input = 1.8
+output = 14.4
+[cost_cn.tiers.tier]
+type = "conditional"
+[cost_cn.tiers.tier.input]
+gte = 128_000

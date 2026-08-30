@@ -1,0 +1,13 @@
+base_model = "nex-agi/nex-n2-pro"
+base_model_omit = ["temperature"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.siliconflow.cn/models?target=nex-agi%2FNex-N2-Pro"
+structured_output = true
+
+[limit]
+context = 262_144
+
+[cost_cn]
+input = 1.75
+output = 7
+cache_read = 0.175

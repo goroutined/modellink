@@ -1,0 +1,22 @@
+name = "360 智脑开放平台"
+env = ["ZHINAO_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://api.360.cn/v1"
+doc = "https://ai.360.com/open/zh/models"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://api.360.cn/v1"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://api.360.cn"
+
+[[endpoints]]
+id = "responses"
+protocol = "openai-responses"
+api = "https://api.360.cn/v1"

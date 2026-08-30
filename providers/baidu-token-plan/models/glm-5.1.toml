@@ -1,0 +1,34 @@
+base_model = "zhipu/glm-5.1"
+base_model_omit = ["temperature", "tool_call"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.baidu.com/doc/qianfan/s/Smoghsq3g"
+
+[limit]
+context = 333_824
+input = 202_752
+output = 131_072
+
+[cost_points]
+per_tokens = 1_000
+input = 6
+output = 24
+cache_read = 1.3
+
+[[cost_points.tiers]]
+input = 6
+output = 24
+cache_read = 1.3
+[cost_points.tiers.tier]
+type = "conditional"
+[cost_points.tiers.tier.input]
+lt = 32_000
+
+[[cost_points.tiers]]
+input = 8
+output = 28
+cache_read = 2
+[cost_points.tiers.tier]
+type = "conditional"
+[cost_points.tiers.tier.input]
+gt = 32_000
+lte = 200_000

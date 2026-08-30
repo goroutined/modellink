@@ -1,0 +1,29 @@
+name = "Doubao Seed 2.0 Pro"
+description = "豆包 Seed 2.0 系列旗舰多模态模型，面向复杂推理、长链路任务执行、工具调用与生产级 Agent 场景。"
+family = "doubao-seed"
+release_date = "2026-02-15"
+last_updated = "2026-02-15"
+attachment = true
+reasoning = true
+tool_call = true
+structured_output = false
+open_weights = false
+
+[limit]
+context = 262_144
+input = 229_376
+output = 131_072
+
+[modalities]
+input = ["text", "image", "video", "pdf"]
+output = ["text"]
+
+[[links]]
+label = "火山方舟模型列表"
+url = "https://www.volcengine.com/docs/82379/1330310?lang=zh&redirect=1"
+type = "docs"
+
+[[links]]
+label = "火山方舟模型详情"
+url = "https://console.volcengine.com/ark/region:cn-beijing/model/detail?Id=doubao-seed-2-0-pro"
+type = "model_card"

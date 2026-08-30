@@ -1,0 +1,26 @@
+base_model = "alibaba/qwen3-30b-a3b"
+base_model_omit = ["structured_output"]
+endpoints = ["openai"]
+doc = "https://support.huaweicloud.com/model-call-maas/usermanual_maas_0008.html"
+tool_call = false
+
+[[reasoning_options]]
+type = "toggle"
+field = "chat_template_kwargs.enable_thinking"
+endpoints = ["openai"]
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 131_072
+input = 131_072
+output = 131_072
+
+[cost_cn]
+input = 0.75
+output = 3
+
+[cost_cn.thinking]
+input = 0.75
+output = 7.5

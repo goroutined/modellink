@@ -1,0 +1,27 @@
+base_model = "deepseek/deepseek-v4-pro"
+base_model_omit = ["tool_call"]
+endpoints = ["openai", "responses", "anthropic"]
+doc = "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+temperature = false
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["openai"]
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["high", "max"]
+default = "high"
+
+[limit]
+context = 1_000_000
+input = 1_000_000
+output = 393_216
+
+[cost_cn]
+input = 12
+output = 24
+cache_read = 1

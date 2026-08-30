@@ -1,0 +1,21 @@
+name = "InternVL3 38B"
+description = "上海人工智能实验室推出的开放权重多模态模型，面向图像理解、图文问答与文本生成。"
+family = "internvl"
+release_date = "2025-05-29"
+last_updated = "2025-05-29"
+attachment = true
+open_weights = true
+
+[limit]
+context = 32_768
+input = 24_576
+output = 8_192
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[[links]]
+label = "千帆模型列表"
+url = "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+type = "docs"

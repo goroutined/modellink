@@ -1,0 +1,20 @@
+base_model = "sensetime/sensenova-6.8-flash-lite"
+endpoints = ["openai", "anthropic"]
+doc = "https://platform.sensenova.cn/docs#model-flash"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "medium", "high", "none"]
+default = "medium"
+
+[[reasoning_options]]
+type = "effort"
+field = "output_config.effort"
+endpoints = ["anthropic"]
+values = ["low", "medium", "high"]
+default = "high"
+
+[interleaved]
+field = "reasoning_content"

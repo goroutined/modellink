@@ -1,0 +1,17 @@
+name = "阶跃星辰"
+env = ["STEPFUN_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://api.stepfun.com/v1"
+doc = "https://platform.stepfun.com/docs/zh/guides/models/overview"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://api.stepfun.com/v1"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://api.stepfun.com"

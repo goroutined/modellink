@@ -1,0 +1,10 @@
+base_model = "deepseek/deepseek-v3.2"
+base_model_omit = ["temperature", "tool_call", "structured_output", "reasoning_options", "interleaved"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.baidu.com/doc/qianfan/s/imlg0beiu"
+reasoning = false
+
+[limit]
+context = 131_072
+input = 98_304
+output = 32_768

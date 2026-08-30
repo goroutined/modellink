@@ -1,0 +1,20 @@
+base_model = "meituan/longcat-2.0"
+base_model_omit = ["structured_output"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://longcat.chat/platform/docs/zh/pricing/long-cat-2.0"
+
+[limit]
+context = 1_048_576
+output = 131_072
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 2
+output = 8
+cache_read = 0.04

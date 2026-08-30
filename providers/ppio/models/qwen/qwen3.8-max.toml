@@ -1,0 +1,17 @@
+base_model = "alibaba/qwen3.8-max"
+base_model_omit = ["temperature", "interleaved", "limit.input"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ppio.com/llm/qwen-qwen3.8-max"
+
+[limit]
+context = 1_000_000
+output = 131_072
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[cost_cn]
+input = 12
+output = 36
+cache_read = 1.5

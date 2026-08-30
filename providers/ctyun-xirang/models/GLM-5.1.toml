@@ -1,0 +1,16 @@
+base_model = "zhipu/glm-5.1"
+base_model_omit = ["temperature", "structured_output"]
+endpoints = ["openai"]
+doc = "https://www.ctyun.cn/products/AIStore"
+
+attachment = false
+reasoning = true
+tool_call = false
+
+[limit]
+context = 204_800
+output = 131_072
+
+[modalities]
+input = ["text"]
+output = ["text"]

@@ -3,6 +3,8 @@ doc = "https://platform.kimi.com/docs/guide/kimi-k2-6-quickstart"
 
 [[reasoning_options]]
 type = "toggle"
+field = "thinking.type"
+endpoints = ["openai"]
 
 [interleaved]
 field = "reasoning_content"

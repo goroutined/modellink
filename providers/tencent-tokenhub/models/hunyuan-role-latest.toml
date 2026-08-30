@@ -1,0 +1,12 @@
+base_model = "tencent/hy-role-latest"
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/132252"
+
+[limit]
+context = 32_768
+input = 28_672
+output = 4_096
+
+[cost_cn]
+input = 2.4
+output = 9.6

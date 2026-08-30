@@ -1,0 +1,10 @@
+base_model = "alibaba/qwen3.7-plus"
+endpoints = ["openai", "anthropic"]
+doc = "https://help.aliyun.com/zh/model-studio/coding-plan-faq"
+
+[[reasoning_options]]
+type = "toggle"
+
+[[reasoning_options]]
+type = "budget_tokens"
+max = 262_144

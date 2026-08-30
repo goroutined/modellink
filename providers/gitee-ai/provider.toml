@@ -1,0 +1,12 @@
+name = "模力方舟（Gitee AI）"
+env = ["GITEE_AI_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://ai.gitee.com/v1"
+doc = "https://ai.gitee.com/serverless-api"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://ai.gitee.com/v1"
+default = true

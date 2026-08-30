@@ -1,0 +1,29 @@
+name = "百度千帆 Coding Plan"
+env = ["QIANFAN_CODING_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://qianfan.baidubce.com/v2/coding"
+doc = "https://cloud.baidu.com/doc/qianfan/s/imlg0beiu"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://qianfan.baidubce.com/v2/coding"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://qianfan.baidubce.com/anthropic/coding"
+
+[[plans_cn]]
+name = "Lite"
+price_month = 40
+usage = "轻量个人编程与交互式 Agent 使用"
+quota_windows = ["每 5 小时约 1,200 次请求", "每周约 9,000 次请求", "每订阅月约 18,000 次请求"]
+
+[[plans_cn]]
+name = "Pro"
+price_month = 200
+usage = "高频编程与多终端 Agent 使用"
+quota_windows = ["每 5 小时约 6,000 次请求", "每周约 45,000 次请求", "每订阅月约 90,000 次请求"]

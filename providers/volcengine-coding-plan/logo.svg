@@ -1,9 +1,2 @@
-<svg width="24" height="24" viewBox="0 0 85 85" xmlns="http://www.w3.org/2000/svg">
-  <g transform="translate(0 5)">
-    <path d="M34.82 28.93 19.85 75h32.16L37.04 28.93c-.35-1.08-1.88-1.08-2.23 0Z" fill="currentColor"/>
-    <path d="M12.83 42.36c-.35-1.08-1.88-1.08-2.23 0L0 75h9.42l7.01-21.57-3.59-11.06Z" fill="currentColor"/>
-    <path d="M29.52 20c-.35-1.08-1.88-1.08-2.23 0L9.42 75h10.43l13.77-42.37L29.52 20Z" fill="currentColor"/>
-    <path d="M71.73 36.43c-.35-1.08-1.88-1.08-2.23 0l-3.55 10.94L74.93 75h9.34L71.73 36.43Z" fill="currentColor"/>
-    <path d="M50.82.81c-.35-1.08-1.88-1.08-2.23 0L38.25 32.63 52.02 75h22.9L50.82.81Z" fill="currentColor"/>
-  </g>
-</svg>
+<!-- Volcengine icon from LobeHub/lobe-icons v1.91.0 (MIT). Copyright © 2023 LobeHub. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd"><title>Volcengine</title><path d="M7.29 5.36 3.148 21.737a.215.215 0 0 0 .203.261h8.29a.214.214 0 0 0 .215-.261L7.7 5.359a.214.214 0 0 0-.41 0Z" fill-opacity=".5"/><path clip-rule="evenodd" d="m4.553 16.18-1.406 5.558a.214.214 0 0 0 .203.261h2.42-4.551a.214.214 0 0 1-.214-.26l2.275-8.961a.214.214 0 0 1 .409 0l.864 3.402Z"/><path d="M14.44.15a.214.214 0 0 0-.41 0L8.366 21.739A.214.214 0 0 0 8.58 22H19.9a.214.214 0 0 0 .215-.261L14.44.151Z" fill-opacity=".5"/><path clip-rule="evenodd" d="M16.694 22h3.207a.215.215 0 0 0 .214-.262l-1.839-6.993 1.164-4.592a.214.214 0 0 1 .411 0l2.951 11.586a.214.214 0 0 1-.214.261h-5.894Z"/><path d="M10.278 7.741 6.685 21.736A.214.214 0 0 0 6.899 22h7.17a.216.216 0 0 0 .214-.166.216.216 0 0 0 0-.098L10.687 7.742a.214.214 0 0 0-.409 0Z"/></svg>

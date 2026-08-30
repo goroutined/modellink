@@ -1,0 +1,20 @@
+name = "DeepSeek V4 Flash Vision Exp"
+description = "DeepSeek 推出的实验性多模态视觉理解模型，在保持 V4 Flash 文本能力的基础上支持图片理解与多模态 Agent 任务。"
+family = "deepseek-flash"
+series = "deepseek-v4-flash-vision"
+release_date = "2026-08-21"
+last_updated = "2026-08-21"
+attachment = true
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 1_000_000
+output = 384_000
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]

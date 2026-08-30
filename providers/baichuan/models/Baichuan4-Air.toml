@@ -1,0 +1,10 @@
+base_model = "baichuan/baichuan4-air"
+base_model_omit = ["reasoning"]
+endpoints = ["openai"]
+doc = "https://platform.baichuan-ai.com/prices"
+tool_call = true
+structured_output = true
+
+[cost_cn]
+input = 0.98
+output = 0.98

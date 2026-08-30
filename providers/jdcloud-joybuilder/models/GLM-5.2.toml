@@ -1,0 +1,9 @@
+base_model = "zhipu/glm-5.2"
+base_model_omit = ["temperature", "tool_call", "structured_output", "limit.output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://docs.jdcloud.com/cn/jdaip/maas-billing-rules"
+
+[cost_cn]
+input = 8
+output = 28
+cache_read = 2

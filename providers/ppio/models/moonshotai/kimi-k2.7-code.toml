@@ -1,0 +1,17 @@
+base_model = "moonshot/kimi-k2.7-code"
+base_model_omit = ["temperature", "interleaved"]
+endpoints = ["openai", "anthropic"]
+doc = "https://ppio.com/llm/moonshotai-kimi-k2.7-code"
+
+[limit]
+context = 262_144
+output = 262_144
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[cost_cn]
+input = 6.5
+output = 27
+cache_read = 1.3

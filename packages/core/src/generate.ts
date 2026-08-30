@@ -89,11 +89,14 @@ async function generateProviders(
     }
 
     const modelsPath = path.join(directory, providerID, "models");
-    for await (const modelPath of new Bun.Glob("**/*.toml").scan({
-      cwd: modelsPath,
-      absolute: true,
-      followSymlinks: true,
-    })) {
+    const modelPaths = existsSync(modelsPath)
+      ? new Bun.Glob("**/*.toml").scan({
+          cwd: modelsPath,
+          absolute: true,
+          followSymlinks: true,
+        })
+      : [];
+    for await (const modelPath of modelPaths) {
       const modelID = path.relative(modelsPath, modelPath).split(path.sep).join("/").slice(0, -5);
       const toml = await import(modelPath, {
         with: {
@@ -129,19 +132,53 @@ async function generateProviders(
       provider.data.endpoints?.map((endpoint) => endpoint.id) ?? [],
     );
     for (const [modelID, model] of Object.entries(provider.data.models)) {
-      if (model.endpoints === undefined) continue;
-      if (provider.data.endpoints === undefined) {
+      if (model.endpoints !== undefined && provider.data.endpoints === undefined) {
         throw new Error(
           `Model "${modelID}" declares endpoints but provider "${providerID}" does not`,
           { cause: { providerID, modelID, endpoints: model.endpoints } },
         );
       }
-      const unknown = model.endpoints.filter((endpoint) => !endpointIDs.has(endpoint));
+      const unknown = (model.endpoints ?? []).filter((endpoint) => !endpointIDs.has(endpoint));
       if (unknown.length > 0) {
         throw new Error(
           `Model "${modelID}" references unknown provider endpoints: ${unknown.join(", ")}`,
           { cause: { providerID, modelID, endpoints: model.endpoints } },
         );
+      }
+
+      for (const option of model.reasoning_options ?? []) {
+        if (option.endpoints === undefined) continue;
+        const unknownOptionEndpoints = option.endpoints.filter(
+          (endpoint) => !endpointIDs.has(endpoint),
+        );
+        if (unknownOptionEndpoints.length > 0) {
+          throw new Error(
+            `Model "${modelID}" reasoning option references unknown provider endpoints: ${unknownOptionEndpoints.join(", ")}`,
+            {
+              cause: {
+                providerID,
+                modelID,
+                endpoints: option.endpoints,
+              },
+            },
+          );
+        }
+        const enabledModelEndpoints = model.endpoints ?? provider.data.endpoints
+          ?.filter((endpoint) => endpoint.default === true)
+          .map((endpoint) => endpoint.id) ?? [];
+        if (option.endpoints.some((endpoint) => !enabledModelEndpoints.includes(endpoint))) {
+          throw new Error(
+            `Model "${modelID}" reasoning option references an endpoint not enabled by the model`,
+            {
+              cause: {
+                providerID,
+                modelID,
+                modelEndpoints: model.endpoints,
+                reasoningEndpoints: option.endpoints,
+              },
+            },
+          );
+        }
       }
     }
     result[providerID] = provider.data;

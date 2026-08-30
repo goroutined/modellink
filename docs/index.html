@@ -20,13 +20,25 @@
         <a href="#/providers" data-nav="providers">服务商</a>
         <a href="#/labs" data-nav="labs">研发机构</a>
       </nav>
-      <label class="global-search">
-        <span>搜索</span>
-        <input id="global-search" type="search" placeholder="模型、服务商或机构" autocomplete="off">
-        <kbd>⌘ K</kbd>
-      </label>
+      <button class="global-search" id="global-search-trigger" type="button" aria-haspopup="dialog" aria-controls="global-search-dialog">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+        <span class="global-search-label">搜索模型、服务商和研发机构</span>
+        <kbd id="search-shortcut" aria-label="搜索快捷键" hidden></kbd>
+      </button>
     </div>
   </header>
+
+  <dialog class="global-search-dialog" id="global-search-dialog" aria-label="全站搜索">
+    <div class="global-search-panel">
+      <div class="global-search-input-row">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+        <input id="global-search-input" type="search" placeholder="搜索模型、服务商和研发机构" autocomplete="off" spellcheck="false">
+        <button id="global-search-close" type="button" aria-label="关闭搜索">×</button>
+      </div>
+      <div class="global-search-results" id="global-search-results" role="listbox" aria-label="搜索结果"></div>
+      <div class="global-search-footer" aria-hidden="true"><span>↑↓ 选择</span><span>Enter 打开</span><span>Esc 关闭</span></div>
+    </div>
+  </dialog>
 
   <main id="app" class="app-shell" aria-live="polite">
     <section class="loading-state">正在加载模型目录…</section>

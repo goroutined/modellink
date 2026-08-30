@@ -1,0 +1,10 @@
+base_model = "baidu/ernie-x1.1"
+base_model_omit = ["structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+temperature = false
+
+[limit]
+context = 64_000
+input = 55_000
+output = 65_536

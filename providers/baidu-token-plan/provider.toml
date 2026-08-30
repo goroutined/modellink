@@ -1,0 +1,21 @@
+name = "百度千帆 Token 福利包"
+env = ["QIANFAN_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://qianfan.baidubce.com/v2"
+doc = "https://cloud.baidu.com/doc/qianfan/s/Smoghsq3g"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://qianfan.baidubce.com/v2"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://qianfan.baidubce.com/anthropic"
+
+[credits_cn]
+points = 1_000
+cny = 1

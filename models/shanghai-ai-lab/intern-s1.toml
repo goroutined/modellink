@@ -1,0 +1,23 @@
+name = "Intern S1"
+description = "上海人工智能实验室推出的开放权重科学多模态推理模型，兼顾通用任务、科学推理与工具调用。"
+family = "intern-s"
+release_date = "2025-07-26"
+last_updated = "2025-07-26"
+attachment = true
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = false
+open_weights = true
+
+[limit]
+context = 32_768
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[[links]]
+label = "Intern 模型列表"
+url = "https://internlm.openxlab.org.cn/doc/docs/%E6%A8%A1%E5%9E%8B%E5%88%97%E8%A1%A8/"
+type = "docs"

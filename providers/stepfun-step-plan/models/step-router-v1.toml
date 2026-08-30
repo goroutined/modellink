@@ -1,0 +1,18 @@
+base_model = "stepfun/step-3.7-flash"
+name = "Step Router V1"
+description = "阶跃星辰 Step Plan 专属智能路由模型，自动在 DeepSeek V4 Pro 与 Step 3.7 Flash 之间调度，并按实际命中的模型计费。"
+attachment = false
+open_weights = false
+endpoints = ["openai", "anthropic"]
+doc = "https://platform.stepfun.com/docs/zh/guides/models/step-router"
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 256_000
+output = 250_000
+
+[modalities]
+input = ["text"]
+output = ["text"]

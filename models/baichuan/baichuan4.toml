@@ -1,0 +1,19 @@
+name = "Baichuan4"
+description = "百川智能推出的第四代基座模型，面向知识问答、长文本、内容创作和多模态理解场景。"
+family = "baichuan"
+release_date = "2024-05-22"
+last_updated = "2024-05-22"
+attachment = true
+open_weights = false
+
+[limit]
+context = 32_000
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[[links]]
+label = "百川大模型开放平台"
+url = "https://www.baichuan-ai.com/"
+type = "model_card"

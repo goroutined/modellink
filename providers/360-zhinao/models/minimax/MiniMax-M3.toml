@@ -1,0 +1,14 @@
+base_model = "minimax/minimax-m3"
+base_model_omit = ["structured_output"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ai.360.com/open/zh/models/minimax/MiniMax-M3"
+
+[limit]
+context = 512_000
+output = 128_000
+
+[cost_cn]
+input = 2.1
+output = 8.4
+cache_read = 0.42
+cache_write = 2.625

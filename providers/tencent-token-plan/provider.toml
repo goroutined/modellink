@@ -1,0 +1,57 @@
+name = "腾讯云 Token Plan"
+env = ["TENCENT_TOKEN_PLAN_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://api.lkeap.cloud.tencent.com/plan/v3"
+doc = "https://cloud.tencent.com/document/product/1823/130060"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://api.lkeap.cloud.tencent.com/plan/v3"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://api.lkeap.cloud.tencent.com/plan/anthropic"
+
+[[plans_cn]]
+name = "通用 Lite"
+price_month = 39
+usage = "每订阅月 3,500 万 Tokens"
+
+[[plans_cn]]
+name = "通用 Standard"
+price_month = 99
+usage = "每订阅月 1 亿 Tokens"
+
+[[plans_cn]]
+name = "通用 Pro"
+price_month = 299
+usage = "每订阅月 3.2 亿 Tokens"
+
+[[plans_cn]]
+name = "通用 Max"
+price_month = 599
+usage = "每订阅月 6.5 亿 Tokens"
+
+[[plans_cn]]
+name = "Hy Lite"
+price_month = 28
+usage = "每订阅月 3,500 万 Tokens，仅支持 Hy3"
+
+[[plans_cn]]
+name = "Hy Standard"
+price_month = 78
+usage = "每订阅月 1 亿 Tokens，仅支持 Hy3"
+
+[[plans_cn]]
+name = "Hy Pro"
+price_month = 238
+usage = "每订阅月 3.2 亿 Tokens，仅支持 Hy3"
+
+[[plans_cn]]
+name = "Hy Max"
+price_month = 468
+usage = "每订阅月 6.5 亿 Tokens，仅支持 Hy3"

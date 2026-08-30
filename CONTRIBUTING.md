@@ -83,6 +83,36 @@ api = "https://api.example.com/v1"
 
 普通按量 API、Coding Plan、Token Plan 等服务只要接入地址、模型名称或计费方式不同，就分别建立独立 Provider，不能合并模型清单。
 
+## 添加 Logo
+
+ModelLink 现有 Logo 主要来自 [Lobe Icons](https://github.com/lobehub/lobe-icons)、许可明确的开源图标库和品牌官网。新增或更新 `labs/<lab-id>/logo.svg`、`providers/<provider-id>/logo.svg` 时，按以下顺序选择来源：
+
+1. 优先使用 Lobe Icons 静态 SVG 包中的单色图标，并固定具体版本，不引用会随时间变化的 `latest`。
+2. Lobe Icons 没有对应品牌或图标明显落后于当前品牌时，使用其他许可明确的开源 SVG，或品牌官网提供且允许用于项目展示的 SVG。
+3. 没有可靠来源时，省略 `logo.svg`，页面会自动使用通用默认图标。只有品牌形态清晰且经过人工确认时，才可提交项目绘制的单色简化版，并明确注明它不是官方素材。
+
+Logo 必须使用方形 `viewBox` 和 `currentColor`，不得包含脚本、外链、嵌入字体、Base64 图片或其他需要联网加载的资源。不要直接描摹或把来源、许可不明的 PNG 自动转换成 SVG。
+
+Lab 使用模型研发机构的品牌，Provider 使用实际提供 API 或套餐的服务品牌。例如阿里巴巴 Lab、阿里云百炼 Provider 和 Qwen 模型系列不是同一个 Logo；同一服务商的普通 API、Coding Plan、Token Plan 可以复用同一 Logo。
+
+每个 SVG 顶部应记录来源。例如：
+
+```svg
+<!-- source: LobeHub/lobe-icons@1.94.0; slug: example; license: MIT -->
+```
+
+```svg
+<!-- source: official; url: https://example.com/logo.svg; retrieved: 2026-08-26 -->
+```
+
+```svg
+<!-- source: simple-icons@16.28.0; slug: example; license: CC0-1.0 -->
+```
+
+项目绘制的简化版使用 `source: modellink-original; unofficial monochrome simplification`；通用默认图标不应复制到各 Lab 或 Provider 目录。
+
+修改源文件后运行 `bun run build`，将 Lab Logo 生成到 `docs/logos/labs/<lab-id>.svg`、Provider Logo 生成到 `docs/logos/<provider-id>.svg`，并确认源文件与页面展示副本一致。
+
 ## 添加 provider model
 
 如果 provider 不是模型研发方，必须引用 canonical model：
@@ -118,6 +148,36 @@ base_model_omit = ["structured_output", "limit.input"]
 ## 模型限制
 
 `limit.context`、`limit.input` 和 `limit.output` 分别记录上下文窗口、最大输入和最大输出。模型同时支持思考和非思考模式时，按照对应 Provider 的默认模式录入：默认开启思考就采用官网公布的思考模式限制，默认关闭思考就采用非思考模式限制。字段名称保持不变，不在标题中附加模式名称。
+
+## 推理能力与控制参数
+
+Canonical Model 的 `reasoning = true` 只表示模型具备思考能力。具体服务商是否开放开关、推理强度或思考 Token 预算，必须在 Provider Model 的 `reasoning_options` 中按该服务商官网单独记录，不能从基础模型或其他服务商继承推断。
+
+思考模型没有 `reasoning_options` 时，表示该服务商下模型固定思考、没有经过官网确认的用户可调参数。禁止使用 `values = ["default"]` 等占位值伪造 effort 档位。
+
+```toml
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high", "max"]
+default = "high"
+
+[[reasoning_options]]
+type = "effort"
+field = "output_config.effort"
+endpoints = ["anthropic"]
+values = ["low", "high", "max"]
+default = "high"
+```
+
+- `field` 记录请求体中的真实字段路径，例如 `reasoning_effort`、`output_config.effort`、`thinking.type`。
+- `endpoints` 只能引用当前 Provider Model 已启用的 endpoint；不同协议的字段、档位或默认值不同就拆成多项记录。
+- `values` 只记录会产生不同推理效果的真实档位。`medium -> high`、`xhigh -> max` 等兼容映射不进入结构化数据，由模型的官方文档链接说明。
+- `values` 同时是实际请求值，必须保留服务商协议使用的原始字面量，例如官网声明 Responses 接口使用 `none` 时不能擅自改写为 `no_think`。
+- `default` 记录服务商该协议的默认有效档位，并且必须包含在 `values` 中；官网没有明确默认值时省略。
+- `budget_tokens` 只在官网明确开放思考预算时填写；已确认上限或下限才填写 `max`、`min`，不得用上下文窗口推算。
+- `toggle` 表示允许用户启用和禁用思考。始终开启且不能关闭的模型不要填写 `toggle`。
 
 ## 数据来源
 
@@ -160,6 +220,8 @@ timezone = "Asia/Shanghai"
 ```
 
 `per_tokens` 表示积分系数对应的 Token 数量；非高峰倍率与高峰窗口必须来自套餐当前官方规则。人民币订阅金额属于 Provider 套餐信息，不得换算成模型 Token 单价。
+
+积分消耗随输入或输出 Token 数量变化时，使用 `[[cost_points.tiers]]`，边界规则与 `cost_cn.tiers` 完全一致。`cost_points` 顶层填写首个阶梯用于兼容读取，阶梯中不重复填写 `per_tokens`。
 
 Provider 官网直接公布固定人民币月费时，可以通过 `plans_cn` 记录套餐本身；预付积分与人民币存在官方固定兑换关系时使用 `credits_cn`。这两类信息只描述订阅和余额，不替代模型的 `cost_cn` 或 `cost_points`。
 
@@ -214,19 +276,26 @@ gt = 512_000
 
 只有官网赋予计费条件明确且无法单纯由数值边界概括的业务名称时才使用 `label`，例如“高峰期”“低峰期”“优先服务”或“批量调用”。标签只负责概括业务模式，结构化的 Token、时间等条件仍必须完整填写，不能用标签替代真实条件。
 
-条件阶梯应覆盖官网公布的全部计价情况，`cost_cn` 顶层价格只作为兼容回退，不能依赖它补足页面未声明的阶梯。按每日高峰、低谷时段计费时可增加以下条件；同一价格可以包含多个时间窗口，开始时间包含、结束时间不包含，开始时间晚于结束时间表示跨越午夜：
+条件阶梯应覆盖官网公布的全部计价情况，`cost_cn` 顶层价格只作为兼容回退，不能依赖它补足页面未声明的阶梯。按高峰、低谷时段计费时可增加以下条件；同一价格可以包含多个时间窗口，开始时间包含、结束时间不包含，开始时间晚于结束时间表示跨越午夜。`days` 省略时表示每天；结束时间允许使用 `24:00` 表示当天结束，开始时间不能使用 `24:00`：
 
 ```toml
 [cost_cn.tiers.tier.time]
 timezone = "Asia/Shanghai"
 
 [[cost_cn.tiers.tier.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
 start = "09:00"
 end = "12:00"
 
 [[cost_cn.tiers.tier.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
 start = "14:00"
 end = "18:00"
+
+[[cost_cn.tiers.tier.time.windows]]
+days = ["saturday", "sunday"]
+start = "00:00"
+end = "24:00"
 ```
 
 如果同一调用 ID 在普通模式和思考模式下采用不同单价，在 `thinking` 中记录思考模式的完整价格；不要把它写成独立的推理 Token 价格：

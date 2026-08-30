@@ -1,0 +1,15 @@
+base_model = "deepseek/deepseek-v3.2"
+base_model_omit = ["temperature", "tool_call", "structured_output"]
+endpoints = ["openai"]
+doc = "https://www.ctyun.cn/document/11061839/11091746"
+
+attachment = false
+reasoning = true
+
+[limit]
+context = 131_072
+output = 16_384
+
+[modalities]
+input = ["text"]
+output = ["text"]

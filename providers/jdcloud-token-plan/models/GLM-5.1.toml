@@ -1,0 +1,8 @@
+base_model = "zhipu/glm-5.1"
+base_model_omit = ["reasoning", "temperature", "structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://docs.jdcloud.com/cn/jdaip/tokenplan-overview"
+
+[limit]
+context = 200_000
+output = 128_000

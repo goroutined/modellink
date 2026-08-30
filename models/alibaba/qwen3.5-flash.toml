@@ -1,0 +1,25 @@
+name = "Qwen3.5 Flash"
+description = "阿里巴巴推出的原生多模态 Flash 模型，面向低延迟对话、编程与 Agent 工作流。"
+family = "qwen3.5"
+release_date = "2026-02-15"
+last_updated = "2026-02-15"
+attachment = true
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 1_000_000
+input = 983_616
+output = 65_536
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[[links]]
+label = "阿里云百炼模型详情"
+url = "https://help.aliyun.com/zh/model-studio/qwen3-5-flash"
+type = "docs"

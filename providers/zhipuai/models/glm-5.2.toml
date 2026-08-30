@@ -4,10 +4,15 @@ doc = "https://docs.bigmodel.cn/cn/guide/models/text/glm-5.2"
 
 [[reasoning_options]]
 type = "toggle"
+field = "thinking.type"
+endpoints = ["openai"]
 
 [[reasoning_options]]
 type = "effort"
-values = ["none", "minimal", "low", "medium", "high", "xhigh", "max"]
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["high", "max"]
+default = "max"
 
 [interleaved]
 field = "reasoning_content"

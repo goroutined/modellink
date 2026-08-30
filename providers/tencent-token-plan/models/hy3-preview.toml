@@ -1,0 +1,4 @@
+base_model = "tencent/hy3"
+name = "Hy3 Preview（自动路由至 Hy3）"
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/130060"

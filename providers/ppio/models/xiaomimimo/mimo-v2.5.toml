@@ -1,0 +1,17 @@
+base_model = "xiaomi/mimo-v2.5"
+base_model_omit = ["temperature", "interleaved"]
+endpoints = ["openai", "anthropic"]
+doc = "https://ppio.com/llm/xiaomimimo-mimo-v2.5"
+
+[limit]
+context = 1_048_576
+output = 131_072
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[cost_cn]
+input = 1
+output = 2
+cache_read = 0.02

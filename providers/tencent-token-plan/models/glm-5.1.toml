@@ -1,0 +1,4 @@
+base_model = "zhipu/glm-5.1"
+base_model_omit = ["temperature"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/130060"

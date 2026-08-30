@@ -1,0 +1,22 @@
+name = "Intern S2 Preview 35B"
+description = "上海人工智能实验室推出的 35B-A3B 科学多模态推理模型，面向科学发现、通用智能体与长上下文任务。"
+family = "intern-s"
+release_date = "2026-05-09"
+last_updated = "2026-05-09"
+attachment = true
+reasoning = true
+temperature = true
+tool_call = true
+open_weights = true
+
+[limit]
+context = 262_144
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[[links]]
+label = "Intern 模型列表"
+url = "https://internlm.openxlab.org.cn/doc/docs/%E6%A8%A1%E5%9E%8B%E5%88%97%E8%A1%A8/"
+type = "docs"

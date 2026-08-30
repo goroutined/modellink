@@ -1,12 +1,26 @@
 base_model = "bytedance/doubao-seed-evolving"
+base_model_omit = ["temperature"]
+endpoints = ["openai", "responses"]
 doc = "https://console.volcengine.com/ark/region:cn-beijing/model/detail?Id=doubao-seed-evolving"
 
 [[reasoning_options]]
 type = "toggle"
+field = "thinking.type"
+endpoints = ["openai", "responses"]
 
 [[reasoning_options]]
 type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
 values = ["minimal", "low", "medium", "high"]
+default = "high"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning.effort"
+endpoints = ["responses"]
+values = ["minimal", "low", "medium", "high"]
+default = "high"
 
 [interleaved]
 field = "reasoning_content"

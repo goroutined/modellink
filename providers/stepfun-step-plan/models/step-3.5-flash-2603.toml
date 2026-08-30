@@ -1,0 +1,21 @@
+base_model = "stepfun/step-3.5-flash"
+endpoints = ["openai", "anthropic"]
+doc = "https://platform.stepfun.com/docs/zh/step-plan/integrations/reasoning-api"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high"]
+
+[[reasoning_options]]
+type = "effort"
+field = "output_config.effort"
+endpoints = ["anthropic"]
+values = ["low", "high"]
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 256_000

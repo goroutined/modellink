@@ -1,10 +1,6 @@
 base_model = "moonshot/kimi-k2.7-code"
 doc = "https://platform.kimi.com/docs/guide/kimi-k2-7-code-quickstart"
 
-[[reasoning_options]]
-type = "effort"
-values = ["default"]
-
 [interleaved]
 field = "reasoning_content"
 

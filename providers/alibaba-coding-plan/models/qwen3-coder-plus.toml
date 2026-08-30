@@ -1,0 +1,9 @@
+base_model = "alibaba/qwen3-coder-plus"
+base_model_omit = ["temperature"]
+endpoints = ["openai", "anthropic"]
+doc = "https://help.aliyun.com/zh/model-studio/coding-plan-faq"
+
+[limit]
+context = 1_000_000
+input = 997_952
+output = 65_536

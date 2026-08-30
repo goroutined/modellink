@@ -1,0 +1,30 @@
+base_model = "alibaba/qwen3.5-397b-a17b"
+base_model_omit = ["temperature", "tool_call", "structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+
+[limit]
+context = 256_000
+input = 252_000
+output = 65_536
+
+[cost_cn]
+input = 1.2
+output = 7.2
+
+[[cost_cn.tiers]]
+input = 1.2
+output = 7.2
+[cost_cn.tiers.tier]
+type = "conditional"
+[cost_cn.tiers.tier.input]
+lte = 128_000
+
+[[cost_cn.tiers]]
+input = 3
+output = 18
+[cost_cn.tiers.tier]
+type = "conditional"
+[cost_cn.tiers.tier.input]
+gt = 128_000
+lte = 256_000

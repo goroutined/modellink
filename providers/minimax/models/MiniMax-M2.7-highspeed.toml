@@ -3,10 +3,6 @@ endpoints = ["openai", "anthropic", "responses"]
 name = "MiniMax M2.7 Highspeed"
 doc = "https://platform.minimaxi.com/docs/guides/text-generation"
 
-[[reasoning_options]]
-type = "effort"
-values = ["default"]
-
 [interleaved]
 field = "reasoning_details"
 

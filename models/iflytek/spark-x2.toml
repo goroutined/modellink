@@ -1,0 +1,25 @@
+name = "Spark X2"
+description = "科大讯飞推出的旗舰深度推理模型，强化数学、代码、语言理解、工具调用与智能体任务。"
+family = "spark-x2"
+release_date = "2026-02-09"
+last_updated = "2026-02-09"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = false
+open_weights = false
+
+[limit]
+context = 196_608
+input = 65_536
+output = 131_072
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "Spark X2 HTTP 协议文档"
+url = "https://www.xfyun.cn/doc/spark/X1http.html"
+type = "docs"

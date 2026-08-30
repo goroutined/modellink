@@ -1,0 +1,9 @@
+base_model = "baichuan/baichuan2-turbo"
+endpoints = ["openai"]
+doc = "https://platform.baichuan-ai.com/docs/api"
+tool_call = true
+structured_output = false
+
+[cost_cn]
+input = 8
+output = 8

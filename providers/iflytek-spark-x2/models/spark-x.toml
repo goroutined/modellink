@@ -1,0 +1,16 @@
+base_model = "iflytek/spark-x2"
+base_model_omit = ["structured_output"]
+endpoints = ["openai"]
+doc = "https://www.xfyun.cn/doc/spark/X1http.html"
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["openai"]
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 3
+output = 3

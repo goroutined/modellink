@@ -25,21 +25,47 @@ const ReasoningEffortValue = z.preprocess(
   (value) => (value === "null" ? null : value),
   z.union([
     z.null(),
-    z.enum(["none", "minimal", "low", "medium", "high", "xhigh", "max", "default"]),
+    z.enum([
+      "none",
+      "minimal",
+      "low",
+      "medium",
+      "high",
+      "xhigh",
+      "max",
+    ]),
   ]),
 );
+
+const ReasoningOptionEndpoint = z
+  .string()
+  .regex(/^[a-z][a-z0-9-]*$/, "Endpoint ID must use lowercase kebab-case");
+
+const ReasoningOptionMetadata = {
+  field: z.string().min(1, "Reasoning control field cannot be empty").optional(),
+  endpoints: z
+    .array(ReasoningOptionEndpoint)
+    .min(1, "Reasoning option endpoints cannot be empty")
+    .refine((endpoints) => new Set(endpoints).size === endpoints.length, {
+      message: "Reasoning option endpoints cannot contain duplicates",
+    })
+    .optional(),
+};
 
 export const ReasoningOption = z
   .discriminatedUnion("type", [
     z
       .object({
         type: z.literal("toggle"),
+        ...ReasoningOptionMetadata,
       })
       .strict(),
     z
       .object({
         type: z.literal("effort"),
-        values: z.array(ReasoningEffortValue),
+        values: z.array(ReasoningEffortValue).min(1, "Reasoning effort values cannot be empty"),
+        default: ReasoningEffortValue.optional(),
+        ...ReasoningOptionMetadata,
       })
       .strict(),
     z
@@ -53,9 +79,20 @@ export const ReasoningOption = z
           .number()
           .min(0, "Maximum reasoning budget cannot be negative")
           .optional(),
+        ...ReasoningOptionMetadata,
       })
       .strict(),
   ])
+  .refine(
+    (data) =>
+      data.type !== "effort" ||
+      data.default === undefined ||
+      data.values.includes(data.default),
+    {
+      message: "Default reasoning effort must be included in values",
+      path: ["default"],
+    },
+  )
   .refine(
     (data) =>
       data.type !== "budget_tokens" ||
@@ -145,10 +182,23 @@ const TokenRange = z
     }
   });
 
+const Weekday = z.enum([
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+  "sunday",
+]);
+
 const DailyTimeWindow = z
   .object({
+    days: z.array(Weekday).min(1, "Time window must contain at least one day").optional(),
     start: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Time must use HH:mm"),
-    end: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Time must use HH:mm"),
+    end: z
+      .string()
+      .regex(/^(([01]\d|2[0-3]):[0-5]\d|24:00)$/, "Time must use HH:mm; only 24:00 is allowed past 23:59"),
   })
   .strict();
 
@@ -212,22 +262,19 @@ const OutputCnyCost = CnyCost.extend({
   tiers: z.array(CnyCostTier).optional(),
 }).strict();
 
-const Weekday = z.enum([
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-  "saturday",
-  "sunday",
-]);
-
-const PointCost = z
-  .object({
-    per_tokens: z.number().int().positive("Point cost token unit must be positive"),
+const PointCostValues = z.object({
     input: z.number().min(0, "Input point cost cannot be negative"),
     output: z.number().min(0, "Output point cost cannot be negative"),
     cache_read: z.number().min(0, "Cache read point cost cannot be negative").optional(),
+  }).strict();
+
+const PointCostTier = PointCostValues.extend({
+  tier: CostTierSelector,
+}).strict();
+
+const PointCost = PointCostValues.extend({
+    per_tokens: z.number().int().positive("Point cost token unit must be positive"),
+    tiers: z.array(PointCostTier).optional(),
     off_peak_multiplier: z
       .number()
       .positive("Off-peak multiplier must be positive")
@@ -242,8 +289,7 @@ const PointCost = z
       })
       .strict()
       .optional(),
-  })
-  .strict();
+  }).strict();
 
 const DateString = z
   .string()
@@ -474,15 +520,6 @@ function refineModel<
   Input,
 >(schema: z.ZodType<Output, Def, Input>) {
   return schema
-    .refine(
-      (data) => {
-        return data.reasoning !== true || data.reasoning_options !== undefined;
-      },
-      {
-        message: "Must set reasoning_options when reasoning is true",
-        path: ["reasoning_options"],
-      },
-    )
     .refine(
       (data) => {
         return data.reasoning !== false || data.reasoning_options === undefined;

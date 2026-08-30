@@ -1,0 +1,3 @@
+base_model = "alibaba/qwen3.7-plus"
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://help.aliyun.com/zh/model-studio/token-plan-personal-overview"

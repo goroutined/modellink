@@ -1,0 +1,22 @@
+base_model = "deepseek/deepseek-v4-flash"
+base_model_omit = ["temperature"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.siliconflow.cn/models?target=deepseek-ai%2FDeepSeek-V4-Flash"
+
+[limit]
+context = 1_048_576
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["high", "max"]
+default = "high"
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 1
+output = 2
+cache_read = 0.02

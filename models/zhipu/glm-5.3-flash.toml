@@ -1,0 +1,34 @@
+name = "GLM-5.3-Flash"
+description = "智谱推出的 GLM-5 系列首个原生多模态模型，面向视觉编程、复杂 Agent 与专业工作流。"
+family = "glm"
+release_date = "2026-08-26"
+last_updated = "2026-08-26"
+attachment = true
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = true
+license = "MIT"
+
+[limit]
+context = 1_048_576
+output = 131_072
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[[links]]
+label = "智谱模型详情"
+url = "https://docs.bigmodel.cn/cn/guide/models/vlm/glm-5.3-flash"
+type = "docs"
+
+[[links]]
+label = "技术介绍"
+url = "https://z.ai/blog/glm-5.3-flash"
+type = "blog"
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/zai-org/GLM-5.3-Flash"

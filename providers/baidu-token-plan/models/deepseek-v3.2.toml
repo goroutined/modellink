@@ -1,0 +1,35 @@
+base_model = "deepseek/deepseek-v3.2"
+base_model_omit = ["temperature", "tool_call", "structured_output", "reasoning_options", "interleaved"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.baidu.com/doc/qianfan/s/Smoghsq3g"
+reasoning = false
+
+[limit]
+context = 131_072
+input = 98_304
+output = 32_768
+
+[cost_points]
+per_tokens = 1_000
+input = 2
+output = 3
+cache_read = 0.4
+
+[[cost_points.tiers]]
+input = 2
+output = 3
+cache_read = 0.4
+[cost_points.tiers.tier]
+type = "conditional"
+[cost_points.tiers.tier.input]
+lte = 32_000
+
+[[cost_points.tiers]]
+input = 4
+output = 6
+cache_read = 0.4
+[cost_points.tiers.tier]
+type = "conditional"
+[cost_points.tiers.tier.input]
+gt = 32_000
+lte = 128_000

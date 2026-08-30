@@ -1,0 +1,19 @@
+base_model = "zhipu/glm-5.3-flash"
+base_model_omit = ["structured_output"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ai.360.com/open/zh/models/z-ai/glm-5.3-flash"
+temperature = true
+
+[limit]
+context = 1_000_000
+output = 128_000
+
+[modalities]
+input = ["text", "image", "video", "pdf"]
+output = ["text"]
+
+[cost_cn]
+input = 0.4
+output = 1.4
+cache_read = 0.115
+cache_write = 0.5

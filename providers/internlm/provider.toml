@@ -1,0 +1,17 @@
+name = "书生·浦语开放平台"
+env = ["INTERNLM_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://intern.openxlab.org.cn/api/v1"
+doc = "https://internlm.openxlab.org.cn/doc/docs/%E6%A8%A1%E5%9E%8B%E5%88%97%E8%A1%A8/"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://intern.openxlab.org.cn/api/v1"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://intern.openxlab.org.cn"

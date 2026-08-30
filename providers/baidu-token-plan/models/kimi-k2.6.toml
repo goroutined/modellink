@@ -1,0 +1,15 @@
+base_model = "moonshot/kimi-k2.6"
+base_model_omit = ["temperature", "tool_call", "structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.baidu.com/doc/qianfan/s/Smoghsq3g"
+
+[limit]
+context = 256_000
+input = 256_000
+output = 262_144
+
+[cost_points]
+per_tokens = 1_000
+input = 6.5
+output = 27
+cache_read = 1.1

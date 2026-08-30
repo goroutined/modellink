@@ -1,0 +1,68 @@
+base_model = "bytedance/doubao-seed-2.0-pro"
+name = "Doubao Seed 2.0 Pro 0215"
+endpoints = ["openai", "responses"]
+doc = "https://console.volcengine.com/ark/region:cn-beijing/model/detail?Id=doubao-seed-2-0-pro"
+temperature = false
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["openai", "responses"]
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["minimal", "low", "medium", "high"]
+default = "medium"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning.effort"
+endpoints = ["responses"]
+values = ["minimal", "low", "medium", "high"]
+default = "medium"
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 3.2
+output = 16
+cache_read = 0.64
+
+[[cost_cn.tiers]]
+input = 3.2
+output = 16
+cache_read = 0.64
+
+[cost_cn.tiers.tier]
+type = "conditional"
+
+[cost_cn.tiers.tier.input]
+gte = 0
+lte = 32_000
+
+[[cost_cn.tiers]]
+input = 4.8
+output = 24
+cache_read = 0.96
+
+[cost_cn.tiers.tier]
+type = "conditional"
+
+[cost_cn.tiers.tier.input]
+gt = 32_000
+lte = 128_000
+
+[[cost_cn.tiers]]
+input = 9.6
+output = 48
+cache_read = 1.92
+
+[cost_cn.tiers.tier]
+type = "conditional"
+
+[cost_cn.tiers.tier.input]
+gt = 128_000
+lte = 256_000

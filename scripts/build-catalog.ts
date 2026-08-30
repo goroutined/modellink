@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 
 import path from "node:path";
-import { mkdir } from "node:fs/promises";
+import { mkdir, rm } from "node:fs/promises";
 
 import { generateCatalog } from "../packages/core/src/generate.js";
 
@@ -74,7 +74,12 @@ await Bun.write(
   `globalThis.MODELLINK_SITE = ${JSON.stringify({ catalog, siteData })};\n`,
 );
 
+await rm(path.join(root, "docs", "logos"), { recursive: true, force: true });
 await mkdir(path.join(root, "docs", "logos", "labs"), { recursive: true });
+await Bun.write(
+  path.join(root, "docs", "logos", "default.svg"),
+  Bun.file(path.join(root, "assets", "default-logo.svg")),
+);
 for await (const logoPath of new Bun.Glob("*/logo.svg").scan({
   cwd: path.join(root, "labs"),
   absolute: true,

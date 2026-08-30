@@ -1,0 +1,14 @@
+base_model = "bytedance/doubao-seed-evolving"
+base_model_omit = ["tool_call", "structured_output", "limit.input"]
+endpoints = ["openai", "responses"]
+doc = "https://ai.360.com/open/zh/models/bytedance/doubao-seed-evolving"
+
+[limit]
+context = 256_000
+output = 256_000
+
+[cost_cn]
+input = 6
+output = 30
+cache_read = 0.6
+cache_write = 7.5

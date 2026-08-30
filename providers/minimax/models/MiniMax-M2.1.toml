@@ -2,10 +2,6 @@ base_model = "minimax/minimax-m2.1"
 endpoints = ["openai", "anthropic", "responses"]
 doc = "https://platform.minimaxi.com/docs/guides/text-generation"
 
-[[reasoning_options]]
-type = "effort"
-values = ["default"]
-
 [interleaved]
 field = "reasoning_details"
 

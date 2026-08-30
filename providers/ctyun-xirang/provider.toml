@@ -1,0 +1,12 @@
+name = "天翼云息壤（星辰 TokenHub）"
+env = ["CTYUN_XIRANG_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://ai.ctaigw.cn/v1"
+doc = "https://www.ctyun.cn/document/11061839"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://ai.ctaigw.cn/v1"
+default = true

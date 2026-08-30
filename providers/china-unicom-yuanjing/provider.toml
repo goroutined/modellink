@@ -1,0 +1,12 @@
+name = "中国联通元景 MaaS"
+env = ["YUANJING_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://maas-api.ai-yuanjing.com/openapi/compatible-mode/v1"
+doc = "https://maas.ai-yuanjing.com/doc/"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://maas-api.ai-yuanjing.com/openapi/compatible-mode/v1"
+default = true

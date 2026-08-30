@@ -1,0 +1,13 @@
+base_model = "moonshot/kimi-k2.6"
+base_model_omit = ["reasoning", "temperature", "tool_call", "structured_output"]
+endpoints = ["openai"]
+doc = "https://docs.jdcloud.com/cn/jdaip/model%20update%20announcement"
+attachment = true
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[cost_cn]
+input = 6.5
+output = 27

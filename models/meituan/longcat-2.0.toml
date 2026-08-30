@@ -1,0 +1,24 @@
+name = "LongCat 2.0"
+description = "美团推出的万亿参数长上下文模型，原生支持工具调用与多步推理，面向编程和长程智能体任务。"
+family = "longcat"
+release_date = "2026-06-30"
+last_updated = "2026-06-30"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = false
+open_weights = false
+
+[limit]
+context = 1_000_000
+output = 128_000
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "LongCat 2.0 更新日志"
+url = "https://longcat.chat/platform/docs/zh/ChangeLog.html"
+type = "announcement"

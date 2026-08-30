@@ -1,0 +1,14 @@
+base_model = "zhipu/glm-5.3"
+base_model_omit = ["temperature", "tool_call", "structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+
+[limit]
+context = 1_000_000
+input = 1_000_000
+output = 131_072
+
+[cost_cn]
+input = 8
+output = 28
+cache_read = 2

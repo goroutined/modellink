@@ -1,0 +1,4 @@
+base_model = "alibaba/qwen3.6-27b"
+base_model_omit = ["temperature", "structured_output"]
+endpoints = ["openai"]
+doc = "https://docs.infini-ai.com/gen-studio/api/text-generation/tutorial-reasoning/qwen.html"

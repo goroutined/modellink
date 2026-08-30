@@ -1,10 +1,27 @@
 base_model = "zhipu/glm-5.3"
-endpoints = ["openai", "anthropic"]
+endpoints = ["openai", "anthropic", "responses"]
 doc = "https://docs.bigmodel.cn/cn/coding-plan/latest-model"
 
 [[reasoning_options]]
 type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
 values = ["low", "high", "max"]
+default = "max"
+
+[[reasoning_options]]
+type = "effort"
+field = "output_config.effort"
+endpoints = ["anthropic"]
+values = ["low", "high", "max"]
+default = "max"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning.effort"
+endpoints = ["responses"]
+values = ["low", "high", "max"]
+default = "max"
 
 [interleaved]
 field = "reasoning_content"

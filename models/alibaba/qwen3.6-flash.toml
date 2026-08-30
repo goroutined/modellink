@@ -1,0 +1,24 @@
+name = "Qwen3.6 Flash"
+description = "通义千问推出的低成本多模态模型，支持推理、视觉理解、编程、工具调用与智能体任务。"
+family = "qwen3.6"
+release_date = "2026-04-16"
+last_updated = "2026-04-16"
+attachment = true
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 1_000_000
+output = 65_536
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[[links]]
+label = "阿里云百炼视觉模型列表"
+url = "https://help.aliyun.com/zh/model-studio/vision-model"
+type = "docs"

@@ -1,0 +1,29 @@
+name = "Qwen3.8 2.4T A95B"
+description = "阿里巴巴推出的 2.4 万亿参数开放权重稀疏 MoE 模型，每 Token 激活 950 亿参数，面向编程、专业工作与长程智能体任务。"
+family = "qwen"
+release_date = "2026-08-12"
+last_updated = "2026-08-12"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = true
+license = "Apache-2.0"
+
+[limit]
+context = 1_000_000
+output = 131_072
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "Qwen3.8 官方仓库"
+url = "https://github.com/QwenLM/Qwen3.8"
+type = "model_card"
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/Qwen/Qwen3.8-2.4T-A95B"

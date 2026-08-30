@@ -1,0 +1,23 @@
+name = "Baichuan4-Turbo"
+description = "百川智能面向企业级应用推出的 Baichuan4 系列旗舰模型，兼顾效果与生成速度。"
+family = "baichuan"
+release_date = "2024-10-31"
+last_updated = "2024-10-31"
+attachment = false
+reasoning = false
+temperature = true
+tool_call = false
+structured_output = false
+open_weights = false
+
+[limit]
+context = 32_000
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "百川大模型开放平台"
+url = "https://platform.baichuan-ai.com/"
+type = "model_card"

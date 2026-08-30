@@ -151,6 +151,15 @@ export const ModelFamilyValues = [
   // Hy
   "Hy",
 
+  // Baidu ERNIE
+  "ernie",
+
+  // Baichuan
+  "baichuan",
+
+  // SenseTime SenseNova
+  "sensenova",
+
   // Yi
   "yi",
 
@@ -173,6 +182,12 @@ export const ModelFamilyValues = [
 
   // Step (StepFun)
   "step",
+
+  // iFLYTEK Spark
+  "spark-x2",
+
+  // Huawei Pangu
+  "openpangu",
 
   // Embedding models
   "text-embedding",
@@ -252,6 +267,16 @@ export const ModelFamilyValues = [
 
   // Longcat
   "longcat",
+
+  // Nex AGI
+  "nex-n2",
+
+  // Intern
+  "intern-s",
+  "internvl",
+
+  // JoyAI
+  "joyai",
 
   // Magistral
   "magistral",

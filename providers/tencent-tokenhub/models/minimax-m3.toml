@@ -1,0 +1,42 @@
+base_model = "minimax/minimax-m3"
+endpoints = ["openai", "responses", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/132246"
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["openai", "anthropic"]
+
+[interleaved]
+field = "reasoning_content"
+
+[provider.body]
+reasoning_split = true
+
+[limit]
+context = 1_000_000
+input = 1_000_000
+output = 524_288
+
+[cost_cn]
+input = 2.1
+output = 8.4
+cache_read = 0.42
+
+[[cost_cn.tiers]]
+input = 2.1
+output = 8.4
+cache_read = 0.42
+[cost_cn.tiers.tier]
+type = "conditional"
+[cost_cn.tiers.tier.input]
+lte = 512_000
+
+[[cost_cn.tiers]]
+input = 4.2
+output = 16.8
+cache_read = 0.84
+[cost_cn.tiers.tier]
+type = "conditional"
+[cost_cn.tiers.tier.input]
+gt = 512_000

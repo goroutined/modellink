@@ -1,0 +1,7 @@
+base_model = "deepseek/deepseek-v4-pro"
+base_model_omit = ["structured_output", "limit.output"]
+doc = "https://ai.gitee.com/serverless-api?service=9138"
+
+[cost_cn]
+input = 12
+output = 24

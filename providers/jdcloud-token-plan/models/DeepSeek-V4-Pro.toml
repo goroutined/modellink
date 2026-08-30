@@ -1,0 +1,8 @@
+base_model = "deepseek/deepseek-v4-pro"
+base_model_omit = ["temperature", "tool_call", "structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://docs.jdcloud.com/cn/jdaip/tokenplan-overview"
+
+[limit]
+context = 1_048_576
+output = 393_216

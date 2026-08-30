@@ -7,12 +7,11 @@ attachment = true
 reasoning = true
 temperature = false
 tool_call = true
-structured_output = false
+structured_output = true
 open_weights = true
 
 [limit]
 context = 262_144
-output = 262_144
 
 [modalities]
 input = ["text", "image", "video"]

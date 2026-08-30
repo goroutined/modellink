@@ -1,0 +1,96 @@
+base_model = "deepseek/deepseek-v4-flash-vision-exp"
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://api-docs.deepseek.com/zh-cn/guides/vision/"
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["openai", "anthropic"]
+
+[[reasoning_options]]
+type = "toggle"
+field = "reasoning.effort"
+endpoints = ["responses"]
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high", "max"]
+default = "high"
+
+[[reasoning_options]]
+type = "effort"
+field = "output_config.effort"
+endpoints = ["anthropic"]
+values = ["low", "high", "max"]
+default = "high"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning.effort"
+endpoints = ["responses"]
+values = ["low", "high", "max"]
+default = "high"
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 1.5
+output = 4.5
+cache_read = 0.05
+
+[[cost_cn.tiers]]
+input = 1.5
+output = 4.5
+cache_read = 0.05
+
+[cost_cn.tiers.tier]
+type = "conditional"
+label = "闲时"
+
+[cost_cn.tiers.tier.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.tier.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "00:00"
+end = "09:00"
+
+[[cost_cn.tiers.tier.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "12:00"
+end = "14:00"
+
+[[cost_cn.tiers.tier.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "18:00"
+end = "24:00"
+
+[[cost_cn.tiers.tier.time.windows]]
+days = ["saturday", "sunday"]
+start = "00:00"
+end = "24:00"
+
+[[cost_cn.tiers]]
+input = 3
+output = 9
+cache_read = 0.1
+
+[cost_cn.tiers.tier]
+type = "conditional"
+label = "高峰"
+
+[cost_cn.tiers.tier.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.tier.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "09:00"
+end = "12:00"
+
+[[cost_cn.tiers.tier.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "14:00"
+end = "18:00"

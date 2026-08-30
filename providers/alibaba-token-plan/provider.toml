@@ -1,0 +1,40 @@
+name = "阿里云百炼 Token Plan"
+env = ["ALIBABA_TOKEN_PLAN_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1"
+doc = "https://help.aliyun.com/zh/model-studio/token-plan-personal-overview"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://token-plan.cn-beijing.maas.aliyuncs.com/apps/anthropic"
+
+[[endpoints]]
+id = "responses"
+protocol = "openai-responses"
+api = "https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1"
+
+[[plans_cn]]
+name = "Lite"
+price_month = 39
+usage = "个人轻量编程与智能体调用"
+quota_windows = ["7 天窗口：2,500 Credits"]
+
+[[plans_cn]]
+name = "Standard"
+price_month = 139
+usage = "个人日常编程与智能体调用"
+quota_windows = ["7 天窗口：10,000 Credits"]
+
+[[plans_cn]]
+name = "Pro"
+price_month = 499
+usage = "个人高频编程与长程智能体任务"
+quota_windows = ["7 天窗口：40,000 Credits"]

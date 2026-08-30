@@ -1,0 +1,20 @@
+name = "Baichuan2-Turbo"
+description = "百川智能开放的通用文本模型，支持搜索增强和企业知识库场景。"
+family = "baichuan"
+release_date = "2023-12-19"
+last_updated = "2023-12-19"
+attachment = false
+temperature = true
+open_weights = false
+
+[limit]
+context = 32_000
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "百川对话 API 文档"
+url = "https://platform.baichuan-ai.com/docs/api"
+type = "docs"

@@ -1,0 +1,10 @@
+base_model = "zhipu/glm-5.3-flash"
+endpoints = ["openai"]
+doc = "https://docs.bigmodel.cn/cn/guide/models/vlm/glm-5.3-flash"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high", "max"]
+default = "max"

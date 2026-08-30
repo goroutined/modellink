@@ -1,0 +1,9 @@
+base_model = "bytedance/doubao-seed-2.1-pro"
+base_model_omit = ["temperature", "structured_output", "limit.input", "limit.output"]
+endpoints = ["openai"]
+doc = "https://docs.jdcloud.com/cn/jdaip/maas-billing-rules"
+
+[cost_cn]
+input = 6
+output = 30
+cache_read = 1.2

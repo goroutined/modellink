@@ -1,0 +1,22 @@
+base_model = "alibaba/qwen3.5-35b-a3b"
+base_model_omit = ["reasoning", "temperature", "tool_call", "structured_output", "limit.output"]
+endpoints = ["openai"]
+doc = "https://docs.jdcloud.com/cn/jdaip/maas-billing-rules"
+
+[cost_cn]
+input = 0.4
+output = 3.2
+
+[[cost_cn.tiers]]
+input = 0.4
+output = 3.2
+[cost_cn.tiers.tier]
+type = "conditional"
+input = { lte = 131_072 }
+
+[[cost_cn.tiers]]
+input = 1.6
+output = 12.8
+[cost_cn.tiers.tier]
+type = "conditional"
+input = { gt = 131_072 }

@@ -12,6 +12,11 @@ api = "https://ark.cn-beijing.volces.com/api/plan/v3"
 default = true
 
 [[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://ark.cn-beijing.volces.com/api/plan"
+
+[[endpoints]]
 id = "responses"
 protocol = "openai-responses"
 api = "https://ark.cn-beijing.volces.com/api/plan/v3"

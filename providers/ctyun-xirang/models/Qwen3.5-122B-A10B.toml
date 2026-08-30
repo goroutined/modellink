@@ -1,0 +1,14 @@
+base_model = "alibaba/qwen3.5-122b-a10b"
+base_model_omit = ["reasoning", "temperature", "tool_call", "structured_output"]
+endpoints = ["openai"]
+doc = "https://www.ctyun.cn/products/AIStore"
+
+attachment = true
+
+[limit]
+context = 262_144
+output = 65_536
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]

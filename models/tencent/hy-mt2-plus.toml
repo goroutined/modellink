@@ -1,0 +1,19 @@
+name = "Hy-MT2-Plus"
+description = "腾讯混元通用翻译模型，兼顾翻译质量与指令遵循能力。"
+family = "hunyuan"
+release_date = "2026-06-12"
+last_updated = "2026-06-12"
+attachment = false
+reasoning = false
+tool_call = false
+structured_output = false
+open_weights = false
+
+[limit]
+context = 8_192
+input = 4_096
+output = 4_096
+
+[modalities]
+input = ["text"]
+output = ["text"]

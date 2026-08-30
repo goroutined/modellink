@@ -1,6 +1,7 @@
 base_model = "minimax/minimax-m3"
 base_model_omit = ["limit.output"]
 doc = "https://bailian.console.aliyun.com/cn-beijing/?tab=model#/model-market/detail/MiniMax%2FMiniMax-M3"
+temperature = false
 
 [[reasoning_options]]
 type = "toggle"

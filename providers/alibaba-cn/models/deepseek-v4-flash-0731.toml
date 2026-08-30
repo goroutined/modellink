@@ -6,6 +6,26 @@ structured_output = false
 
 [[reasoning_options]]
 type = "toggle"
+field = "enable_thinking"
+endpoints = ["openai", "responses"]
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["anthropic"]
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high", "max"]
+default = "high"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning.effort"
+endpoints = ["responses"]
+values = ["low", "high", "max"]
 
 [interleaved]
 field = "reasoning_content"
@@ -18,12 +38,12 @@ output = 393_216
 [cost_cn]
 input = 1.5
 output = 4.5
-cache_read = 0.3
+cache_read = 0.15
 
 [[cost_cn.tiers]]
 input = 1.5
 output = 4.5
-cache_read = 0.3
+cache_read = 0.15
 
 [cost_cn.tiers.tier]
 type = "conditional"
@@ -47,7 +67,7 @@ end = "00:00"
 [[cost_cn.tiers]]
 input = 3
 output = 9
-cache_read = 0.6
+cache_read = 0.3
 
 [cost_cn.tiers.tier]
 type = "conditional"

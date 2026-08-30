@@ -1,0 +1,10 @@
+base_model = "deepseek/deepseek-v4-pro"
+base_model_omit = ["structured_output"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ai.360.com/open/zh/models/deepseek/deepseek-v4-pro"
+
+[cost_cn]
+input = 9
+output = 27
+cache_read = 0.9
+cache_write = 11.25

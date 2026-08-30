@@ -1,0 +1,25 @@
+name = "ERNIE 5.0"
+description = "百度推出的原生全模态文心旗舰模型，强化智能体规划、工具应用、指令遵循与复杂推理。"
+family = "ernie"
+release_date = "2025-11-13"
+last_updated = "2026-02-06"
+attachment = true
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 128_000
+input = 119_000
+output = 65_536
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[[links]]
+label = "文心 5.0 技术介绍"
+url = "https://ernie.baidu.com/blog/zh/posts/ernie5.0/"
+type = "blog"

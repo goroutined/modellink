@@ -1,0 +1,23 @@
+name = "Intern S2 Preview 397B"
+description = "上海人工智能实验室推出的 397B 科学多模态推理模型，面向通用智能体、科学发现与复杂任务。"
+family = "intern-s"
+release_date = "2026-07-16"
+last_updated = "2026-07-16"
+attachment = true
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = false
+open_weights = true
+
+[limit]
+context = 262_144
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[[links]]
+label = "Intern 模型列表"
+url = "https://internlm.openxlab.org.cn/doc/docs/%E6%A8%A1%E5%9E%8B%E5%88%97%E8%A1%A8/"
+type = "docs"

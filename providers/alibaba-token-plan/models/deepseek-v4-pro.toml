@@ -1,0 +1,6 @@
+base_model = "deepseek/deepseek-v4-pro"
+endpoints = ["openai", "anthropic"]
+doc = "https://help.aliyun.com/zh/model-studio/token-plan-personal-overview"
+
+[limit]
+output = 393_216

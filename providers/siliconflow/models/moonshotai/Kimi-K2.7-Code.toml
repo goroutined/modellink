@@ -1,0 +1,12 @@
+base_model = "moonshot/kimi-k2.7-code"
+base_model_omit = ["temperature"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.siliconflow.cn/models?target=moonshotai%2FKimi-K2.7-Code"
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 6.5
+output = 27
+cache_read = 1.3

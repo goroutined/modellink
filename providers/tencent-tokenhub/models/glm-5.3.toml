@@ -1,0 +1,23 @@
+base_model = "zhipu/glm-5.3"
+endpoints = ["openai", "responses", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/132061"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high", "max"]
+default = "max"
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 1_000_000
+input = 1_000_000
+output = 131_072
+
+[cost_cn]
+input = 8
+output = 28
+cache_read = 2

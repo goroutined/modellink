@@ -1,0 +1,24 @@
+name = "Qwen3.5 397B A17B"
+description = "通义千问推出的开放权重原生多模态 MoE 模型，面向复杂推理、编程与智能体任务。"
+family = "qwen3.5"
+release_date = "2026-02"
+last_updated = "2026-02"
+attachment = true
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = true
+license = "Apache-2.0"
+
+[limit]
+context = 262_144
+output = 65_536
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/Qwen/Qwen3.5-397B-A17B"

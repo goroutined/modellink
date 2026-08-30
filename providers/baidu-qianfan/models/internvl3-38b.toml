@@ -1,0 +1,11 @@
+base_model = "shanghai-ai-lab/internvl3-38b"
+doc = "https://cloud.baidu.com/doc/qianfan-api/s/Dmba8k71y"
+
+[limit]
+context = 32_768
+input = 24_576
+output = 8_192
+
+[cost_cn]
+input = 8
+output = 24

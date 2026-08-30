@@ -1,0 +1,18 @@
+base_model = "moonshot/kimi-k2.7-code"
+name = "Kimi K2.7 Code HighSpeed"
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/132232"
+structured_output = true
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 262_144
+input = 262_144
+output = 262_144
+
+[cost_cn]
+input = 13
+output = 54
+cache_read = 2.6

@@ -1,0 +1,11 @@
+base_model = "zhipu/glm-5.3"
+base_model_omit = ["reasoning", "structured_output"]
+doc = "https://ai.gitee.com/serverless-api?service=24974"
+
+[limit]
+context = 1_000_000
+output = 128_000
+
+[cost_cn]
+input = 8
+output = 28

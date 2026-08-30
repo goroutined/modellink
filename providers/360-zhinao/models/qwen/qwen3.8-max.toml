@@ -1,0 +1,18 @@
+base_model = "alibaba/qwen3.8-max"
+base_model_omit = ["tool_call", "structured_output", "limit.input"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ai.360.com/open/zh/models/qwen/qwen3.8-max"
+
+[limit]
+context = 1_000_000
+output = 128_000
+
+[modalities]
+input = ["text", "image", "video", "pdf"]
+output = ["text"]
+
+[cost_cn]
+input = 12
+output = 36
+cache_read = 1.2
+cache_write = 15

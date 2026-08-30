@@ -1,0 +1,28 @@
+base_model = "minimax/minimax-m3"
+base_model_omit = ["temperature", "structured_output", "limit.output"]
+endpoints = ["openai"]
+doc = "https://docs.jdcloud.com/cn/jdaip/maas-billing-rules"
+
+[limit]
+context = 1_000_000
+
+[cost_cn]
+input = 4.2
+output = 16.8
+cache_read = 0.84
+
+[[cost_cn.tiers]]
+input = 4.2
+output = 16.8
+cache_read = 0.84
+[cost_cn.tiers.tier]
+type = "conditional"
+input = { lte = 524_288 }
+
+[[cost_cn.tiers]]
+input = 8.4
+output = 33.6
+cache_read = 1.68
+[cost_cn.tiers.tier]
+type = "conditional"
+input = { gt = 524_288 }

@@ -1,0 +1,45 @@
+base_model = "zhipu/glm-5v-turbo"
+base_model_omit = ["temperature"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/132061"
+structured_output = true
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["openai"]
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 204_800
+input = 204_800
+output = 131_072
+
+[modalities]
+input = ["text", "image", "video", "pdf"]
+output = ["text"]
+
+[cost_cn]
+input = 5
+output = 22
+cache_read = 1.2
+
+[[cost_cn.tiers]]
+input = 5
+output = 22
+cache_read = 1.2
+[cost_cn.tiers.tier]
+type = "conditional"
+[cost_cn.tiers.tier.input]
+lte = 32_768
+
+[[cost_cn.tiers]]
+input = 7
+output = 26
+cache_read = 1.8
+[cost_cn.tiers.tier]
+type = "conditional"
+[cost_cn.tiers.tier.input]
+gt = 32_768

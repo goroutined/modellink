@@ -1,0 +1,22 @@
+name = "JoyAI LLM 1.3T"
+description = "京东探索研究院推出的 1.3 万亿参数大语言模型，面向复杂文本生成、深度推理、工具调用与智能体任务。"
+family = "joyai"
+release_date = "2026-06-03"
+last_updated = "2026-06-03"
+attachment = false
+reasoning = true
+tool_call = true
+open_weights = false
+
+[limit]
+context = 131_072
+output = 16_384
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "京东云模型上新公告"
+url = "https://docs.jdcloud.com/cn/jdaip/model%20update%20announcement"
+type = "announcement"

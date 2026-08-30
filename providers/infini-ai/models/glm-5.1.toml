@@ -1,0 +1,4 @@
+base_model = "zhipu/glm-5.1"
+base_model_omit = ["temperature", "limit.output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://docs.infini-ai.com/gen-studio/api/text-generation/tutorial-reasoning/glm.html"

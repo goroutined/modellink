@@ -1,0 +1,8 @@
+base_model = "alibaba/qwen3.5-397b-a17b"
+endpoints = ["openai"]
+doc = "https://maas.ai-yuanjing.com/doc/pages/216556925/"
+
+[[reasoning_options]]
+type = "toggle"
+field = "chat_template_kwargs.enable_thinking"
+endpoints = ["openai"]

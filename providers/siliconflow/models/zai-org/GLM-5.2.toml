@@ -1,0 +1,12 @@
+base_model = "zhipu/glm-5.2"
+base_model_omit = ["temperature", "limit.output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.siliconflow.cn/models?target=zai-org%2FGLM-5.2"
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 8
+output = 28
+cache_read = 2

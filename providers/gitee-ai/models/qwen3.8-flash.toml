@@ -1,0 +1,14 @@
+base_model = "alibaba/qwen3.8-flash"
+base_model_omit = ["reasoning", "structured_output", "limit.input", "limit.output"]
+doc = "https://ai.gitee.com/serverless-api?service=25284"
+
+[limit]
+context = 1_000_000
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[cost_cn]
+input = 0.8
+output = 2.7

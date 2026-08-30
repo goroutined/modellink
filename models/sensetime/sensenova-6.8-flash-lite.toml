@@ -1,0 +1,29 @@
+name = "SenseNova 6.8 Flash Lite"
+description = "商汤日日新面向复杂真实任务推出的轻量级原生多模态智能体模型。"
+family = "sensenova"
+release_date = "2026-08-11"
+last_updated = "2026-08-11"
+attachment = true
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 256_000
+output = 65_536
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[[links]]
+label = "商汤官方发布"
+url = "https://www.sensetime.com/cn/news/sensenova-6.8-flash-lite-preview"
+type = "announcement"
+
+[[links]]
+label = "SenseNova API 文档"
+url = "https://platform.sensenova.cn/docs#model-flash"
+type = "docs"

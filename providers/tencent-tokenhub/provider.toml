@@ -1,0 +1,22 @@
+name = "腾讯云 TokenHub"
+env = ["TENCENT_TOKENHUB_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://tokenhub.tencentmaas.com/v1"
+doc = "https://cloud.tencent.com/document/product/1823/130051"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://tokenhub.tencentmaas.com/v1"
+default = true
+
+[[endpoints]]
+id = "responses"
+protocol = "openai-responses"
+api = "https://tokenhub.tencentmaas.com/v1"
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://tokenhub.tencentmaas.com/v1"

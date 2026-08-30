@@ -1,0 +1,17 @@
+name = "商汤日日新 SenseNova"
+env = ["SENSENOVA_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://token.sensenova.cn/v1"
+doc = "https://platform.sensenova.cn/docs"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://token.sensenova.cn/v1"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://token.sensenova.cn"

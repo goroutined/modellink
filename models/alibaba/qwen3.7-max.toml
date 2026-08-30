@@ -1,0 +1,25 @@
+name = "Qwen3.7 Max"
+description = "通义千问面向智能体时代推出的旗舰文本模型，强化复杂推理、编程、办公与长周期自主执行。"
+family = "qwen3.7-max"
+release_date = "2026-05-20"
+last_updated = "2026-05-20"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 1_000_000
+input = 983_616
+output = 131_072
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "阿里云百炼模型信息"
+url = "https://help.aliyun.com/zh/model-studio/qwen3-7-max"
+type = "docs"

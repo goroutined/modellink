@@ -1,0 +1,11 @@
+base_model = "zhipu/glm-5"
+base_model_omit = ["temperature", "reasoning_options", "interleaved"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.baidu.com/doc/qianfan/s/imlg0beiu"
+tool_call = true
+structured_output = true
+
+[limit]
+context = 335_872
+input = 204_800
+output = 131_072

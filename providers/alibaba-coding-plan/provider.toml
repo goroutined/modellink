@@ -1,0 +1,23 @@
+name = "阿里云百炼 Coding Plan"
+env = ["BAILIAN_CODING_PLAN_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://coding.dashscope.aliyuncs.com/v1"
+doc = "https://help.aliyun.com/zh/model-studio/coding-plan"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://coding.dashscope.aliyuncs.com/v1"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://coding.dashscope.aliyuncs.com/apps/anthropic"
+
+[[plans_cn]]
+name = "Pro"
+price_month = 200
+usage = "个人交互式 AI 编程工具与 OpenClaw"
+quota_windows = ["5 小时滚动窗口：6,000 次请求", "每周：45,000 次请求", "每月：90,000 次请求"]

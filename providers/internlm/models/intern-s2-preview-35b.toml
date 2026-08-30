@@ -1,0 +1,11 @@
+base_model = "shanghai-ai-lab/intern-s2-preview-35b"
+base_model_omit = ["structured_output"]
+endpoints = ["openai"]
+doc = "https://internlm.openxlab.org.cn/doc/docs/Chat/"
+temperature = true
+tool_call = true
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking_mode"
+endpoints = ["openai"]

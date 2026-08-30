@@ -1,0 +1,4 @@
+base_model = "deepseek/deepseek-v4-pro"
+base_model_omit = ["temperature", "limit.output"]
+endpoints = ["openai"]
+doc = "https://docs.infini-ai.com/gen-studio/api/text-generation/tutorial-reasoning/deepseek.html"

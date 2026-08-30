@@ -1,0 +1,42 @@
+base_model = "minimax/minimax-m3"
+base_model_omit = ["temperature", "interleaved"]
+endpoints = ["openai", "anthropic"]
+doc = "https://ppio.com/llm/minimax-minimax-m3"
+structured_output = true
+
+[limit]
+context = 1_000_000
+output = 131_072
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[cost_cn]
+input = 2.1
+output = 8.4
+cache_read = 0.42
+
+[[cost_cn.tiers]]
+input = 2.1
+output = 8.4
+cache_read = 0.42
+
+[cost_cn.tiers.tier]
+type = "conditional"
+
+[cost_cn.tiers.tier.input]
+gte = 1
+lte = 524_288
+
+[[cost_cn.tiers]]
+input = 4.2
+output = 16.8
+cache_read = 0.84
+
+[cost_cn.tiers.tier]
+type = "conditional"
+
+[cost_cn.tiers.tier.input]
+gt = 524_288
+lte = 1_000_000

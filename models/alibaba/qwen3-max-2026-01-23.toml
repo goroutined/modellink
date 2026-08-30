@@ -1,0 +1,26 @@
+name = "Qwen3 Max 0123"
+description = "阿里巴巴面向复杂智能体任务推出的 Qwen3 Max 快照，融合思考与非思考模式并强化工具调用。"
+family = "qwen"
+series = "qwen3-max"
+release_date = "2026-01-23"
+last_updated = "2026-01-23"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 262_144
+input = 258_048
+output = 32_768
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "阿里云百炼模型详情"
+url = "https://help.aliyun.com/zh/model-studio/model-qwen3-max"
+type = "docs"

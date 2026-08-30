@@ -1,0 +1,9 @@
+base_model = "shanghai-ai-lab/intern-s1"
+base_model_omit = ["structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://internlm.openxlab.org.cn/doc/docs/Chat/"
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking_mode"
+endpoints = ["openai"]

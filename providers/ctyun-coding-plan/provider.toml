@@ -1,0 +1,42 @@
+name = "天翼云编程 Token Plan"
+env = ["CTYUN_CODING_PLAN_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://ai.ctaigw.cn/coding/v1"
+doc = "https://www.ctyun.cn/document/11061839/11095143"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://ai.ctaigw.cn/coding/v1"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://ai.ctaigw.cn/coding"
+
+[[plans_cn]]
+name = "2500 万 Tokens"
+price_month = 29
+usage = "入门体验，适合首次体验 AI 工具能力"
+
+[[plans_cn]]
+name = "8000 万 Tokens"
+price_month = 89
+usage = "日常使用，适合处理基础的开发任务"
+
+[[plans_cn]]
+name = "1.8 亿 Tokens"
+price_month = 199
+usage = "轻量开发，适合处理较为复杂的开发任务"
+
+[[plans_cn]]
+name = "3.8 亿 Tokens"
+price_month = 399
+usage = "专业开发，适合处理复杂项目的开发任务"
+
+[[plans_cn]]
+name = "6.8 亿 Tokens"
+price_month = 699
+usage = "高频 AI 开发，适合处理复杂项目的持续迭代任务"

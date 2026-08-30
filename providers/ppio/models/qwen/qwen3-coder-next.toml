@@ -1,0 +1,17 @@
+base_model = "alibaba/qwen3-coder-next"
+base_model_omit = ["temperature", "limit.input"]
+endpoints = ["openai", "anthropic"]
+doc = "https://ppio.com/llm/qwen-qwen3-coder-next"
+structured_output = true
+
+[limit]
+context = 262_144
+output = 65_536
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[cost_cn]
+input = 1.4
+output = 10.5

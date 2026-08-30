@@ -1,0 +1,28 @@
+name = "Step 3.5 Flash"
+description = "阶跃星辰推出的高效语言推理模型，面向复杂推理、软件工程、工具调用与智能体任务。"
+family = "step"
+release_date = "2026-02-12"
+last_updated = "2026-03"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = true
+license = "Apache-2.0"
+
+[limit]
+context = 256_000
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/stepfun-ai/Step-3.5-Flash"
+
+[[links]]
+label = "官方模型介绍"
+url = "https://static.stepfun.com/blog/step-3.5-flash/"
+type = "announcement"

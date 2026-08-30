@@ -1,0 +1,30 @@
+name = "Qwen3 Coder Plus"
+description = "阿里巴巴面向 Coding Agent 打造的代码生成模型，擅长工具调用、环境交互与自主编程。"
+family = "qwen"
+release_date = "2025-07-22"
+last_updated = "2025-07-22"
+attachment = false
+reasoning = false
+temperature = true
+tool_call = true
+structured_output = false
+open_weights = true
+
+[limit]
+context = 1_000_000
+input = 997_952
+output = 65_536
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "Qwen3-Coder 发布说明"
+url = "https://qwen.ai/blog?id=qwen3-coder"
+type = "announcement"
+
+[[links]]
+label = "阿里云百炼模型详情"
+url = "https://help.aliyun.com/zh/model-studio/qwen3-coder-plus"
+type = "docs"

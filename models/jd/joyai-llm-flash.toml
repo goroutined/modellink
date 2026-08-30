@@ -1,0 +1,22 @@
+name = "JoyAI LLM Flash"
+description = "京东推出的开放权重 MoE 模型，面向推理、编程、智能体交互与长文档处理。"
+family = "joyai"
+release_date = "2026-02-14"
+last_updated = "2026-02-14"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = false
+open_weights = true
+
+[limit]
+context = 131_072
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/jdopensource/JoyAI-LLM-Flash"

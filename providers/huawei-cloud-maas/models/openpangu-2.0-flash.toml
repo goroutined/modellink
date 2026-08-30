@@ -1,0 +1,27 @@
+base_model = "huawei/openpangu-2.0-flash"
+base_model_omit = ["structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://support.huaweicloud.com/model-call-maas/usermanual_maas_0008.html"
+
+[[reasoning_options]]
+type = "toggle"
+field = "chat_template_kwargs.thinking"
+endpoints = ["openai"]
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["anthropic"]
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 524_288
+input = 512_000
+output = 131_072
+
+[cost_cn]
+input = 0.8
+output = 1.6
+cache_read = 0.2

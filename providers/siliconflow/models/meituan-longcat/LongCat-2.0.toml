@@ -1,0 +1,13 @@
+base_model = "meituan/longcat-2.0"
+base_model_omit = ["temperature", "limit.output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.siliconflow.cn/models?target=meituan-longcat%2FLongCat-2.0"
+structured_output = true
+
+[limit]
+context = 1_048_576
+
+[cost_cn]
+input = 5
+output = 20
+cache_read = 0.1

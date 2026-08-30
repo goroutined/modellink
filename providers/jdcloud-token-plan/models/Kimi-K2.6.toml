@@ -1,0 +1,13 @@
+base_model = "moonshot/kimi-k2.6"
+base_model_omit = ["reasoning", "temperature", "tool_call", "structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://docs.jdcloud.com/cn/jdaip/tokenplan-overview"
+attachment = false
+
+[limit]
+context = 262_144
+output = 32_768
+
+[modalities]
+input = ["text"]
+output = ["text"]

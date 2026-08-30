@@ -1,0 +1,3 @@
+base_model = "tencent/hy3"
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/130060"

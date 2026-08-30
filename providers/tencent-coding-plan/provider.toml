@@ -1,0 +1,29 @@
+name = "腾讯云 Coding Plan"
+env = ["TENCENT_CODING_PLAN_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://api.lkeap.cloud.tencent.com/coding/v3"
+doc = "https://cloud.tencent.com/document/product/1823/130092"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://api.lkeap.cloud.tencent.com/coding/v3"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://api.lkeap.cloud.tencent.com/coding/anthropic"
+
+[[plans_cn]]
+name = "Lite"
+price_month = 40
+usage = "个人交互式 AI 编程工具"
+quota_windows = ["每 5 小时：约 1,200 次请求", "每周：约 9,000 次请求", "每订阅月：约 18,000 次请求"]
+
+[[plans_cn]]
+name = "Pro"
+price_month = 200
+usage = "高频个人交互式 AI 编程工具"
+quota_windows = ["每 5 小时：约 6,000 次请求", "每周：约 45,000 次请求", "每订阅月：约 90,000 次请求"]

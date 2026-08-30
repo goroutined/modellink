@@ -1,0 +1,16 @@
+base_model = "moonshot/kimi-k3"
+endpoints = ["openai", "responses", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/132232"
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 1_000_000
+input = 1_000_000
+output = 1_000_000
+
+[cost_cn]
+input = 20
+output = 100
+cache_read = 2

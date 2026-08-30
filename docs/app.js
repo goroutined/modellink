@@ -1,10 +1,18 @@
 const app = document.querySelector("#app");
-const searchInput = document.querySelector("#global-search");
+const globalSearchTrigger = document.querySelector("#global-search-trigger");
+const globalSearchDialog = document.querySelector("#global-search-dialog");
+const globalSearchInput = document.querySelector("#global-search-input");
+const globalSearchResults = document.querySelector("#global-search-results");
+const globalSearchClose = document.querySelector("#global-search-close");
+const searchShortcut = document.querySelector("#search-shortcut");
 const siteHeader = document.querySelector(".site-header");
+let globalSearchActiveIndex = 0;
+let globalSearchComposing = false;
 
 const FIELD_LABELS = {
   id: "ID", name: "名称", description: "描述", family: "模型家族", series: "模型系列",
   attachment: "文件附件", reasoning: "推理能力", reasoning_options: "推理选项",
+  field: "请求字段", values: "可用值",
   tool_call: "工具调用", interleaved: "交错推理", structured_output: "结构化输出",
   temperature: "温度参数", knowledge: "知识截止日期", release_date: "发布日期",
   last_updated: "更新时间", modalities: "输入输出模态", open_weights: "开放权重",
@@ -15,7 +23,7 @@ const FIELD_LABELS = {
   cache_write: "缓存写入价格", status: "生命周期状态", provider: "服务商调用配置",
   experimental: "实验性配置", weights: "权重", benchmarks: "评测", links: "相关链接",
   api: "API 地址", env: "环境变量", npm: "兼容 SDK 包", protocol: "调用协议",
-  endpoints: "接入端点", default: "默认端点",
+  endpoints: "端点", default: "默认值",
   doc: "模型详情页", models: "模型",
   plans_cn: "人民币订阅套餐", price_month: "月费", usage: "适用场景",
   quota_windows: "额度窗口", credits_cn: "预付积分", points: "积分",
@@ -38,7 +46,7 @@ const state = {
   query: "",
   modelFilters: { lab: "all", reasoning: "all", weights: "all" },
   modelSort: { key: "release_date", direction: -1 },
-  expandedSeries: new Set(),
+  expandedModelPrices: new Set(),
 };
 
 const escapeHtml = (value) => String(value)
@@ -55,6 +63,7 @@ const compactTokenLimit = (value) => {
   if (value >= 1_000) return `${Math.floor(value / 1_000)}K`;
   return null;
 };
+const formatTokenShort = (value) => compactTokenLimit(value) ?? formatNumber(value);
 const formatTokenLimit = (value) => {
   if (value == null) return '<span class="pending-value">-</span>';
   const compact = compactTokenLimit(value);
@@ -67,7 +76,7 @@ const labFor = (id) => state.siteData.labs?.[id] ?? { id, name: id };
 const boolBadge = (value) => value === undefined
   ? '<span class="badge unknown">未知</span>'
   : `<span class="badge ${value ? "yes" : "no"}">${BOOLEAN_LABELS[value]}</span>`;
-const logo = (kind, id, large = false) => `<img class="logo${large ? " large" : ""}" src="logos/${kind === "labs" ? "labs/" : ""}${escapeHtml(id)}.svg" alt="" onerror="this.hidden=true">`;
+const logo = (kind, id, large = false) => `<img class="logo${large ? " large" : ""}" src="logos/${kind === "labs" ? "labs/" : ""}${escapeHtml(id)}.svg" alt="" onerror="this.onerror=null;this.src='logos/default.svg'">`;
 
 function providerEndpoints(provider) {
   if (provider.endpoints?.length) return provider.endpoints;
@@ -88,6 +97,42 @@ function renderProtocols(endpoints) {
     const label = PROTOCOL_LABELS[endpoint.protocol] ?? endpoint.protocol;
     return `<span class="protocol-badge${endpoint.default ? " default" : ""}" title="${escapeHtml(endpoint.api ?? label)}">${escapeHtml(label)}</span>`;
   }).join("")}</span>`;
+}
+
+function renderReasoningControl(model) {
+  if (model.reasoning === undefined) return '<span class="pending-value">-</span>';
+  if (model.reasoning !== true) return boolBadge(false);
+  const options = model.reasoning_options ?? [];
+  if (!options.length) return boolBadge(true);
+
+  const groups = new Map();
+  for (const option of options) {
+    const field = option.field ?? (option.type === "budget_tokens" ? "Token 预算" : option.type === "toggle" ? "开关" : "推理档位");
+    let value = "";
+    if (option.type === "effort") {
+      value = (option.values ?? []).map((item) => item ?? "null").join(" ");
+      if (option.default !== undefined) value += `，默认 ${option.default ?? "null"}`;
+    } else if (option.type === "budget_tokens") {
+      const limits = [];
+      if (option.min !== undefined) limits.push(`最小值 ${formatTokenShort(option.min)}`);
+      if (option.max !== undefined) limits.push(`最大值 ${formatTokenShort(option.max)}`);
+      value = limits.join("，") || "可调";
+    } else if (option.type === "toggle") {
+      value = "支持开关";
+    }
+    const line = `${field}：${value}`;
+    for (const endpoint of option.endpoints?.length ? option.endpoints : ["default"]) {
+      if (!groups.has(endpoint)) groups.set(endpoint, new Set());
+      groups.get(endpoint).add(line);
+    }
+  }
+
+  const tooltip = [...groups.entries()].map(([endpoint, lines]) => {
+    const protocol = endpoint === "default" ? "默认协议" : PROTOCOL_LABELS[endpoint] ?? endpoint;
+    return `<span class="reasoning-tooltip-group"><strong>${escapeHtml(protocol)}</strong>${[...lines].map((line) => `<span>${escapeHtml(line)}</span>`).join("")}</span>`;
+  }).join("");
+  const ariaDetails = [...groups.entries()].map(([endpoint, lines]) => `${endpoint}：${[...lines].join("；")}`).join("；");
+  return `<span class="reasoning-control reasoning-tooltip" tabindex="0" aria-label="支持推理；${escapeHtml(ariaDetails)}"><span class="badge yes">是</span><span class="reasoning-help" aria-hidden="true">?</span><span class="reasoning-tooltip-content" role="tooltip">${tooltip}</span></span>`;
 }
 
 function renderEndpointList(provider) {
@@ -184,7 +229,10 @@ function formatConditionalTier(tier) {
   if (tier.output) parts.push(`输出 ${formatTokenRange(tier.output)}`);
   if (tier.time) {
     const windows = tier.time.windows
-      .map((window) => `${window.start}–${window.end}`)
+      .map((window) => {
+        const days = formatWindowDays(window.days);
+        return `${days ? `${days} ` : ""}${window.start}–${window.end}`;
+      })
       .join("、");
     parts.push(`${windows}（${tier.time.timezone}）`);
   }
@@ -223,8 +271,26 @@ const WEEKDAY_LABELS = {
   friday: "周五", saturday: "周六", sunday: "周日",
 };
 
+function formatWindowDays(days) {
+  if (!days?.length) return "";
+  const key = days.join(",");
+  if (key === "monday,tuesday,wednesday,thursday,friday") return "工作日";
+  if (key === "saturday,sunday") return "周末";
+  if (days.length === 7) return "每天";
+  return days.map((day) => WEEKDAY_LABELS[day] ?? day).join("、");
+}
+
 function formatPointCost(cost, firstKey, secondKey) {
   if (!cost) return '<span class="pending-value">-</span>';
+  const tiers = [...(cost.tiers ?? [])];
+  if (tiers.length) {
+    const rows = tiers.map((tier) => ({
+      label: tier.tier.label,
+      detail: formatConditionalTier(tier.tier),
+      cost: tier,
+    }));
+    return `<span class="tier-prices">${rows.map(({ label, detail, cost: tierCost }, index) => `<span><small class="price-tier-summary"><span>${escapeHtml(label ?? `阶梯 ${index + 1}`)}</span>${priceHelp(detail)}</small>${formatPointCost({ ...tierCost, per_tokens: cost.per_tokens }, firstKey, secondKey)}</span>`).join("")}</span>`;
+  }
   const first = cost[firstKey];
   const second = cost[secondKey];
   const pair = `<span class="price-pair"><span>${first == null ? "-" : formatNumber(first)}</span><span class="price-separator">/</span><span>${second == null ? "-" : formatNumber(second)}</span></span>`;
@@ -242,9 +308,19 @@ function formatOfferingCost(model, firstKey, secondKey) {
   return formatPointCost(model.cost_points, firstKey, secondKey);
 }
 
-function pricingUnitNote(models) {
+function formatComparableCost(model, firstKey, secondKey) {
+  if (model.cost_cn) return formatCnyTiered(model.cost_cn, firstKey, secondKey);
+  if (model.cost_points && firstKey === "input" && secondKey === "output") {
+    return '<span class="plan-billing" title="该服务按套餐额度计费，不换算为人民币 Token 单价">套餐制</span>';
+  }
+  return '<span class="pending-value">-</span>';
+}
+
+function pricingUnitNote(models, showPointDetails = true) {
   const hasCny = models.some((model) => model.cost_cn);
   const hasPoints = models.some((model) => model.cost_points);
+  if (!showPointDetails && hasCny && hasPoints) return "人民币价格：元 / 百万 Token；积分套餐不换算人民币单价";
+  if (!showPointDetails && hasPoints) return "积分套餐不换算人民币 Token 单价";
   if (hasCny && hasPoints) return "人民币价格：元 / 百万 Token；订阅套餐显示积分消耗";
   if (hasPoints) return "订阅套餐积分消耗；悬停 ? 查看抵扣规则";
   return "人民币价格单位：元 / 百万 Token";
@@ -267,7 +343,10 @@ function catalogSummary() {
 function modelPrices(modelId) {
   const offerings = modelOfferings(modelId);
   if (!offerings.length) return '<span class="pending-value">-</span>';
-  return `<span class="model-price-list">${offerings.map(({ providerId, provider, model }) => `<span><a class="interactive-link" href="${routeHref("providers", providerId)}">${escapeHtml(provider.name ?? providerId)}</a>${formatOfferingCost(model, "input", "output")}</span>`).join("")}</span>`;
+  const expanded = state.expandedModelPrices.has(modelId);
+  const toggle = `<button class="model-price-toggle${expanded ? " expanded" : ""}" type="button" data-price-toggle="${escapeHtml(modelId)}" aria-expanded="${expanded}" aria-label="${expanded ? "收起" : "展开"}${offerings.length}个服务商的价格"><span>${offerings.length} 个服务商提供</span><span class="model-price-caret" aria-hidden="true">›</span></button>`;
+  if (!expanded) return toggle;
+  return `<span class="model-price-summary">${toggle}<span class="model-price-list">${offerings.map(({ providerId, provider, model }) => `<span><a class="interactive-link" href="${routeHref("providers", providerId)}">${escapeHtml(provider.name ?? providerId)}</a>${formatComparableCost(model, "input", "output")}</span>`).join("")}</span></span>`;
 }
 
 function modelSortValue([id, model], key) {
@@ -319,19 +398,16 @@ function modelVersionLabel(id, model) {
 }
 
 function renderModelRow([id, model], options = {}) {
-  const { seriesKey, seriesMembers = [], expanded = false, versionRow = false } = options;
+  const { seriesMembers = [], versionRow = false } = options;
   const hasVersions = seriesMembers.length > 1;
   const rootEntry = hasVersions
     ? seriesMembers.find(([candidateId]) => candidateId.split("/").at(-1) === model.series)
     : undefined;
   const displayName = hasVersions && !versionRow ? (rootEntry?.[1].name ?? model.name) : model.name;
   const detail = id;
-  const toggle = hasVersions && !versionRow
-    ? `<button class="series-toggle" type="button" data-series-toggle="${escapeHtml(seriesKey)}" aria-expanded="${expanded}" aria-label="${expanded ? "收起" : "展开"}${escapeHtml(displayName)}的版本">${expanded ? "−" : "+"}</button>`
-    : "";
   const count = hasVersions && !versionRow ? `<span class="series-count">${seriesMembers.length} 个版本</span>` : "";
   return `<tr class="${versionRow ? "version-row" : hasVersions ? "series-row" : ""}">
-    <td><div class="series-model-cell">${toggle}<a class="primary-cell row-link" href="${routeHref("models", id)}">${logo("labs", labIdFor(id))}<span><span class="series-title-line"><strong>${escapeHtml(displayName)}</strong>${count}</span><small title="${escapeHtml(id)}">${escapeHtml(detail)}</small></span></a></div></td>
+    <td><div class="series-model-cell"><a class="primary-cell row-link" href="${routeHref("models", id)}">${logo("labs", labIdFor(id))}<span><span class="series-title-line"><strong>${escapeHtml(displayName)}</strong>${count}</span><small title="${escapeHtml(id)}">${escapeHtml(detail)}</small></span></a></div></td>
     <td><a href="${routeHref("labs", labIdFor(id))}">${escapeHtml(labFor(labIdFor(id)).name)}</a></td><td class="number">${modelOfferings(id).length}</td>
     <td class="number">${formatTokenLimit(model.limit?.context)}</td><td class="number">${formatTokenLimit(model.limit?.input)}</td><td class="number">${formatTokenLimit(model.limit?.output)}</td><td>${renderModalities(model.modalities)}</td>
     <td>${boolBadge(model.reasoning)}</td><td>${boolBadge(model.tool_call)}</td><td>${boolBadge(model.structured_output)}</td><td>${boolBadge(model.temperature)}</td><td>${boolBadge(model.open_weights)}</td>
@@ -387,10 +463,9 @@ function renderModels() {
         <th>${sortHeader("name", "模型")}</th><th>${sortHeader("lab", "研发机构")}</th><th>${sortHeader("providers", "服务商")}</th>
         <th>${sortHeader("context", "上下文窗口")}</th><th>最大输入</th><th>最大输出</th><th>模态</th><th>推理能力</th><th>工具调用</th><th>结构化输出</th><th>温度参数</th><th>开放权重</th>
         <th>${sortHeader("price", "服务商价格（输入 / 输出）")}</th><th>${sortHeader("release_date", "发布日期")}</th><th>${sortHeader("last_updated", "更新时间")}</th>
-      </tr></thead><tbody>${groups.map(({ key, members, visibleMembers, representative }) => {
-        const expanded = state.expandedSeries.has(key) && visibleMembers.length > 1;
-        const children = expanded ? visibleMembers.filter(([id]) => id !== representative[0]) : [];
-        return renderModelRow(representative, { seriesKey: key, seriesMembers: members, expanded })
+      </tr></thead><tbody>${groups.map(({ members, visibleMembers, representative }) => {
+        const children = visibleMembers.filter(([id]) => id !== representative[0]);
+        return renderModelRow(representative, { seriesMembers: members })
           + children.map((entry) => renderModelRow(entry, { versionRow: true })).join("");
       }).join("")}</tbody></table></div></div>` : '<div class="empty-state">没有符合当前条件的模型。</div>');
   bindListControls();
@@ -482,9 +557,9 @@ function renderModelDetail(id) {
     <div class="detail-grid"><section class="panel"><h2>核心参数</h2><div class="stat-grid">
       <div class="stat"><span>上下文窗口</span><strong>${formatTokenLimit(model.limit?.context)}</strong></div><div class="stat"><span>最大输入</span><strong>${formatTokenLimit(model.limit?.input)}</strong></div><div class="stat"><span>最大输出</span><strong>${formatTokenLimit(model.limit?.output)}</strong></div><div class="stat"><span>发布日期</span><strong>${escapeHtml(model.release_date ?? "未知")}</strong></div>
     </div></section><aside class="panel"><h2>能力与模态</h2><div class="badge-group">${[["推理", model.reasoning], ["工具调用", model.tool_call], ["结构化输出", model.structured_output], ["开放权重", model.open_weights]].map(([label, value]) => `<span class="capability ${value ? "yes" : ""}">${label}：${value === undefined ? "未知" : BOOLEAN_LABELS[value]}</span>`).join("")}${modalities.map((x) => `<span class="modality">${escapeHtml(x)}</span>`).join("")}</div></aside></div>
-    <section class="section"><div class="section-heading"><h2>服务商与价格</h2><span>${escapeHtml(pricingUnitNote(offerings.map(({ model: offering }) => offering)))}</span></div>${offerings.length ? `<div class="table-panel"><div class="table-scroll"><table class="offering-table"><thead><tr><th>服务商与调用 ID</th><th>上下文窗口</th><th>最大输入</th><th>最大输出</th><th>输入 / 输出</th><th>缓存读 / 写</th><th>协议</th><th class="secondary-cell">工具调用</th><th class="secondary-cell">结构化输出</th><th class="secondary-cell">温度参数</th><th class="secondary-cell">模型详情</th></tr></thead><tbody>${offerings.map(({ providerId, modelId, provider, model: offering }) => `<tr>
+    <section class="section"><div class="section-heading"><h2>服务商与价格</h2><span>${escapeHtml(pricingUnitNote(offerings.map(({ model: offering }) => offering), false))}</span></div>${offerings.length ? `<div class="table-panel"><div class="table-scroll"><table class="offering-table"><thead><tr><th>服务商与调用 ID</th><th>上下文窗口</th><th>最大输入</th><th>最大输出</th><th>输入 / 输出</th><th>缓存读 / 写</th><th>协议</th><th class="secondary-cell">推理控制</th><th class="secondary-cell">工具调用</th><th class="secondary-cell">结构化输出</th><th class="secondary-cell">温度参数</th><th class="secondary-cell">模型详情</th></tr></thead><tbody>${offerings.map(({ providerId, modelId, provider, model: offering }) => `<tr>
       <td class="model-call-cell"><a class="interactive-link" href="${routeHref("providers", providerId)}">${escapeHtml(provider.name ?? providerId)}</a><span class="call-id"><code>${escapeHtml(modelId)}</code><button class="copy-button" type="button" data-copy="${escapeHtml(modelId)}" aria-label="复制调用模型 ID" title="复制调用模型 ID">⧉</button></span></td>
-      <td class="key-cell number">${formatTokenLimit(offering.limit?.context)}</td><td class="key-cell number">${formatTokenLimit(offering.limit?.input)}</td><td class="key-cell number">${formatTokenLimit(offering.limit?.output)}</td><td class="key-cell number">${formatOfferingCost(offering, "input", "output")}</td><td class="key-cell number">${formatOfferingCost(offering, "cache_read", "cache_write")}</td><td class="key-cell">${renderProtocols(modelEndpoints(provider, offering))}</td>
+      <td class="key-cell number">${formatTokenLimit(offering.limit?.context)}</td><td class="key-cell number">${formatTokenLimit(offering.limit?.input)}</td><td class="key-cell number">${formatTokenLimit(offering.limit?.output)}</td><td class="key-cell number">${formatComparableCost(offering, "input", "output")}</td><td class="key-cell number">${formatComparableCost(offering, "cache_read", "cache_write")}</td><td class="key-cell">${renderProtocols(modelEndpoints(provider, offering))}</td><td class="secondary-cell">${renderReasoningControl(offering)}</td>
       <td class="secondary-cell">${boolBadge(offering.tool_call)}</td><td class="secondary-cell">${boolBadge(offering.structured_output)}</td><td class="secondary-cell">${boolBadge(offering.temperature)}</td><td class="secondary-cell">${offering.doc ? `<a class="interactive-link" href="${escapeHtml(offering.doc)}" target="_blank" rel="noreferrer">模型详情</a>` : provider.doc ? `<a class="interactive-link" href="${escapeHtml(provider.doc)}" target="_blank" rel="noreferrer">服务商文档</a>` : "-"}</td></tr>`).join("")}</tbody></table></div></div>` : '<div class="empty-state">暂未录入可调用此模型的服务商。</div>'}</section>
     ${fullDataSection(model, "模型全部字段")}`;
   bindTabs();
@@ -506,14 +581,14 @@ function renderProviderDetail(id) {
     ${renderProviderPlans(provider)}
     <section class="section"><div class="section-heading"><h2>可调用模型</h2><span>${escapeHtml(pricingUnitNote(models.map(([, model]) => model)))}</span></div>${models.length ? `<div class="table-panel"><div class="table-scroll"><table class="offering-table"><thead><tr>
       <th>模型与调用 ID</th><th>上下文窗口</th><th>最大输入</th><th>最大输出</th><th>模态</th><th>输入 / 输出</th><th>缓存读 / 写</th><th>协议</th>
-      <th class="secondary-cell">推理</th><th class="secondary-cell">工具调用</th><th class="secondary-cell">结构化输出</th><th class="secondary-cell">温度参数</th><th class="secondary-cell">模型详情</th>
+      <th class="secondary-cell">推理控制</th><th class="secondary-cell">工具调用</th><th class="secondary-cell">结构化输出</th><th class="secondary-cell">温度参数</th><th class="secondary-cell">模型详情</th>
     </tr></thead><tbody>${models.map(([modelId, model]) => {
       const canonical = canonicalForOffering(id, modelId);
       return `<tr>
         <td class="model-call-cell">${canonical ? `<a class="interactive-link" href="${routeHref("models", canonical)}">${escapeHtml(model.name ?? canonical)}</a>` : `<strong>${escapeHtml(model.name ?? modelId)}</strong>`}<span class="call-id"><code>${escapeHtml(modelId)}</code><button class="copy-button" type="button" data-copy="${escapeHtml(modelId)}" aria-label="复制调用模型 ID" title="复制调用模型 ID">⧉</button></span></td>
         <td class="key-cell number">${formatTokenLimit(model.limit?.context)}</td><td class="key-cell number">${formatTokenLimit(model.limit?.input)}</td><td class="key-cell number">${formatTokenLimit(model.limit?.output)}</td><td class="key-cell">${renderModalities(model.modalities)}</td>
         <td class="key-cell number">${formatOfferingCost(model, "input", "output")}</td><td class="key-cell number">${formatOfferingCost(model, "cache_read", "cache_write")}</td><td class="key-cell">${renderProtocols(modelEndpoints(provider, model))}</td>
-        <td class="secondary-cell">${boolBadge(model.reasoning)}</td><td class="secondary-cell">${boolBadge(model.tool_call)}</td><td class="secondary-cell">${boolBadge(model.structured_output)}</td><td class="secondary-cell">${boolBadge(model.temperature)}</td><td class="secondary-cell">${model.doc ? `<a class="interactive-link" href="${escapeHtml(model.doc)}" target="_blank" rel="noreferrer">模型详情</a>` : provider.doc ? `<a class="interactive-link" href="${escapeHtml(provider.doc)}" target="_blank" rel="noreferrer">服务商文档</a>` : "-"}</td>
+        <td class="secondary-cell">${renderReasoningControl(model)}</td><td class="secondary-cell">${boolBadge(model.tool_call)}</td><td class="secondary-cell">${boolBadge(model.structured_output)}</td><td class="secondary-cell">${boolBadge(model.temperature)}</td><td class="secondary-cell">${model.doc ? `<a class="interactive-link" href="${escapeHtml(model.doc)}" target="_blank" rel="noreferrer">模型详情</a>` : provider.doc ? `<a class="interactive-link" href="${escapeHtml(provider.doc)}" target="_blank" rel="noreferrer">服务商文档</a>` : "-"}</td>
       </tr>`;
     }).join("")}</tbody></table></div></div>` : '<div class="empty-state">暂未录入该服务商的模型。</div>'}</section>
     ${fullDataSection(provider, "服务商全部字段")}`;
@@ -539,7 +614,6 @@ function bindListControls() {
   const localSearch = document.querySelector("[data-local-search]");
   localSearch?.addEventListener("input", (event) => {
     state.query = event.target.value;
-    searchInput.value = state.query;
     render();
     document.querySelector("[data-local-search]")?.focus();
   });
@@ -553,11 +627,11 @@ function bindListControls() {
     state.modelSort.key = key;
     render();
   }));
-  document.querySelectorAll("[data-series-toggle]").forEach((button) => button.addEventListener("click", () => {
-    const key = button.dataset.seriesToggle;
+  document.querySelectorAll("[data-price-toggle]").forEach((button) => button.addEventListener("click", () => {
+    const modelId = button.dataset.priceToggle;
     const scrollTop = window.scrollY;
-    if (state.expandedSeries.has(key)) state.expandedSeries.delete(key);
-    else state.expandedSeries.add(key);
+    if (state.expandedModelPrices.has(modelId)) state.expandedModelPrices.delete(modelId);
+    else state.expandedModelPrices.add(modelId);
     render();
     window.scrollTo({ top: scrollTop, behavior: "instant" });
   }));
@@ -588,10 +662,184 @@ async function loadData() {
   return { catalog: await catalogResponse.json(), siteData: await siteDataResponse.json() };
 }
 
-searchInput.addEventListener("input", () => { state.query = searchInput.value; if (!route().id) render(); });
+function globalSearchEntries() {
+  const models = Object.entries(state.catalog.models).map(([id, model]) => {
+    const labId = labIdFor(id);
+    const lab = labFor(labId);
+    const offeringIds = (state.siteData.model_providers?.[id] ?? []).map(({ model_id: modelId }) => modelId);
+    return {
+      section: "models", id, group: "模型", name: model.name ?? id,
+      subtitle: `${lab.name ?? labId} · ${id}`,
+      secondary: [model.description, model.family, model.series, ...offeringIds].filter(Boolean),
+      related: [lab.name, labId].filter(Boolean),
+      icon: logo("labs", labId),
+    };
+  });
+  const providers = Object.entries(state.catalog.providers).map(([id, provider]) => ({
+    section: "providers", id, group: "服务商", name: provider.name ?? id,
+    subtitle: `${Object.keys(provider.models ?? {}).length} 个可调用模型 · ${id}`,
+    secondary: [provider.api, provider.doc, provider.protocol,
+      ...providerEndpoints(provider).flatMap((endpoint) => [endpoint.protocol, endpoint.api])].filter(Boolean),
+    related: [],
+    icon: logo("providers", id),
+  }));
+  const labs = Object.entries(state.siteData.labs ?? {}).map(([id, lab]) => ({
+    section: "labs", id, group: "研发机构", name: lab.name ?? id,
+    subtitle: `${labModelEntries(id).length} 个模型 · ${id}`,
+    secondary: [lab.description].filter(Boolean),
+    related: [],
+    icon: logo("labs", id),
+  }));
+  return { models, providers, labs };
+}
+
+function globalSearchScore(entry, query) {
+  const name = entry.name.toLowerCase();
+  const id = entry.id.toLowerCase();
+  if (name === query || id === query) return 0;
+  if (name.startsWith(query)) return 10;
+  if (id.startsWith(query)) return 12;
+  if (name.split(/\s+|[-_/]/).some((part) => part.startsWith(query))) return 14;
+  if (name.includes(query) || id.includes(query)) return 20;
+  if ((entry.secondary ?? []).some((value) => String(value).toLowerCase() === query)) return 30;
+  if ((entry.secondary ?? []).some((value) => String(value).toLowerCase().includes(query))) return 40;
+  if ((entry.related ?? []).some((value) => String(value).toLowerCase() === query)) return 60;
+  if ((entry.related ?? []).some((value) => String(value).toLowerCase().startsWith(query))) return 65;
+  if ((entry.related ?? []).some((value) => String(value).toLowerCase().includes(query))) return 70;
+  return Number.POSITIVE_INFINITY;
+}
+
+function globalSearchResult(entry, index) {
+  return `<a class="global-search-result" data-global-result data-result-index="${index}" href="${routeHref(entry.section, entry.id)}" role="option" aria-selected="false">
+    ${entry.icon}<span class="global-search-result-copy"><strong>${escapeHtml(entry.name)}</strong><small>${escapeHtml(entry.subtitle)}</small></span><span class="global-search-kind">${entry.group}</span>
+  </a>`;
+}
+
+function renderGlobalSearchResults() {
+  const query = globalSearchInput.value.trim().toLowerCase();
+  const entries = globalSearchEntries();
+  const groups = [];
+  if (query) {
+    for (const [order, [key, label]] of [["models", "模型"], ["providers", "服务商"], ["labs", "研发机构"]].entries()) {
+      const matches = entries[key].map((entry) => ({ entry, score: globalSearchScore(entry, query) }))
+        .filter(({ score }) => Number.isFinite(score))
+        .sort((a, b) => a.score - b.score || a.entry.name.localeCompare(b.entry.name, "zh-CN"));
+      if (matches.length) groups.push({ label, order, score: matches[0].score, entries: matches.map(({ entry }) => entry) });
+    }
+    groups.sort((a, b) => a.score - b.score || a.order - b.order);
+  } else {
+    groups.push({ label: "快速入口", entries: [
+      { section: "models", id: undefined, group: "入口", name: "浏览全部模型", subtitle: `${entries.models.length} 个规范模型`, icon: '<span class="global-search-mark">M</span>' },
+      { section: "providers", id: undefined, group: "入口", name: "浏览全部服务商", subtitle: `${entries.providers.length} 个模型服务商`, icon: '<span class="global-search-mark">P</span>' },
+      { section: "labs", id: undefined, group: "入口", name: "浏览全部研发机构", subtitle: `${entries.labs.length} 个研发机构`, icon: '<span class="global-search-mark">L</span>' },
+    ] });
+    const latest = [...entries.models].sort((a, b) => {
+      const modelA = state.catalog.models[a.id];
+      const modelB = state.catalog.models[b.id];
+      return String(modelB.release_date ?? modelB.last_updated ?? "").localeCompare(String(modelA.release_date ?? modelA.last_updated ?? ""));
+    }).slice(0, 6);
+    if (latest.length) groups.push({ label: "最新模型", entries: latest });
+  }
+
+  if (!groups.length) {
+    globalSearchResults.innerHTML = `<div class="global-search-empty"><strong>没有找到匹配结果</strong><span>试试模型名称、调用 ID、服务商或研发机构</span></div>`;
+    globalSearchActiveIndex = -1;
+    return;
+  }
+
+  let resultIndex = 0;
+  globalSearchResults.innerHTML = groups.map((group) => `<section class="global-search-group"><h2>${group.label}<span>${group.entries.length}</span></h2><div>${group.entries.map((entry) => globalSearchResult(entry, resultIndex++)).join("")}</div></section>`).join("");
+  globalSearchActiveIndex = Math.min(Math.max(globalSearchActiveIndex, 0), resultIndex - 1);
+  syncGlobalSearchActive(false);
+}
+
+function syncGlobalSearchActive(shouldScroll = true) {
+  const results = [...globalSearchResults.querySelectorAll("[data-global-result]")];
+  results.forEach((result, index) => {
+    const active = index === globalSearchActiveIndex;
+    result.classList.toggle("active", active);
+    result.setAttribute("aria-selected", String(active));
+  });
+  if (shouldScroll) results[globalSearchActiveIndex]?.scrollIntoView({ block: "nearest" });
+}
+
+function openGlobalSearch() {
+  if (!globalSearchDialog.open) globalSearchDialog.showModal();
+  globalSearchInput.value = "";
+  globalSearchActiveIndex = 0;
+  renderGlobalSearchResults();
+  requestAnimationFrame(() => globalSearchInput.focus());
+}
+
+function closeGlobalSearch() {
+  if (globalSearchDialog.open) globalSearchDialog.close();
+}
+
+function configureSearchShortcut() {
+  if (!searchShortcut) return;
+  const platform = navigator.userAgentData?.platform ?? navigator.platform ?? "";
+  const mobile = navigator.userAgentData?.mobile === true
+    || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+    || (platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  if (mobile) return;
+  searchShortcut.textContent = /Mac/i.test(platform) ? "⌘ K" : "Ctrl K";
+  searchShortcut.hidden = false;
+}
+
+configureSearchShortcut();
+globalSearchTrigger.addEventListener("click", openGlobalSearch);
+globalSearchClose.addEventListener("click", closeGlobalSearch);
+globalSearchDialog.addEventListener("click", (event) => {
+  if (event.target === globalSearchDialog) closeGlobalSearch();
+});
+globalSearchInput.addEventListener("input", () => {
+  if (globalSearchComposing) return;
+  globalSearchActiveIndex = 0;
+  renderGlobalSearchResults();
+});
+globalSearchInput.addEventListener("compositionstart", () => {
+  globalSearchComposing = true;
+});
+globalSearchInput.addEventListener("compositionend", () => {
+  globalSearchComposing = false;
+  globalSearchActiveIndex = 0;
+  renderGlobalSearchResults();
+});
+globalSearchInput.addEventListener("keydown", (event) => {
+  if (globalSearchComposing || event.isComposing || event.keyCode === 229) return;
+  const results = [...globalSearchResults.querySelectorAll("[data-global-result]")];
+  if (event.key === "ArrowDown" && results.length) {
+    event.preventDefault();
+    globalSearchActiveIndex = (globalSearchActiveIndex + 1) % results.length;
+    syncGlobalSearchActive();
+  } else if (event.key === "ArrowUp" && results.length) {
+    event.preventDefault();
+    globalSearchActiveIndex = (globalSearchActiveIndex - 1 + results.length) % results.length;
+    syncGlobalSearchActive();
+  } else if (event.key === "Enter" && results[globalSearchActiveIndex]) {
+    event.preventDefault();
+    results[globalSearchActiveIndex].click();
+  }
+});
+globalSearchResults.addEventListener("mousemove", (event) => {
+  const result = event.target.closest("[data-result-index]");
+  if (!result) return;
+  globalSearchActiveIndex = Number(result.dataset.resultIndex);
+  syncGlobalSearchActive(false);
+});
+globalSearchResults.addEventListener("click", (event) => {
+  const result = event.target.closest("[data-global-result]");
+  if (!result) return;
+  state.query = "";
+  closeGlobalSearch();
+  if (result.getAttribute("href") === location.hash) requestAnimationFrame(render);
+});
 document.addEventListener("keydown", (event) => {
-  if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") { event.preventDefault(); searchInput.focus(); }
-  if (event.key === "Escape" && document.activeElement === searchInput) { state.query = ""; searchInput.value = ""; render(); }
+  if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+    event.preventDefault();
+    if (globalSearchDialog.open) globalSearchInput.focus();
+    else openGlobalSearch();
+  }
 });
 window.addEventListener("hashchange", render);
 

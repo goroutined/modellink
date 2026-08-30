@@ -1,0 +1,28 @@
+name = "Kimi K2.5"
+description = "月之暗面推出的开放权重原生多模态 Agent 模型，支持视觉、代码、工具调用与思考模式。"
+family = "kimi-k2"
+release_date = "2026-01-27"
+last_updated = "2026-01-27"
+attachment = true
+reasoning = true
+temperature = false
+tool_call = true
+structured_output = true
+open_weights = true
+
+[limit]
+context = 262_144
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[[links]]
+label = "Kimi K2.5 官方介绍"
+url = "https://www.kimi.com/blog/kimi-k2-5"
+type = "announcement"
+
+[[links]]
+label = "Kimi K2.5 官方模型卡"
+url = "https://huggingface.co/moonshotai/Kimi-K2.5"
+type = "model_card"

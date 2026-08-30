@@ -1,0 +1,12 @@
+name = "讯飞星火 X2 API"
+env = ["IFLYTEK_SPARK_API_PASSWORD"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://spark-api-open.xf-yun.com/x2"
+doc = "https://www.xfyun.cn/doc/spark/X1http.html"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://spark-api-open.xf-yun.com/x2"
+default = true

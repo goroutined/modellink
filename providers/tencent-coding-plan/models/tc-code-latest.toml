@@ -1,0 +1,6 @@
+base_model = "zhipu/glm-5"
+base_model_omit = ["reasoning", "temperature", "tool_call", "structured_output", "limit.output"]
+name = "Auto"
+description = "腾讯云 Coding Plan 智能路由模型，根据请求自动选择套餐当前支持的编程模型。"
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/130092"

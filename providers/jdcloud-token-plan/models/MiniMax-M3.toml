@@ -1,0 +1,13 @@
+base_model = "minimax/minimax-m3"
+base_model_omit = ["reasoning", "temperature", "tool_call", "structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://docs.jdcloud.com/cn/jdaip/tokenplan-overview"
+attachment = true
+
+[limit]
+context = 1_000_000
+output = 524_288
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]

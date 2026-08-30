@@ -1,0 +1,20 @@
+base_model = "alibaba/qwen3.8-2.4t-a95b"
+base_model_omit = ["temperature", "interleaved", "limit.input"]
+endpoints = ["openai", "responses"]
+doc = "https://ppio.com/llm/qwen-qwen3.8-2.4t-a95b"
+reasoning = true
+tool_call = true
+structured_output = true
+
+[limit]
+context = 1_000_000
+output = 131_072
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[cost_cn]
+input = 12
+output = 36
+cache_read = 1.5

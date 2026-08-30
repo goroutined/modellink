@@ -1,0 +1,25 @@
+name = "Spark X2 Flash"
+description = "科大讯飞面向 Agent 场景推出的高性价比模型，强化智能体、代码生成和工具调用能力。"
+family = "spark-x2"
+release_date = "2026-07-27"
+last_updated = "2026-07-27"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = false
+open_weights = false
+
+[limit]
+context = 262_144
+input = 196_608
+output = 262_144
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "Spark X2 Flash HTTP 协议文档"
+url = "https://www.xfyun.cn/doc/spark/X2-Flash.html"
+type = "docs"

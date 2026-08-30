@@ -1,0 +1,32 @@
+base_model = "zhipu/glm-5"
+base_model_omit = ["reasoning", "temperature", "tool_call", "structured_output", "limit.output"]
+endpoints = ["openai"]
+doc = "https://docs.jdcloud.com/cn/jdaip/model%20update%20announcement"
+attachment = true
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[cost_cn]
+input = 4
+output = 18
+cache_read = 1
+
+[[cost_cn.tiers]]
+input = 4
+output = 18
+cache_read = 1
+[cost_cn.tiers.tier]
+type = "conditional"
+[cost_cn.tiers.tier.input]
+lte = 32_768
+
+[[cost_cn.tiers]]
+input = 6
+output = 22
+cache_read = 1.5
+[cost_cn.tiers.tier]
+type = "conditional"
+[cost_cn.tiers.tier.input]
+gt = 32_768

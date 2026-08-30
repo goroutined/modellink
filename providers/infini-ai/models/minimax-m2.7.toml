@@ -1,0 +1,4 @@
+base_model = "minimax/minimax-m2.7"
+base_model_omit = ["temperature"]
+endpoints = ["openai", "anthropic"]
+doc = "https://docs.infini-ai.com/shared/gen-studio/coding-tools/gs-use-openclaw.html"

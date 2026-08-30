@@ -1,0 +1,17 @@
+base_model = "zhipu/glm-5.3-flash"
+base_model_omit = ["temperature", "structured_output"]
+endpoints = ["openai", "responses", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/132061"
+
+[limit]
+context = 1_000_000
+output = 131_072
+
+[modalities]
+input = ["text", "image", "video", "pdf"]
+output = ["text"]
+
+[cost_cn]
+input = 0.8
+output = 2.8
+cache_read = 0.23

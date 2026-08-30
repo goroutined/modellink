@@ -1,0 +1,10 @@
+base_model = "minimax/minimax-m2.5"
+base_model_omit = ["limit.output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://help.aliyun.com/zh/model-studio/coding-plan-faq"
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 196_608

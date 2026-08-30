@@ -1,0 +1,7 @@
+base_model = "deepseek/deepseek-v4-flash"
+base_model_omit = ["reasoning", "structured_output", "limit.output"]
+doc = "https://ai.gitee.com/serverless-api?service=9139"
+
+[cost_cn]
+input = 1
+output = 2

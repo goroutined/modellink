@@ -1,0 +1,14 @@
+base_model = "zhipu/glm-5.1"
+base_model_omit = ["reasoning", "temperature", "tool_call", "structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://www.ctyun.cn/document/11061839/11095143"
+
+attachment = false
+
+[limit]
+context = 204_800
+output = 131_072
+
+[modalities]
+input = ["text"]
+output = ["text"]

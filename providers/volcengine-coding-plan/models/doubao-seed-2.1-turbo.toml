@@ -1,18 +1,7 @@
 base_model = "bytedance/doubao-seed-2.1-turbo"
 endpoints = ["openai", "anthropic"]
-base_model_omit = ["limit.input"]
+base_model_omit = ["temperature", "structured_output", "limit.input"]
 doc = "https://www.volcengine.com/docs/82379/1925114"
-structured_output = false
-
-[[reasoning_options]]
-type = "toggle"
-
-[[reasoning_options]]
-type = "effort"
-values = ["low", "medium", "high"]
-
-[interleaved]
-field = "reasoning_content"
 
 [limit]
 context = 256_000

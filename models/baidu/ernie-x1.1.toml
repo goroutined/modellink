@@ -1,0 +1,26 @@
+name = "ERNIE X1.1"
+description = "百度推出的深度推理文心模型，强化工具调用、智能体、代码、数学与复杂指令遵循。"
+family = "ernie"
+series = "ernie-x1"
+release_date = "2025-09-26"
+last_updated = "2025-09-26"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 64_000
+input = 55_000
+output = 65_536
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "千帆模型更新记录"
+url = "https://cloud.baidu.com/doc/qianfan/s/Kmh4stnjp"
+type = "docs"

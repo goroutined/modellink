@@ -1,0 +1,7 @@
+base_model = "deepseek/deepseek-v4-pro-0813"
+base_model_omit = ["temperature"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/130060"
+
+[limit]
+output = 393_216

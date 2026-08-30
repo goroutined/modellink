@@ -1,0 +1,15 @@
+base_model = "alibaba/qwen3.8-27b"
+base_model_omit = ["reasoning", "structured_output", "limit.input", "limit.output"]
+doc = "https://ai.gitee.com/serverless-api?service=23103"
+temperature = false
+
+[limit]
+context = 1_000_000
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[cost_cn]
+input = 3
+output = 12

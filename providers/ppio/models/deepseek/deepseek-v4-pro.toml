@@ -1,0 +1,13 @@
+base_model = "deepseek/deepseek-v4-pro"
+base_model_omit = ["temperature", "interleaved"]
+endpoints = ["openai", "anthropic"]
+doc = "https://ppio.com/llm/deepseek-deepseek-v4-pro"
+
+[limit]
+context = 1_048_576
+output = 393_216
+
+[cost_cn]
+input = 9
+output = 27
+cache_read = 3

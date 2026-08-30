@@ -4,10 +4,39 @@ doc = "https://bailian.console.aliyun.com/cn-beijing/?tab=model#/model-market/de
 
 [[reasoning_options]]
 type = "toggle"
+field = "enable_thinking"
+endpoints = ["openai", "responses"]
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["anthropic"]
 
 [[reasoning_options]]
 type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["high", "max"]
+default = "high"
+
+[[reasoning_options]]
+type = "effort"
+field = "output_config.effort"
+endpoints = ["anthropic"]
+values = ["high", "max"]
+default = "max"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning.effort"
+endpoints = ["responses"]
 values = ["none", "minimal", "low", "medium", "high", "xhigh", "max"]
+default = "xhigh"
+
+[[reasoning_options]]
+type = "budget_tokens"
+field = "thinking.budget_tokens"
+endpoints = ["anthropic"]
 
 [interleaved]
 field = "reasoning_content"

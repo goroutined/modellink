@@ -1,0 +1,7 @@
+base_model = "jd/joyai-llm-1.3t"
+endpoints = ["openai"]
+doc = "https://docs.jdcloud.com/cn/jdaip/model%20update%20announcement"
+
+[cost_cn]
+input = 3.5
+output = 14

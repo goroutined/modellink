@@ -1,0 +1,23 @@
+base_model = "deepseek/deepseek-v4-flash"
+base_model_omit = ["tool_call", "interleaved"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.baidu.com/doc/qianfan/s/imlg0beiu"
+temperature = false
+structured_output = true
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["openai"]
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["high", "max"]
+default = "high"
+
+[limit]
+context = 1_155_072
+input = 1_024_000
+output = 131_072

@@ -1,0 +1,4 @@
+base_model = "deepseek/deepseek-v4-flash"
+base_model_omit = ["reasoning", "temperature", "tool_call", "structured_output", "limit.output"]
+endpoints = ["openai"]
+doc = "https://www.ctyun.cn/document/11061839/00000000"

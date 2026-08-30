@@ -1,0 +1,34 @@
+base_model = "tencent/hy3"
+endpoints = ["openai", "responses", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/132252"
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["openai"]
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high"]
+default = "high"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning.effort"
+endpoints = ["responses"]
+values = ["none", "low", "medium", "high"]
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 262_144
+input = 196_608
+output = 131_072
+
+[cost_cn]
+input = 1
+output = 4
+cache_read = 0.25

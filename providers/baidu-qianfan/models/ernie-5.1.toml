@@ -1,0 +1,30 @@
+base_model = "baidu/ernie-5.1"
+base_model_omit = ["reasoning", "temperature", "structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+
+[limit]
+context = 128_000
+input = 119_000
+output = 65_536
+
+[cost_cn]
+input = 4
+output = 18
+
+[[cost_cn.tiers]]
+input = 4
+output = 18
+[cost_cn.tiers.tier]
+type = "conditional"
+[cost_cn.tiers.tier.input]
+lte = 32_000
+
+[[cost_cn.tiers]]
+input = 6
+output = 22
+[cost_cn.tiers.tier]
+type = "conditional"
+[cost_cn.tiers.tier.input]
+gt = 32_000
+lte = 128_000

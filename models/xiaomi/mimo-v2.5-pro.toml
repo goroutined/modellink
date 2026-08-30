@@ -1,14 +1,15 @@
 name = "MiMo V2.5 Pro"
 description = "小米推出的长上下文文本模型，面向复杂推理、编程、工具调用与智能体任务。"
 family = "mimo-v2.5-pro"
-release_date = "2026-05-18"
-last_updated = "2026-05-18"
+release_date = "2026-04-23"
+last_updated = "2026-07"
 attachment = false
 reasoning = true
 temperature = true
 tool_call = true
 structured_output = true
-open_weights = false
+open_weights = true
+license = "MIT"
 
 [limit]
 context = 1_048_576
@@ -17,3 +18,12 @@ output = 131_072
 [modalities]
 input = ["text"]
 output = ["text"]
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/XiaomiMiMo/MiMo-V2.5-Pro"
+
+[[links]]
+label = "官方模型详情"
+url = "https://mimo.mi.com/models/zh-CN/mimo-v2.5-pro"
+type = "docs"

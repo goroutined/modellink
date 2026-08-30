@@ -1,0 +1,16 @@
+base_model = "iflytek/spark-x2-flash"
+base_model_omit = ["structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://www.xfyun.cn/doc/spark/X2-Flash.html"
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["openai"]
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 1
+output = 2

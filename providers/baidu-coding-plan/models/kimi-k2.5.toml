@@ -1,0 +1,22 @@
+base_model = "moonshot/kimi-k2.5"
+base_model_omit = ["structured_output", "interleaved"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.baidu.com/doc/qianfan/s/imlg0beiu"
+attachment = false
+reasoning = true
+temperature = false
+tool_call = true
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["openai"]
+
+[limit]
+context = 294_912
+input = 229_376
+output = 65_536

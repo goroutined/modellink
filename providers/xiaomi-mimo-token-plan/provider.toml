@@ -1,0 +1,22 @@
+name = "Xiaomi MiMo Token Plan"
+env = ["MIMO_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://token-plan-cn.xiaomimimo.com/v1"
+doc = "https://mimo.mi.com/docs/zh-CN/quick-start/faq/token-plan"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://token-plan-cn.xiaomimimo.com/v1"
+default = true
+
+[[endpoints]]
+id = "responses"
+protocol = "openai-responses"
+api = "https://token-plan-cn.xiaomimimo.com/v1"
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://token-plan-cn.xiaomimimo.com/anthropic"

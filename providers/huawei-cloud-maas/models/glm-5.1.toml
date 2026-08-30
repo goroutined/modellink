@@ -1,0 +1,107 @@
+base_model = "zhipu/glm-5.1"
+base_model_omit = ["structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://support.huaweicloud.com/model-call-maas/usermanual_maas_0008.html"
+structured_output = false
+
+[[reasoning_options]]
+type = "toggle"
+field = "chat_template_kwargs.thinking"
+endpoints = ["openai"]
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["anthropic"]
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 202_752
+input = 196_608
+output = 131_072
+
+[cost_cn]
+input = 6
+output = 24
+
+[[cost_cn.tiers]]
+input = 6
+output = 24
+
+[cost_cn.tiers.tier]
+type = "conditional"
+label = "时段 1 · <32K"
+
+[cost_cn.tiers.tier.input]
+lt = 32_768
+
+[cost_cn.tiers.tier.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.tier.time.windows]]
+start = "08:00"
+end = "21:00"
+
+[[cost_cn.tiers]]
+input = 4.2
+output = 16.8
+
+[cost_cn.tiers.tier]
+type = "conditional"
+label = "时段 2 · <32K"
+
+[cost_cn.tiers.tier.input]
+lt = 32_768
+
+[cost_cn.tiers.tier.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.tier.time.windows]]
+start = "21:00"
+end = "24:00"
+
+[[cost_cn.tiers.tier.time.windows]]
+start = "00:00"
+end = "08:00"
+
+[[cost_cn.tiers]]
+input = 8
+output = 28
+
+[cost_cn.tiers.tier]
+type = "conditional"
+label = "时段 1 · ≥32K"
+
+[cost_cn.tiers.tier.input]
+gte = 32_768
+
+[cost_cn.tiers.tier.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.tier.time.windows]]
+start = "08:00"
+end = "21:00"
+
+[[cost_cn.tiers]]
+input = 5.6
+output = 19.6
+
+[cost_cn.tiers.tier]
+type = "conditional"
+label = "时段 2 · ≥32K"
+
+[cost_cn.tiers.tier.input]
+gte = 32_768
+
+[cost_cn.tiers.tier.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.tier.time.windows]]
+start = "21:00"
+end = "24:00"
+
+[[cost_cn.tiers.tier.time.windows]]
+start = "00:00"
+end = "08:00"

@@ -1,0 +1,22 @@
+name = "PPIO 派欧云"
+env = ["PPIO_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://api.ppio.com/openai/v1"
+doc = "https://ppio.com/docs/model/llm"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://api.ppio.com/openai/v1"
+default = true
+
+[[endpoints]]
+id = "responses"
+protocol = "openai-responses"
+api = "https://api.ppio.com/openai/v1"
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://api.ppio.com/anthropic"
