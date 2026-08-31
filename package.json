@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "build": "bun scripts/build-catalog.ts",
+    "build:data": "bun scripts/build-data-package.ts",
     "validate": "bun packages/core/script/validate.ts",
+    "verify:data": "bun scripts/verify-data-package.ts",
     "test": "bun test",
     "typecheck": "tsc --noEmit",
     "check": "bun run typecheck && bun run validate && bun test && bun run build"

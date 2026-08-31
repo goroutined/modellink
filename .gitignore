@@ -9,6 +9,7 @@ docs/catalog.json
 docs/models.json
 docs/site-data.json
 docs/logos/
+.artifacts/
 
 # Dependencies
 node_modules/

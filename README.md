@@ -13,6 +13,39 @@ ModelLink 不只是 models.dev 的中国镜像。它保留 models.dev 核心结�
 - **兼容且可扩展**：提供 models.dev 兼容输出，也提供包含中国区特色字段的完整目录和中文可视化页面。
 - **官网优先、持续核验**：模型参数、调用 ID 和价格直接依据服务商当前官方文档维护，社区可以共同补充与纠错。
 
+## 获取数据
+
+在线页面同时提供最新 JSON：
+
+```text
+https://goroutined.github.io/modellink/api.json
+https://goroutined.github.io/modellink/models.json
+https://goroutined.github.io/modellink/catalog.json
+```
+
+`@modellink/data` 将同一份结果发布为不含运行时代码和依赖的版本化数据制品。国内客户端可以通过 npmmirror 直接读取包内文件，不依赖 JavaScript 或 npm CLI：
+
+```text
+https://registry.npmmirror.com/@modellink/data/latest/files/manifest.json
+https://registry.npmmirror.com/@modellink/data/latest/files/api.json
+https://registry.npmmirror.com/@modellink/data/latest/files/models.json
+https://registry.npmmirror.com/@modellink/data/latest/files/catalog.json
+```
+
+客户端建议定期获取体积很小的 `manifest.json`，比较其中的 `version` 或目标文件 `sha256`。发现更新后，使用固定版本地址下载并校验文件；网络失败或校验失败时继续使用本地缓存：
+
+```text
+https://registry.npmmirror.com/@modellink/data/<version>/files/catalog.json
+```
+
+也可以通过包管理器安装固定版本：
+
+```bash
+npm install @modellink/data --registry=https://registry.npmmirror.com
+```
+
+npmmirror 的单文件地址是国内便捷入口；需要完整制品时，可以从 npm Registry 元数据中的 `dist.tarball` 下载标准 tgz。版本一经发布不会覆盖，生产环境应保存已校验的本地副本，不要把 `latest` 作为唯一数据源。
+
 ## 数据结构
 
 ModelLink 沿用 models.dev 的三层目录：
