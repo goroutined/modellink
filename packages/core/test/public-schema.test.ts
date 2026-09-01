@@ -101,6 +101,14 @@ describe("public JSON Schema", () => {
       expect(definitions[name]).toBeDefined();
     }
 
+    const references = collectObjects(
+      schema,
+      (value) => typeof value.$ref === "string",
+    ).map((value) => value.$ref as string);
+    for (const reference of references) {
+      expect(reference).toMatch(/^#\/definitions\/[^/]+$/);
+    }
+
     expect(definitions.Models.type).toBe("object");
     expect(definitions.Models.additionalProperties.$ref).toBe(
       "#/definitions/ModelMetadata",

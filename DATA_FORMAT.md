@@ -523,6 +523,7 @@ schema.json#/definitions/Provider
 schema.json#/definitions/Protocol
 schema.json#/definitions/ProviderEndpoint
 schema.json#/definitions/ReasoningOption
+schema.json#/definitions/JsonValue
 ```
 
 `x-modellink-schema-version` 表示破坏性兼容级别；Schema 文件的 SHA-256 表示某个版本内的精确结构。新增可选字段可以只改变哈希而保持兼容版本不变，因此代码生成工具应同时记录版本和哈希。
@@ -555,6 +556,8 @@ const validateProvider = ajv.compile({
 ```
 
 代码生成器可将整个文件作为输入，也可只选择 `Provider`、`ProviderModel`、`ModelMetadata`、`Protocol`、`ProviderEndpoint` 或 `ReasoningOption` 等定义。`Models` 和 `Providers` 都是以 ID 为键的 Map，而不是固定字段对象。
+
+公开 Schema 的 `$ref` 只指向 `definitions` 下的稳定顶层定义，不依赖某个对象内部属性的 JSON Pointer。这可以避免下游代码生成器把仓库生成过程中的内部复用路径误认为公共类型名。
 
 可选布尔值必须保留三态语义：字段缺失表示“未知”，`false` 表示服务商明确不支持或固定不可调，`true` 表示已有明确支持信息。不要在反序列化时把缺失值默认成 `false`。
 

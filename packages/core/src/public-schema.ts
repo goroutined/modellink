@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import {
+  JsonValue,
   Model,
   ModelMetadata,
   Protocol,
@@ -51,6 +52,7 @@ export const Manifest = z
   .strict();
 
 export const PublicSchemas = {
+  JsonValue,
   ModelMetadata,
   Protocol,
   ProviderEndpoint,
