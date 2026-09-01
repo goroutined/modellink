@@ -2,7 +2,7 @@
 
 中国 AI 模型与推理服务商的开源目录，并保持与 [models.dev](https://models.dev) 的数据格式兼容。
 
-[在线浏览](https://goroutined.github.io/modellink/) · [兼容输出](#兼容输出) · [参与贡献](./CONTRIBUTING.md)
+[在线浏览](https://goroutined.github.io/modellink/) · [数据格式与迁移](./DATA_FORMAT.md) · [兼容输出](#兼容输出) · [参与贡献](./CONTRIBUTING.md)
 
 ModelLink 不只是 models.dev 的中国镜像。它保留 models.dev 核心结构，让现有工具可以低成本迁移，同时围绕中国开发者和 Agent 应用补充更实用的数据：
 
@@ -79,6 +79,8 @@ providers/<provider-id>/
 - `logos/<provider>.svg` 和 `logos/labs/<lab>.svg`。
 
 源码中的 `base_model` 和 `base_model_omit` 只参与构建，不会出现在输出 JSON 中。
+
+全部公开字段、缺失值语义、人民币与积分计费、协议选择方式，以及从 models.dev 迁移的注意事项，请参阅 [数据格式与迁移指南](./DATA_FORMAT.md)。
 
 ## 参与贡献
 
