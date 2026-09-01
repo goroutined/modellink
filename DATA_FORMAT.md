@@ -13,6 +13,7 @@ ModelLink 的原则是：保留 models.dev 的核心 JSON 结构，在此基础�
 | `api.json` | `Record<providerId, Provider>` | 查询服务商、调用 ID、协议、价格和服务商实际能力 |
 | `models.json` | `Record<canonicalModelId, ModelMetadata>` | 查询与服务商无关的基础模型事实 |
 | `catalog.json` | `{ models, providers }` | 一次下载完整目录 |
+| `schema.json` | JSON Schema | 生成类型或验证公开 JSON 的结构 |
 | `manifest.json` | `Manifest` | npm 数据包的版本、来源与文件完整性校验 |
 
 在线最新数据：
@@ -21,6 +22,7 @@ ModelLink 的原则是：保留 models.dev 的核心 JSON 结构，在此基础�
 https://goroutined.github.io/modellink/api.json
 https://goroutined.github.io/modellink/models.json
 https://goroutined.github.io/modellink/catalog.json
+https://goroutined.github.io/modellink/schema.json
 ```
 
 `manifest.json` 位于版本化的 [`@modellink/data`](https://www.npmjs.com/package/@modellink/data) 包内，不在 GitHub Pages 根路径提供。`docs/site-data.json` 和 `docs/data.js` 只服务 ModelLink 展示页面，不属于稳定的下游数据契约。
@@ -495,6 +497,82 @@ catalog.providers // 与 api.json 相同
 
 需要同时搜索基础模型与服务商时使用它；只需要调用目录的客户端优先下载体积更小的 `api.json`。
 
+## `schema.json`
+
+`schema.json` 是提交在 ModelLink 仓库中并随 GitHub Pages、npm 数据包共同分发的公开结构契约：
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://goroutined.github.io/modellink/schema.json",
+  "x-modellink-schema-version": 1,
+  "$ref": "#/definitions/Catalog"
+}
+```
+
+根 `$ref` 默认验证 `catalog.json`。其他文件和可复用对象通过以下引用提供：
+
+```text
+schema.json#/definitions/Models
+schema.json#/definitions/Providers
+schema.json#/definitions/Catalog
+schema.json#/definitions/Manifest
+schema.json#/definitions/ModelMetadata
+schema.json#/definitions/ProviderModel
+schema.json#/definitions/Provider
+schema.json#/definitions/Protocol
+schema.json#/definitions/ProviderEndpoint
+schema.json#/definitions/ReasoningOption
+```
+
+`x-modellink-schema-version` 表示破坏性兼容级别；Schema 文件的 SHA-256 表示某个版本内的精确结构。新增可选字段可以只改变哈希而保持兼容版本不变，因此代码生成工具应同时记录版本和哈希。
+
+`schema.json` 面向数据读取和代码生成，描述公开字段、必填性、可选性、基础类型、对象结构与枚举。它不是 ModelLink 的数据审计规则，不保证价格、日期、模型能力或跨字段关系的真实性；这些内容由仓库数据、运行时 Schema、目录构建校验和维护流程保证。
+
+因此 Schema 验证通过只表示 JSON 可以按照当前公开契约读取，不代表每个字段都已完成最新官网审计。下游不需要复刻仓库的数据审核逻辑，也不应使用 `false`、`0` 或自行推导的值替代缺失的可选字段。
+
+### 验证与复用定义
+
+下面的 TypeScript 示例直接验证完整 Catalog；`addSchema` 后也可以用同一个 `$id` 引用任意独立定义：
+
+```ts
+import Ajv from "ajv"
+import addFormats from "ajv-formats"
+
+const schema = await fetch("https://goroutined.github.io/modellink/schema.json").then(r => r.json())
+const catalog = await fetch("https://goroutined.github.io/modellink/catalog.json").then(r => r.json())
+
+const ajv = new Ajv({ strict: false })
+addFormats(ajv)
+ajv.addSchema(schema)
+
+const validateCatalog = ajv.compile({ $ref: schema.$id })
+if (!validateCatalog(catalog)) throw new Error(ajv.errorsText(validateCatalog.errors))
+
+const validateProvider = ajv.compile({
+  $ref: `${schema.$id}#/definitions/Provider`,
+})
+```
+
+代码生成器可将整个文件作为输入，也可只选择 `Provider`、`ProviderModel`、`ModelMetadata`、`Protocol`、`ProviderEndpoint` 或 `ReasoningOption` 等定义。`Models` 和 `Providers` 都是以 ID 为键的 Map，而不是固定字段对象。
+
+可选布尔值必须保留三态语义：字段缺失表示“未知”，`false` 表示服务商明确不支持或固定不可调，`true` 表示已有明确支持信息。不要在反序列化时把缺失值默认成 `false`。
+
+### 判断 Schema 是否更新
+
+客户端应同时保存支持的兼容版本和上次使用的 Schema 哈希：
+
+```ts
+if (manifest.schema_version > SUPPORTED_SCHEMA_VERSION) {
+  throw new Error("ModelLink Schema 版本高于客户端支持范围")
+}
+
+const schemaChanged =
+  manifest.files["schema.json"].sha256 !== cachedSchemaSha256
+```
+
+`schema_version` 变化代表可能存在破坏性修改；版本相同但 SHA-256 变化通常表示新增说明、可选字段或其他兼容更新，代码生成项目可据此提示重新生成类型。
+
 ## `manifest.json`
 
 版本化 npm 数据包包含：
@@ -508,7 +586,7 @@ interface Manifest {
     repository: string
     revision: string
   }
-  files: Record<"api.json" | "models.json" | "catalog.json", {
+  files: Record<"api.json" | "models.json" | "catalog.json" | "schema.json", {
     sha256: string
     size: number
   }>
@@ -516,7 +594,7 @@ interface Manifest {
 ```
 
 - `version`：`@modellink/data` 的 SemVer 版本。
-- `schema_version`：数据包 Manifest 与公开结构的契约版本，当前为 `1`。客户端遇到高于自身支持范围的版本时应停止自动加载并保留旧数据。
+- `schema_version`：与 `schema.json` 的 `x-modellink-schema-version` 相同，当前为 `1`。客户端遇到高于自身支持范围的版本时应停止自动加载并保留旧数据。
 - `generated_at`：构建时的 ISO 8601 时间，不代表每个模型的更新时间。
 - `source.revision`：生成该包的 Git commit SHA。
 - `files.*.sha256`：文件原始字节的 SHA-256 十六进制值。
@@ -633,4 +711,4 @@ const offering = provider.models["deepseek-v4-pro-0813"]
 
 ## Schema 来源
 
-本文档对应当前 [`packages/core/src/schema.ts`](./packages/core/src/schema.ts)。Schema 是字段类型与校验规则的最终依据；本指南解释消费语义。贡献或修改源数据时请另见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+机器可读契约是仓库根目录的 [`schema.json`](./schema.json)，它由 [`packages/core/src/schema.ts`](./packages/core/src/schema.ts) 和 [`packages/core/src/public-schema.ts`](./packages/core/src/public-schema.ts) 生成。本指南解释消费语义。修改 TypeScript Schema 后运行 `bun run schema` 更新文件，`bun run check:schema` 可以只检查是否过期。贡献或修改源数据时请另见 [CONTRIBUTING.md](./CONTRIBUTING.md)。

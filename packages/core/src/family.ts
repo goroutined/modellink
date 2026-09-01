@@ -219,9 +219,6 @@ export const ModelFamilyValues = [
   "lyria",
   "melotts",
 
-  // Baidu Ernie
-  "ernie",
-
   // Hermes
   "hermes",
 
@@ -286,9 +283,6 @@ export const ModelFamilyValues = [
   // Phoenix
   "phoenix",
 
-  // Trinity
-  "trinity",
-
   // Lucid
   "lucid",
 
@@ -309,9 +303,6 @@ export const ModelFamilyValues = [
 
   // Falcon
   "falcon",
-
-  // Baichuan
-  "baichuan",
 
   // Skywork
   "skywork",

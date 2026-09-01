@@ -21,6 +21,7 @@ ModelLink 不只是 models.dev 的中国镜像。它保留 models.dev 核心结�
 https://goroutined.github.io/modellink/api.json
 https://goroutined.github.io/modellink/models.json
 https://goroutined.github.io/modellink/catalog.json
+https://goroutined.github.io/modellink/schema.json
 ```
 
 `@modellink/data` 将同一份结果发布为不含运行时代码和依赖的版本化数据制品。国内客户端可以通过 npmmirror 的标准 npm Registry API 查询最新版本：
@@ -33,7 +34,7 @@ https://registry.npmmirror.com/@modellink%2Fdata/latest
 
 1. 定期请求元数据，只比较 `version`，未变化时无需下载完整数据包。
 2. 版本变化后下载 `dist.tarball` 指向的标准 `.tgz`，并用 `dist.integrity` 校验包完整性。
-3. 解包后读取 `manifest.json`，再用其中的 SHA-256 分别校验 `api.json`、`models.json` 和 `catalog.json`。
+3. 解包后读取 `manifest.json`，再用其中的 SHA-256 分别校验 `api.json`、`models.json`、`catalog.json` 和 `schema.json`。
 4. 网络、解包或任一校验失败时继续使用上一次校验通过的本地副本。
 
 也可以通过包管理器安装固定版本：
@@ -42,7 +43,7 @@ https://registry.npmmirror.com/@modellink%2Fdata/latest
 npm install @modellink/data --registry=https://registry.npmmirror.com
 ```
 
-合并到 `main` 后，发布工作流会将本次生成的三个 JSON 与 npm 最新版本中的哈希比较。只有实际数据发生变化时才自动递增 patch 版本并发布；页面、文档等非数据修改不会产生空版本。版本一经发布不会覆盖，生产环境应保存已校验的本地副本，不要把 `latest` 元数据作为唯一数据源。
+合并到 `main` 后，发布工作流会将本次生成的四个公开 JSON 与 npm 最新版本中的哈希比较。只有实际数据或 Schema 发生变化时才自动递增 patch 版本并发布；页面、文档等非数据修改不会产生空版本。版本一经发布不会覆盖，生产环境应保存已校验的本地副本，不要把 `latest` 元数据作为唯一数据源。
 
 ## 数据结构
 
@@ -76,6 +77,7 @@ providers/<provider-id>/
 - `api.json`：完整展开的 provider map，是 models.dev `/api.json` 的兼容字段超集。
 - `models.json`：canonical model map，与 models.dev `/models.json` 同形。
 - `catalog.json`：`{ models, providers }`，Provider 数据包含 ModelLink 中国区扩展字段。
+- `schema.json`：公开 JSON 的版本化 JSON Schema，同时通过 GitHub Pages 和 npm 数据包分发。
 - `logos/<provider>.svg` 和 `logos/labs/<lab>.svg`。
 
 源码中的 `base_model` 和 `base_model_omit` 只参与构建，不会出现在输出 JSON 中。

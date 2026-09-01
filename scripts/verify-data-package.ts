@@ -4,12 +4,13 @@ import { createHash } from "node:crypto";
 import path from "node:path";
 import { readFile, readdir } from "node:fs/promises";
 
+import { Manifest } from "../packages/core/src/public-schema.js";
+
 const root = path.join(import.meta.dirname, "..");
 const directory = path.resolve(root, readArgument("--directory") ?? ".artifacts/npm");
-const manifest = JSON.parse(await readFile(path.join(directory, "manifest.json"), "utf8")) as {
-  version: string;
-  files: Record<string, { sha256: string; size: number }>;
-};
+const manifest = Manifest.parse(
+  JSON.parse(await readFile(path.join(directory, "manifest.json"), "utf8")),
+);
 const packageJSON = JSON.parse(await readFile(path.join(directory, "package.json"), "utf8")) as {
   name: string;
   version: string;
@@ -22,9 +23,9 @@ if (packageJSON.version !== manifest.version) {
   throw new Error(`Package version ${packageJSON.version} does not match manifest ${manifest.version}`);
 }
 
-const expectedDataFiles = ["api.json", "catalog.json", "models.json"];
+const expectedDataFiles = ["api.json", "catalog.json", "models.json", "schema.json"];
 if (JSON.stringify(Object.keys(manifest.files).sort()) !== JSON.stringify(expectedDataFiles)) {
-  throw new Error("Manifest must describe exactly api.json, catalog.json and models.json");
+  throw new Error("Manifest must describe exactly api.json, catalog.json, models.json and schema.json");
 }
 
 for (const [name, expected] of Object.entries(manifest.files)) {
@@ -47,6 +48,7 @@ const allowed = new Set([
   "manifest.json",
   "models.json",
   "package.json",
+  "schema.json",
 ]);
 const unexpected = (await readdir(directory)).filter((name) => !allowed.has(name));
 if (unexpected.length > 0) {

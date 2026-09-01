@@ -5,11 +5,13 @@
   "scripts": {
     "build": "bun scripts/build-catalog.ts",
     "build:data": "bun scripts/build-data-package.ts",
+    "schema": "bun scripts/build-schema.ts",
+    "check:schema": "bun scripts/build-schema.ts --check",
     "validate": "bun packages/core/script/validate.ts",
     "verify:data": "bun scripts/verify-data-package.ts",
     "test": "bun test",
     "typecheck": "tsc --noEmit",
-    "check": "bun run typecheck && bun run validate && bun test && bun run build"
+    "check": "bun run typecheck && bun run check:schema && bun run validate && bun test && bun run build"
   },
   "dependencies": {
     "remeda": "^2.33.7",
@@ -18,6 +20,9 @@
   "devDependencies": {
     "@tsconfig/bun": "^1.0.8",
     "@types/bun": "1.3.0",
-    "typescript": "5.8.2"
+    "ajv": "8.17.1",
+    "ajv-formats": "3.0.1",
+    "typescript": "5.8.2",
+    "zod-to-json-schema": "3.24.6"
   }
 }

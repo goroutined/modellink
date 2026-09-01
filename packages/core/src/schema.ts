@@ -42,13 +42,18 @@ const ReasoningOptionEndpoint = z
   .regex(/^[a-z][a-z0-9-]*$/, "Endpoint ID must use lowercase kebab-case");
 
 const ReasoningOptionMetadata = {
-  field: z.string().min(1, "Reasoning control field cannot be empty").optional(),
+  field: z
+    .string()
+    .min(1, "Reasoning control field cannot be empty")
+    .describe("Request body field used by this reasoning control.")
+    .optional(),
   endpoints: z
     .array(ReasoningOptionEndpoint)
     .min(1, "Reasoning option endpoints cannot be empty")
     .refine((endpoints) => new Set(endpoints).size === endpoints.length, {
       message: "Reasoning option endpoints cannot contain duplicates",
     })
+    .describe("Provider endpoint IDs where this reasoning control applies.")
     .optional(),
 };
 
@@ -63,8 +68,13 @@ export const ReasoningOption = z
     z
       .object({
         type: z.literal("effort"),
-        values: z.array(ReasoningEffortValue).min(1, "Reasoning effort values cannot be empty"),
-        default: ReasoningEffortValue.optional(),
+        values: z
+          .array(ReasoningEffortValue)
+          .min(1, "Reasoning effort values cannot be empty")
+          .describe("Supported reasoning effort values; JSON null disables reasoning when supported."),
+        default: ReasoningEffortValue.describe(
+          "Default reasoning effort when the provider documents one.",
+        ).optional(),
         ...ReasoningOptionMetadata,
       })
       .strict(),
@@ -73,11 +83,15 @@ export const ReasoningOption = z
         type: z.literal("budget_tokens"),
         min: z
           .number()
+          .int()
           .min(-1, "Minimum reasoning budget cannot be less than -1")
+          .describe("Minimum reasoning token budget; -1 may represent automatic allocation.")
           .optional(),
         max: z
           .number()
+          .int()
           .min(0, "Maximum reasoning budget cannot be negative")
+          .describe("Maximum reasoning token budget.")
           .optional(),
         ...ReasoningOptionMetadata,
       })
@@ -104,6 +118,9 @@ export const ReasoningOption = z
         "Minimum reasoning budget cannot exceed maximum reasoning budget",
       path: ["min"],
     },
+  )
+  .describe(
+    "Provider-specific reasoning control; type discriminates toggle, effort and token-budget forms.",
   );
 
 const Cost = z.object({
@@ -331,25 +348,49 @@ const Modality = z.enum(["text", "audio", "image", "video", "pdf"]);
 
 const Modalities = z
   .object({
-    input: z.array(Modality),
-    output: z.array(Modality),
+    input: z.array(Modality).describe("Input modalities accepted by the model."),
+    output: z.array(Modality).describe("Output modalities produced by the model."),
   })
-  .strict();
+  .strict()
+  .describe("Input and output modalities exposed by this model endpoint.");
 
 const LimitBase = z
   .object({
-    context: z.number().min(0, "Context window must be positive"),
-    input: z.number().min(0, "Input tokens must be positive").optional(),
+    context: z
+      .number()
+      .int()
+      .min(0, "Context window must be a non-negative integer")
+      .describe("Maximum context window in tokens."),
+    input: z
+      .number()
+      .int()
+      .min(0, "Input tokens must be a non-negative integer")
+      .describe("Maximum input length in tokens when separately documented.")
+      .optional(),
   })
   .strict();
 
 const ModelLimit = LimitBase.extend({
-  output: z.number().min(0, "Output tokens must be positive").optional(),
-}).strict();
+  output: z
+    .number()
+    .int()
+    .min(0, "Output tokens must be a non-negative integer")
+    .describe("Maximum output length in tokens when documented.")
+    .optional(),
+})
+  .strict()
+  .describe("Token limits published for the base model.");
 
 const ProviderModelLimit = LimitBase.extend({
-  output: z.number().min(0, "Output tokens must be positive").optional(),
-}).strict();
+  output: z
+    .number()
+    .int()
+    .min(0, "Output tokens must be a non-negative integer")
+    .describe("Maximum output length in tokens when documented.")
+    .optional(),
+})
+  .strict()
+  .describe("Token limits exposed by this provider model endpoint.");
 
 const UrlString = z.string().url("Must be a valid URL");
 
@@ -357,18 +398,23 @@ export const Protocol = z.enum([
   "openai-compatible",
   "anthropic-compatible",
   "openai-responses",
-]);
+]).describe("Protocol used to call a provider endpoint.");
 
 export const ProviderEndpoint = z
   .object({
     id: z
       .string()
-      .regex(/^[a-z][a-z0-9-]*$/, "Endpoint ID must use lowercase kebab-case"),
+      .regex(/^[a-z][a-z0-9-]*$/, "Endpoint ID must use lowercase kebab-case")
+      .describe("Stable endpoint ID referenced by provider models."),
     protocol: Protocol,
-    api: UrlString,
-    default: z.literal(true).optional(),
+    api: UrlString.describe("Base API URL for this endpoint."),
+    default: z
+      .literal(true)
+      .describe("Marks the endpoint represented by the provider-level protocol and API fields.")
+      .optional(),
   })
-  .strict();
+  .strict()
+  .describe("A protocol-specific API endpoint exposed by a provider.");
 
 export const ModelLink = z
   .object({
@@ -415,17 +461,33 @@ export const BenchmarkResult = z
   })
   .strict();
 
+const AttachmentCapability = z
+  .boolean()
+  .describe("Whether attachments are supported. Missing on optional metadata means unknown.");
+const ReasoningCapability = z
+  .boolean()
+  .describe("Whether reasoning is supported. Missing means unknown; false means explicitly unsupported.");
+const ToolCallCapability = z
+  .boolean()
+  .describe("Whether tool calling is supported. Missing means unknown; false means explicitly unsupported.");
+const StructuredOutputCapability = z
+  .boolean()
+  .describe("Whether structured output is supported. Missing means unknown; false means explicitly unsupported.");
+const TemperatureCapability = z
+  .boolean()
+  .describe("Whether temperature is explicitly adjustable. Missing means unknown; false means fixed or unsupported.");
+
 const ModelMetadataBase = z.object({
   id: z.string(),
   name: z.string().min(1, "Model name cannot be empty"),
   description: z.string().min(1, "Model description cannot be empty"),
   family: ModelFamily.optional(),
   series: z.string().min(1, "Model series cannot be empty").optional(),
-  attachment: z.boolean().optional(),
-  reasoning: z.boolean().optional(),
-  tool_call: z.boolean().optional(),
-  structured_output: z.boolean().optional(),
-  temperature: z.boolean().optional(),
+  attachment: AttachmentCapability.optional(),
+  reasoning: ReasoningCapability.optional(),
+  tool_call: ToolCallCapability.optional(),
+  structured_output: StructuredOutputCapability.optional(),
+  temperature: TemperatureCapability.optional(),
   knowledge: DateString.optional(),
   release_date: DateString.optional(),
   last_updated: DateString.optional(),
@@ -448,10 +510,13 @@ const ModelBase = z.object({
   description: z.string().min(1, "Model description cannot be empty"),
   family: ModelFamily.optional(),
   series: z.string().min(1, "Model series cannot be empty").optional(),
-  attachment: z.boolean(),
-  reasoning: z.boolean().optional(),
-  reasoning_options: z.array(ReasoningOption).optional(),
-  tool_call: z.boolean().optional(),
+  attachment: AttachmentCapability,
+  reasoning: ReasoningCapability.optional(),
+  reasoning_options: z
+    .array(ReasoningOption)
+    .describe("Provider-specific controls for enabling or configuring reasoning.")
+    .optional(),
+  tool_call: ToolCallCapability.optional(),
   interleaved: z
     .union([
       z.literal(true),
@@ -461,9 +526,10 @@ const ModelBase = z.object({
         })
         .strict(),
     ])
+    .describe("Whether reasoning content is returned alongside output, optionally naming its response field.")
     .optional(),
-  structured_output: z.boolean().optional(),
-  temperature: z.boolean().optional(),
+  structured_output: StructuredOutputCapability.optional(),
+  temperature: TemperatureCapability.optional(),
   knowledge: DateString.optional(),
   release_date: DateString,
   last_updated: DateString,
@@ -477,8 +543,11 @@ const ModelBase = z.object({
     .refine((endpoints) => new Set(endpoints).size === endpoints.length, {
       message: "Model endpoints cannot contain duplicates",
     })
+    .describe("Provider endpoint IDs enabled for this model; missing means the provider default endpoint.")
     .optional(),
-  cost_points: PointCost.optional(),
+  cost_points: PointCost.describe(
+    "Plan point consumption per the number of tokens declared by per_tokens.",
+  ).optional(),
   status: z.enum(["alpha", "beta", "deprecated"]).optional(),
   experimental: z
     .object({
@@ -574,16 +643,16 @@ function refineModel<
 export const ModelShape = z
   .object({
     ...ModelBase.shape,
-    cost: OutputCost.optional(),
-    cost_cn: OutputCnyCost.optional(),
+    cost: OutputCost.describe("Prices in USD per million tokens.").optional(),
+    cost_cn: OutputCnyCost.describe("Prices in CNY per million tokens.").optional(),
   })
   .strict();
 
 export const AuthoredModelShape = z
   .object({
     ...ModelBase.shape,
-    cost: AuthoredCost.optional(),
-    cost_cn: AuthoredCnyCost.optional(),
+    cost: AuthoredCost.describe("Prices in USD per million tokens.").optional(),
+    cost_cn: AuthoredCnyCost.describe("Prices in CNY per million tokens.").optional(),
   })
   .strict();
 
@@ -598,11 +667,12 @@ export const Provider = z
     id: z.string(),
     env: z.array(z.string()).min(1, "Provider env cannot be empty"),
     npm: z.string().min(1, "Provider npm module cannot be empty"),
-    protocol: z.string().min(1, "Provider protocol cannot be empty"),
-    api: z.string().optional(),
+    protocol: Protocol.describe("Default protocol used by this provider."),
+    api: z.string().describe("Base API URL for the default endpoint.").optional(),
     endpoints: z
       .array(ProviderEndpoint)
       .min(1, "Provider endpoints cannot be empty")
+      .describe("All protocol-specific endpoints exposed by this provider.")
       .optional(),
     name: z.string().min(1, "Provider name cannot be empty"),
     plans_cn: z
@@ -618,6 +688,7 @@ export const Provider = z
           })
           .strict(),
       )
+      .describe("Subscription plans published for users in China.")
       .optional(),
     credits_cn: z
       .object({

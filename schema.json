@@ -1,0 +1,1541 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://goroutined.github.io/modellink/schema.json",
+  "title": "ModelLink Public Data Schema",
+  "description": "Public JSON contract for ModelLink catalog, provider, model and package manifest data.",
+  "x-modellink-schema-version": 1,
+  "$ref": "#/definitions/Catalog",
+  "definitions": {
+    "ModelMetadata": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family": {
+          "type": "string",
+          "enum": [
+            "trinity",
+            "trinity-mini",
+            "gpt",
+            "gpt-codex",
+            "gpt-codex-spark",
+            "gpt-codex-mini",
+            "gpt-pro",
+            "gpt-mini",
+            "gpt-nano",
+            "gpt-sol",
+            "gpt-terra",
+            "gpt-luna",
+            "gpt-oss",
+            "gpt-image",
+            "o",
+            "o-mini",
+            "o-pro",
+            "claude",
+            "claude-haiku",
+            "claude-sonnet",
+            "claude-opus",
+            "claude-fable",
+            "gemini",
+            "gemini-pro",
+            "gemini-flash",
+            "gemini-flash-lite",
+            "gemini-embedding",
+            "glm",
+            "glmv",
+            "glm-air",
+            "glm-flash",
+            "glm-free",
+            "glm-z",
+            "llama",
+            "muse",
+            "qwen",
+            "qwen3.5",
+            "qwen3.6",
+            "qwen3.7-plus",
+            "qwen3.7-max",
+            "qwen3.7-flash",
+            "qwen3.8-max",
+            "qwen-free",
+            "ornith",
+            "deepseek",
+            "deepseek-thinking",
+            "deepseek-flash",
+            "deepseek-flash-free",
+            "deepseek-flash-think",
+            "doubao-seed",
+            "phi",
+            "kimi",
+            "kimi-k2",
+            "kimi-k3",
+            "kimi-free",
+            "kimi-thinking",
+            "laguna",
+            "laguna-s",
+            "mistral",
+            "mistral-large",
+            "mistral-medium",
+            "mistral-small",
+            "mistral-nemo",
+            "ministral",
+            "codestral",
+            "devstral",
+            "pixtral",
+            "mixtral",
+            "grok",
+            "grok-build",
+            "grok-vision",
+            "grok-beta",
+            "gemma",
+            "nova",
+            "nova-pro",
+            "nova-lite",
+            "nova-micro",
+            "command",
+            "command-r",
+            "command-a",
+            "command-light",
+            "north",
+            "north-free",
+            "jamba",
+            "nemotron",
+            "nemotron-free",
+            "titan",
+            "titan-embed",
+            "minimax",
+            "minimax-m2",
+            "minimax-m2.1",
+            "minimax-m2.5",
+            "minimax-m2.7",
+            "minimax-m3",
+            "minimax-m3-free",
+            "minimax-free",
+            "hunyuan",
+            "Hy",
+            "ernie",
+            "baichuan",
+            "sensenova",
+            "yi",
+            "granite",
+            "reka",
+            "sonar",
+            "sonar-pro",
+            "sonar-reasoning",
+            "sonar-deep-research",
+            "solar",
+            "solar-mini",
+            "solar-pro",
+            "step",
+            "spark-x2",
+            "openpangu",
+            "text-embedding",
+            "cohere-embed",
+            "voyage",
+            "mistral-embed",
+            "bge",
+            "plamo",
+            "codestral-embed",
+            "dall-e",
+            "flux",
+            "imagen",
+            "recraft",
+            "stable-diffusion",
+            "ideogram",
+            "dreamshaper",
+            "sora",
+            "veo",
+            "runway",
+            "dream-machine",
+            "whisper",
+            "elevenlabs",
+            "lyria",
+            "melotts",
+            "hermes",
+            "zephyr",
+            "openchat",
+            "starling",
+            "qvq",
+            "sherlock",
+            "pony",
+            "mercury",
+            "cogito",
+            "mimo",
+            "mimo-pro",
+            "mimo-omni",
+            "mimo-v2-pro",
+            "mimo-v2-omni",
+            "mimo-v2.5-pro",
+            "mimo-v2.5",
+            "mimo-v2.5-free",
+            "mimo-pro-free",
+            "mimo-omni-free",
+            "mimo-flash-free",
+            "mm-poly",
+            "longcat",
+            "nex-n2",
+            "intern-s",
+            "internvl",
+            "joyai",
+            "magistral",
+            "magistral-small",
+            "magistral-medium",
+            "phoenix",
+            "lucid",
+            "agi",
+            "intellect",
+            "aura",
+            "jais",
+            "sarvam",
+            "falcon",
+            "skywork",
+            "bart",
+            "distilbert",
+            "resnet",
+            "m2m",
+            "indictrans",
+            "llava",
+            "seed",
+            "ray",
+            "tstars",
+            "rnj",
+            "hy3",
+            "hy3-free",
+            "ling",
+            "ling-flash-free",
+            "ring",
+            "ring-1t-free",
+            "kat-coder",
+            "sqlcoder",
+            "discolm",
+            "osmosis",
+            "parakeet",
+            "nemoretriever",
+            "nano-banana",
+            "una-cybertron",
+            "morph",
+            "voxtral",
+            "venice",
+            "auto",
+            "model-router",
+            "fugu",
+            "v0",
+            "tako",
+            "mai",
+            "rednote",
+            "smart-turn",
+            "qwerky",
+            "big-pickle",
+            "chutesai",
+            "opengvlab",
+            "tngtech",
+            "topazlabs",
+            "unsloth",
+            "nousresearch",
+            "alpha",
+            "oswe",
+            "neural-chat",
+            "pangu",
+            "liquid",
+            "sourceful",
+            "allenai",
+            "palmyra",
+            "allam",
+            "canopylabs",
+            "groq",
+            "elephant"
+          ]
+        },
+        "series": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attachment": {
+          "type": "boolean",
+          "description": "Whether attachments are supported. Missing on optional metadata means unknown."
+        },
+        "reasoning": {
+          "type": "boolean",
+          "description": "Whether reasoning is supported. Missing means unknown; false means explicitly unsupported."
+        },
+        "tool_call": {
+          "type": "boolean",
+          "description": "Whether tool calling is supported. Missing means unknown; false means explicitly unsupported."
+        },
+        "structured_output": {
+          "type": "boolean",
+          "description": "Whether structured output is supported. Missing means unknown; false means explicitly unsupported."
+        },
+        "temperature": {
+          "type": "boolean",
+          "description": "Whether temperature is explicitly adjustable. Missing means unknown; false means fixed or unsupported."
+        },
+        "knowledge": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}(-\\d{2})?$"
+        },
+        "release_date": {
+          "$ref": "#/definitions/ModelMetadata/properties/knowledge"
+        },
+        "last_updated": {
+          "$ref": "#/definitions/ModelMetadata/properties/knowledge"
+        },
+        "modalities": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "text",
+                  "audio",
+                  "image",
+                  "video",
+                  "pdf"
+                ]
+              },
+              "description": "Input modalities accepted by the model."
+            },
+            "output": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ModelMetadata/properties/modalities/properties/input/items"
+              },
+              "description": "Output modalities produced by the model."
+            }
+          },
+          "required": [
+            "input",
+            "output"
+          ],
+          "additionalProperties": false,
+          "description": "Input and output modalities exposed by this model endpoint."
+        },
+        "open_weights": {
+          "type": "boolean"
+        },
+        "limit": {
+          "type": "object",
+          "properties": {
+            "context": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Maximum context window in tokens."
+            },
+            "input": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Maximum input length in tokens when separately documented."
+            },
+            "output": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Maximum output length in tokens when documented."
+            }
+          },
+          "required": [
+            "context"
+          ],
+          "additionalProperties": false,
+          "description": "Token limits published for the base model."
+        },
+        "license": {
+          "type": "string",
+          "minLength": 1
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "announcement",
+                  "blog",
+                  "docs",
+                  "license",
+                  "model_card",
+                  "paper",
+                  "weights",
+                  "other"
+                ]
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "weights": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "$ref": "#/definitions/ModelMetadata/properties/links/items/properties/url"
+              },
+              "format": {
+                "type": "string",
+                "minLength": 1
+              },
+              "quantization": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "benchmarks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "score": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                ]
+              },
+              "metric": {
+                "type": "string",
+                "minLength": 1
+              },
+              "harness": {
+                "type": "string",
+                "minLength": 1
+              },
+              "variant": {
+                "type": "string",
+                "minLength": 1
+              },
+              "dataset": {
+                "type": "string",
+                "minLength": 1
+              },
+              "version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "$ref": "#/definitions/ModelMetadata/properties/links/items/properties/url"
+              },
+              "date": {
+                "$ref": "#/definitions/ModelMetadata/properties/knowledge"
+              }
+            },
+            "required": [
+              "name",
+              "score"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "Protocol": {
+      "type": "string",
+      "enum": [
+        "openai-compatible",
+        "anthropic-compatible",
+        "openai-responses"
+      ],
+      "description": "Protocol used to call a provider endpoint."
+    },
+    "ProviderEndpoint": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "Stable endpoint ID referenced by provider models."
+        },
+        "protocol": {
+          "$ref": "#/definitions/Protocol"
+        },
+        "api": {
+          "type": "string",
+          "format": "uri",
+          "description": "Base API URL for this endpoint."
+        },
+        "default": {
+          "type": "boolean",
+          "const": true,
+          "description": "Marks the endpoint represented by the provider-level protocol and API fields."
+        }
+      },
+      "required": [
+        "id",
+        "protocol",
+        "api"
+      ],
+      "additionalProperties": false,
+      "description": "A protocol-specific API endpoint exposed by a provider."
+    },
+    "ReasoningOption": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "toggle"
+            },
+            "field": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Request body field used by this reasoning control."
+            },
+            "endpoints": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              "minItems": 1,
+              "description": "Provider endpoint IDs where this reasoning control applies."
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "effort"
+            },
+            "values": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "none",
+                      "minimal",
+                      "low",
+                      "medium",
+                      "high",
+                      "xhigh",
+                      "max"
+                    ]
+                  }
+                ]
+              },
+              "minItems": 1,
+              "description": "Supported reasoning effort values; JSON null disables reasoning when supported."
+            },
+            "default": {
+              "$ref": "#/definitions/ReasoningOption/anyOf/1/properties/values/items",
+              "description": "Default reasoning effort when the provider documents one."
+            },
+            "field": {
+              "$ref": "#/definitions/ReasoningOption/anyOf/0/properties/field"
+            },
+            "endpoints": {
+              "$ref": "#/definitions/ReasoningOption/anyOf/0/properties/endpoints"
+            }
+          },
+          "required": [
+            "type",
+            "values"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "budget_tokens"
+            },
+            "min": {
+              "type": "integer",
+              "minimum": -1,
+              "description": "Minimum reasoning token budget; -1 may represent automatic allocation."
+            },
+            "max": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Maximum reasoning token budget."
+            },
+            "field": {
+              "$ref": "#/definitions/ReasoningOption/anyOf/0/properties/field"
+            },
+            "endpoints": {
+              "$ref": "#/definitions/ReasoningOption/anyOf/0/properties/endpoints"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "description": "Provider-specific reasoning control; type discriminates toggle, effort and token-budget forms."
+    },
+    "ProviderModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family": {
+          "$ref": "#/definitions/ModelMetadata/properties/family"
+        },
+        "series": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attachment": {
+          "$ref": "#/definitions/ModelMetadata/properties/attachment"
+        },
+        "reasoning": {
+          "$ref": "#/definitions/ModelMetadata/properties/reasoning",
+          "description": "Whether reasoning is supported. Missing means unknown; false means explicitly unsupported."
+        },
+        "reasoning_options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReasoningOption"
+          },
+          "description": "Provider-specific controls for enabling or configuring reasoning."
+        },
+        "tool_call": {
+          "$ref": "#/definitions/ModelMetadata/properties/tool_call",
+          "description": "Whether tool calling is supported. Missing means unknown; false means explicitly unsupported."
+        },
+        "interleaved": {
+          "anyOf": [
+            {
+              "type": "boolean",
+              "const": true
+            },
+            {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string",
+                  "enum": [
+                    "reasoning_content",
+                    "reasoning_details"
+                  ]
+                }
+              },
+              "required": [
+                "field"
+              ],
+              "additionalProperties": false
+            }
+          ],
+          "description": "Whether reasoning content is returned alongside output, optionally naming its response field."
+        },
+        "structured_output": {
+          "$ref": "#/definitions/ModelMetadata/properties/structured_output",
+          "description": "Whether structured output is supported. Missing means unknown; false means explicitly unsupported."
+        },
+        "temperature": {
+          "$ref": "#/definitions/ModelMetadata/properties/temperature",
+          "description": "Whether temperature is explicitly adjustable. Missing means unknown; false means fixed or unsupported."
+        },
+        "knowledge": {
+          "$ref": "#/definitions/ModelMetadata/properties/knowledge"
+        },
+        "release_date": {
+          "$ref": "#/definitions/ModelMetadata/properties/knowledge"
+        },
+        "last_updated": {
+          "$ref": "#/definitions/ModelMetadata/properties/knowledge"
+        },
+        "modalities": {
+          "$ref": "#/definitions/ModelMetadata/properties/modalities"
+        },
+        "open_weights": {
+          "type": "boolean"
+        },
+        "limit": {
+          "type": "object",
+          "properties": {
+            "context": {
+              "$ref": "#/definitions/ModelMetadata/properties/limit/properties/context"
+            },
+            "input": {
+              "$ref": "#/definitions/ModelMetadata/properties/limit/properties/input"
+            },
+            "output": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Maximum output length in tokens when documented."
+            }
+          },
+          "required": [
+            "context"
+          ],
+          "additionalProperties": false,
+          "description": "Token limits exposed by this provider model endpoint."
+        },
+        "doc": {
+          "$ref": "#/definitions/ModelMetadata/properties/links/items/properties/url"
+        },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "minItems": 1,
+          "description": "Provider endpoint IDs enabled for this model; missing means the provider default endpoint."
+        },
+        "cost_points": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "number",
+              "minimum": 0
+            },
+            "output": {
+              "type": "number",
+              "minimum": 0
+            },
+            "cache_read": {
+              "type": "number",
+              "minimum": 0
+            },
+            "per_tokens": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "tiers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "$ref": "#/definitions/ProviderModel/properties/cost_points/properties/input"
+                  },
+                  "output": {
+                    "$ref": "#/definitions/ProviderModel/properties/cost_points/properties/output"
+                  },
+                  "cache_read": {
+                    "$ref": "#/definitions/ProviderModel/properties/cost_points/properties/cache_read"
+                  },
+                  "tier": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "const": "context"
+                          },
+                          "size": {
+                            "type": "integer",
+                            "minimum": 0
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "size"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "const": "conditional"
+                          },
+                          "input": {
+                            "type": "object",
+                            "properties": {
+                              "gte": {
+                                "type": "integer",
+                                "minimum": 0
+                              },
+                              "gt": {
+                                "type": "integer",
+                                "minimum": 0
+                              },
+                              "lt": {
+                                "type": "integer",
+                                "minimum": 0
+                              },
+                              "lte": {
+                                "type": "integer",
+                                "minimum": 0
+                              }
+                            },
+                            "additionalProperties": false
+                          },
+                          "output": {
+                            "$ref": "#/definitions/ProviderModel/properties/cost_points/properties/tiers/items/properties/tier/anyOf/1/properties/input"
+                          },
+                          "time": {
+                            "type": "object",
+                            "properties": {
+                              "timezone": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "windows": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "days": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string",
+                                        "enum": [
+                                          "monday",
+                                          "tuesday",
+                                          "wednesday",
+                                          "thursday",
+                                          "friday",
+                                          "saturday",
+                                          "sunday"
+                                        ]
+                                      },
+                                      "minItems": 1
+                                    },
+                                    "start": {
+                                      "type": "string",
+                                      "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                                    },
+                                    "end": {
+                                      "type": "string",
+                                      "pattern": "^(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+                                    }
+                                  },
+                                  "required": [
+                                    "start",
+                                    "end"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                "minItems": 1
+                              }
+                            },
+                            "required": [
+                              "timezone",
+                              "windows"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "label": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "type"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "tier"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "off_peak_multiplier": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 1
+            },
+            "peak_window": {
+              "type": "object",
+              "properties": {
+                "days": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/ProviderModel/properties/cost_points/properties/tiers/items/properties/tier/anyOf/1/properties/time/properties/windows/items/properties/days/items"
+                  },
+                  "minItems": 1
+                },
+                "start": {
+                  "type": "string",
+                  "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                },
+                "end": {
+                  "type": "string",
+                  "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                },
+                "timezone": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "days",
+                "start",
+                "end",
+                "timezone"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "input",
+            "output",
+            "per_tokens"
+          ],
+          "additionalProperties": false,
+          "description": "Plan point consumption per the number of tokens declared by per_tokens."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "alpha",
+            "beta",
+            "deprecated"
+          ]
+        },
+        "experimental": {
+          "type": "object",
+          "properties": {
+            "modes": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "cost": {
+                    "type": "object",
+                    "properties": {
+                      "input": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "output": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "reasoning": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "cache_read": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "cache_write": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "input_audio": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "output_audio": {
+                        "type": "number",
+                        "minimum": 0
+                      }
+                    },
+                    "required": [
+                      "input",
+                      "output"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "cost_cn": {
+                    "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost"
+                  },
+                  "provider": {
+                    "type": "object",
+                    "properties": {
+                      "body": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "type": "null"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/provider/properties/body/additionalProperties"
+                              }
+                            },
+                            {
+                              "type": "object",
+                              "additionalProperties": {
+                                "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/provider/properties/body/additionalProperties"
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      "headers": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "provider": {
+          "type": "object",
+          "properties": {
+            "npm": {
+              "type": "string"
+            },
+            "api": {
+              "type": "string"
+            },
+            "shape": {
+              "type": "string",
+              "enum": [
+                "responses",
+                "completions"
+              ]
+            },
+            "body": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/provider/properties/body/additionalProperties"
+              }
+            },
+            "headers": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "cost": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/input"
+            },
+            "output": {
+              "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/output"
+            },
+            "reasoning": {
+              "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/reasoning"
+            },
+            "cache_read": {
+              "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/cache_read"
+            },
+            "cache_write": {
+              "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/cache_write"
+            },
+            "input_audio": {
+              "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/input_audio"
+            },
+            "output_audio": {
+              "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/output_audio"
+            },
+            "context_over_200k": {
+              "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost"
+            },
+            "tiers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/input"
+                  },
+                  "output": {
+                    "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/output"
+                  },
+                  "reasoning": {
+                    "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/reasoning"
+                  },
+                  "cache_read": {
+                    "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/cache_read"
+                  },
+                  "cache_write": {
+                    "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/cache_write"
+                  },
+                  "input_audio": {
+                    "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/input_audio"
+                  },
+                  "output_audio": {
+                    "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/output_audio"
+                  },
+                  "tier": {
+                    "$ref": "#/definitions/ProviderModel/properties/cost_points/properties/tiers/items/properties/tier"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "tier"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "input",
+            "output"
+          ],
+          "additionalProperties": false,
+          "description": "Prices in USD per million tokens."
+        },
+        "cost_cn": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/input"
+            },
+            "output": {
+              "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/output"
+            },
+            "reasoning": {
+              "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/reasoning"
+            },
+            "cache_read": {
+              "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/cache_read"
+            },
+            "cache_write": {
+              "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/cache_write"
+            },
+            "input_audio": {
+              "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/input_audio"
+            },
+            "output_audio": {
+              "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/output_audio"
+            },
+            "thinking": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/input"
+                },
+                "output": {
+                  "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/output"
+                },
+                "cache_read": {
+                  "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/cache_read"
+                },
+                "cache_write": {
+                  "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/cache_write"
+                },
+                "input_audio": {
+                  "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/input_audio"
+                },
+                "output_audio": {
+                  "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/output_audio"
+                }
+              },
+              "required": [
+                "input",
+                "output"
+              ],
+              "additionalProperties": false
+            },
+            "context_over_200k": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/input"
+                },
+                "output": {
+                  "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/output"
+                },
+                "reasoning": {
+                  "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/reasoning"
+                },
+                "cache_read": {
+                  "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/cache_read"
+                },
+                "cache_write": {
+                  "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/cache_write"
+                },
+                "input_audio": {
+                  "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/input_audio"
+                },
+                "output_audio": {
+                  "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/output_audio"
+                },
+                "thinking": {
+                  "$ref": "#/definitions/ProviderModel/properties/cost_cn/properties/thinking"
+                }
+              },
+              "required": [
+                "input",
+                "output"
+              ],
+              "additionalProperties": false
+            },
+            "tiers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/input"
+                  },
+                  "output": {
+                    "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/output"
+                  },
+                  "reasoning": {
+                    "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/reasoning"
+                  },
+                  "cache_read": {
+                    "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/cache_read"
+                  },
+                  "cache_write": {
+                    "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/cache_write"
+                  },
+                  "input_audio": {
+                    "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/input_audio"
+                  },
+                  "output_audio": {
+                    "$ref": "#/definitions/ProviderModel/properties/experimental/properties/modes/additionalProperties/properties/cost/properties/output_audio"
+                  },
+                  "thinking": {
+                    "$ref": "#/definitions/ProviderModel/properties/cost_cn/properties/thinking"
+                  },
+                  "tier": {
+                    "$ref": "#/definitions/ProviderModel/properties/cost_points/properties/tiers/items/properties/tier"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "tier"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "input",
+            "output"
+          ],
+          "additionalProperties": false,
+          "description": "Prices in CNY per million tokens."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "attachment",
+        "release_date",
+        "last_updated",
+        "modalities",
+        "open_weights",
+        "limit"
+      ],
+      "additionalProperties": false
+    },
+    "Provider": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "env": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "npm": {
+          "type": "string",
+          "minLength": 1
+        },
+        "protocol": {
+          "type": "string",
+          "enum": [
+            "openai-compatible",
+            "anthropic-compatible",
+            "openai-responses"
+          ],
+          "description": "Default protocol used by this provider."
+        },
+        "api": {
+          "type": "string",
+          "description": "Base API URL for the default endpoint."
+        },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProviderEndpoint"
+          },
+          "minItems": 1,
+          "description": "All protocol-specific endpoints exposed by this provider."
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plans_cn": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "price_month": {
+                "type": "number",
+                "minimum": 0
+              },
+              "usage": {
+                "type": "string",
+                "minLength": 1
+              },
+              "quota_windows": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "name",
+              "price_month"
+            ],
+            "additionalProperties": false
+          },
+          "description": "Subscription plans published for users in China."
+        },
+        "credits_cn": {
+          "type": "object",
+          "properties": {
+            "points": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "cny": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "valid_days": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "points",
+            "cny"
+          ],
+          "additionalProperties": false
+        },
+        "doc": {
+          "type": "string",
+          "minLength": 1
+        },
+        "models": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/ProviderModel"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "env",
+        "npm",
+        "protocol",
+        "name",
+        "doc",
+        "models"
+      ],
+      "additionalProperties": false
+    },
+    "Models": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/ModelMetadata"
+      }
+    },
+    "Providers": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/Provider"
+      }
+    },
+    "ManifestFile": {
+      "type": "object",
+      "properties": {
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "sha256",
+        "size"
+      ],
+      "additionalProperties": false
+    },
+    "Manifest": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+        },
+        "schema_version": {
+          "type": "number",
+          "const": 1
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source": {
+          "type": "object",
+          "properties": {
+            "repository": {
+              "type": "string",
+              "format": "uri"
+            },
+            "revision": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "repository",
+            "revision"
+          ],
+          "additionalProperties": false
+        },
+        "files": {
+          "type": "object",
+          "properties": {
+            "api.json": {
+              "$ref": "#/definitions/ManifestFile"
+            },
+            "models.json": {
+              "$ref": "#/definitions/ManifestFile"
+            },
+            "catalog.json": {
+              "$ref": "#/definitions/ManifestFile"
+            },
+            "schema.json": {
+              "$ref": "#/definitions/ManifestFile"
+            }
+          },
+          "required": [
+            "api.json",
+            "models.json",
+            "catalog.json",
+            "schema.json"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "version",
+        "schema_version",
+        "generated_at",
+        "source",
+        "files"
+      ],
+      "additionalProperties": false
+    },
+    "Catalog": {
+      "type": "object",
+      "properties": {
+        "models": {
+          "$ref": "#/definitions/Models"
+        },
+        "providers": {
+          "$ref": "#/definitions/Providers"
+        }
+      },
+      "required": [
+        "models",
+        "providers"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

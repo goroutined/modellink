@@ -9,6 +9,7 @@ on:
       - 'providers/**'
       - 'packages/core/**'
       - 'scripts/**'
+      - 'schema.json'
       - 'docs/**'
       - 'package.json'
       - 'bun.lock'

@@ -6,12 +6,13 @@ import { appendFile, readFile } from "node:fs/promises";
 const root = path.join(import.meta.dirname, "..");
 const publishedPath = resolveArgument("--published");
 const candidatePath = resolveArgument("--candidate");
-const dataFiles = ["api.json", "models.json", "catalog.json"] as const;
+const requiredDataFiles = ["api.json", "models.json", "catalog.json"] as const;
+const releaseFiles = [...requiredDataFiles, "schema.json"] as const;
 
-const published = await readManifest(publishedPath);
-const candidate = await readManifest(candidatePath);
+const published = await readManifest(publishedPath, false);
+const candidate = await readManifest(candidatePath, true);
 
-const changed = dataFiles.some(
+const changed = releaseFiles.some(
   (name) =>
     published.files[name]?.sha256 !== candidate.files[name]?.sha256 ||
     published.files[name]?.size !== candidate.files[name]?.size,
@@ -37,12 +38,12 @@ type Manifest = {
   files: Record<string, { sha256: string; size: number }>;
 };
 
-async function readManifest(file: string): Promise<Manifest> {
+async function readManifest(file: string, requireSchema: boolean): Promise<Manifest> {
   const manifest = JSON.parse(await readFile(file, "utf8")) as Partial<Manifest>;
   if (typeof manifest.version !== "string" || manifest.files === undefined) {
     throw new Error(`Invalid data manifest: ${file}`);
   }
-  for (const name of dataFiles) {
+  for (const name of requiredDataFiles) {
     const entry = manifest.files[name];
     if (
       entry === undefined ||
@@ -52,6 +53,16 @@ async function readManifest(file: string): Promise<Manifest> {
     ) {
       throw new Error(`Invalid ${name} entry in data manifest: ${file}`);
     }
+  }
+  const schema = manifest.files["schema.json"];
+  if (
+    (requireSchema || schema !== undefined) &&
+    (schema === undefined ||
+      !/^[0-9a-f]{64}$/.test(schema.sha256) ||
+      !Number.isSafeInteger(schema.size) ||
+      schema.size < 0)
+  ) {
+    throw new Error(`Invalid schema.json entry in data manifest: ${file}`);
   }
   return manifest as Manifest;
 }

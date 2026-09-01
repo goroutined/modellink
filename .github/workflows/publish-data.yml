@@ -10,6 +10,7 @@ on:
       - 'packages/core/**'
       - 'packages/data/**'
       - 'scripts/**'
+      - 'schema.json'
       - 'package.json'
       - 'bun.lock'
       - '.github/workflows/publish-data.yml'

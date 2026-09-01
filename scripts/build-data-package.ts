@@ -4,6 +4,8 @@ import { createHash } from "node:crypto";
 import path from "node:path";
 import { copyFile, mkdir, readFile, rm } from "node:fs/promises";
 
+import { SCHEMA_VERSION } from "../packages/core/src/public-schema.js";
+
 import "./build-catalog.ts";
 
 const root = path.join(import.meta.dirname, "..");
@@ -20,11 +22,11 @@ if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/.test(version)) {
 await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
 
-const dataFiles = ["api.json", "models.json", "catalog.json"] as const;
+const dataFiles = ["api.json", "models.json", "catalog.json", "schema.json"] as const;
 const files: Record<string, { sha256: string; size: number }> = {};
 
 for (const name of dataFiles) {
-  const source = path.join(root, "docs", name);
+  const source = name === "schema.json" ? path.join(root, name) : path.join(root, "docs", name);
   const target = path.join(output, name);
   await copyFile(source, target);
   const contents = await readFile(target);
@@ -37,7 +39,7 @@ for (const name of dataFiles) {
 const revision = process.env.GITHUB_SHA ?? readGitRevision();
 const manifest = {
   version,
-  schema_version: 1,
+  schema_version: SCHEMA_VERSION,
   generated_at: new Date().toISOString(),
   source: {
     repository: "https://github.com/goroutined/modellink",
@@ -63,11 +65,12 @@ await Bun.write(
       },
       homepage: "https://goroutined.github.io/modellink/",
       keywords: ["ai", "models", "llm", "china", "catalog", "models.dev"],
-      files: ["api.json", "models.json", "catalog.json", "manifest.json", "README.md", "LICENSE"],
+      files: ["api.json", "models.json", "catalog.json", "schema.json", "manifest.json", "README.md", "LICENSE"],
       exports: {
         "./api.json": "./api.json",
         "./models.json": "./models.json",
         "./catalog.json": "./catalog.json",
+        "./schema.json": "./schema.json",
         "./manifest.json": "./manifest.json",
         "./package.json": "./package.json",
       },
