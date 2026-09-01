@@ -1,0 +1,32 @@
+base_model = "minimax/minimax-m3"
+base_model_omit = ["temperature"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/133811"
+
+[cost_points]
+per_tokens = 1_000_000
+input = 42
+output = 168
+cache_read = 8.4
+
+[[cost_points.tiers]]
+input = 42
+output = 168
+cache_read = 8.4
+
+[cost_points.tiers.tier]
+type = "conditional"
+
+[cost_points.tiers.tier.input]
+lte = 512_000
+
+[[cost_points.tiers]]
+input = 84
+output = 336
+cache_read = 16.8
+
+[cost_points.tiers.tier]
+type = "conditional"
+
+[cost_points.tiers.tier.input]
+gt = 512_000

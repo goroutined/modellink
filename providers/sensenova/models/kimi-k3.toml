@@ -1,0 +1,22 @@
+base_model = "moonshot/kimi-k3"
+base_model_omit = ["structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://platform.sensenova.cn/docs#model-kimi-k3"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high", "max"]
+default = "max"
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 1_000_000
+output = 131_072
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]

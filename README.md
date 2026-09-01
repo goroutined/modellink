@@ -23,20 +23,18 @@ https://goroutined.github.io/modellink/models.json
 https://goroutined.github.io/modellink/catalog.json
 ```
 
-`@modellink/data` 将同一份结果发布为不含运行时代码和依赖的版本化数据制品。国内客户端可以通过 npmmirror 直接读取包内文件，不依赖 JavaScript 或 npm CLI：
+`@modellink/data` 将同一份结果发布为不含运行时代码和依赖的版本化数据制品。国内客户端可以通过 npmmirror 的标准 npm Registry API 查询最新版本：
 
 ```text
-https://registry.npmmirror.com/@modellink/data/latest/files/manifest.json
-https://registry.npmmirror.com/@modellink/data/latest/files/api.json
-https://registry.npmmirror.com/@modellink/data/latest/files/models.json
-https://registry.npmmirror.com/@modellink/data/latest/files/catalog.json
+https://registry.npmmirror.com/@modellink%2Fdata/latest
 ```
 
-客户端建议定期获取体积很小的 `manifest.json`，比较其中的 `version` 或目标文件 `sha256`。发现更新后，使用固定版本地址下载并校验文件；网络失败或校验失败时继续使用本地缓存：
+返回的 JSON 包含 `version`、`dist.tarball` 和 `dist.integrity`。这套接口与编程语言无关，客户端建议按以下流程更新本地数据：
 
-```text
-https://registry.npmmirror.com/@modellink/data/<version>/files/catalog.json
-```
+1. 定期请求元数据，只比较 `version`，未变化时无需下载完整数据包。
+2. 版本变化后下载 `dist.tarball` 指向的标准 `.tgz`，并用 `dist.integrity` 校验包完整性。
+3. 解包后读取 `manifest.json`，再用其中的 SHA-256 分别校验 `api.json`、`models.json` 和 `catalog.json`。
+4. 网络、解包或任一校验失败时继续使用上一次校验通过的本地副本。
 
 也可以通过包管理器安装固定版本：
 
@@ -44,7 +42,7 @@ https://registry.npmmirror.com/@modellink/data/<version>/files/catalog.json
 npm install @modellink/data --registry=https://registry.npmmirror.com
 ```
 
-npmmirror 的单文件地址是国内便捷入口；需要完整制品时，可以从 npm Registry 元数据中的 `dist.tarball` 下载标准 tgz。版本一经发布不会覆盖，生产环境应保存已校验的本地副本，不要把 `latest` 作为唯一数据源。
+合并到 `main` 后，发布工作流会将本次生成的三个 JSON 与 npm 最新版本中的哈希比较。只有实际数据发生变化时才自动递增 patch 版本并发布；页面、文档等非数据修改不会产生空版本。版本一经发布不会覆盖，生产环境应保存已校验的本地副本，不要把 `latest` 元数据作为唯一数据源。
 
 ## 数据结构
 

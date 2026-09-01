@@ -2582,9 +2582,40 @@ describe("catalog generation", () => {
       ].sort(),
     );
     expect(provider?.models["deepseek-ai/DeepSeek-V4-Flash"]?.cost_cn).toEqual({
-      input: 1,
-      output: 2,
-      cache_read: 0.02,
+      input: 1.5,
+      output: 4.5,
+      cache_read: 0.15,
+      tiers: [
+        {
+          input: 1.5,
+          output: 4.5,
+          cache_read: 0.15,
+          tier: {
+            type: "conditional",
+            label: "闲时",
+            time: {
+              timezone: "Asia/Shanghai",
+              windows: [{ start: "02:00", end: "08:00" }],
+            },
+          },
+        },
+        {
+          input: 3,
+          output: 9,
+          cache_read: 0.3,
+          tier: {
+            type: "conditional",
+            label: "其他时间",
+            time: {
+              timezone: "Asia/Shanghai",
+              windows: [
+                { start: "00:00", end: "02:00" },
+                { start: "08:00", end: "24:00" },
+              ],
+            },
+          },
+        },
+      ],
     });
     expect(
       provider?.models["deepseek-ai/DeepSeek-V4-Flash"]?.reasoning_options,
@@ -3052,7 +3083,56 @@ describe("catalog generation", () => {
     ).toEqual(["glm-5", "glm-5-0", "tc-code-latest"]);
     expect(
       Object.keys(catalog.providers["tencent-token-plan"]?.models ?? {}),
-    ).toHaveLength(17);
+    ).toHaveLength(23);
+    for (const id of [
+      "glm-5.3",
+      "glm-5-3",
+      "kimi-k2.7-code",
+      "minimax-m3",
+      "minimax-m-3-0",
+      "hy3-202608",
+    ]) {
+      expect(catalog.providers["tencent-token-plan"]?.models).toHaveProperty([id]);
+    }
+    expect(catalog.providers["tencent-token-plan"]?.models).not.toHaveProperty(
+      "hy4-preview",
+    );
+    expect(catalog.providers["tencent-token-plan"]?.plans_cn).toEqual([
+      { name: "通用 Lite", price_month: 39, usage: "每订阅月 780 积分" },
+      { name: "通用 Standard", price_month: 99, usage: "每订阅月 1,980 积分" },
+      { name: "通用 Pro", price_month: 299, usage: "每订阅月 5,980 积分" },
+      { name: "通用 Max", price_month: 599, usage: "每订阅月 11,980 积分" },
+      {
+        name: "Hy Lite",
+        price_month: 28,
+        usage: "每订阅月 560 积分，适用于 Hy Token Plan 模型",
+      },
+      {
+        name: "Hy Standard",
+        price_month: 78,
+        usage: "每订阅月 1,560 积分，适用于 Hy Token Plan 模型",
+      },
+      {
+        name: "Hy Pro",
+        price_month: 238,
+        usage: "每订阅月 4,760 积分，适用于 Hy Token Plan 模型",
+      },
+      {
+        name: "Hy Max",
+        price_month: 468,
+        usage: "每订阅月 9,360 积分，适用于 Hy Token Plan 模型",
+      },
+    ]);
+    expect(
+      catalog.providers["tencent-token-plan"]?.models["glm-5.3"]?.cost_points,
+    ).toEqual({ per_tokens: 1_000_000, input: 160, output: 560, cache_read: 40 });
+    expect(
+      catalog.providers["tencent-token-plan"]?.models["kimi-k2.7-code"]
+        ?.cost_points,
+    ).toEqual({ per_tokens: 1_000_000, input: 130, output: 540, cache_read: 26 });
+    expect(
+      catalog.providers["tencent-token-plan"]?.models["hy3-202608"]?.cost_points,
+    ).toEqual({ per_tokens: 1_000_000, input: 20, output: 80, cache_read: 5 });
     expect(
       catalog.providers["tencent-coding-plan"]?.models["glm-5"]
         ?.structured_output,
@@ -3111,10 +3191,13 @@ describe("catalog generation", () => {
       catalog.providers["tencent-token-plan"]?.models["tc-code-latest"],
     ).toMatchObject({
       attachment: false,
-      reasoning: true,
       limit: { context: 204_800 },
       modalities: { input: ["text"], output: ["text"] },
     });
+    expect(
+      catalog.providers["tencent-token-plan"]?.models["tc-code-latest"]
+        ?.reasoning,
+    ).toBeUndefined();
     expect(
       catalog.providers["tencent-token-plan"]?.models["tc-code-latest"]
         ?.temperature,
@@ -3221,7 +3304,13 @@ describe("catalog generation", () => {
       },
     ]);
     expect(Object.keys(sensenova?.models ?? {}).sort()).toEqual(
-      ["sensenova-6.8-flash-lite", "deepseek-v4-flash", "glm-5.2"].sort(),
+      [
+        "sensenova-6.8-flash-lite",
+        "deepseek-v4-flash",
+        "deepseek-v4-pro",
+        "glm-5.2",
+        "kimi-k3",
+      ].sort(),
     );
     expect(sensenova?.models["sensenova-6.8-flash-lite"]?.limit).toEqual({
       context: 256_000,
@@ -3231,6 +3320,19 @@ describe("catalog generation", () => {
       context: 1_000_000,
       output: 65_536,
     });
+    expect(sensenova?.models["deepseek-v4-pro"]?.limit).toEqual({
+      context: 1_000_000,
+      output: 393_216,
+    });
+    expect(sensenova?.models["kimi-k3"]?.limit).toEqual({
+      context: 1_000_000,
+      output: 131_072,
+    });
+    expect(sensenova?.models["kimi-k3"]?.modalities.input).toEqual([
+      "text",
+      "image",
+    ]);
+    expect(sensenova?.models["kimi-k3"]?.structured_output).toBeUndefined();
 
     expect(ctyun?.api).toBe("https://ai.ctaigw.cn/v1");
     expect(Object.keys(ctyun?.models ?? {}).sort()).toEqual(

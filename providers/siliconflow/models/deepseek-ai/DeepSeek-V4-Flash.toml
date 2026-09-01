@@ -17,6 +17,42 @@ default = "high"
 field = "reasoning_content"
 
 [cost_cn]
-input = 1
-output = 2
-cache_read = 0.02
+input = 1.5
+output = 4.5
+cache_read = 0.15
+
+[[cost_cn.tiers]]
+input = 1.5
+output = 4.5
+cache_read = 0.15
+
+[cost_cn.tiers.tier]
+type = "conditional"
+label = "闲时"
+
+[cost_cn.tiers.tier.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.tier.time.windows]]
+start = "02:00"
+end = "08:00"
+
+[[cost_cn.tiers]]
+input = 3
+output = 9
+cache_read = 0.3
+
+[cost_cn.tiers.tier]
+type = "conditional"
+label = "其他时间"
+
+[cost_cn.tiers.tier.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.tier.time.windows]]
+start = "00:00"
+end = "02:00"
+
+[[cost_cn.tiers.tier.time.windows]]
+start = "08:00"
+end = "24:00"

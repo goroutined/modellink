@@ -19,39 +19,39 @@ api = "https://api.lkeap.cloud.tencent.com/plan/anthropic"
 [[plans_cn]]
 name = "通用 Lite"
 price_month = 39
-usage = "每订阅月 3,500 万 Tokens"
+usage = "每订阅月 780 积分"
 
 [[plans_cn]]
 name = "通用 Standard"
 price_month = 99
-usage = "每订阅月 1 亿 Tokens"
+usage = "每订阅月 1,980 积分"
 
 [[plans_cn]]
 name = "通用 Pro"
 price_month = 299
-usage = "每订阅月 3.2 亿 Tokens"
+usage = "每订阅月 5,980 积分"
 
 [[plans_cn]]
 name = "通用 Max"
 price_month = 599
-usage = "每订阅月 6.5 亿 Tokens"
+usage = "每订阅月 11,980 积分"
 
 [[plans_cn]]
 name = "Hy Lite"
 price_month = 28
-usage = "每订阅月 3,500 万 Tokens，仅支持 Hy3"
+usage = "每订阅月 560 积分，适用于 Hy Token Plan 模型"
 
 [[plans_cn]]
 name = "Hy Standard"
 price_month = 78
-usage = "每订阅月 1 亿 Tokens，仅支持 Hy3"
+usage = "每订阅月 1,560 积分，适用于 Hy Token Plan 模型"
 
 [[plans_cn]]
 name = "Hy Pro"
 price_month = 238
-usage = "每订阅月 3.2 亿 Tokens，仅支持 Hy3"
+usage = "每订阅月 4,760 积分，适用于 Hy Token Plan 模型"
 
 [[plans_cn]]
 name = "Hy Max"
 price_month = 468
-usage = "每订阅月 6.5 亿 Tokens，仅支持 Hy3"
+usage = "每订阅月 9,360 积分，适用于 Hy Token Plan 模型"

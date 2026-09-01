@@ -1,6 +1,18 @@
 name: Publish data package
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/**'
+      - 'models/**'
+      - 'providers/**'
+      - 'packages/core/**'
+      - 'packages/data/**'
+      - 'scripts/**'
+      - 'package.json'
+      - 'bun.lock'
+      - '.github/workflows/publish-data.yml'
   release:
     types: [published]
   workflow_dispatch:
@@ -15,13 +27,17 @@ on:
         default: false
         type: boolean
 
+concurrency:
+  group: publish-data-package
+  cancel-in-progress: false
+
 permissions:
   contents: read
   id-token: write
 
 jobs:
   package:
-    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.release.tag_name, 'data-v')
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || startsWith(github.event.release.tag_name, 'data-v')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -33,8 +49,9 @@ jobs:
           node-version: 24
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
-      - name: Resolve package version
-        id: version
+      - name: Resolve requested version
+        id: requested
+        if: github.event_name != 'push'
         env:
           EVENT_NAME: ${{ github.event_name }}
           RELEASE_TAG: ${{ github.event.release.tag_name }}
@@ -52,16 +69,87 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
       - run: bun install --frozen-lockfile
       - run: bun run check
-      - run: bun run build:data -- --version "${{ steps.version.outputs.version }}"
-      - run: bun run verify:data
+
+      - name: Build comparison artifact
+        if: github.event_name == 'push'
+        run: bun run build:data -- --version 0.0.0
+
+      - name: Download latest published manifest
+        if: github.event_name == 'push'
+        run: |
+          mkdir -p .artifacts/previous
+          npm pack '@modellink/data@latest' \
+            --pack-destination .artifacts/previous \
+            --ignore-scripts \
+            --json > .artifacts/previous/pack.json
+          archive="$(node -e "const p=require('./.artifacts/previous/pack.json'); process.stdout.write(p[0].filename)")"
+          tar -xOf ".artifacts/previous/$archive" package/manifest.json \
+            > .artifacts/previous/manifest.json
+
+      - name: Resolve automatic version
+        id: automatic
+        if: github.event_name == 'push'
+        run: >-
+          bun scripts/resolve-data-release.ts
+          --published .artifacts/previous/manifest.json
+          --candidate .artifacts/npm/manifest.json
+
+      - name: Select release plan
+        id: plan
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          AUTOMATIC_CHANGED: ${{ steps.automatic.outputs.changed }}
+          AUTOMATIC_VERSION: ${{ steps.automatic.outputs.version }}
+          REQUESTED_VERSION: ${{ steps.requested.outputs.version }}
+          MANUAL_PUBLISH: ${{ inputs.publish }}
+        run: |
+          if [[ "$EVENT_NAME" == "push" ]]; then
+            echo "build=$AUTOMATIC_CHANGED" >> "$GITHUB_OUTPUT"
+            echo "publish=$AUTOMATIC_CHANGED" >> "$GITHUB_OUTPUT"
+            echo "version=$AUTOMATIC_VERSION" >> "$GITHUB_OUTPUT"
+          else
+            echo "build=true" >> "$GITHUB_OUTPUT"
+            echo "version=$REQUESTED_VERSION" >> "$GITHUB_OUTPUT"
+            if [[ "$EVENT_NAME" == "release" || "$MANUAL_PUBLISH" == "true" ]]; then
+              echo "publish=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "publish=false" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+
+      - name: Build publishable package
+        if: steps.plan.outputs.build == 'true'
+        run: bun run build:data -- --version "${{ steps.plan.outputs.version }}"
+      - name: Verify publishable package
+        if: steps.plan.outputs.build == 'true'
+        run: bun run verify:data
       - name: Pack npm artifact
+        if: steps.plan.outputs.build == 'true'
         run: npm pack .artifacts/npm --pack-destination .artifacts
       - uses: actions/upload-artifact@v7
+        if: steps.plan.outputs.build == 'true'
         with:
-          name: modellink-data-${{ steps.version.outputs.version }}
-          path: .artifacts/modellink-data-${{ steps.version.outputs.version }}.tgz
+          name: modellink-data-${{ steps.plan.outputs.version }}
+          path: .artifacts/modellink-data-${{ steps.plan.outputs.version }}.tgz
           if-no-files-found: error
           retention-days: 30
       - name: Publish to npm
-        if: github.event_name == 'release' || inputs.publish
+        if: steps.plan.outputs.publish == 'true'
         run: npm publish .artifacts/npm --access public
+      - name: Refresh npmmirror
+        if: steps.plan.outputs.publish == 'true'
+        continue-on-error: true
+        run: npx --yes cnpm@latest sync '@modellink/data'
+
+      - name: Summarize automatic check
+        if: github.event_name == 'push'
+        env:
+          CHANGED: ${{ steps.automatic.outputs.changed }}
+          LATEST: ${{ steps.automatic.outputs.latest }}
+          VERSION: ${{ steps.automatic.outputs.version }}
+        run: |
+          if [[ "$CHANGED" == "true" ]]; then
+            echo "Data changed: publishing @modellink/data $VERSION (previously $LATEST)." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Generated JSON matches @modellink/data $LATEST; publishing was skipped." >> "$GITHUB_STEP_SUMMARY"
+          fi

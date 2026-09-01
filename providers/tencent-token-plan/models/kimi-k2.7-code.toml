@@ -1,0 +1,9 @@
+base_model = "moonshot/kimi-k2.7-code"
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/133811"
+
+[cost_points]
+per_tokens = 1_000_000
+input = 130
+output = 540
+cache_read = 26
