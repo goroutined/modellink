@@ -1,0 +1,20 @@
+base_model = "zhipu/glm-5.3-flash"
+base_model_omit = ["reasoning", "structured_output"]
+doc = "https://ai.gitee.com/serverless-api?service=25827"
+attachment = false
+temperature = true
+tool_call = true
+
+[limit]
+context = 1_000_000
+output = 128_000
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[cost_cn]
+input = 0.8
+output = 2.8
+cache_read = 0.23
+cache_write = 0.8

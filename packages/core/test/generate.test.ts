@@ -630,7 +630,7 @@ describe("catalog generation", () => {
     }
 
     const minimaxTokenPlan = catalog.providers["minimax-token-plan"];
-    expect(minimaxTokenPlan?.api).toBe("https://api.minimaxi.com/v1");
+    expect(minimaxTokenPlan?.api).toBe("https://api.minimax.cn/v1");
     expect(minimaxTokenPlan?.plans_cn).toEqual([
       {
         name: "Plus",
@@ -2986,7 +2986,7 @@ describe("catalog generation", () => {
       modalities: { input: ["text"], output: ["text"] },
     });
     expect(provider?.models["qwen3-30b-a3b"]).toMatchObject({
-      endpoints: ["openai"],
+      endpoints: ["openai", "anthropic"],
       tool_call: false,
       reasoning_options: [
         {
@@ -2998,7 +2998,7 @@ describe("catalog generation", () => {
     });
     expect(provider?.models["qwen3-30b-a3b"]?.structured_output).toBeUndefined();
     expect(provider?.models["qwen3-32b"]).toMatchObject({
-      endpoints: ["openai"],
+      endpoints: ["openai", "anthropic"],
       reasoning_options: [
         {
           type: "toggle",
@@ -3018,6 +3018,7 @@ describe("catalog generation", () => {
     expect(Object.keys(gitee?.models ?? {}).sort()).toEqual(
       [
         "GLM-5.3",
+        "GLM-5.3-Flash",
         "kimi-k3",
         "qwen3.8-max",
         "qwen3.8-flash",
@@ -3061,6 +3062,13 @@ describe("catalog generation", () => {
     });
     expect(gitee?.models["GLM-5.3"]?.reasoning).toBeUndefined();
     expect(gitee?.models["GLM-5.3"]?.structured_output).toBeUndefined();
+    expect(gitee?.models["GLM-5.3-Flash"]).toMatchObject({
+      tool_call: true,
+      limit: { context: 1_000_000, output: 128_000 },
+      modalities: { input: ["text"], output: ["text"] },
+      cost_cn: { input: 0.8, output: 2.8, cache_read: 0.23 },
+    });
+    expect(gitee?.models["GLM-5.3-Flash"]?.reasoning).toBeUndefined();
     expect(gitee?.models["DeepSeek-V4-Pro"]?.reasoning).toBe(true);
     expect(gitee?.models["DeepSeek-V4-Pro"]?.limit.output).toBeUndefined();
     expect(gitee?.models["DeepSeek-V4-Flash"]?.reasoning).toBeUndefined();
@@ -3071,7 +3079,7 @@ describe("catalog generation", () => {
     ]);
     expect(gitee?.models["qwen3.8-27b"]?.temperature).toBe(false);
     expect(gitee?.models["qwen3.8-max"]?.temperature).toBe(false);
-    expect(gitee?.models["kimi-k3"]?.temperature).toBe(true);
+    expect(gitee?.models["kimi-k3"]?.temperature).toBeUndefined();
     expect(catalog.providers.modelscope).toBeUndefined();
   });
 

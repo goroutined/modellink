@@ -1,6 +1,6 @@
 base_model = "alibaba/qwen3-30b-a3b"
 base_model_omit = ["structured_output"]
-endpoints = ["openai"]
+endpoints = ["openai", "anthropic"]
 doc = "https://support.huaweicloud.com/model-call-maas/usermanual_maas_0008.html"
 tool_call = false
 

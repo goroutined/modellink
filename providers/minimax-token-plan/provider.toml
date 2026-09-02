@@ -2,19 +2,19 @@ name = "MiniMax Token Plan"
 env = ["MINIMAX_API_KEY"]
 npm = "@ai-sdk/openai-compatible"
 protocol = "openai-compatible"
-api = "https://api.minimaxi.com/v1"
+api = "https://api.minimax.cn/v1"
 doc = "https://platform.minimaxi.com/docs/token-plan/intro"
 
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"
-api = "https://api.minimaxi.com/v1"
+api = "https://api.minimax.cn/v1"
 default = true
 
 [[endpoints]]
 id = "anthropic"
 protocol = "anthropic-compatible"
-api = "https://api.minimaxi.com/anthropic"
+api = "https://api.minimax.cn/anthropic"
 
 [[plans_cn]]
 name = "Plus"
