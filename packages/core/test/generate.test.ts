@@ -304,7 +304,7 @@ describe("catalog generation", () => {
     expect(
       alibabaDeepseekPro0813?.cost_cn?.tiers?.map((tier) => tier.cache_read),
     ).toEqual([0.45, 0.9]);
-    expect(alibabaDeepseekFlash0731?.structured_output).toBe(false);
+    expect(alibabaDeepseekFlash0731?.structured_output).toBe(true);
     expect(alibabaDeepseekFlash0731?.cost_cn).toMatchObject({
       input: 1.5,
       output: 4.5,
@@ -861,6 +861,10 @@ describe("catalog generation", () => {
     expect(deepseekV4ProGa?.name).toBe("DeepSeek V4 Pro GA");
     expect(deepseekV4ProGa?.release_date).toBe("2026-08-13");
     expect(deepseekV4ProGa?.cost_cn).toBeUndefined();
+    expect(deepseekV4ProGa?.structured_output).toBe(true);
+    expect(
+      volcengine?.models["deepseek-v4-flash-ga-260731"]?.structured_output,
+    ).toBe(true);
     const doubaoSeed21Pro = volcengine?.models["doubao-seed-2-1-pro-260628"];
     expect(doubaoSeed21Pro?.limit).toEqual({
       context: 262_144,
@@ -1077,7 +1081,7 @@ describe("catalog generation", () => {
     }
     expect(
       volcengine?.models["doubao-seed-2-0-pro-260215"]?.structured_output,
-    ).toBe(false);
+    ).toBe(true);
     expect(
       volcengine?.models["doubao-seed-2-0-lite-260215"]?.release_date,
     ).toBe("2026-02-15");
@@ -1211,7 +1215,7 @@ describe("catalog generation", () => {
       volcengineDeepseekGaEffortOptions,
     );
     expect(volcengineDeepseekV4FlashGa?.tool_call).toBe(true);
-    expect(volcengineDeepseekV4FlashGa?.structured_output).toBe(false);
+    expect(volcengineDeepseekV4FlashGa?.structured_output).toBe(true);
     expect(volcengineDeepseekV4FlashGa?.cost_cn).toEqual({
       input: 3,
       output: 9,
@@ -3547,7 +3551,7 @@ describe("catalog generation", () => {
     });
     expect(alibabaTokenPlan?.models["deepseek-v4-flash-0731"]).toMatchObject({
       endpoints: ["openai", "anthropic"],
-      structured_output: false,
+      structured_output: true,
       limit: { output: 393_216 },
     });
     expect(alibabaTokenPlan?.models["deepseek-v4-pro-0813"]?.limit.output).toBe(
@@ -3714,7 +3718,7 @@ describe("catalog generation", () => {
       cost_cn: { input: 1, output: 3, cache_read: 0.1, cache_write: 1.25 },
     });
     expect(zhinao?.models["z-ai/glm-5.2"]).toMatchObject({
-      endpoints: ["openai", "anthropic"],
+      endpoints: ["openai", "anthropic", "responses"],
       temperature: true,
       limit: { context: 1_000_000, output: 128_000 },
       cost_cn: { input: 8, output: 28, cache_read: 2, cache_write: 10 },

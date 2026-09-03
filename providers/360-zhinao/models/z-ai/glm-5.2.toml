@@ -1,6 +1,6 @@
 base_model = "zhipu/glm-5.2"
 base_model_omit = ["tool_call", "structured_output"]
-endpoints = ["openai", "anthropic"]
+endpoints = ["openai", "anthropic", "responses"]
 doc = "https://ai.360.com/open/zh/models/z-ai/glm-5.2"
 temperature = true
 

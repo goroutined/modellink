@@ -2,7 +2,7 @@ base_model = "deepseek/deepseek-v4-flash-0731"
 endpoints = ["openai", "anthropic", "responses"]
 doc = "https://bailian.console.aliyun.com/cn-beijing/?tab=model#/model-market/detail/deepseek-v4-flash-0731"
 name = "DeepSeek V4 Flash 0731"
-structured_output = false
+structured_output = true
 
 [[reasoning_options]]
 type = "toggle"
