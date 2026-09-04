@@ -165,7 +165,7 @@ describe("catalog generation", () => {
     const catalog = await generateCatalog(root);
     const canonical = catalog.models["alibaba/qwen3.6-27b"];
     const offering =
-      catalog.providers.siliconflow?.models["Qwen/Qwen3.6-27B"];
+      catalog.providers["siliconflow-cn"]?.models["Qwen/Qwen3.6-27B"];
 
     expect(canonical?.name).toBe("Qwen3.6 27B");
     expect(canonical?.limit).toEqual({ context: 262_144 });
@@ -483,8 +483,8 @@ describe("catalog generation", () => {
 
     for (const [providerID, modelID] of [
       ["alibaba-cn", "MiniMax/MiniMax-M3"],
-      ["minimax", "MiniMax-M3"],
-      ["minimax-token-plan", "MiniMax-M3"],
+      ["minimax-cn", "MiniMax-M3"],
+      ["minimax-token-plan-cn", "MiniMax-M3"],
       ["volcengine-agent-plan", "minimax-m3"],
       ["volcengine-coding-plan", "minimax-m3"],
     ] as const) {
@@ -493,7 +493,7 @@ describe("catalog generation", () => {
       );
     }
 
-    const minimaxApi = catalog.providers.minimax;
+    const minimaxApi = catalog.providers["minimax-cn"];
     expect(minimaxApi?.api).toBe("https://api.minimaxi.com/v1");
     expect(minimaxApi?.name).toBe("MiniMax");
     expect(minimaxApi?.endpoints).toEqual([
@@ -629,7 +629,7 @@ describe("catalog generation", () => {
       expect(model?.interleaved).toEqual({ field: "reasoning_details" });
     }
 
-    const minimaxTokenPlan = catalog.providers["minimax-token-plan"];
+    const minimaxTokenPlan = catalog.providers["minimax-token-plan-cn"];
     expect(minimaxTokenPlan?.api).toBe("https://api.minimax.cn/v1");
     expect(minimaxTokenPlan?.plans_cn).toEqual([
       {
@@ -1613,7 +1613,7 @@ describe("catalog generation", () => {
 
   test("records the current Alibaba Coding Plan whitelist and limits", async () => {
     const catalog = await generateCatalog(root);
-    const codingPlan = catalog.providers["alibaba-coding-plan"];
+    const codingPlan = catalog.providers["alibaba-coding-plan-cn"];
 
     expect(codingPlan?.api).toBe("https://coding.dashscope.aliyuncs.com/v1");
     expect(codingPlan?.endpoints).toEqual([
@@ -2311,8 +2311,8 @@ describe("catalog generation", () => {
 
   test("records the current Xiaomi MiMo API and Token Plan", async () => {
     const catalog = await generateCatalog(root);
-    const api = catalog.providers["xiaomi-mimo"];
-    const tokenPlan = catalog.providers["xiaomi-mimo-token-plan"];
+    const api = catalog.providers.xiaomi;
+    const tokenPlan = catalog.providers["xiaomi-token-plan-cn"];
     const endpointProtocols = [
       {
         id: "openai",
@@ -2547,9 +2547,9 @@ describe("catalog generation", () => {
 
   test("records the current SiliconFlow Agent model whitelist and prices", async () => {
     const catalog = await generateCatalog(root);
-    const provider = catalog.providers.siliconflow;
+    const provider = catalog.providers["siliconflow-cn"];
 
-    expect(catalog.providers).not.toHaveProperty("siliconflow-cn");
+    expect(catalog.providers).not.toHaveProperty("siliconflow");
     expect(provider?.name).toBe("硅基流动");
     expect(provider?.endpoints).toEqual([
       {
@@ -3549,7 +3549,7 @@ describe("catalog generation", () => {
     const catalog = await generateCatalog(root);
 
     expect(
-      Object.keys(catalog.providers["alibaba-token-plan"]?.models ?? {}).sort(),
+      Object.keys(catalog.providers["alibaba-token-plan-cn"]?.models ?? {}).sort(),
     ).toEqual(
       [
         "qwen3.8-max",
@@ -3563,7 +3563,7 @@ describe("catalog generation", () => {
         "glm-5.2",
       ].sort(),
     );
-    const alibabaTokenPlan = catalog.providers["alibaba-token-plan"];
+    const alibabaTokenPlan = catalog.providers["alibaba-token-plan-cn"];
     expect(alibabaTokenPlan?.models["qwen3.8-flash"]).toMatchObject({
       endpoints: ["openai", "anthropic"],
       attachment: true,
@@ -3810,6 +3810,22 @@ describe("catalog generation", () => {
 
   test("assigns stable provider and model identifiers", async () => {
     const catalog = await generateCatalog(root);
+
+    const providerMigrations = {
+      "alibaba-coding-plan": "alibaba-coding-plan-cn",
+      "alibaba-token-plan": "alibaba-token-plan-cn",
+      minimax: "minimax-cn",
+      "minimax-token-plan": "minimax-token-plan-cn",
+      moonshot: "moonshotai-cn",
+      siliconflow: "siliconflow-cn",
+      "xiaomi-mimo": "xiaomi",
+      "xiaomi-mimo-token-plan": "xiaomi-token-plan-cn",
+    } as const;
+
+    for (const [oldID, newID] of Object.entries(providerMigrations)) {
+      expect(catalog.providers).not.toHaveProperty(oldID);
+      expect(catalog.providers).toHaveProperty(newID);
+    }
 
     for (const [providerID, provider] of Object.entries(catalog.providers)) {
       expect(provider.id).toBe(providerID);

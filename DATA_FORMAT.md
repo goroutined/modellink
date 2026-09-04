@@ -37,6 +37,26 @@ https://goroutined.github.io/modellink/schema.json
 
 当前 JSON 不公开 Provider Model 到 canonical model 的结构化反向引用。需要跨服务商聚合时，不应仅凭名称或 `family` 猜测；可以使用 ModelLink 页面内部索引作为展示参考，但不要把它视为稳定 API。
 
+### `@modellink/data` 0.2.0 Provider ID 迁移
+
+`0.2.0` 统一中国区 Provider 的地区后缀，并修正了与 models.dev 同名但实际指向
+国际站的问题。使用旧 ID 的下游需要按下表迁移：
+
+| `0.1.x` ID | `0.2.0` ID | models.dev 对应关系 |
+|---|---|---|
+| `alibaba-coding-plan` | `alibaba-coding-plan-cn` | 相同 |
+| `alibaba-token-plan` | `alibaba-token-plan-cn` | 相同 |
+| `minimax` | `minimax-cn` | 相同 |
+| `minimax-token-plan` | `minimax-token-plan-cn` | ModelLink 独有的 Token Plan，不等同于 models.dev 的 `minimax-cn-coding-plan` |
+| `moonshot` | `moonshotai-cn` | 相同 |
+| `siliconflow` | `siliconflow-cn` | 相同 |
+| `xiaomi-mimo` | `xiaomi` | 相同 |
+| `xiaomi-mimo-token-plan` | `xiaomi-token-plan-cn` | 相同 |
+
+Provider ID 的规范形式为 `{vendor}-cn` 或 `{vendor}-{plan}-cn`。只有服务商同时存在
+国际区和中国区语义时才增加地区后缀；中国区是唯一或默认语义时不机械增加 `-cn`。
+Provider ID 的迁移不会改变其模型调用 ID。
+
 ## 通用约定
 
 ### 可选值与未知值

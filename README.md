@@ -43,7 +43,7 @@ https://registry.npmmirror.com/@modellink%2Fdata/latest
 npm install @modellink/data --registry=https://registry.npmmirror.com
 ```
 
-合并到 `main` 后，发布工作流会将本次生成的四个公开 JSON 与 npm 最新版本中的哈希比较。只有实际数据或 Schema 发生变化时才自动递增 patch 版本并发布；页面、文档等非数据修改不会产生空版本。版本一经发布不会覆盖，生产环境应保存已校验的本地副本，不要把 `latest` 元数据作为唯一数据源。
+合并到 `main` 后，发布工作流会将本次生成的四个公开 JSON 与 npm 最新版本中的哈希比较。只有实际数据或 Schema 发生变化时才发布；通常自动递增 patch 版本，破坏性数据迁移可通过 `packages/data/release.json` 提升最低发布版本。页面、文档等非数据修改不会产生空版本。版本一经发布不会覆盖，生产环境应保存已校验的本地副本，不要把 `latest` 元数据作为唯一数据源。
 
 ## 数据结构
 
