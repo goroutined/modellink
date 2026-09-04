@@ -1,0 +1,12 @@
+base_model = "zhipu/glm-5.3"
+base_model_omit = ["reasoning", "temperature", "structured_output", "limit.output"]
+doc = "https://cloud.siliconflow.cn/models?target=zai-org%2FGLM-5.3"
+tool_call = true
+
+[limit]
+context = 1_048_576
+
+[cost_cn]
+input = 8
+output = 28
+cache_read = 2

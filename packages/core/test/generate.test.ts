@@ -2569,6 +2569,7 @@ describe("catalog generation", () => {
         "deepseek-ai/DeepSeek-V4-Flash",
         "deepseek-ai/DeepSeek-V4-Pro",
         "zai-org/GLM-5.2",
+        "zai-org/GLM-5.3",
         "Pro/zai-org/GLM-5.1",
         "moonshotai/Kimi-K2.7-Code",
         "Pro/moonshotai/Kimi-K2.6",
@@ -2585,6 +2586,15 @@ describe("catalog generation", () => {
         "Qwen/Qwen3.5-27B",
       ].sort(),
     );
+    expect(provider?.models["zai-org/GLM-5.3"]).toMatchObject({
+      tool_call: true,
+      limit: { context: 1_048_576 },
+      cost_cn: { input: 8, output: 28, cache_read: 2 },
+    });
+    expect(provider?.models["zai-org/GLM-5.3"]?.reasoning).toBeUndefined();
+    expect(provider?.models["zai-org/GLM-5.3"]?.temperature).toBeUndefined();
+    expect(provider?.models["zai-org/GLM-5.3"]?.structured_output).toBeUndefined();
+    expect(provider?.models["zai-org/GLM-5.3"]?.limit.output).toBeUndefined();
     expect(provider?.models["deepseek-ai/DeepSeek-V4-Flash"]?.cost_cn).toEqual({
       input: 1.5,
       output: 4.5,
@@ -3025,6 +3035,8 @@ describe("catalog generation", () => {
         "GLM-5.3-Flash",
         "kimi-k3",
         "qwen3.8-max",
+        "qwen3.8-max-0902",
+        "qwen3.8-max-2026-09-02",
         "qwen3.8-flash",
         "qwen3.8-27b",
         "DeepSeek-V4-Pro",
@@ -3083,6 +3095,17 @@ describe("catalog generation", () => {
     ]);
     expect(gitee?.models["qwen3.8-27b"]?.temperature).toBe(false);
     expect(gitee?.models["qwen3.8-max"]?.temperature).toBe(false);
+    for (const id of ["qwen3.8-max-0902", "qwen3.8-max-2026-09-02"]) {
+      expect(gitee?.models[id]).toMatchObject({
+        id,
+        limit: { context: 1_000_000, output: 128_000 },
+        cost_cn: { input: 12, output: 36 },
+      });
+      expect(gitee?.models[id]?.reasoning).toBeUndefined();
+      expect(gitee?.models[id]?.temperature).toBeUndefined();
+      expect(gitee?.models[id]?.tool_call).toBeUndefined();
+      expect(gitee?.models[id]?.structured_output).toBeUndefined();
+    }
     expect(gitee?.models["kimi-k3"]?.temperature).toBeUndefined();
     expect(catalog.providers.modelscope).toBeUndefined();
   });
@@ -3592,8 +3615,30 @@ describe("catalog generation", () => {
       "image",
     ]);
     expect(Object.keys(catalog.providers["jdcloud-token-plan"]?.models ?? {}).sort()).toEqual(
-      ["GLM-5.1", "GLM-5.2", "Kimi-K2.6", "MiniMax-M3", "DeepSeek-V4-Flash", "DeepSeek-V4-Pro"].sort(),
+      [
+        "GLM-5.1",
+        "GLM-5.2",
+        "Kimi-K2.6",
+        "MiniMax-M3",
+        "DeepSeek-V4-Flash",
+        "DeepSeek-V4-Flash-0731",
+        "DeepSeek-V4-Pro",
+        "deepseek-v4-pro-0813",
+      ].sort(),
     );
+    const jdTokenPlan = catalog.providers["jdcloud-token-plan"];
+    expect(jdTokenPlan?.models["DeepSeek-V4-Flash-0731"]).toMatchObject({
+      id: "DeepSeek-V4-Flash-0731",
+      endpoints: ["openai", "anthropic"],
+      limit: { context: 1_000_000, output: 393_216 },
+    });
+    expect(jdTokenPlan?.models["deepseek-v4-pro-0813"]).toMatchObject({
+      id: "deepseek-v4-pro-0813",
+      endpoints: ["openai", "anthropic"],
+      limit: { context: 1_000_000, output: 393_216 },
+    });
+    expect(jdTokenPlan?.models).not.toHaveProperty("DeepSeek-V4-Flash-Preview");
+    expect(jdTokenPlan?.models).not.toHaveProperty("DeepSeek-V4-Pro-Preview");
     const internlm = catalog.providers.internlm;
     expect(Object.keys(internlm?.models ?? {}).sort()).toEqual(
       [

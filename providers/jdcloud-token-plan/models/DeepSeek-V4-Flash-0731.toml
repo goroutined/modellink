@@ -1,0 +1,8 @@
+base_model = "deepseek/deepseek-v4-flash-0731"
+base_model_omit = ["reasoning", "temperature", "tool_call", "structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://docs.jdcloud.com/cn/jdaip/tokenplan-overview"
+
+[limit]
+context = 1_000_000
+output = 393_216

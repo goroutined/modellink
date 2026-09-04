@@ -1,6 +1,7 @@
 name = "Qwen3.8 Max"
 description = "Qwen3.8 原生视觉语言系列旗舰模型，面向复杂推理、视觉理解、编程与智能体任务。"
 family = "qwen3.8-max"
+series = "qwen3.8-max"
 release_date = "2026-08-03"
 last_updated = "2026-08-03"
 attachment = true
