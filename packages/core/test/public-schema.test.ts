@@ -22,7 +22,7 @@ describe("public JSON Schema", () => {
     expect(
       validate(ajv, `${schema.$id}#/definitions/Manifest`, {
         version: "0.1.0",
-        schema_version: 1,
+        schema_version: 2,
         generated_at: "2026-09-01T00:00:00.000Z",
         source: {
           repository: "https://github.com/goroutined/modellink",
@@ -97,9 +97,16 @@ describe("public JSON Schema", () => {
     const schema = await Bun.file(path.join(root, "schema.json")).json() as any;
     const definitions = schema.definitions as Record<string, any>;
 
-    for (const name of ["Protocol", "ProviderEndpoint", "ReasoningOption"]) {
+    for (const name of ["Protocol", "ProviderEndpoint", "ProviderLinks", "ReasoningOption"]) {
       expect(definitions[name]).toBeDefined();
     }
+
+    expect(definitions.ProviderLinks.properties).toEqual({
+      models: expect.objectContaining({ type: "string", format: "uri" }),
+      pricing: expect.objectContaining({ type: "string", format: "uri" }),
+      api_key: expect.objectContaining({ type: "string", format: "uri" }),
+      console: expect.objectContaining({ type: "string", format: "uri" }),
+    });
 
     const references = collectObjects(
       schema,

@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://token-plan-cn.xiaomimimo.com/v1"
 doc = "https://mimo.mi.com/docs/zh-CN/quick-start/faq/token-plan"
 
+[links]
+models = "https://mimo.mi.com/docs/zh-CN/tokenplan/Token%20Plan/subscription"
+pricing = "https://mimo.mi.com/docs/zh-CN/tokenplan/Token%20Plan/subscription"
+api_key = "https://mimo.mi.com/docs/zh-CN/quick-start/faq/api-integration"
+console = "https://platform.xiaomimimo.com/#/console/plan-manage"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

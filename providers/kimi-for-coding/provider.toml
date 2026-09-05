@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://api.kimi.com/coding/v1"
 doc = "https://www.kimi.com/code/docs/"
 
+[links]
+models = "https://www.kimi.com/code/docs/"
+pricing = "https://www.kimi.com/membership/pricing?from=kfc_docs_overview"
+api_key = "https://www.kimi.com/code/docs/"
+console = "https://www.kimi.com/code/console"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

@@ -65,7 +65,7 @@ providers/<provider-id>/
 - `labs/`：模型研发组织。
 - `models/`：与服务商无关的 canonical model metadata。
 - `providers/`：具体 API 服务及其模型、价格、限制和调用方式。
-- `protocol`、`endpoints`、`cost_cn`、`cost_points`、`plans_cn` 和 `series`：ModelLink 扩展字段，分别表示默认调用协议、多协议接入端点、人民币官方价格、订阅套餐积分消耗、人民币套餐信息和 canonical model 的版本系列。
+- `protocol`、`endpoints`、`links`、`cost_cn`、`cost_points`、`plans_cn` 和 `series`：ModelLink 扩展字段，分别表示默认调用协议、多协议接入端点、按用途区分的官方入口、人民币官方价格、订阅套餐积分消耗、人民币套餐信息和 canonical model 的版本系列。
 - 第三方 provider 使用 `base_model = "<lab>/<model>"` 继承模型事实，只声明真实差异。
 
 文件路径决定 ID，TOML 中不写 `id`。

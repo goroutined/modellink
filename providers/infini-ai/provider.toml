@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://cloud.infini-ai.com/maas/v1"
 doc = "https://docs.infini-ai.com/gen-studio/models/"
 
+[links]
+models = "https://cloud.infini-ai.com/genstudio/usage/limit"
+pricing = "https://docs.infini-ai.com/gen-studio/api/usage-and-billing/billing.html"
+api_key = "https://docs.infini-ai.com/gen-studio/api/get-started/"
+console = "https://cloud.infini-ai.com/iam/secret/key"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

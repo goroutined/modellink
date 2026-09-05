@@ -3,7 +3,7 @@
   "$id": "https://goroutined.github.io/modellink/schema.json",
   "title": "ModelLink Public Data Schema",
   "description": "Public JSON contract for ModelLink catalog, provider, model and package manifest data.",
-  "x-modellink-schema-version": 1,
+  "x-modellink-schema-version": 2,
   "$ref": "#/definitions/Catalog",
   "definitions": {
     "JsonValue": {
@@ -552,6 +552,33 @@
       ],
       "additionalProperties": false,
       "description": "A protocol-specific API endpoint exposed by a provider."
+    },
+    "ProviderLinks": {
+      "type": "object",
+      "properties": {
+        "models": {
+          "type": "string",
+          "format": "uri",
+          "description": "Official catalog of models available from this provider."
+        },
+        "pricing": {
+          "type": "string",
+          "format": "uri",
+          "description": "Official pricing, subscription plan, or purchase page."
+        },
+        "api_key": {
+          "type": "string",
+          "format": "uri",
+          "description": "Official instructions for applying for and configuring an API key."
+        },
+        "console": {
+          "type": "string",
+          "format": "uri",
+          "description": "Official console used to manage API keys and the provider account."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Purpose-specific official links for integrating with this provider."
     },
     "ReasoningOption": {
       "anyOf": [
@@ -2197,6 +2224,10 @@
           "type": "string",
           "minLength": 1
         },
+        "links": {
+          "$ref": "#/definitions/ProviderLinks",
+          "description": "Purpose-specific official links for integrating with this provider."
+        },
         "models": {
           "type": "object",
           "additionalProperties": {
@@ -2254,7 +2285,7 @@
         },
         "schema_version": {
           "type": "number",
-          "const": 1
+          "const": 2
         },
         "generated_at": {
           "type": "string",

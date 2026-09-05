@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://api.minimax.cn/v1"
 doc = "https://platform.minimaxi.com/docs/token-plan/intro"
 
+[links]
+models = "https://platform.minimaxi.com/docs/token-plan/intro"
+pricing = "https://platform.minimaxi.com/docs/token-plan/intro"
+api_key = "https://platform.minimaxi.com/docs/token-plan/quickstart"
+console = "https://platform.minimaxi.com/console/plan"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

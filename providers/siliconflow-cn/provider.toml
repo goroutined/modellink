@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://api.siliconflow.cn/v1"
 doc = "https://www.siliconflow.cn/models"
 
+[links]
+models = "https://www.siliconflow.cn/models"
+pricing = "https://www.siliconflow.cn/models"
+api_key = "https://docs.siliconflow.cn/docs/userguide/quickstart"
+console = "https://cloud.siliconflow.cn/account/ak"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

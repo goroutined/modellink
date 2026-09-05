@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://modelservice.jdcloud.com/tokenPlan/openai/v1"
 doc = "https://docs.jdcloud.com/cn/jdaip/tokenplan-overview"
 
+[links]
+models = "https://docs.jdcloud.com/cn/jdaip/tokenplan-overview"
+pricing = "https://joybuilder-console.jdcloud.com/system/subscribe/list"
+api_key = "https://docs.jdcloud.com/cn/jdaip/tokenplan-quickstart"
+console = "https://joybuilder-console.jdcloud.com/system/subscribe/list"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

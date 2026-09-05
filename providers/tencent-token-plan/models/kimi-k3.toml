@@ -1,0 +1,18 @@
+base_model = "moonshot/kimi-k3"
+base_model_omit = ["temperature", "tool_call", "structured_output", "reasoning_options", "interleaved", "limit.input"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/130119"
+attachment = true
+reasoning = true
+
+# 套餐成员、模态和协议以以上套餐页为准；长度参考腾讯精确型号指南：
+# https://cloud.tencent.com/document/product/1823/132232
+# 指南明确 max_completion_tokens 最大 1048576，不使用示例中的默认值。
+# 个人版积分抵扣表尚未公布此型号，不复用 TokenHub 或企业版价格。
+[limit]
+context = 1_000_000
+output = 1_048_576
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]

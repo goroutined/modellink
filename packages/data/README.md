@@ -12,4 +12,6 @@ ModelLink 的版本化 JSON 数据制品，包含中国 AI 模型、推理服务
 
 这个包没有运行时代码、依赖或安装脚本。它既可以通过 npm 安装，也可以作为与编程语言无关的静态数据制品使用。
 
+Provider 的 `links` 字段按用途提供模型列表、价格与套餐、API Key 说明和管理控制台入口；没有准确官方入口的用途会直接省略。
+
 项目主页与完整使用说明请参阅 [ModelLink](https://github.com/goroutined/modellink)。

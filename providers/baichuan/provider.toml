@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://api.baichuan-ai.com/v1"
 doc = "https://platform.baichuan-ai.com/docs/api"
 
+[links]
+models = "https://platform.baichuan-ai.com/prices"
+pricing = "https://platform.baichuan-ai.com/prices"
+api_key = "https://platform.baichuan-ai.com/docs/guide"
+console = "https://platform.baichuan-ai.com/console/apikey"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

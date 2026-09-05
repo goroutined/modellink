@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://ark.cn-beijing.volces.com/api/v3"
 doc = "https://www.volcengine.com/docs/82379/1330310?lang=zh&redirect=1"
 
+[links]
+models = "https://www.volcengine.com/docs/82379/1330310?lang=zh&redirect=1"
+pricing = "https://www.volcengine.com/docs/82379/1544106"
+api_key = "https://www.volcengine.com/docs/82379/1541594"
+console = "https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

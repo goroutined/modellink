@@ -5,6 +5,11 @@ protocol = "openai-compatible"
 api = "https://spark-api-open.xf-yun.com/x2"
 doc = "https://www.xfyun.cn/doc/spark/X1http.html"
 
+[links]
+models = "https://www.xfyun.cn/doc/spark/X1http.html"
+api_key = "https://www.xfyun.cn/doc/spark/X1http.html"
+console = "https://console.xfyun.cn/services/bmx1"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

@@ -206,6 +206,7 @@ interface Provider {
   endpoints?: ProviderEndpoint[]
   name: string
   doc: string
+  links?: ProviderLinks
   plans_cn?: PlanCN[]
   credits_cn?: CreditsCN
   models: Record<string, ProviderModel>
@@ -221,10 +222,31 @@ interface Provider {
 | `api` | 默认 Base URL；某些非 OpenAI 默认协议可以缺失 |
 | `endpoints` | 全部已确认协议与对应 Base URL |
 | `name` | 中文或官方服务名称 |
-| `doc` | 服务商模型或接入文档 |
+| `doc` | models.dev 兼容的服务商主要文档入口 |
+| `links` | 按用途区分的模型、价格、API Key 与控制台入口 |
 | `plans_cn` | 人民币订阅套餐 |
 | `credits_cn` | 官方积分与人民币固定兑换关系 |
 | `models` | 调用 ID 到完整 Provider Model 的映射 |
+
+### Provider 官方入口
+
+```ts
+interface ProviderLinks {
+  models?: string
+  pricing?: string
+  api_key?: string
+  console?: string
+}
+```
+
+| 字段 | 点击后的预期用途 |
+| --- | --- |
+| `models` | 查看服务商当前全部可用模型及模型说明 |
+| `pricing` | 查看价格、套餐，或进入服务商提供的官方购买入口 |
+| `api_key` | 首次接入指引：如何获取并配置该服务的 API Key，优先指向快速开始或认证教程；套餐可能使用专属密钥 |
+| `console` | 登录服务商后台，管理 API Key 和账户 |
+
+这些字段全部可选。不存在真正达到对应目的的官方页面时，字段直接缺失；不得使用空字符串、`null`、搜索结果页或无关首页占位。`doc` 为兼容入口，不替代上述结构化语义；相同 URL 可以因承担不同用途而同时出现。`ProviderModel.doc` 仍只表示精确调用型号的详情或参数依据。
 
 ### 协议与 Endpoint
 
@@ -525,7 +547,7 @@ catalog.providers // 与 api.json 相同
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://goroutined.github.io/modellink/schema.json",
-  "x-modellink-schema-version": 1,
+  "x-modellink-schema-version": 2,
   "$ref": "#/definitions/Catalog"
 }
 ```
@@ -542,11 +564,12 @@ schema.json#/definitions/ProviderModel
 schema.json#/definitions/Provider
 schema.json#/definitions/Protocol
 schema.json#/definitions/ProviderEndpoint
+schema.json#/definitions/ProviderLinks
 schema.json#/definitions/ReasoningOption
 schema.json#/definitions/JsonValue
 ```
 
-`x-modellink-schema-version` 表示破坏性兼容级别；Schema 文件的 SHA-256 表示某个版本内的精确结构。新增可选字段可以只改变哈希而保持兼容版本不变，因此代码生成工具应同时记录版本和哈希。
+`x-modellink-schema-version` 表示公开对象结构的兼容级别；Schema 文件的 SHA-256 表示该版本的精确内容。ModelLink 公开对象是严格结构，新增字段也可能要求严格验证器或代码生成客户端重新生成，因此本次加入 `Provider.links` 后版本升级为 `2`。仅描述、注释等不改变可读取结构的更新可以只改变哈希而不升级版本。
 
 `schema.json` 面向数据读取和代码生成，描述公开字段、必填性、可选性、基础类型、对象结构与枚举。它不是 ModelLink 的数据审计规则，不保证价格、日期、模型能力或跨字段关系的真实性；这些内容由仓库数据、运行时 Schema、目录构建校验和维护流程保证。
 
@@ -575,7 +598,7 @@ const validateProvider = ajv.compile({
 })
 ```
 
-代码生成器可将整个文件作为输入，也可只选择 `Provider`、`ProviderModel`、`ModelMetadata`、`Protocol`、`ProviderEndpoint` 或 `ReasoningOption` 等定义。`Models` 和 `Providers` 都是以 ID 为键的 Map，而不是固定字段对象。
+代码生成器可将整个文件作为输入，也可只选择 `Provider`、`ProviderLinks`、`ProviderModel`、`ModelMetadata`、`Protocol`、`ProviderEndpoint` 或 `ReasoningOption` 等定义。`Models` 和 `Providers` 都是以 ID 为键的 Map，而不是固定字段对象。
 
 公开 Schema 的 `$ref` 只指向 `definitions` 下的稳定顶层定义，不依赖某个对象内部属性的 JSON Pointer。这可以避免下游代码生成器把仓库生成过程中的内部复用路径误认为公共类型名。
 
@@ -617,7 +640,7 @@ interface Manifest {
 ```
 
 - `version`：`@modellink/data` 的 SemVer 版本。
-- `schema_version`：与 `schema.json` 的 `x-modellink-schema-version` 相同，当前为 `1`。客户端遇到高于自身支持范围的版本时应停止自动加载并保留旧数据。
+- `schema_version`：与 `schema.json` 的 `x-modellink-schema-version` 相同，当前为 `2`。客户端遇到高于自身支持范围的版本时应停止自动加载并保留旧数据。
 - `generated_at`：构建时的 ISO 8601 时间，不代表每个模型的更新时间。
 - `source.revision`：生成该包的 Git commit SHA。
 - `files.*.sha256`：文件原始字节的 SHA-256 十六进制值。

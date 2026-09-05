@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://api.ppio.com/openai/v1"
 doc = "https://ppio.com/docs/model/llm"
 
+[links]
+models = "https://ppio.com/docs/model/llm"
+api_key = "https://ppio.com/docs/support/api-key"
+pricing = "https://ppio.com/pricing"
+console = "https://ppio.com/settings/key-management"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

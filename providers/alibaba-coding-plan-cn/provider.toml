@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://coding.dashscope.aliyuncs.com/v1"
 doc = "https://help.aliyun.com/zh/model-studio/coding-plan"
 
+[links]
+models = "https://help.aliyun.com/zh/model-studio/coding-plan"
+pricing = "https://help.aliyun.com/zh/model-studio/coding-plan"
+api_key = "https://help.aliyun.com/zh/model-studio/coding-plan"
+console = "https://bailian.console.aliyun.com/cn-beijing/?tab=plan#/efm/subscription/coding-plan"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

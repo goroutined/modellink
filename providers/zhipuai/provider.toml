@@ -2,8 +2,14 @@ name = "智谱 AI"
 env = ["ZAI_API_KEY"]
 npm = "@ai-sdk/openai-compatible"
 protocol = "openai-compatible"
-doc = "https://docs.bigmodel.cn/cn/guide/start/model-overview"
 api = "https://open.bigmodel.cn/api/paas/v4"
+doc = "https://docs.bigmodel.cn/cn/guide/start/model-overview"
+
+[links]
+models = "https://docs.bigmodel.cn/cn/guide/start/model-overview"
+pricing = "https://open.bigmodel.cn/pricing"
+api_key = "https://docs.bigmodel.cn/cn/guide/develop/http/introduction"
+console = "https://bigmodel.cn/usercenter/proj-mgmt/apikeys"
 
 [[endpoints]]
 id = "openai"

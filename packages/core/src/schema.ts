@@ -416,6 +416,16 @@ export const ProviderEndpoint = z
   .strict()
   .describe("A protocol-specific API endpoint exposed by a provider.");
 
+export const ProviderLinks = z
+  .object({
+    models: UrlString.describe("Official catalog of models available from this provider.").optional(),
+    pricing: UrlString.describe("Official pricing, subscription plan, or purchase page.").optional(),
+    api_key: UrlString.describe("Official instructions for applying for and configuring an API key.").optional(),
+    console: UrlString.describe("Official console used to manage API keys and the provider account.").optional(),
+  })
+  .strict()
+  .describe("Purpose-specific official links for integrating with this provider.");
+
 export const ModelLink = z
   .object({
     label: z.string().min(1, "Link label cannot be empty").optional(),
@@ -704,6 +714,7 @@ export const Provider = z
         1,
         "Please provide a link to the provider documentation where models are listed",
       ),
+    links: ProviderLinks.optional(),
     models: z.record(Model),
   })
   .strict()

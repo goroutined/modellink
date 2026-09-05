@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://api.minimaxi.com/v1"
 doc = "https://platform.minimaxi.com/docs/guides/text-generation"
 
+[links]
+models = "https://platform.minimaxi.com/docs/guides/models-intro"
+pricing = "https://platform.minimaxi.com/docs/guides/pricing-paygo"
+api_key = "https://platform.minimaxi.com/docs/guides/quickstart-preparation"
+console = "https://platform.minimaxi.com/console/access?tab=api-keys"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

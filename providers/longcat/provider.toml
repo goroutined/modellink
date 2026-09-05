@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://api.longcat.chat/openai"
 doc = "https://longcat.chat/platform/docs/zh/APIDocs.html"
 
+[links]
+models = "https://longcat.chat/platform/docs/zh/#%E6%94%AF%E6%8C%81%E7%9A%84%E6%A8%A1%E5%9E%8B"
+pricing = "https://longcat.chat/platform/docs/zh/pricing/long-cat-2.0"
+api_key = "https://longcat.chat/platform/docs/zh/"
+console = "https://longcat.chat/platform/api_keys"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

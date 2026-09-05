@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://token.sensenova.cn/v1"
 doc = "https://platform.sensenova.cn/docs"
 
+[links]
+models = "https://platform.sensenova.cn/docs"
+pricing = "https://platform.sensenova.cn/docs#points"
+api_key = "https://platform.sensenova.cn/docs"
+console = "https://platform.sensenova.cn/console/keys"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

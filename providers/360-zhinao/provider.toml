@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://api.360.cn/v1"
 doc = "https://ai.360.com/open/zh/models"
 
+[links]
+models = "https://ai.360.com/open/zh/models"
+pricing = "https://ai.360.com/open/zh/models"
+api_key = "https://ai.360.com/docs"
+console = "https://ai.360.com/open/zh/platform/keys"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

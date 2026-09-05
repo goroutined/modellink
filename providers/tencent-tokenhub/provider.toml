@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://tokenhub.tencentmaas.com/v1"
 doc = "https://cloud.tencent.com/document/product/1823/130051"
 
+[links]
+models = "https://cloud.tencent.com/document/product/1823/130051"
+pricing = "https://cloud.tencent.com/document/product/1823/130055"
+api_key = "https://cloud.tencent.com/document/product/1823/130090"
+console = "https://console.cloud.tencent.com/tokenhub/apikey?regionId=1"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://dashscope.aliyuncs.com/compatible-mode/v1"
 doc = "https://help.aliyun.com/zh/model-studio/getting-started/models"
 
+[links]
+models = "https://help.aliyun.com/zh/model-studio/getting-started/models"
+pricing = "https://help.aliyun.com/zh/model-studio/model-pricing"
+api_key = "https://help.aliyun.com/zh/model-studio/get-api-key"
+console = "https://bailian.console.aliyun.com/?tab=model#/api-key"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

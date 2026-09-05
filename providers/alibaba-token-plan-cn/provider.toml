@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1"
 doc = "https://help.aliyun.com/zh/model-studio/token-plan-personal-overview"
 
+[links]
+models = "https://help.aliyun.com/zh/model-studio/token-plan-personal-overview"
+pricing = "https://help.aliyun.com/zh/model-studio/token-plan-personal-overview"
+api_key = "https://help.aliyun.com/zh/model-studio/token-plan-personal-quick-start"
+console = "https://bailian.console.aliyun.com/cn-beijing?tab=plan#/efm/subscription/overview"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

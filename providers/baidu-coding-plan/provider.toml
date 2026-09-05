@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://qianfan.baidubce.com/v2/coding"
 doc = "https://cloud.baidu.com/doc/qianfan/s/imlg0beiu"
 
+[links]
+models = "https://cloud.baidu.com/doc/qianfan/s/imlg0beiu"
+pricing = "https://cloud.baidu.com/doc/qianfan/s/imlg0beiu"
+api_key = "https://cloud.baidu.com/doc/qianfan/s/imlg0beiu"
+console = "https://console.bce.baidu.com/qianfan/resource/subscribe"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

@@ -3118,10 +3118,12 @@ describe("catalog generation", () => {
     ).toEqual(["glm-5", "glm-5-0", "tc-code-latest"]);
     expect(
       Object.keys(catalog.providers["tencent-token-plan"]?.models ?? {}),
-    ).toHaveLength(23);
+    ).toHaveLength(25);
     for (const id of [
       "glm-5.3",
       "glm-5-3",
+      "glm-5.3-flash",
+      "kimi-k3",
       "kimi-k2.7-code",
       "minimax-m3",
       "minimax-m-3-0",
@@ -3545,7 +3547,7 @@ describe("catalog generation", () => {
     expect(baichuan?.models["Baichuan4"]?.modalities.input).toEqual(["text"]);
   });
 
-  test("records the current Alibaba, Kimi, JD, Intern, 360, and Yuanjing additions", async () => {
+  test("records the current Alibaba, Kimi, JD, Intern, and 360 additions", async () => {
     const catalog = await generateCatalog(root);
 
     expect(
@@ -3799,9 +3801,7 @@ describe("catalog generation", () => {
       { input: 0.4, output: 3.2, tier: { type: "conditional", input: { lte: 131_072 } } },
       { input: 1.6, output: 12.8, tier: { type: "conditional", input: { gt: 131_072 } } },
     ]);
-    expect(Object.keys(catalog.providers["china-unicom-yuanjing"]?.models ?? {}).sort()).toEqual(
-      ["qwen3.6-35b-a3b", "qwen35-397b-a17b", "qwen3.5-122b-a10b", "qwen3.5-27b", "step3.5-flash"].sort(),
-    );
+    expect(catalog.providers).not.toHaveProperty("china-unicom-yuanjing");
     expect(catalog.providers.longcat?.models["LongCat-2.0"]?.limit).toEqual({
       context: 1_048_576,
       output: 131_072,

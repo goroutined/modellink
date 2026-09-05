@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://ai.gitee.com/v1"
 doc = "https://ai.gitee.com/serverless-api"
 
+[links]
+models = "https://ai.gitee.com/serverless-api"
+pricing = "https://ai.gitee.com/serverless-api"
+api_key = "https://ai.gitee.com/docs/products/apis"
+console = "https://ai.gitee.com/dashboard/settings/tokens"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

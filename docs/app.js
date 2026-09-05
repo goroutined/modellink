@@ -24,7 +24,8 @@ const FIELD_LABELS = {
   experimental: "实验性配置", weights: "权重", benchmarks: "评测", links: "相关链接",
   api: "API 地址", env: "环境变量", npm: "兼容 SDK 包", protocol: "调用协议",
   endpoints: "端点", default: "默认值",
-  doc: "模型详情页", models: "模型",
+  doc: "模型详情页", models: "模型列表", pricing: "价格与套餐",
+  api_key: "API Key 说明", console: "管理控制台",
   plans_cn: "人民币订阅套餐", price_month: "月费", usage: "适用场景",
   quota_windows: "额度窗口", credits_cn: "预付积分", points: "积分",
   cny: "人民币价值", valid_days: "有效天数",
@@ -89,6 +90,23 @@ function modelEndpoints(provider, model) {
   if (!model?.endpoints?.length) return endpoints.filter((endpoint) => endpoint.default);
   const supported = new Set(model.endpoints);
   return endpoints.filter((endpoint) => supported.has(endpoint.id));
+}
+
+function providerLinkEntries(provider) {
+  const candidates = [
+    ["模型列表", provider.links?.models],
+    ["价格与套餐", provider.links?.pricing],
+    ["API Key 说明", provider.links?.api_key],
+    ["管理控制台", provider.links?.console],
+    ["官方文档", provider.doc],
+  ];
+  return candidates.filter(([, url]) => Boolean(url));
+}
+
+function renderProviderLinks(provider, button = false) {
+  const entries = providerLinkEntries(provider);
+  if (!entries.length) return "—";
+  return entries.map(([label, url]) => `<a class="${button ? "button-link" : "interactive-link"}" href="${escapeHtml(url)}" target="_blank" rel="noreferrer">${escapeHtml(label)}</a>`).join("");
 }
 
 function renderProtocols(endpoints) {
@@ -473,14 +491,14 @@ function renderModels() {
 
 function renderProviders() {
   const q = state.query.toLowerCase();
-  const providers = Object.entries(state.catalog.providers).filter(([id, provider]) => `${id} ${provider.name ?? ""} ${provider.api ?? ""} ${provider.protocol ?? ""} ${(provider.endpoints ?? []).map((endpoint) => `${endpoint.protocol} ${endpoint.api}`).join(" ")}`.toLowerCase().includes(q));
+  const providers = Object.entries(state.catalog.providers).filter(([id, provider]) => `${id} ${provider.name ?? ""} ${provider.api ?? ""} ${provider.protocol ?? ""} ${Object.values(provider.links ?? {}).join(" ")} ${(provider.endpoints ?? []).map((endpoint) => `${endpoint.protocol} ${endpoint.api}`).join(" ")}`.toLowerCase().includes(q));
   app.innerHTML = pageHeading("PROVIDERS", "服务商", "比较国内模型服务商的可调用模型、API 入口、调用协议与官方文档。", `${providers.length} / ${Object.keys(state.catalog.providers).length} · ${catalogSummary()}`)
     + `<div class="toolbar"><input data-local-search type="search" value="${escapeHtml(state.query)}" placeholder="筛选服务商名称、ID、API 或协议"></div>`
-    + (providers.length ? `<div class="table-panel"><div class="table-scroll"><table><thead><tr><th>服务商</th><th>模型数</th><th>调用协议</th><th>API 地址</th><th>官方文档</th></tr></thead><tbody>${providers.map(([id, provider]) => `<tr>
+    + (providers.length ? `<div class="table-panel"><div class="table-scroll"><table><thead><tr><th>服务商</th><th>模型数</th><th>调用协议</th><th>API 地址</th><th>官方入口</th></tr></thead><tbody>${providers.map(([id, provider]) => `<tr>
       <td><a class="primary-cell row-link" href="${routeHref("providers", id)}">${logo("providers", id)}<span><strong>${escapeHtml(provider.name ?? id)}</strong><small>${escapeHtml(id)}</small></span></a></td>
       <td class="number">${Object.keys(provider.models ?? {}).length}</td><td>${renderProtocols(providerEndpoints(provider))}</td>
       <td>${provider.api ? `<code class="api-address">${escapeHtml(provider.api)}</code>` : "—"}</td>
-      <td>${provider.doc ? `<a href="${escapeHtml(provider.doc)}" target="_blank" rel="noreferrer">查看文档</a>` : "—"}</td></tr>`).join("")}</tbody></table></div></div>` : '<div class="empty-state">没有符合当前条件的服务商。</div>');
+      <td><span class="provider-link-list">${renderProviderLinks(provider)}</span></td></tr>`).join("")}</tbody></table></div></div>` : '<div class="empty-state">没有符合当前条件的服务商。</div>');
   bindListControls();
 }
 
@@ -576,7 +594,7 @@ function renderProviderDetail(id) {
   if (!provider) return renderNotFound("服务商", id, "providers");
   const models = Object.entries(provider.models ?? {});
   app.innerHTML = `<nav class="breadcrumb provider-breadcrumb"><a href="#/providers">服务商</a><span>›</span><span>${escapeHtml(provider.name ?? id)}</span></nav>
-    <header class="page-heading provider-heading"><div class="detail-title">${logo("providers", id, true)}<div><p class="eyebrow">PROVIDER</p><h1>${escapeHtml(provider.name ?? id)}</h1><p class="lead">${escapeHtml(id)} · ${models.length} 个可调用模型</p></div></div><div class="detail-actions">${provider.doc ? `<a class="button-link" href="${escapeHtml(provider.doc)}" target="_blank" rel="noreferrer">官方文档</a>` : ""}</div></header>
+    <header class="page-heading provider-heading"><div class="detail-title">${logo("providers", id, true)}<div><p class="eyebrow">PROVIDER</p><h1>${escapeHtml(provider.name ?? id)}</h1><p class="lead">${escapeHtml(id)} · ${models.length} 个可调用模型</p></div></div><div class="detail-actions">${renderProviderLinks(provider, true)}</div></header>
     <div class="detail-grid provider-overview"><section class="panel">${renderEndpointList(provider)}</section><aside class="panel"><div class="stat-grid"><div class="stat"><span>模型数</span><strong>${models.length}</strong></div><div class="stat"><span>协议数</span><strong>${providerEndpoints(provider).length}</strong></div><div class="stat"><span>环境变量</span><strong>${formatNumber(provider.env?.length ?? 0)}</strong></div></div></aside></div>
     ${renderProviderPlans(provider)}
     <section class="section"><div class="section-heading"><h2>可调用模型</h2><span>${escapeHtml(pricingUnitNote(models.map(([, model]) => model)))}</span></div>${models.length ? `<div class="table-panel"><div class="table-scroll"><table class="offering-table"><thead><tr>

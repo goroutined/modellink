@@ -53,6 +53,26 @@ providers/<provider-id>/
 
 兼容层的 `provider.toml` 包含名称、认证环境变量、AI SDK 包、文档地址，以及 OpenAI-compatible provider 的 API 地址。`npm` 仅用于保持 models.dev 兼容，不作为 ModelLink 的协议判断依据。
 
+`doc` 保留为 models.dev 兼容的主要文档入口。面向用户的明确入口通过可选 `links` 记录：
+
+```toml
+[links]
+models = "https://example.com/models"
+pricing = "https://example.com/pricing"
+api_key = "https://example.com/docs/create-api-key"
+console = "https://console.example.com/api-keys"
+```
+
+- `models` 必须能查看当前可用模型或完整模型目录，不能使用单个模型详情页。
+- `pricing` 指向价格、套餐或官方购买说明。
+- `api_key` 是面向首次接入用户的指引：优先选择对应服务的快速开始、密钥申请或认证教程，明确说明在哪里获取密钥、如何配置或发起调用。不能仅因为页面提到 API Key 就选用产品概览、价格表或泛泛的 FAQ；FAQ 只有实际给出操作步骤且没有更直接的指引时才使用。
+- 普通 API 与 Coding/Token/Agent Plan 必须分别核对密钥与接入流程，不能用普通密钥教程替代专属套餐教程。共用教程只有明确覆盖该套餐时才可复用。不能读取正文时记录为未确认，不以链接存在或页面标题代替内容核验。
+- `console` 指向可以登录并管理 API Key 或账户的官方控制台。
+- 找不到满足语义的官方页面时省略字段，不写空字符串、`null`、搜索页或无关首页。
+- 按页面实际内容判断用途，不要求独立页面或特定标题：快速开始中的密钥申请步骤可以作为 `api_key`，模型目录中的价格表可以作为 `pricing`。存在已验证的章节锚点时优先使用，方便直接定位。
+- 同一个官方页面同时满足多个用途时可以重复使用 URL；展示层按用途分别展示，不按地址去重，避免隐藏 API Key 等入口。
+- Provider Model 的 `doc` 继续指向精确调用型号的详情或参数证据，不受此处影响。
+
 每个 Provider 同时直接声明 ModelLink 默认协议扩展字段：
 
 ```toml

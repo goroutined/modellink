@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://open.bigmodel.cn/api/coding/paas/v4"
 doc = "https://docs.bigmodel.cn/cn/coding-plan/overview"
 
+[links]
+models = "https://docs.bigmodel.cn/cn/coding-plan/overview"
+pricing = "https://bigmodel.cn/coding-plan/personal/overview"
+api_key = "https://docs.bigmodel.cn/cn/coding-plan/quick-start"
+console = "https://bigmodel.cn/coding-plan/personal/overview"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"

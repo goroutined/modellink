@@ -2,8 +2,14 @@ name = "DeepSeek"
 env = ["DEEPSEEK_API_KEY"]
 npm = "@ai-sdk/openai-compatible"
 protocol = "openai-compatible"
-doc = "https://api-docs.deepseek.com/zh-cn/quick_start/pricing"
 api = "https://api.deepseek.com"
+doc = "https://api-docs.deepseek.com/zh-cn/quick_start/pricing"
+
+[links]
+models = "https://api-docs.deepseek.com/zh-cn/quick_start/pricing"
+pricing = "https://api-docs.deepseek.com/zh-cn/quick_start/pricing"
+api_key = "https://api-docs.deepseek.com/zh-cn/"
+console = "https://platform.deepseek.com/api_keys"
 
 [[endpoints]]
 id = "openai"

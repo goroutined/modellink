@@ -5,6 +5,12 @@ protocol = "openai-compatible"
 api = "https://ai.ctaigw.cn/v1"
 doc = "https://www.ctyun.cn/document/11061839"
 
+[links]
+models = "https://www.ctyun.cn/document/11061839/11062235"
+pricing = "https://www.ctyun.cn/document/11061839/11062267"
+api_key = "https://www.ctyun.cn/document/11061839/11062271"
+console = "https://ctxirang.ctyun.cn/maas/home"
+
 [[endpoints]]
 id = "openai"
 protocol = "openai-compatible"
