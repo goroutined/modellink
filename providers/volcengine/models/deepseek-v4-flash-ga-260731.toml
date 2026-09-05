@@ -2,7 +2,7 @@ base_model = "deepseek/deepseek-v4-flash-0731"
 base_model_omit = ["temperature"]
 name = "DeepSeek V4 Flash GA"
 endpoints = ["openai", "responses"]
-doc = "https://console.volcengine.com/ark/region:cn-beijing/model/detail?name=deepseek-v4-flash-ga"
+doc = "https://ark.volcengine.com/region:cn-beijing/model/detail?name=deepseek-v4-flash-ga"
 structured_output = true
 
 [[reasoning_options]]

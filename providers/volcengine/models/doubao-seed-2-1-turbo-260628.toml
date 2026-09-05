@@ -1,7 +1,7 @@
 base_model = "bytedance/doubao-seed-2.1-turbo"
 base_model_omit = ["temperature"]
 endpoints = ["openai", "responses"]
-doc = "https://console.volcengine.com/ark/region:cn-beijing/model/detail?Id=doubao-seed-2-1-turbo"
+doc = "https://ark.volcengine.com/region:cn-beijing/model/detail?Id=doubao-seed-2-1-turbo"
 
 [[reasoning_options]]
 type = "toggle"

@@ -2,7 +2,7 @@ base_model = "deepseek/deepseek-v4-pro-0813"
 base_model_omit = ["temperature"]
 name = "DeepSeek V4 Pro GA"
 endpoints = ["openai", "responses"]
-doc = "https://console.volcengine.com/ark/region:cn-beijing/model/detail?name=deepseek-v4-pro-ga"
+doc = "https://ark.volcengine.com/region:cn-beijing/model/detail?name=deepseek-v4-pro-ga"
 structured_output = true
 
 [[reasoning_options]]

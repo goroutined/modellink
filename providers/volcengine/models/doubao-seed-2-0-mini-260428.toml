@@ -1,7 +1,7 @@
 base_model = "bytedance/doubao-seed-2.0-mini"
 name = "Doubao Seed 2.0 Mini 0428"
 endpoints = ["openai", "responses"]
-doc = "https://console.volcengine.com/ark/region:cn-beijing/model/detail?Id=doubao-seed-2-0-mini"
+doc = "https://ark.volcengine.com/region:cn-beijing/model/detail?Id=doubao-seed-2-0-mini"
 
 [[reasoning_options]]
 type = "toggle"

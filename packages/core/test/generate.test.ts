@@ -1146,7 +1146,7 @@ describe("catalog generation", () => {
     });
     expect(volcengineDeepseekV4Pro?.cost_cn).not.toHaveProperty("cache_write");
     expect(volcengineDeepseekV4Pro?.doc).toBe(
-      "https://console.volcengine.com/ark/region:cn-beijing/model/detail?Id=deepseek-v4-pro",
+      "https://ark.volcengine.com/region:cn-beijing/model/detail?Id=deepseek-v4-pro",
     );
 
     const volcengineDeepseekV4Flash =
@@ -1169,7 +1169,7 @@ describe("catalog generation", () => {
       volcengineDeepseekPreviewEffortOptions,
     );
     expect(volcengineDeepseekV4Flash?.doc).toBe(
-      "https://console.volcengine.com/ark/region:cn-beijing/model/detail?Id=deepseek-v4-flash",
+      "https://ark.volcengine.com/region:cn-beijing/model/detail?Id=deepseek-v4-flash",
     );
 
     const volcengineDeepseekV4FlashGa =
@@ -1222,14 +1222,14 @@ describe("catalog generation", () => {
       cache_read: 0.1,
     });
     expect(volcengineDeepseekV4FlashGa?.doc).toBe(
-      "https://console.volcengine.com/ark/region:cn-beijing/model/detail?name=deepseek-v4-flash-ga",
+      "https://ark.volcengine.com/region:cn-beijing/model/detail?name=deepseek-v4-flash-ga",
     );
     expect(deepseekV4ProGa?.endpoints).toEqual(["openai", "responses"]);
     expect(deepseekV4ProGa?.reasoning_options).toEqual(
       volcengineDeepseekGaEffortOptions,
     );
     expect(deepseekV4ProGa?.doc).toBe(
-      "https://console.volcengine.com/ark/region:cn-beijing/model/detail?name=deepseek-v4-pro-ga",
+      "https://ark.volcengine.com/region:cn-beijing/model/detail?name=deepseek-v4-pro-ga",
     );
 
     const volcengineGlm52 = volcengine?.models["glm-5-2-260617"];
@@ -1277,7 +1277,7 @@ describe("catalog generation", () => {
       cache_read: 2,
     });
     expect(volcengineGlm52?.doc).toBe(
-      "https://console.volcengine.com/ark/region:cn-beijing/model/detail?Id=glm-5-2",
+      "https://ark.volcengine.com/region:cn-beijing/model/detail?Id=glm-5-2",
     );
 
     const zhipuCodingPlan = catalog.providers["zhipuai-coding-plan"];

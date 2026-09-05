@@ -3,7 +3,7 @@ name = "Doubao Seed 2.0 Mini 0215"
 release_date = "2026-02-15"
 last_updated = "2026-02-15"
 endpoints = ["openai", "responses"]
-doc = "https://console.volcengine.com/ark/region:cn-beijing/model/detail?Id=doubao-seed-2-0-mini"
+doc = "https://ark.volcengine.com/region:cn-beijing/model/detail?Id=doubao-seed-2-0-mini"
 
 [[reasoning_options]]
 type = "toggle"

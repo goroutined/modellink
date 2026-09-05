@@ -1,7 +1,7 @@
 base_model = "zhipu/glm-5.2"
 base_model_omit = ["temperature"]
 endpoints = ["openai", "responses"]
-doc = "https://console.volcengine.com/ark/region:cn-beijing/model/detail?Id=glm-5-2"
+doc = "https://ark.volcengine.com/region:cn-beijing/model/detail?Id=glm-5-2"
 structured_output = false
 
 [[reasoning_options]]
