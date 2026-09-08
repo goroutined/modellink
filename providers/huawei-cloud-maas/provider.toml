@@ -3,10 +3,10 @@ env = ["HUAWEI_CLOUD_MAAS_API_KEY"]
 npm = "@ai-sdk/openai-compatible"
 protocol = "openai-compatible"
 api = "https://api.modelarts-maas.com/openai/v1"
-doc = "https://support.huaweicloud.com/model-call-maas/usermanual_maas_0008.html"
+doc = "https://support.huaweicloud.com/model-list-maas/model_list_0001.html"
 
 [links]
-models = "https://support.huaweicloud.com/model-call-maas/usermanual_maas_0008.html"
+models = "https://support.huaweicloud.com/model-list-maas/model_list_0001.html"
 pricing = "https://support.huaweicloud.com/price-maas/price-maas-0002.html"
 api_key = "https://support.huaweicloud.com/model-call-maas/model-call-049.html"
 console = "https://console.huaweicloud.com/modelarts/#/model-studio/homepage"

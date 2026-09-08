@@ -1,7 +1,7 @@
 base_model = "zhipu/glm-5.2"
 base_model_omit = ["structured_output"]
 endpoints = ["openai", "anthropic"]
-doc = "https://support.huaweicloud.com/model-call-maas/usermanual_maas_0008.html"
+doc = "https://support.huaweicloud.com/model-list-maas/model_list_0001.html"
 structured_output = false
 
 [[reasoning_options]]

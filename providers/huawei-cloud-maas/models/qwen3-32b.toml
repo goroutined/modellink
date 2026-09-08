@@ -1,7 +1,7 @@
 base_model = "alibaba/qwen3-32b"
 base_model_omit = ["tool_call"]
 endpoints = ["openai", "anthropic"]
-doc = "https://support.huaweicloud.com/model-call-maas/usermanual_maas_0008.html"
+doc = "https://support.huaweicloud.com/model-list-maas/model_list_0001.html"
 tool_call = false
 
 [[reasoning_options]]
