@@ -16,11 +16,22 @@ bun run check
 
 ```bash
 bun run validate  # 校验 TOML、引用和最终模型约束
-bun test          # 运行继承、扩展和输出测试
+bun run test      # 运行继承、扩展和输出测试
 bun run build     # 生成兼容 JSON、完整目录和 logo
 ```
 
 ModelLink 保持 models.dev 核心格式兼容，并通过扩展字段补充中国区协议、人民币价格和订阅套餐等信息。请勿手工编辑构建产物，数据录入规则见下文。
+
+## 测试与数据核验的分工
+
+日常新增、更新或移除模型和服务商，只需修改对应 TOML（以及需要的 Logo），不需要在测试中同步维护模型清单、数量或具体价格。
+
+- `validate` 与真实目录的 Schema 测试检查全量数据的格式、结构、引用和通用一致性，不限定具体模型或服务商枚举。
+- 继承、覆盖、`base_model_omit`、路径 ID、协议引用和输出归一化等生成机制，通过独立的虚构样例测试；不要以不断变化的真实模型参数作为固定预期。
+- 官网是否提供模型、价格与能力是否准确，交由官方资料核验、人工审核及独立 Checker 处理；测试通过不等于官方证据完整。
+- 修改 Schema 或生成逻辑时，补充相应通用机制测试。不要为了通过测试修改正确的模型业务数据，也不要为新增模型增加一份测试白名单。
+
+`bun run check` 调用 `bun run test`，只运行 `packages/core/test` 和 `scripts` 内的项目测试，不运行独立 Checker。
 
 ## 添加 canonical model
 

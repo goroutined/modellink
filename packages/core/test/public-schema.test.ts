@@ -5,6 +5,7 @@ import Ajv from "ajv";
 import addFormats from "ajv-formats";
 
 import { generateCatalog } from "../src/generate.js";
+import { withCatalogFixture } from "./fixtures.js";
 
 const root = path.join(import.meta.dirname, "../../..");
 
@@ -40,7 +41,7 @@ describe("public JSON Schema", () => {
 
   test("rejects wire-shape violations that affect generated clients", async () => {
     const schema = await Bun.file(path.join(root, "schema.json")).json();
-    const catalog = await generateCatalog(root);
+    const catalog = await withCatalogFixture({}, generateCatalog);
     const ajv = new Ajv({ strict: false });
     addFormats(ajv);
     ajv.addSchema(schema);

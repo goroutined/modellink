@@ -9,9 +9,9 @@
     "check:schema": "bun scripts/build-schema.ts --check",
     "validate": "bun packages/core/script/validate.ts",
     "verify:data": "bun scripts/verify-data-package.ts",
-    "test": "bun test",
+    "test": "bun test ./packages/core/test ./scripts",
     "typecheck": "tsc --noEmit",
-    "check": "bun run typecheck && bun run check:schema && bun run validate && bun test && bun run build"
+    "check": "bun run typecheck && bun run check:schema && bun run validate && bun run test && bun run build"
   },
   "dependencies": {
     "remeda": "^2.33.7",
