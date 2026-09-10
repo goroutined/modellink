@@ -12,7 +12,7 @@ endpoints = ["openai"]
 type = "effort"
 field = "reasoning_effort"
 endpoints = ["openai"]
-values = ["high", "max"]
+values = ["none", "high", "max"]
 default = "max"
 
 [interleaved]
