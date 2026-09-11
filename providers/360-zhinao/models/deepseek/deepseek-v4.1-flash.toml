@@ -1,0 +1,22 @@
+# 2026-09-11 精确型号页面：supportedParameters、supportedProtocols、模态、长度和 pricing。
+# reasoning="none" 的接口语义未明确，不将其推断成不具备推理能力；保持未知。
+base_model = "deepseek/deepseek-v4.1-flash"
+base_model_omit = ["reasoning", "reasoning_options", "interleaved", "tool_call", "structured_output", "limit.input"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ai.360.com/open/zh/models/deepseek/deepseek-v4.1-flash"
+attachment = true
+temperature = true
+
+[limit]
+context = 1_000_000
+output = 384_000
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[cost_cn]
+input = 2
+output = 8
+cache_read = 0.04
+cache_write = 2.5

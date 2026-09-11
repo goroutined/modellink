@@ -42,6 +42,8 @@ endpoints = ["anthropic"]
 field = "reasoning_content"
 
 [limit]
+# 国区匿名 listFoundationModels 精确型号 contextWindow（2026-09-11）。
+context = 1_000_000
 input = 1_048_576
 
 [cost_cn]

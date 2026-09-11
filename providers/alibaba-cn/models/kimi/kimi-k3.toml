@@ -5,6 +5,8 @@ doc = "https://bailian.console.aliyun.com/cn-beijing/?tab=model#/model-market/de
 field = "reasoning_content"
 
 [limit]
+# 国区匿名 listFoundationModels 精确型号 contextWindow（2026-09-11）。
+context = 1_000_000
 input = 1_048_576
 
 [cost_cn]

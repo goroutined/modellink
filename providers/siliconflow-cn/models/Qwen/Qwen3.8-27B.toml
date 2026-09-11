@@ -1,0 +1,26 @@
+# 2026-09-11 官方模型目录的精确记录：normal、contextLen、functionCallSupport、jsonModeSupport。
+# https://www.siliconflow.cn/models
+# 目录只说明 reasoning_effort 可调，未给出档位；不推断 reasoning_options。
+base_model = "alibaba/qwen3.8-27b"
+base_model_omit = ["temperature", "limit.input", "limit.output", "reasoning_options", "interleaved"]
+# Messages 文档的 model 适用范围为完整可用对话模型列表。
+# https://docs.siliconflow.cn/cn/docs/api/messages-post
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.siliconflow.cn/models?target=Qwen%2FQwen3.8-27B"
+attachment = true
+reasoning = true
+tool_call = true
+structured_output = true
+
+[limit]
+context = 262_144
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[cost_cn]
+# 2026-09-11 经维护者确认采用官方价格页；模型目录仍展示不同的 1.8/14.4。
+# https://www.siliconflow.cn/pricing
+input = 3
+output = 12

@@ -1,28 +1,24 @@
-# 2026-09-11：130051 型号表归为原厂直供；130055 价格表采用工作日峰谷、周末全天闲时。
-base_model = "deepseek/deepseek-v4-flash-0731"
-name = "DeepSeek V4 Flash 0731 正式版 原厂直供"
+# 2026-09-11：精确型号及能力见 130051，人民币原厂直供价格及峰谷时段见 130055。
+# 精确协议表已列出三种协议；仍不沿用旧型号的思考参数。
+# https://cloud.tencent.cn/document/product/1823/130079
+base_model = "deepseek/deepseek-v4.1-flash"
+base_model_omit = ["temperature", "reasoning_options", "interleaved"]
+name = "DeepSeek V4.1 Flash 原厂直供"
 endpoints = ["openai", "responses", "anthropic"]
-doc = "https://cloud.tencent.com/document/product/1823/132248"
-
-[[reasoning_options]]
-type = "toggle"
-field = "thinking.type"
-endpoints = ["openai"]
-
-[[reasoning_options]]
-type = "effort"
-field = "reasoning_effort"
-endpoints = ["openai"]
-values = ["high", "max"]
-default = "high"
-
-[interleaved]
-field = "reasoning_content"
+doc = "https://cloud.tencent.com/document/product/1823/130051"
+attachment = true
+reasoning = true
+tool_call = true
+structured_output = true
 
 [limit]
 context = 1_000_000
 input = 1_000_000
 output = 393_216
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
 
 [cost_cn]
 input = 1

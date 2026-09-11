@@ -13,7 +13,7 @@ input = ["text", "image", "video", "pdf"]
 output = ["text"]
 
 [cost_cn]
-input = 0.4
-output = 1.4
-cache_read = 0.115
-cache_write = 0.5
+input = 0.76
+output = 2.66
+cache_read = 0.2185
+cache_write = 0.95

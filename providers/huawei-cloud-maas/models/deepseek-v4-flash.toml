@@ -15,6 +15,16 @@ type = "toggle"
 field = "thinking.type"
 endpoints = ["anthropic"]
 
+# 两种协议均明确 DeepSeek-V4 系列使用 reasoning_effort，思考模式下生效。
+# https://support.huaweicloud.com/model-call-maas/model-call-021.html
+# https://support.huaweicloud.com/model-call-maas/model-call-022.html
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai", "anthropic"]
+values = ["high", "max"]
+default = "high"
+
 [interleaved]
 field = "reasoning_content"
 

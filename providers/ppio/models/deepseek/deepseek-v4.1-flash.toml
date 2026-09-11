@@ -1,0 +1,23 @@
+# 2026-09-11 PPIO 官网目录精确记录：status=1、features、endpoints、长度及人民币 pricing。
+# https://ppio.com/llm/deepseek-deepseek-v4-flash
+base_model = "deepseek/deepseek-v4.1-flash"
+base_model_omit = ["temperature", "limit.input", "reasoning_options", "interleaved"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ppio.com/model/deepseek/deepseek-v4.1-flash"
+attachment = true
+reasoning = true
+tool_call = true
+structured_output = true
+
+[limit]
+context = 1_048_576
+output = 393_216
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[cost_cn]
+input = 2
+output = 8
+cache_read = 0.04

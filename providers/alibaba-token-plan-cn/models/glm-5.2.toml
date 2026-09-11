@@ -1,3 +1,7 @@
 base_model = "zhipu/glm-5.2"
 endpoints = ["openai", "anthropic", "responses"]
 doc = "https://help.aliyun.com/zh/model-studio/token-plan-personal-overview"
+
+[limit]
+# 套餐精确型号 glm-5.2；国区匿名模型 API contextWindow（2026-09-11）。
+context = 1_000_000

@@ -1,0 +1,28 @@
+name = "DeepSeek V4.1 Flash"
+description = "DeepSeek 于 2026 年 9 月 10 日发布的原生多模态模型，支持文本与图片输入，面向编程、推理与视觉 Agent 任务。"
+family = "deepseek-flash"
+release_date = "2026-09-10"
+last_updated = "2026-09-10"
+attachment = true
+reasoning = true
+tool_call = true
+structured_output = true
+open_weights = true
+license = "MIT"
+
+[limit]
+context = 1_000_000
+output = 393_216
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash"
+
+[[links]]
+label = "官方发布公告"
+url = "https://api-docs.deepseek.com/zh-cn/news/news260910/"
+type = "docs"

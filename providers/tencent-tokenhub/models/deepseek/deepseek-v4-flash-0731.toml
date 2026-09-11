@@ -1,3 +1,4 @@
+# 2026-09-11：130051 型号表归为原厂直供；130055 价格表采用工作日峰谷、周末全天闲时。
 base_model = "deepseek/deepseek-v4-flash-0731"
 name = "DeepSeek V4 Flash 0731 正式版 原厂直供"
 endpoints = ["openai", "responses", "anthropic"]
@@ -24,14 +25,14 @@ input = 1_000_000
 output = 393_216
 
 [cost_cn]
-input = 1.5
-output = 4.5
-cache_read = 0.05
+input = 1
+output = 4
+cache_read = 0.02
 
 [[cost_cn.tiers]]
-input = 1.5
-output = 4.5
-cache_read = 0.05
+input = 1
+output = 4
+cache_read = 0.02
 
 [cost_cn.tiers.tier]
 type = "conditional"
@@ -41,9 +42,9 @@ timezone = "Asia/Shanghai"
 windows = [{ days = ["monday", "tuesday", "wednesday", "thursday", "friday"], start = "00:00", end = "09:00" }, { days = ["monday", "tuesday", "wednesday", "thursday", "friday"], start = "12:00", end = "14:00" }, { days = ["monday", "tuesday", "wednesday", "thursday", "friday"], start = "18:00", end = "24:00" }, { days = ["saturday", "sunday"], start = "00:00", end = "24:00" }]
 
 [[cost_cn.tiers]]
-input = 3
-output = 9
-cache_read = 0.1
+input = 2
+output = 8
+cache_read = 0.04
 [cost_cn.tiers.tier]
 type = "conditional"
 label = "高峰时段"
