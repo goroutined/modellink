@@ -9,7 +9,7 @@ doc = "https://help.aliyun.com/zh/model-studio/token-plan-personal-overview"
 models = "https://help.aliyun.com/zh/model-studio/token-plan-personal-overview"
 pricing = "https://help.aliyun.com/zh/model-studio/token-plan-personal-overview"
 api_key = "https://help.aliyun.com/zh/model-studio/token-plan-personal-quick-start"
-console = "https://bailian.console.aliyun.com/cn-beijing?tab=plan#/efm/subscription/overview"
+console = "https://bailian.console.aliyun.com/cn-beijing/subscription/overview"
 
 [[endpoints]]
 id = "openai"

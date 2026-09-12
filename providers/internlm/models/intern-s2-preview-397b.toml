@@ -2,6 +2,7 @@ base_model = "shanghai-ai-lab/intern-s2-preview-397b"
 base_model_omit = ["structured_output"]
 endpoints = ["openai"]
 doc = "https://internlm.openxlab.org.cn/doc/docs/Chat/"
+status = "deprecated"
 
 [[reasoning_options]]
 type = "toggle"

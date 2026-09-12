@@ -9,7 +9,7 @@ doc = "https://help.aliyun.com/zh/model-studio/getting-started/models"
 models = "https://help.aliyun.com/zh/model-studio/getting-started/models"
 pricing = "https://help.aliyun.com/zh/model-studio/model-pricing"
 api_key = "https://help.aliyun.com/zh/model-studio/get-api-key"
-console = "https://bailian.console.aliyun.com/cn-beijing?tab=model#/api-key"
+console = "https://bailian.console.aliyun.com/cn-beijing/model/settings/api-key"
 
 [[endpoints]]
 id = "openai"

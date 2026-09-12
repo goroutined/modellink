@@ -1,0 +1,24 @@
+# 2026-09-12 官方模型目录精确记录：normal、contextLen、functionCallSupport、jsonModeSupport。
+# https://www.siliconflow.cn/models
+base_model = "tencent/hy4-preview"
+# Messages 文档的 model 适用范围为完整可用对话模型列表。
+# https://docs.siliconflow.cn/cn/docs/api/messages-post
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.siliconflow.cn/models?target=tencent%2FHy4-preview"
+attachment = false
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 1_048_576
+output = 64_000
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[cost_cn]
+input = 6
+output = 18
+cache_read = 0.3

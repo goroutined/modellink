@@ -1,0 +1,33 @@
+base_model = "zhipu/glm-5.3-flash"
+endpoints = ["openai", "responses"]
+doc = "https://ark.volcengine.com/region:cn-beijing/model/detail?name=glm-5-3-flash"
+structured_output = false
+temperature = true
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high", "max"]
+default = "max"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning.effort"
+endpoints = ["responses"]
+values = ["low", "high", "max"]
+default = "max"
+
+[limit]
+context = 1_048_576
+input = 1_048_576
+output = 131_072
+
+[modalities]
+input = ["text", "image", "video", "pdf"]
+output = ["text"]
+
+[cost_cn]
+input = 0.8
+output = 2.8
+cache_read = 0.23

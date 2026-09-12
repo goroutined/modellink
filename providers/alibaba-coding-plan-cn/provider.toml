@@ -9,7 +9,7 @@ doc = "https://help.aliyun.com/zh/model-studio/coding-plan"
 models = "https://help.aliyun.com/zh/model-studio/coding-plan"
 pricing = "https://help.aliyun.com/zh/model-studio/coding-plan"
 api_key = "https://help.aliyun.com/zh/model-studio/coding-plan"
-console = "https://bailian.console.aliyun.com/cn-beijing/?tab=plan#/efm/subscription/coding-plan"
+console = "https://bailian.console.aliyun.com/cn-beijing/subscription/coding-plan"
 
 [[endpoints]]
 id = "openai"

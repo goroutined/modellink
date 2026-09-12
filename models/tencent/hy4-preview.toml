@@ -1,0 +1,10 @@
+name = "Hy4 Preview"
+description = "腾讯混元新一代生产力旗舰模型，面向 Agent、Coding 与长程生产力场景。"
+family = "hunyuan"
+release_date = "2026-08-28"
+last_updated = "2026-08-28"
+
+[[links]]
+label = "SiliconFlow 模型目录"
+url = "https://www.siliconflow.cn/models"
+type = "model_card"

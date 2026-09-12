@@ -1,9 +1,16 @@
-base_model = "moonshot/kimi-k2.7-code"
+base_model = "moonshot/kimi-k2.8-preview"
 endpoints = ["openai", "anthropic"]
 doc = "https://www.kimi.com/code/docs/kimi-code/models.html"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high", "max"]
+default = "max"
 
 [interleaved]
 field = "reasoning_content"
 
 [limit]
-context = 262_144
+context = 1_048_576
