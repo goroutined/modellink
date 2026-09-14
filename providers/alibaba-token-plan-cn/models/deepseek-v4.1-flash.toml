@@ -1,0 +1,7 @@
+base_model = "deepseek/deepseek-v4.1-flash"
+endpoints = ["openai", "anthropic"]
+doc = "https://help.aliyun.com/zh/model-studio/deepseek-v4-1-flash"
+structured_output = true
+
+[limit]
+output = 393_216
