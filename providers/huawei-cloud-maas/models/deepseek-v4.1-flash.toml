@@ -1,0 +1,29 @@
+base_model = "deepseek/deepseek-v4.1-flash"
+base_model_omit = ["structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://support.huaweicloud.com/model-call-maas/model-call-021.html"
+
+[[reasoning_options]]
+type = "toggle"
+field = "chat_template_kwargs.thinking"
+endpoints = ["openai", "anthropic"]
+
+[[reasoning_options]]
+type = "effort"
+field = "chat_template_kwargs.reasoning_effort"
+endpoints = ["openai", "anthropic"]
+values = ["low", "high", "max"]
+default = "high"
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 1_048_576
+input = 1_048_576
+output = 393_216
+
+[cost_cn]
+input = 3
+output = 9
+cache_read = 0.3

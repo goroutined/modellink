@@ -1,0 +1,19 @@
+base_model = "alibaba/qwen3.7-flash"
+base_model_omit = ["tool_call", "structured_output", "limit.input"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ai.360.com/open/zh/models/qwen/qwen3.7-flash"
+temperature = true
+
+[limit]
+context = 1_000_000
+output = 128_000
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[cost_cn]
+input = 0.2
+output = 0.8
+cache_read = 0.02
+cache_write = 0.25

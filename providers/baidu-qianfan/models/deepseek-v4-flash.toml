@@ -1,5 +1,6 @@
 base_model = "deepseek/deepseek-v4-flash"
 base_model_omit = ["tool_call"]
+name = "DeepSeek V4 Flash（即将下线）"
 endpoints = ["openai", "responses", "anthropic"]
 doc = "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
 temperature = false

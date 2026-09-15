@@ -9,7 +9,7 @@ doc = "https://www.volcengine.com/docs/82379/2366394?lang=zh"
 models = "https://www.volcengine.com/docs/82379/2366394?lang=zh"
 pricing = "https://www.volcengine.com/docs/82379/2366394?lang=zh"
 api_key = "https://www.volcengine.com/docs/82379/2373738"
-console = "https://console.volcengine.com/ark/region:ark+cn-beijing/openManagement?LLM=%7B%7D&advancedActiveKey=agentPlan"
+console = "https://ark.volcengine.com/region:cn-beijing/openManagement?LLM=%7B%7D&advancedActiveKey=agentPlan"
 
 [[endpoints]]
 id = "openai"

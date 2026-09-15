@@ -1,0 +1,24 @@
+base_model = "zhipu/glm-5.3"
+base_model_omit = ["structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://support.huaweicloud.com/model-call-maas/model-call-021.html"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai", "anthropic"]
+values = ["low", "high", "max"]
+default = "max"
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 1_048_576
+input = 1_048_576
+output = 131_072
+
+[cost_cn]
+input = 8
+output = 28
+cache_read = 2

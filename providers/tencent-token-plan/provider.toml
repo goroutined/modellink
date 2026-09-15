@@ -6,7 +6,7 @@ api = "https://api.lkeap.cloud.tencent.com/plan/v3"
 doc = "https://cloud.tencent.com/document/product/1823/130060"
 
 [links]
-models = "https://cloud.tencent.com/document/product/1823/130119"
+models = "https://cloud.tencent.com/document/product/1823/130060"
 pricing = "https://cloud.tencent.com/document/product/1823/130060"
 api_key = "https://cloud.tencent.com/document/product/1823/130119"
 console = "https://console.cloud.tencent.com/tokenhub/tokenplan"

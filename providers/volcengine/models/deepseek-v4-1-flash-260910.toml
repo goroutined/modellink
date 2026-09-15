@@ -1,0 +1,88 @@
+base_model = "deepseek/deepseek-v4.1-flash"
+name = "DeepSeek V4.1 Flash"
+endpoints = ["openai", "responses"]
+doc = "https://ark.volcengine.com/region:cn-beijing/model/detail?name=deepseek-v4-1-flash"
+structured_output = true
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["openai", "responses"]
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high", "max"]
+default = "high"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning.effort"
+endpoints = ["responses"]
+values = ["low", "high", "max"]
+default = "high"
+
+[limit]
+context = 1_048_576
+input = 1_048_576
+output = 393_216
+
+[cost_cn]
+input = 1
+output = 4
+cache_read = 0.02
+
+[[cost_cn.tiers]]
+input = 1
+output = 4
+cache_read = 0.02
+
+[cost_cn.tiers.tier]
+type = "conditional"
+label = "空闲时段"
+
+[cost_cn.tiers.tier.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.tier.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "00:00"
+end = "09:00"
+
+[[cost_cn.tiers.tier.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "12:00"
+end = "14:00"
+
+[[cost_cn.tiers.tier.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "18:00"
+end = "24:00"
+
+[[cost_cn.tiers.tier.time.windows]]
+days = ["saturday", "sunday"]
+start = "00:00"
+end = "24:00"
+
+[[cost_cn.tiers]]
+input = 2
+output = 8
+cache_read = 0.04
+
+[cost_cn.tiers.tier]
+type = "conditional"
+label = "高峰时段"
+
+[cost_cn.tiers.tier.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.tier.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "09:00"
+end = "12:00"
+
+[[cost_cn.tiers.tier.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "14:00"
+end = "18:00"
