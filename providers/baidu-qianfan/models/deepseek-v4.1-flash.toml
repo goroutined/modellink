@@ -1,0 +1,54 @@
+base_model = "deepseek/deepseek-v4.1-flash"
+base_model_omit = ["reasoning", "tool_call", "structured_output"]
+attachment = false
+doc = "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+
+[limit]
+context = 1_000_000
+input = 1_000_000
+output = 393_216
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[cost_cn]
+input = 2
+output = 8
+cache_read = 0.04
+
+[[cost_cn.tiers]]
+input = 2
+output = 8
+cache_read = 0.04
+
+[cost_cn.tiers.tier]
+type = "conditional"
+label = "高峰"
+
+[cost_cn.tiers.tier.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.tier.time.windows]]
+start = "08:00"
+end = "22:00"
+
+[[cost_cn.tiers]]
+input = 1
+output = 4
+cache_read = 0.02
+
+[cost_cn.tiers.tier]
+type = "conditional"
+label = "空闲"
+
+[cost_cn.tiers.tier.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.tier.time.windows]]
+start = "22:00"
+end = "24:00"
+
+[[cost_cn.tiers.tier.time.windows]]
+start = "00:00"
+end = "08:00"

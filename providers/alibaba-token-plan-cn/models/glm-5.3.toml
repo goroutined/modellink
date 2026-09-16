@@ -1,0 +1,12 @@
+base_model = "zhipu/glm-5.3"
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://help.aliyun.com/zh/model-studio/token-plan-personal-overview"
+reasoning = true
+
+[limit]
+context = 1_000_000
+output = 131_072
+
+[modalities]
+input = ["text"]
+output = ["text"]
