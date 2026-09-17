@@ -28,6 +28,10 @@ context = 1_048_576
 input = 1_048_576
 output = 393_216
 
+[modalities]
+input = ["text", "image", "video", "pdf"]
+output = ["text"]
+
 [cost_cn]
 input = 1
 output = 4

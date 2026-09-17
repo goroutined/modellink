@@ -9,7 +9,7 @@ doc = "https://ai.gitee.com/serverless-api"
 models = "https://ai.gitee.com/serverless-api"
 pricing = "https://ai.gitee.com/serverless-api"
 api_key = "https://ai.gitee.com/docs/products/apis"
-console = "https://ai.gitee.com/dashboard/settings/tokens"
+console = "https://ai.gitee.com/dashboard/tokens"
 
 [[endpoints]]
 id = "openai"

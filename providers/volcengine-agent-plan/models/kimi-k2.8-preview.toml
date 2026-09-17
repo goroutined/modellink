@@ -1,0 +1,12 @@
+base_model = "moonshot/kimi-k2.8-preview"
+base_model_omit = ["reasoning", "temperature", "tool_call", "structured_output"]
+attachment = false
+doc = "https://www.volcengine.com/docs/82379/2366394?lang=zh"
+
+[limit]
+context = 1_024_000
+output = 1_024_000
+
+[modalities]
+input = ["text"]
+output = ["text"]
