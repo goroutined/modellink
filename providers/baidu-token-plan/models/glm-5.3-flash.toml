@@ -1,0 +1,20 @@
+base_model = "zhipu/glm-5.3-flash"
+base_model_omit = ["reasoning", "temperature", "tool_call", "structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.baidu.com/doc/qianfan/s/Smoghsq3g"
+attachment = false
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[limit]
+context = 1_000_000
+input = 1_000_000
+output = 131_072
+
+[cost_points]
+per_tokens = 1_000
+input = 0.8
+output = 2.8
+cache_read = 0.23

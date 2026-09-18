@@ -1,6 +1,6 @@
 base_model = "deepseek/deepseek-v4-pro"
 base_model_omit = ["temperature", "interleaved"]
-endpoints = ["openai", "anthropic"]
+endpoints = ["openai", "anthropic", "responses"]
 doc = "https://ppio.com/llm/deepseek-deepseek-v4-pro"
 
 [limit]

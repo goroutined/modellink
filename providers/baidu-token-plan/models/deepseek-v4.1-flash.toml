@@ -1,0 +1,20 @@
+base_model = "deepseek/deepseek-v4.1-flash"
+base_model_omit = ["reasoning", "temperature", "tool_call", "structured_output", "reasoning_options", "interleaved"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.baidu.com/doc/qianfan/s/Smoghsq3g"
+attachment = false
+
+[limit]
+context = 1_000_000
+input = 1_000_000
+output = 393_216
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[cost_points]
+per_tokens = 1_000
+input = 2
+output = 8
+cache_read = 0.04

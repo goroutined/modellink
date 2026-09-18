@@ -1,0 +1,17 @@
+base_model = "alibaba/qwen3.8-flash"
+base_model_omit = ["reasoning", "tool_call", "structured_output", "limit.input"]
+name = "Qwen3.8 Omni Flash"
+description = "Qwen 新一代原生全模态模型，支持 1M 长序列，可直接输入文本、图像、音频与视频，基于 Qwen3.8-Flash-Next 架构。"
+doc = "https://ai.gitee.com/serverless-api?service=27476"
+
+[limit]
+context = 1_000_000
+output = 128_000
+
+[modalities]
+input = ["text", "image", "audio", "video"]
+output = ["text"]
+
+[cost_cn]
+input = 0.8
+output = 2.7

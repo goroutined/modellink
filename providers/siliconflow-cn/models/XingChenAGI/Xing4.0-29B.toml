@@ -1,0 +1,21 @@
+# 2026-09-18 官方模型目录精确记录：正式在线、工具调用、256K 上下文、免费价格。
+# https://www.siliconflow.cn/models
+name = "Xing4.0-29B"
+description = "中国电信星辰开源的 29B MoE 工程与 Agent 模型，原生支持 256K 上下文与工具调用。"
+release_date = "2026-09-17"
+last_updated = "2026-09-17"
+attachment = false
+tool_call = true
+open_weights = true
+doc = "https://cloud.siliconflow.cn/models?target=XingChenAGI%2FXing4.0-29B"
+
+[limit]
+context = 262_144
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[cost_cn]
+input = 0
+output = 0

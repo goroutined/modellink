@@ -9,7 +9,7 @@ doc = "https://platform.minimaxi.com/docs/token-plan/intro"
 models = "https://platform.minimaxi.com/docs/token-plan/intro"
 pricing = "https://platform.minimaxi.com/docs/token-plan/intro"
 api_key = "https://platform.minimaxi.com/docs/token-plan/quickstart"
-console = "https://platform.minimax.cn/console/plan"
+console = "https://platform.minimax.cn/user-center/payment/token-plan"
 
 [[endpoints]]
 id = "openai"
