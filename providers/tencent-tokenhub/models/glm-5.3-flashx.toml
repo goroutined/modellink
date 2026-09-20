@@ -1,0 +1,23 @@
+base_model = "zhipu/glm-5.3-flash"
+name = "GLM-5.3-FlashX"
+description = "GLM-5.3-Flash 的高速多模态增强版本，支持图片、视频和文件输入。"
+release_date = "2026-09-18"
+last_updated = "2026-09-18"
+open_weights = false
+base_model_omit = ["temperature"]
+endpoints = ["openai", "responses", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/132061"
+
+[limit]
+context = 1_000_000
+input = 1_000_000
+output = 131_072
+
+[modalities]
+input = ["text", "image", "video", "pdf"]
+output = ["text"]
+
+[cost_cn]
+input = 2
+output = 7
+cache_read = 0.57
