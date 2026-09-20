@@ -27,16 +27,16 @@ cache_read = 0.42
 input = 2.1
 output = 8.4
 cache_read = 0.42
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
-[cost_cn.tiers.tier.input]
+[cost_cn.tiers.when.input]
 lte = 512_000
 
 [[cost_cn.tiers]]
 input = 4.2
 output = 16.8
 cache_read = 0.84
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
-[cost_cn.tiers.tier.input]
+[cost_cn.tiers.when.input]
 gt = 512_000

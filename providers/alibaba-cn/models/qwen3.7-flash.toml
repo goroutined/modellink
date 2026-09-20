@@ -39,7 +39,7 @@ output = 2.4
 cache_read = 0.12
 cache_write = 0.75
 
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 size = 32_000
 
 [[cost_cn.tiers]]
@@ -48,5 +48,5 @@ output = 4.8
 cache_read = 0.24
 cache_write = 1.5
 
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 size = 256_000

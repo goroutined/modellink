@@ -21,14 +21,25 @@ context = 1_048_576
 output = 131_072
 
 [cost_points]
+label = "非高峰"
 per_tokens = 1
+input = 240
+output = 480
+cache_read = 2
+
+[[cost_points.tiers]]
+label = "高峰"
 input = 300
 output = 600
 cache_read = 2.5
-off_peak_multiplier = 0.8
 
-[cost_points.peak_window]
+[cost_points.tiers.when]
+type = "conditional"
+
+[cost_points.tiers.when.time]
+timezone = "Asia/Shanghai"
+
+[[cost_points.tiers.when.time.windows]]
 days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 start = "08:00"
-end = "00:00"
-timezone = "Asia/Shanghai"
+end = "24:00"

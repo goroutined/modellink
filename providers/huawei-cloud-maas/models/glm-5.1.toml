@@ -27,81 +27,90 @@ input = 6
 output = 24
 
 [[cost_cn.tiers]]
+label = "时段 1 · <32K"
 input = 6
 output = 24
 
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
-label = "时段 1 · <32K"
 
-[cost_cn.tiers.tier.input]
-lt = 32_768
+[cost_cn.tiers.when.input]
+lt = 32768
 
-[cost_cn.tiers.tier.time]
+[cost_cn.tiers.when.time]
 timezone = "Asia/Shanghai"
 
-[[cost_cn.tiers.tier.time.windows]]
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 start = "08:00"
 end = "21:00"
 
+
 [[cost_cn.tiers]]
+label = "时段 2 · <32K"
 input = 4.2
 output = 16.8
 
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
-label = "时段 2 · <32K"
 
-[cost_cn.tiers.tier.input]
-lt = 32_768
+[cost_cn.tiers.when.input]
+lt = 32768
 
-[cost_cn.tiers.tier.time]
+[cost_cn.tiers.when.time]
 timezone = "Asia/Shanghai"
 
-[[cost_cn.tiers.tier.time.windows]]
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 start = "21:00"
 end = "24:00"
 
-[[cost_cn.tiers.tier.time.windows]]
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 start = "00:00"
 end = "08:00"
 
+
 [[cost_cn.tiers]]
+label = "时段 1 · ≥32K"
 input = 8
 output = 28
 
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
-label = "时段 1 · ≥32K"
 
-[cost_cn.tiers.tier.input]
-gte = 32_768
+[cost_cn.tiers.when.input]
+gte = 32768
 
-[cost_cn.tiers.tier.time]
+[cost_cn.tiers.when.time]
 timezone = "Asia/Shanghai"
 
-[[cost_cn.tiers.tier.time.windows]]
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 start = "08:00"
 end = "21:00"
 
+
 [[cost_cn.tiers]]
+label = "时段 2 · ≥32K"
 input = 5.6
 output = 19.6
 
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
-label = "时段 2 · ≥32K"
 
-[cost_cn.tiers.tier.input]
-gte = 32_768
+[cost_cn.tiers.when.input]
+gte = 32768
 
-[cost_cn.tiers.tier.time]
+[cost_cn.tiers.when.time]
 timezone = "Asia/Shanghai"
 
-[[cost_cn.tiers.tier.time.windows]]
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 start = "21:00"
 end = "24:00"
 
-[[cost_cn.tiers.tier.time.windows]]
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 start = "00:00"
 end = "08:00"

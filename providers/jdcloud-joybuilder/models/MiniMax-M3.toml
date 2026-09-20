@@ -15,7 +15,7 @@ cache_read = 0.84
 input = 4.2
 output = 16.8
 cache_read = 0.84
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
 input = { lte = 524_288 }
 
@@ -23,6 +23,6 @@ input = { lte = 524_288 }
 input = 8.4
 output = 33.6
 cache_read = 1.68
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
 input = { gt = 524_288 }

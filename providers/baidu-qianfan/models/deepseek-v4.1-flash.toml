@@ -13,42 +13,24 @@ input = ["text"]
 output = ["text"]
 
 [cost_cn]
-input = 2
-output = 8
-cache_read = 0.04
-
-[[cost_cn.tiers]]
-input = 2
-output = 8
-cache_read = 0.04
-
-[cost_cn.tiers.tier]
-type = "conditional"
-label = "高峰"
-
-[cost_cn.tiers.tier.time]
-timezone = "Asia/Shanghai"
-
-[[cost_cn.tiers.tier.time.windows]]
-start = "08:00"
-end = "22:00"
-
-[[cost_cn.tiers]]
+label = "空闲"
 input = 1
 output = 4
 cache_read = 0.02
 
-[cost_cn.tiers.tier]
-type = "conditional"
-label = "空闲"
+[[cost_cn.tiers]]
+label = "高峰"
+input = 2
+output = 8
+cache_read = 0.04
 
-[cost_cn.tiers.tier.time]
+[cost_cn.tiers.when]
+type = "conditional"
+
+[cost_cn.tiers.when.time]
 timezone = "Asia/Shanghai"
 
-[[cost_cn.tiers.tier.time.windows]]
-start = "22:00"
-end = "24:00"
-
-[[cost_cn.tiers.tier.time.windows]]
-start = "00:00"
-end = "08:00"
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+start = "08:00"
+end = "22:00"

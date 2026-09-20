@@ -13,16 +13,16 @@ output = 3.2
 [[cost_cn.tiers]]
 input = 0.4
 output = 3.2
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
-[cost_cn.tiers.tier.input]
+[cost_cn.tiers.when.input]
 gte = 0
 lt = 128_000
 
 [[cost_cn.tiers]]
 input = 1.6
 output = 12.8
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
-[cost_cn.tiers.tier.input]
+[cost_cn.tiers.when.input]
 gte = 128_000

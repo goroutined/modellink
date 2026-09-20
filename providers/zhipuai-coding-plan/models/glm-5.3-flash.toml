@@ -24,14 +24,25 @@ values = ["low", "high", "max"]
 default = "max"
 
 [cost_points]
+label = "非高峰"
 per_tokens = 10_000
+input = 1.15
+cache_read = 0.28
+output = 4
+
+[[cost_points.tiers]]
+label = "高峰"
 input = 2.3
 cache_read = 0.56
 output = 8
-off_peak_multiplier = 0.5
 
-[cost_points.peak_window]
+[cost_points.tiers.when]
+type = "conditional"
+
+[cost_points.tiers.when.time]
+timezone = "Asia/Shanghai"
+
+[[cost_points.tiers.when.time.windows]]
 days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
 start = "14:00"
 end = "18:00"
-timezone = "Asia/Shanghai"

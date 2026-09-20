@@ -30,9 +30,9 @@ const FIELD_LABELS = {
   quota_windows: "额度窗口", credits_cn: "预付积分", points: "积分",
   cny: "人民币价值", valid_days: "有效天数",
   label: "标签", url: "链接", type: "类型", min: "最小值", max: "最大值",
-  tiers: "阶梯价格", tier: "计费阶梯", size: "输入长度阈值",
-  off_peak_multiplier: "非高峰积分倍率", peak_window: "高峰时段",
+  tiers: "阶梯价格", when: "生效条件", size: "输入长度阈值",
   days: "星期", start: "开始时间", end: "结束时间", timezone: "时区",
+  holiday: "节假日规则",
 };
 
 const BOOLEAN_LABELS = { true: "是", false: "否" };
@@ -242,14 +242,14 @@ function formatTokenRange(range) {
 
 function formatConditionalTier(tier) {
   const parts = [];
-  if (tier.label) parts.push(tier.label);
   if (tier.input) parts.push(`输入 ${formatTokenRange(tier.input)}`);
   if (tier.output) parts.push(`输出 ${formatTokenRange(tier.output)}`);
   if (tier.time) {
     const windows = tier.time.windows
       .map((window) => {
         const days = formatWindowDays(window.days);
-        return `${days ? `${days} ` : ""}${window.start}–${window.end}`;
+        const holiday = window.holiday === "exclude_cn_statutory" ? " · 不含中国法定节假日" : "";
+        return `${days ? `${days} ` : ""}${window.start}–${window.end}${holiday}`;
       })
       .join("、");
     parts.push(`${windows}（${tier.time.timezone}）`);
@@ -265,22 +265,25 @@ function priceHelp(detail) {
 function formatCnyTiered(cost, firstKey, secondKey) {
   const tiers = [...(cost?.tiers ?? [])];
   if (!tiers.length) return formatCnyModes(cost, firstKey, secondKey);
-  const contextOnly = tiers.every((tier) => tier.tier.type === "context");
+  const contextOnly = tiers.every((tier) => tier.when.type === "context");
   const rows = contextOnly
     ? (() => {
-        const sorted = tiers.sort((left, right) => left.tier.size - right.tier.size);
-        return [{ detail: `上下文 <${compactTokens(sorted[0].tier.size)}`, cost }, ...sorted.map((tier, index) => ({
+        const sorted = tiers.sort((left, right) => left.when.size - right.when.size);
+        return [{ label: cost.label, detail: `上下文 <${compactTokens(sorted[0].when.size)}`, cost }, ...sorted.map((tier, index) => ({
           detail: sorted[index + 1]
-            ? `上下文 ≥${compactTokens(tier.tier.size)} · <${compactTokens(sorted[index + 1].tier.size)}`
-            : `上下文 ≥${compactTokens(tier.tier.size)}`,
+            ? `上下文 ≥${compactTokens(tier.when.size)} · <${compactTokens(sorted[index + 1].when.size)}`
+            : `上下文 ≥${compactTokens(tier.when.size)}`,
           cost: tier,
         }))];
       })()
-    : tiers.map((tier) => ({
-        label: tier.tier.label,
-        detail: formatConditionalTier(tier.tier),
+    : [
+      ...(cost.label ? [{ label: cost.label, detail: "其他时间，未命中专项计费条件", cost }] : []),
+      ...tiers.map((tier) => ({
+        label: tier.label,
+        detail: formatConditionalTier(tier.when),
         cost: tier,
-      }));
+      })),
+    ];
   return `<span class="tier-prices">${rows.map(({ label, detail, cost: tierCost }, index) => `<span><small class="price-tier-summary"><span>${escapeHtml(label ?? `阶梯 ${index + 1}`)}</span>${priceHelp(detail)}</small>${formatCnyModes(tierCost, firstKey, secondKey)}</span>`).join("")}</span>`;
 }
 
@@ -302,22 +305,20 @@ function formatPointCost(cost, firstKey, secondKey) {
   if (!cost) return '<span class="pending-value">-</span>';
   const tiers = [...(cost.tiers ?? [])];
   if (tiers.length) {
-    const rows = tiers.map((tier) => ({
-      label: tier.tier.label,
-      detail: formatConditionalTier(tier.tier),
+    const rows = [
+      ...(cost.label ? [{ label: cost.label, detail: "其他时间，未命中专项计费条件", cost }] : []),
+      ...tiers.map((tier) => ({
+      label: tier.label,
+      detail: formatConditionalTier(tier.when),
       cost: tier,
-    }));
+    })),
+    ];
     return `<span class="tier-prices">${rows.map(({ label, detail, cost: tierCost }, index) => `<span><small class="price-tier-summary"><span>${escapeHtml(label ?? `阶梯 ${index + 1}`)}</span>${priceHelp(detail)}</small>${formatPointCost({ ...tierCost, per_tokens: cost.per_tokens }, firstKey, secondKey)}</span>`).join("")}</span>`;
   }
   const first = cost[firstKey];
   const second = cost[secondKey];
   const pair = `<span class="price-pair"><span>${first == null ? "-" : formatNumber(first)}</span><span class="price-separator">/</span><span>${second == null ? "-" : formatNumber(second)}</span></span>`;
   const detail = [`每 ${formatNumber(cost.per_tokens)} Token 按所示积分抵扣`];
-  if (cost.peak_window) {
-    const days = cost.peak_window.days.map((day) => WEEKDAY_LABELS[day] ?? day).join("、");
-    detail.push(`高峰：${days} ${cost.peak_window.start}–${cost.peak_window.end}（${cost.peak_window.timezone}）`);
-  }
-  if (cost.off_peak_multiplier != null) detail.push(`非高峰按 ${formatNumber(cost.off_peak_multiplier * 100)}% 积分抵扣`);
   return `<span class="point-cost"><span>${pair}<small>积分</small></span>${priceHelp(detail.join("；"))}</span>`;
 }
 

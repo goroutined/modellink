@@ -23,7 +23,7 @@ describe("public JSON Schema", () => {
     expect(
       validate(ajv, `${schema.$id}#/definitions/Manifest`, {
         version: "0.1.0",
-        schema_version: 2,
+        schema_version: 3,
         generated_at: "2026-09-01T00:00:00.000Z",
         source: {
           repository: "https://github.com/goroutined/modellink",

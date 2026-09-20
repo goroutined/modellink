@@ -368,6 +368,7 @@ type ReasoningOption =
 
 ```ts
 interface CostValues {
+  label?: string
   input: number
   output: number
   reasoning?: number
@@ -388,7 +389,7 @@ interface CostCNValues extends CostValues {
 
 interface CostCN extends CostCNValues {
   context_over_200k?: CostCNValues
-  tiers?: Array<CostCNValues & { tier: CostTierSelector }>
+  tiers?: CostCNTier[]
 }
 ```
 
@@ -401,7 +402,7 @@ interface CostCN extends CostCNValues {
 
 ### 阶梯选择器
 
-每个 tier 在价格字段之外包含 `tier` 选择器：
+每个 tier 的 `label` 与价格字段同级，用于描述该价格档；匹配条件统一放在 `when` 中：
 
 ```ts
 type CostTierSelector =
@@ -413,13 +414,21 @@ type CostTierSelector =
       time?: {
         timezone: string
         windows: Array<{
-          days?: Weekday[]
+          days: Weekday[]
           start: string
           end: string
+          holiday?: "exclude_cn_statutory"
         }>
       }
-      label?: string
     }
+
+interface CostTier extends CostValues {
+  when: CostTierSelector
+}
+
+interface CostCNTier extends CostCNValues {
+  when: CostTierSelector
+}
 
 interface TokenRange {
   gt?: number
@@ -434,8 +443,10 @@ interface TokenRange {
 - `gt/gte`、`lt/lte` 分别表示开区间和闭区间边界；同一侧不会同时出现两种边界。
 - `time.timezone` 使用 IANA 时区，例如 `Asia/Shanghai`。
 - 时间窗口开始时间包含、结束时间不包含；跨午夜窗口可能出现 `start > end`；`end` 可以是 `24:00`。
-- `days` 缺失表示每天。
-- 顶层价格是兼容回退值或首档摘要。存在 `tiers` 时，精确计价应先匹配 tier；未匹配时才使用顶层值。
+- `days` 必须显式列出适用的星期。
+- `holiday = "exclude_cn_statutory"` 表示该窗口仅在中国法定节假日之外匹配。ModelLink 不维护具体节假日日期；调用方需要注入自己的节假日 resolver。resolver 缺失或无法判断当年日期时，应返回“价格未知”，不能静默套用顶层价格。
+- 顶层价格是默认回退价格。顶层 `label` 是该回退档的展示名，例如“闲时”或“非高峰”。存在 `tiers` 时，精确计价应先匹配 `tiers[].when`；未匹配时才使用顶层值。
+- 多个 `tiers` 可以覆盖全部时间。在这种情况下顶层值只是安全兜底，实际计价不会走到。
 
 不要假定数组顺序就是价格高低。对于条件重叠的异常数据，调用方应停止自动估价并展示官方文档，而不是自行选择最便宜的一档。
 
@@ -443,29 +454,26 @@ interface TokenRange {
 
 ```ts
 interface PointCost {
+  label?: string
   per_tokens: number
   input: number
   output: number
   cache_read?: number
-  tiers?: Array<{
-    tier: CostTierSelector
-    input: number
-    output: number
-    cache_read?: number
-  }>
-  off_peak_multiplier?: number
-  peak_window?: {
-    days: Weekday[]
-    start: string
-    end: string
-    timezone: string
-  }
+  tiers?: PointCostTier[]
+}
+
+interface PointCostTier {
+  label?: string
+  input: number
+  output: number
+  cache_read?: number
+  when: CostTierSelector
 }
 ```
 
 例如 `per_tokens = 1000`、`input = 2` 表示每 1000 个输入 Token 消耗 2 积分。积分不是人民币；只有 Provider 同时给出 `credits_cn` 时，才能根据官方固定兑换关系换算。
 
-`off_peak_multiplier` 是非高峰期相对于顶层积分的乘数，取值大于 `0` 且不超过 `1`。`peak_window` 描述高峰时段。
+积分价格与人民币价格使用同一套 `tiers + when` 语义：顶层积分值是非高峰或默认扣减，`tiers` 记录高峰等例外扣减。顶层 `label` 用于页面展示默认档名称。
 
 ### 套餐与积分兑换
 
@@ -640,7 +648,7 @@ interface Manifest {
 ```
 
 - `version`：`@modellink/data` 的 SemVer 版本。
-- `schema_version`：与 `schema.json` 的 `x-modellink-schema-version` 相同，当前为 `2`。客户端遇到高于自身支持范围的版本时应停止自动加载并保留旧数据。
+- `schema_version`：与 `schema.json` 的 `x-modellink-schema-version` 相同，当前为 `3`。客户端遇到高于自身支持范围的版本时应停止自动加载并保留旧数据。
 - `generated_at`：构建时的 ISO 8601 时间，不代表每个模型的更新时间。
 - `source.revision`：生成该包的 Git commit SHA。
 - `files.*.sha256`：文件原始字节的 SHA-256 十六进制值。

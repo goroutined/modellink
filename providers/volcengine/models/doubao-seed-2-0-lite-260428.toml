@@ -35,10 +35,10 @@ input = 0.6
 output = 3.6
 cache_read = 0.12
 
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
 
-[cost_cn.tiers.tier.input]
+[cost_cn.tiers.when.input]
 gte = 0
 lte = 32_000
 
@@ -47,10 +47,10 @@ input = 0.9
 output = 5.4
 cache_read = 0.18
 
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
 
-[cost_cn.tiers.tier.input]
+[cost_cn.tiers.when.input]
 gt = 32_000
 lte = 128_000
 
@@ -59,9 +59,9 @@ input = 1.8
 output = 10.8
 cache_read = 0.36
 
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
 
-[cost_cn.tiers.tier.input]
+[cost_cn.tiers.when.input]
 gt = 128_000
 lte = 256_000

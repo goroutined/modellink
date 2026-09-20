@@ -11,7 +11,7 @@ import {
   ReasoningOption,
 } from "./schema.js";
 
-export const SCHEMA_VERSION = 2;
+export const SCHEMA_VERSION = 3;
 
 export const Models = z.record(ModelMetadata);
 export const Providers = z.record(Provider);

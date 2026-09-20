@@ -24,28 +24,29 @@ input = 1_000_000
 output = 393_216
 
 [cost_cn]
-input = 4.5
-output = 13.5
-cache_read = 0.15
-
-[[cost_cn.tiers]]
-input = 4.5
-output = 13.5
-cache_read = 0.15
-[cost_cn.tiers.tier]
-type = "conditional"
 label = "闲时"
-[cost_cn.tiers.tier.time]
-timezone = "Asia/Shanghai"
-windows = [{ days = ["monday", "tuesday", "wednesday", "thursday", "friday"], start = "00:00", end = "09:00" }, { days = ["monday", "tuesday", "wednesday", "thursday", "friday"], start = "12:00", end = "14:00" }, { days = ["monday", "tuesday", "wednesday", "thursday", "friday"], start = "18:00", end = "24:00" }, { days = ["saturday", "sunday"], start = "00:00", end = "24:00" }]
+input = 4.5
+output = 13.5
+cache_read = 0.15
 
 [[cost_cn.tiers]]
+label = "高峰时段"
 input = 9
 output = 27
 cache_read = 0.3
-[cost_cn.tiers.tier]
+
+[cost_cn.tiers.when]
 type = "conditional"
-label = "高峰时段"
-[cost_cn.tiers.tier.time]
+
+[cost_cn.tiers.when.time]
 timezone = "Asia/Shanghai"
-windows = [{ days = ["monday", "tuesday", "wednesday", "thursday", "friday"], start = "09:00", end = "12:00" }, { days = ["monday", "tuesday", "wednesday", "thursday", "friday"], start = "14:00", end = "18:00" }]
+
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "09:00"
+end = "12:00"
+
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "14:00"
+end = "18:00"

@@ -18,17 +18,17 @@ cache_read = 1
 input = 4
 output = 18
 cache_read = 1
-[cost_points.tiers.tier]
+[cost_points.tiers.when]
 type = "conditional"
-[cost_points.tiers.tier.input]
+[cost_points.tiers.when.input]
 lt = 32_000
 
 [[cost_points.tiers]]
 input = 6
 output = 22
 cache_read = 1.5
-[cost_points.tiers.tier]
+[cost_points.tiers.when]
 type = "conditional"
-[cost_points.tiers.tier.input]
+[cost_points.tiers.when.input]
 gt = 32_000
 lte = 200_000

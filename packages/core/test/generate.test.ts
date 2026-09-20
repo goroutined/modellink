@@ -18,9 +18,22 @@ describe("catalog generation", () => {
               days: ["monday", "tuesday", "wednesday", "thursday", "friday"],
               start: "00:30",
               end: "08:30",
+              holiday: "exclude_cn_statutory",
             },
             { days: ["saturday", "sunday"], start: "00:00", end: "24:00" },
-            { start: "18:00", end: "00:00" },
+            {
+              days: [
+                "monday",
+                "tuesday",
+                "wednesday",
+                "thursday",
+                "friday",
+                "saturday",
+                "sunday",
+              ],
+              start: "18:00",
+              end: "24:00",
+            },
           ],
         },
       }),
@@ -29,13 +42,26 @@ describe("catalog generation", () => {
       time: {
         timezone: "Asia/Shanghai",
         windows: [
-          {
-            days: ["monday", "tuesday", "wednesday", "thursday", "friday"],
-            start: "00:30",
-            end: "08:30",
-          },
-          { days: ["saturday", "sunday"], start: "00:00", end: "24:00" },
-          { start: "18:00", end: "00:00" },
+            {
+              days: ["monday", "tuesday", "wednesday", "thursday", "friday"],
+              start: "00:30",
+              end: "08:30",
+              holiday: "exclude_cn_statutory",
+            },
+            { days: ["saturday", "sunday"], start: "00:00", end: "24:00" },
+            {
+              days: [
+                "monday",
+                "tuesday",
+                "wednesday",
+                "thursday",
+                "friday",
+                "saturday",
+                "sunday",
+              ],
+              start: "18:00",
+              end: "24:00",
+            },
         ],
       },
     });
@@ -44,7 +70,30 @@ describe("catalog generation", () => {
         type: "conditional",
         time: {
           timezone: "Asia/Shanghai",
-          windows: [{ start: "24:00", end: "24:00" }],
+          windows: [
+            {
+              days: ["monday"],
+              start: "24:00",
+              end: "24:00",
+            },
+          ],
+        },
+      }),
+    ).toThrow();
+
+    expect(() =>
+      CostTierSelector.parse({
+        type: "conditional",
+        time: {
+          timezone: "UTC",
+          windows: [
+            {
+              days: ["monday"],
+              start: "09:00",
+              end: "12:00",
+              holiday: "exclude_cn_statutory",
+            },
+          ],
         },
       }),
     ).toThrow();

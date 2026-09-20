@@ -33,35 +33,39 @@ input = 6.5
 output = 27
 
 [[cost_cn.tiers]]
+label = "时段 1"
 input = 6.5
 output = 27
 
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
-label = "时段 1"
 
-[cost_cn.tiers.tier.time]
+[cost_cn.tiers.when.time]
 timezone = "Asia/Shanghai"
 
-[[cost_cn.tiers.tier.time.windows]]
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 start = "08:00"
 end = "21:00"
 
+
 [[cost_cn.tiers]]
+label = "时段 2"
 input = 4.55
 output = 18.9
 
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
-label = "时段 2"
 
-[cost_cn.tiers.tier.time]
+[cost_cn.tiers.when.time]
 timezone = "Asia/Shanghai"
 
-[[cost_cn.tiers.tier.time.windows]]
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 start = "21:00"
 end = "24:00"
 
-[[cost_cn.tiers.tier.time.windows]]
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 start = "00:00"
 end = "08:00"

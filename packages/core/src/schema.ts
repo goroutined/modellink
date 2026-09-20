@@ -124,6 +124,7 @@ export const ReasoningOption = z
   );
 
 const Cost = z.object({
+  label: z.string().min(1, "Cost label cannot be empty").optional(),
   input: z.number().min(0, "Input price cannot be negative"),
   output: z.number().min(0, "Output price cannot be negative"),
   reasoning: z.number().min(0, "Reasoning price cannot be negative").optional(),
@@ -211,11 +212,17 @@ const Weekday = z.enum([
 
 const DailyTimeWindow = z
   .object({
-    days: z.array(Weekday).min(1, "Time window must contain at least one day").optional(),
+    days: z.array(Weekday).min(1, "Time window must contain at least one day"),
     start: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Time must use HH:mm"),
     end: z
       .string()
       .regex(/^(([01]\d|2[0-3]):[0-5]\d|24:00)$/, "Time must use HH:mm; only 24:00 is allowed past 23:59"),
+    holiday: z
+      .literal("exclude_cn_statutory")
+      .optional()
+      .describe(
+        "Excludes this window on China statutory holidays; callers provide the holiday resolver.",
+      ),
   })
   .strict();
 
@@ -224,7 +231,19 @@ const DailyTimeCondition = z
     timezone: z.string().min(1, "Timezone cannot be empty"),
     windows: z.array(DailyTimeWindow).min(1, "At least one time window is required"),
   })
-  .strict();
+  .strict()
+  .superRefine((condition, context) => {
+    if (
+      condition.timezone === "Asia/Shanghai" ||
+      !condition.windows.some((window) => window.holiday !== undefined)
+    ) return;
+
+    context.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "China statutory holiday windows must use Asia/Shanghai timezone",
+      path: ["timezone"],
+    });
+  });
 
 export const CostTierSelector = z.union([
   z
@@ -239,7 +258,6 @@ export const CostTierSelector = z.union([
       input: TokenRange.optional(),
       output: TokenRange.optional(),
       time: DailyTimeCondition.optional(),
-      label: z.string().min(1, "Tier label cannot be empty").optional(),
     })
     .strict()
     .refine(
@@ -252,11 +270,11 @@ export const CostTierSelector = z.union([
 ]);
 
 const CostTier = Cost.extend({
-  tier: CostTierSelector,
+  when: CostTierSelector,
 }).strict();
 
 const CnyCostTier = CnyCost.extend({
-  tier: CostTierSelector,
+  when: CostTierSelector,
 }).strict();
 
 const AuthoredCost = Cost.extend({
@@ -280,32 +298,19 @@ const OutputCnyCost = CnyCost.extend({
 }).strict();
 
 const PointCostValues = z.object({
+    label: z.string().min(1, "Point cost label cannot be empty").optional(),
     input: z.number().min(0, "Input point cost cannot be negative"),
     output: z.number().min(0, "Output point cost cannot be negative"),
     cache_read: z.number().min(0, "Cache read point cost cannot be negative").optional(),
   }).strict();
 
 const PointCostTier = PointCostValues.extend({
-  tier: CostTierSelector,
+  when: CostTierSelector,
 }).strict();
 
 const PointCost = PointCostValues.extend({
     per_tokens: z.number().int().positive("Point cost token unit must be positive"),
     tiers: z.array(PointCostTier).optional(),
-    off_peak_multiplier: z
-      .number()
-      .positive("Off-peak multiplier must be positive")
-      .max(1, "Off-peak multiplier cannot exceed 1")
-      .optional(),
-    peak_window: z
-      .object({
-        days: z.array(Weekday).min(1, "Peak window must contain at least one day"),
-        start: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Time must use HH:mm"),
-        end: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Time must use HH:mm"),
-        timezone: z.string().min(1, "Timezone cannot be empty"),
-      })
-      .strict()
-      .optional(),
   }).strict();
 
 const DateString = z
@@ -627,7 +632,7 @@ function refineModel<
         const tiers = data.cost?.tiers;
         if (tiers === undefined) return true;
 
-        const selectors = tiers.map((tier) => JSON.stringify(tier.tier));
+        const selectors = tiers.map((tier) => JSON.stringify(tier.when));
         return new Set(selectors).size === selectors.length;
       },
       {
@@ -640,7 +645,7 @@ function refineModel<
         const tiers = data.cost_cn?.tiers;
         if (tiers === undefined) return true;
 
-        const selectors = tiers.map((tier) => JSON.stringify(tier.tier));
+        const selectors = tiers.map((tier) => JSON.stringify(tier.when));
         return new Set(selectors).size === selectors.length;
       },
       {

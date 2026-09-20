@@ -14,10 +14,10 @@ input = 42
 output = 168
 cache_read = 8.4
 
-[cost_points.tiers.tier]
+[cost_points.tiers.when]
 type = "conditional"
 
-[cost_points.tiers.tier.input]
+[cost_points.tiers.when.input]
 lte = 512_000
 
 [[cost_points.tiers]]
@@ -25,8 +25,8 @@ input = 84
 output = 336
 cache_read = 16.8
 
-[cost_points.tiers.tier]
+[cost_points.tiers.when]
 type = "conditional"
 
-[cost_points.tiers.tier.input]
+[cost_points.tiers.when.input]
 gt = 512_000

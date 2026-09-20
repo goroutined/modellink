@@ -8,7 +8,7 @@ The catalog schema, model-family list, inheritance rules, and generator in this 
 
 Upstream repository: <https://github.com/anomalyco/models.dev>
 
-ModelLink intentionally extends the upstream schema with `protocol` and `endpoints` on providers, model-level `endpoints`, and `cost_cn` on provider models. The legacy `protocol`/`api` pair remains the default endpoint for compatibility. `cost_cn.thinking` records the complete input/output rates used when thinking mode has different pricing. `cost_cn.tiers[].tier.type = "conditional"` supports joint input/output token ranges and timezone-aware daily pricing windows; the upstream-compatible `context` tier remains supported. These fields are maintained locally and must be preserved when refreshing upstream files.
+ModelLink intentionally extends the upstream schema with `protocol` and `endpoints` on providers, model-level `endpoints`, and `cost_cn` on provider models. The legacy `protocol`/`api` pair remains the default endpoint for compatibility. `cost_cn.thinking` records the complete input/output rates used when thinking mode has different pricing. `cost_cn.tiers[].when.type = "conditional"` supports joint input/output token ranges and timezone-aware daily pricing windows; the upstream-compatible `context` tier remains supported. These fields are maintained locally and must be preserved when refreshing upstream files.
 
 Before importing a new data batch, compare these files with the current upstream versions:
 

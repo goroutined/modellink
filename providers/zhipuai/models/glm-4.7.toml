@@ -18,14 +18,14 @@ input = 2
 output = 8
 cache_read = 0.4
 
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
 
-[cost_cn.tiers.tier.input]
+[cost_cn.tiers.when.input]
 gte = 0
 lt = 32_000
 
-[cost_cn.tiers.tier.output]
+[cost_cn.tiers.when.output]
 gte = 0
 lt = 200
 
@@ -34,14 +34,14 @@ input = 3
 output = 14
 cache_read = 0.6
 
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
 
-[cost_cn.tiers.tier.input]
+[cost_cn.tiers.when.input]
 gte = 0
 lt = 32_000
 
-[cost_cn.tiers.tier.output]
+[cost_cn.tiers.when.output]
 gte = 200
 
 [[cost_cn.tiers]]
@@ -49,9 +49,9 @@ input = 4
 output = 16
 cache_read = 0.8
 
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
 
-[cost_cn.tiers.tier.input]
+[cost_cn.tiers.when.input]
 gte = 32_000
 lt = 200_000

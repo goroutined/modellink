@@ -3,7 +3,7 @@
   "$id": "https://goroutined.github.io/modellink/schema.json",
   "title": "ModelLink Public Data Schema",
   "description": "Public JSON contract for ModelLink catalog, provider, model and package manifest data.",
-  "x-modellink-schema-version": 2,
+  "x-modellink-schema-version": 3,
   "$ref": "#/definitions/Catalog",
   "definitions": {
     "JsonValue": {
@@ -1120,6 +1120,10 @@
         "cost_points": {
           "type": "object",
           "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
             "input": {
               "type": "number",
               "minimum": 0
@@ -1141,6 +1145,10 @@
               "items": {
                 "type": "object",
                 "properties": {
+                  "label": {
+                    "type": "string",
+                    "minLength": 1
+                  },
                   "input": {
                     "type": "number",
                     "minimum": 0
@@ -1153,7 +1161,7 @@
                     "type": "number",
                     "minimum": 0
                   },
-                  "tier": {
+                  "when": {
                     "anyOf": [
                       {
                         "type": "object",
@@ -1259,9 +1267,15 @@
                                     "end": {
                                       "type": "string",
                                       "pattern": "^(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+                                    },
+                                    "holiday": {
+                                      "type": "string",
+                                      "const": "exclude_cn_statutory",
+                                      "description": "Excludes this window on China statutory holidays; callers provide the holiday resolver."
                                     }
                                   },
                                   "required": [
+                                    "days",
                                     "start",
                                     "end"
                                   ],
@@ -1275,10 +1289,6 @@
                               "windows"
                             ],
                             "additionalProperties": false
-                          },
-                          "label": {
-                            "type": "string",
-                            "minLength": 1
                           }
                         },
                         "required": [
@@ -1292,55 +1302,10 @@
                 "required": [
                   "input",
                   "output",
-                  "tier"
+                  "when"
                 ],
                 "additionalProperties": false
               }
-            },
-            "off_peak_multiplier": {
-              "type": "number",
-              "exclusiveMinimum": 0,
-              "maximum": 1
-            },
-            "peak_window": {
-              "type": "object",
-              "properties": {
-                "days": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "enum": [
-                      "monday",
-                      "tuesday",
-                      "wednesday",
-                      "thursday",
-                      "friday",
-                      "saturday",
-                      "sunday"
-                    ]
-                  },
-                  "minItems": 1
-                },
-                "start": {
-                  "type": "string",
-                  "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
-                },
-                "end": {
-                  "type": "string",
-                  "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
-                },
-                "timezone": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "days",
-                "start",
-                "end",
-                "timezone"
-              ],
-              "additionalProperties": false
             }
           },
           "required": [
@@ -1370,6 +1335,10 @@
                   "cost": {
                     "type": "object",
                     "properties": {
+                      "label": {
+                        "type": "string",
+                        "minLength": 1
+                      },
                       "input": {
                         "type": "number",
                         "minimum": 0
@@ -1408,6 +1377,10 @@
                   "cost_cn": {
                     "type": "object",
                     "properties": {
+                      "label": {
+                        "type": "string",
+                        "minLength": 1
+                      },
                       "input": {
                         "type": "number",
                         "minimum": 0
@@ -1502,6 +1475,10 @@
         "cost": {
           "type": "object",
           "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
             "input": {
               "type": "number",
               "minimum": 0
@@ -1533,6 +1510,10 @@
             "context_over_200k": {
               "type": "object",
               "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                },
                 "input": {
                   "type": "number",
                   "minimum": 0
@@ -1573,6 +1554,10 @@
               "items": {
                 "type": "object",
                 "properties": {
+                  "label": {
+                    "type": "string",
+                    "minLength": 1
+                  },
                   "input": {
                     "type": "number",
                     "minimum": 0
@@ -1601,7 +1586,7 @@
                     "type": "number",
                     "minimum": 0
                   },
-                  "tier": {
+                  "when": {
                     "anyOf": [
                       {
                         "type": "object",
@@ -1707,9 +1692,15 @@
                                     "end": {
                                       "type": "string",
                                       "pattern": "^(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+                                    },
+                                    "holiday": {
+                                      "type": "string",
+                                      "const": "exclude_cn_statutory",
+                                      "description": "Excludes this window on China statutory holidays; callers provide the holiday resolver."
                                     }
                                   },
                                   "required": [
+                                    "days",
                                     "start",
                                     "end"
                                   ],
@@ -1723,10 +1714,6 @@
                               "windows"
                             ],
                             "additionalProperties": false
-                          },
-                          "label": {
-                            "type": "string",
-                            "minLength": 1
                           }
                         },
                         "required": [
@@ -1740,7 +1727,7 @@
                 "required": [
                   "input",
                   "output",
-                  "tier"
+                  "when"
                 ],
                 "additionalProperties": false
               }
@@ -1756,6 +1743,10 @@
         "cost_cn": {
           "type": "object",
           "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
             "input": {
               "type": "number",
               "minimum": 0
@@ -1787,6 +1778,10 @@
             "thinking": {
               "type": "object",
               "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                },
                 "input": {
                   "type": "number",
                   "minimum": 0
@@ -1821,6 +1816,10 @@
             "context_over_200k": {
               "type": "object",
               "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                },
                 "input": {
                   "type": "number",
                   "minimum": 0
@@ -1852,6 +1851,10 @@
                 "thinking": {
                   "type": "object",
                   "properties": {
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
                     "input": {
                       "type": "number",
                       "minimum": 0
@@ -1895,6 +1898,10 @@
               "items": {
                 "type": "object",
                 "properties": {
+                  "label": {
+                    "type": "string",
+                    "minLength": 1
+                  },
                   "input": {
                     "type": "number",
                     "minimum": 0
@@ -1926,6 +1933,10 @@
                   "thinking": {
                     "type": "object",
                     "properties": {
+                      "label": {
+                        "type": "string",
+                        "minLength": 1
+                      },
                       "input": {
                         "type": "number",
                         "minimum": 0
@@ -1957,7 +1968,7 @@
                     ],
                     "additionalProperties": false
                   },
-                  "tier": {
+                  "when": {
                     "anyOf": [
                       {
                         "type": "object",
@@ -2063,9 +2074,15 @@
                                     "end": {
                                       "type": "string",
                                       "pattern": "^(([01]\\d|2[0-3]):[0-5]\\d|24:00)$"
+                                    },
+                                    "holiday": {
+                                      "type": "string",
+                                      "const": "exclude_cn_statutory",
+                                      "description": "Excludes this window on China statutory holidays; callers provide the holiday resolver."
                                     }
                                   },
                                   "required": [
+                                    "days",
                                     "start",
                                     "end"
                                   ],
@@ -2079,10 +2096,6 @@
                               "windows"
                             ],
                             "additionalProperties": false
-                          },
-                          "label": {
-                            "type": "string",
-                            "minLength": 1
                           }
                         },
                         "required": [
@@ -2096,7 +2109,7 @@
                 "required": [
                   "input",
                   "output",
-                  "tier"
+                  "when"
                 ],
                 "additionalProperties": false
               }
@@ -2285,7 +2298,7 @@
         },
         "schema_version": {
           "type": "number",
-          "const": 2
+          "const": 3
         },
         "generated_at": {
           "type": "string",

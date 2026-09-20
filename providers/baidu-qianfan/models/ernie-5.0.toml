@@ -19,16 +19,16 @@ output = 24
 [[cost_cn.tiers]]
 input = 6
 output = 24
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
-[cost_cn.tiers.tier.input]
+[cost_cn.tiers.when.input]
 lte = 32_000
 
 [[cost_cn.tiers]]
 input = 10
 output = 40
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
-[cost_cn.tiers.tier.input]
+[cost_cn.tiers.when.input]
 gt = 32_000
 lte = 128_000

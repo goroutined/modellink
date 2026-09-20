@@ -129,7 +129,7 @@ output = 3
 [[cost.tiers]]
 input = 2
 output = 6
-[cost.tiers.tier]
+[cost.tiers.when]
 size = 200000
 [cost_cn]
 input = 2
@@ -137,14 +137,14 @@ output = 6
 [[cost_cn.tiers]]
 input = 3
 output = 9
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 size = 200000
 ` }, async (root) => {
       const result = (await generateCatalog(root)).providers.example!.models["vendor/call"]!;
-      expect(result.cost?.tiers?.[0]?.tier).toEqual({ type: "context", size: 200000 });
+      expect(result.cost?.tiers?.[0]?.when).toEqual({ type: "context", size: 200000 });
       expect(result.cost?.context_over_200k).toEqual({ input: 2, output: 6 });
       expect(result.cost_cn).not.toHaveProperty("context_over_200k");
-      expect(result.cost_cn?.tiers?.[0]?.tier).toEqual({ type: "context", size: 200000 });
+      expect(result.cost_cn?.tiers?.[0]?.when).toEqual({ type: "context", size: 200000 });
     });
   });
 });

@@ -39,5 +39,5 @@ output = 24
 cache_read = 1.2
 cache_write = 7.5
 
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 size = 256_000

@@ -10,13 +10,13 @@ output = 3.2
 [[cost_cn.tiers]]
 input = 0.4
 output = 3.2
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
 input = { lte = 131_072 }
 
 [[cost_cn.tiers]]
 input = 1.6
 output = 12.8
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
 input = { gt = 131_072 }

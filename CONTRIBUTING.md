@@ -237,20 +237,31 @@ Coding Plan、Token Plan 等订阅服务按积分抵扣时，使用 `cost_points
 
 ```toml
 [cost_points]
+label = "非高峰"
 per_tokens = 10_000
+input = 3.45
+cache_read = 0.85
+output = 12
+
+[cost_points.tiers]
+label = "高峰"
 input = 6.9
 cache_read = 1.7
 output = 24
-off_peak_multiplier = 0.5
 
-[cost_points.peak_window]
+[cost_points.tiers.when]
+type = "conditional"
+
+[cost_points.tiers.when.time]
+timezone = "Asia/Shanghai"
+
+[[cost_points.tiers.when.time.windows]]
 days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
 start = "14:00"
 end = "18:00"
-timezone = "Asia/Shanghai"
 ```
 
-`per_tokens` 表示积分系数对应的 Token 数量；非高峰倍率与高峰窗口必须来自套餐当前官方规则。人民币订阅金额属于 Provider 套餐信息，不得换算成模型 Token 单价。
+`per_tokens` 表示积分系数对应的 Token 数量；顶层是非高峰或默认扣减，`tiers` 记录高峰等例外扣减，且必须来自套餐当前官方规则。人民币订阅金额属于 Provider 套餐信息，不得换算成模型 Token 单价。
 
 积分消耗随输入或输出 Token 数量变化时，使用 `[[cost_points.tiers]]`，边界规则与 `cost_cn.tiers` 完全一致。`cost_points` 顶层填写首个阶梯用于兼容读取，阶梯中不重复填写 `per_tokens`。
 
@@ -267,14 +278,14 @@ output = 8
 input = 2
 output = 8
 
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
 
-[cost_cn.tiers.tier.input]
+[cost_cn.tiers.when.input]
 gte = 0
 lt = 32_000
 
-[cost_cn.tiers.tier.output]
+[cost_cn.tiers.when.output]
 gte = 0
 lt = 200
 ```
@@ -288,45 +299,80 @@ Token 区间支持四种明确边界：`gt` 表示大于，`gte` 表示大于等
 input = 2.1
 output = 8.4
 
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
 
-[cost_cn.tiers.tier.input]
+[cost_cn.tiers.when.input]
 lte = 512_000
 
 [[cost_cn.tiers]]
 input = 4.2
 output = 16.8
 
-[cost_cn.tiers.tier]
+[cost_cn.tiers.when]
 type = "conditional"
 
-[cost_cn.tiers.tier.input]
+[cost_cn.tiers.when.input]
 gt = 512_000
 ```
 
-只有官网赋予计费条件明确且无法单纯由数值边界概括的业务名称时才使用 `label`，例如“高峰期”“低峰期”“优先服务”或“批量调用”。标签只负责概括业务模式，结构化的 Token、时间等条件仍必须完整填写，不能用标签替代真实条件。
+`label` 与 `input`、`output` 同级。只有官网赋予计费条件明确且无法单纯由数值边界概括的业务名称时才使用 `label`，例如“高峰期”“低峰期”“优先服务”或“批量调用”。标签只负责概括业务模式，结构化的 Token、时间等条件仍必须完整填写，不能用标签替代真实条件。
 
-条件阶梯应覆盖官网公布的全部计价情况，`cost_cn` 顶层价格只作为兼容回退，不能依赖它补足页面未声明的阶梯。按高峰、低谷时段计费时可增加以下条件；同一价格可以包含多个时间窗口，开始时间包含、结束时间不包含，开始时间晚于结束时间表示跨越午夜。`days` 省略时表示每天；结束时间允许使用 `24:00` 表示当天结束，开始时间不能使用 `24:00`：
+如果官网规则有明确默认档，例如“非高峰价格为默认值，高峰时段例外”，顶层填写默认价格并设置 `label`，`tiers` 只保留高峰等例外档。如果官网是“上下文阈值 × 时段”这类完整矩阵，则保留多个 `tiers` 覆盖全部组合；此时顶层价格只是安全兜底，可以不写 `label`。
+
+按高峰、低谷时段计费时可增加时间条件；同一价格可以包含多个时间窗口，开始时间包含、结束时间不包含，开始时间晚于结束时间表示跨越午夜。`days` 必须显式列出；结束时间允许使用 `24:00` 表示当天结束，开始时间不能使用 `24:00`：
 
 ```toml
-[cost_cn.tiers.tier.time]
+[cost_cn.tiers.when.time]
 timezone = "Asia/Shanghai"
 
-[[cost_cn.tiers.tier.time.windows]]
+[[cost_cn.tiers.when.time.windows]]
 days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
 start = "09:00"
 end = "12:00"
+holiday = "exclude_cn_statutory"
 
-[[cost_cn.tiers.tier.time.windows]]
+[[cost_cn.tiers.when.time.windows]]
 days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
 start = "14:00"
 end = "18:00"
+holiday = "exclude_cn_statutory"
+```
 
-[[cost_cn.tiers.tier.time.windows]]
-days = ["saturday", "sunday"]
-start = "00:00"
-end = "24:00"
+`holiday = "exclude_cn_statutory"` 只能用于官网明确说明中国法定节假日按非高峰或例外处理的服务商，且必须搭配 `Asia/Shanghai`。ModelLink 不维护具体节假日日期；调用方需要注入自己的节假日 resolver。resolver 缺失时应返回价格未知，不能静默回落到顶层价格。
+
+高峰 / 闲时价格的推荐写法是：
+
+```toml
+[cost_cn]
+label = "闲时"
+input = 1
+output = 4
+cache_read = 0.02
+
+[[cost_cn.tiers]]
+label = "高峰"
+input = 2
+output = 8
+cache_read = 0.04
+
+[cost_cn.tiers.when]
+type = "conditional"
+
+[cost_cn.tiers.when.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "09:00"
+end = "12:00"
+holiday = "exclude_cn_statutory"
+
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "14:00"
+end = "18:00"
+holiday = "exclude_cn_statutory"
 ```
 
 如果同一调用 ID 在普通模式和思考模式下采用不同单价，在 `thinking` 中记录思考模式的完整价格；不要把它写成独立的推理 Token 价格：
