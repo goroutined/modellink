@@ -1,0 +1,24 @@
+name = "Step 5 Preview"
+description = "阶跃星辰面向真实任务的新一代旗舰基模，重点覆盖编程、专业知识工作、长上下文与多模态 Agent 任务。"
+family = "step"
+release_date = "2026-09-19"
+last_updated = "2026-09-19"
+attachment = true
+reasoning = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 1_000_000
+input = 1_000_000
+output = 1_000_000
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[[links]]
+label = "官方模型文档"
+url = "https://platform.stepfun.com/docs/zh/guides/models/step-5-preview"
+type = "docs"
