@@ -677,6 +677,22 @@ export const AuthoredModel = refineModel(AuthoredModelShape);
 
 export type Model = z.infer<typeof Model>;
 
+const ProviderCreditsCN = z
+  .object({
+    points: z.number().int().positive("Credit points must be positive"),
+    cny: z.number().positive("Credit CNY value must be positive"),
+    valid_days: z.number().int().positive("Credit validity must be positive").optional(),
+  })
+  .strict();
+
+const ProviderCreditPackageCN = z
+  .object({
+    cny: z.number().positive("Credit package CNY price must be positive"),
+    points: z.number().int().positive("Credit package points must be positive"),
+    valid_days: z.number().int().positive("Credit package validity must be positive").optional(),
+  })
+  .strict();
+
 export const Provider = z
   .object({
     id: z.string(),
@@ -705,13 +721,13 @@ export const Provider = z
       )
       .describe("Subscription plans published for users in China.")
       .optional(),
-    credits_cn: z
-      .object({
-        points: z.number().int().positive("Credit points must be positive"),
-        cny: z.number().positive("Credit CNY value must be positive"),
-        valid_days: z.number().int().positive("Credit validity must be positive").optional(),
-      })
-      .strict()
+    credits_cn: ProviderCreditsCN
+      .describe("Legacy single credit package summary retained for Schema v3 readers.")
+      .optional(),
+    credit_packages_cn: z
+      .array(ProviderCreditPackageCN)
+      .min(1, "Credit packages cannot be empty")
+      .describe("Purchasable credit packages published for users in China.")
       .optional(),
     doc: z
       .string()
@@ -767,6 +783,47 @@ export const Provider = z
         code: z.ZodIssueCode.custom,
         message: "Default endpoint must match provider protocol and api",
         path: ["endpoints"],
+      });
+    }
+  })
+  .superRefine((data, context) => {
+    const packages = data.credit_packages_cn;
+    if (packages === undefined) return;
+
+    const cnyValues = new Set<number>();
+    const pointValues = new Set<number>();
+    for (const [index, creditPackage] of packages.entries()) {
+      if (cnyValues.has(creditPackage.cny)) {
+        context.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Credit package CNY prices must be unique",
+          path: ["credit_packages_cn", index, "cny"],
+        });
+      }
+      if (pointValues.has(creditPackage.points)) {
+        context.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Credit package point amounts must be unique",
+          path: ["credit_packages_cn", index, "points"],
+        });
+      }
+      cnyValues.add(creditPackage.cny);
+      pointValues.add(creditPackage.points);
+    }
+
+    const credits = data.credits_cn;
+    if (credits === undefined) return;
+    const matches = packages.some(
+      (creditPackage) =>
+        creditPackage.cny === credits.cny &&
+        creditPackage.points === credits.points &&
+        creditPackage.valid_days === credits.valid_days,
+    );
+    if (!matches) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Legacy credits_cn must match one credit package exactly",
+        path: ["credits_cn"],
       });
     }
   });

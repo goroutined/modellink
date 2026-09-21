@@ -98,6 +98,8 @@ describe("public JSON Schema", () => {
     const schema = await Bun.file(path.join(root, "schema.json")).json() as any;
     const definitions = schema.definitions as Record<string, any>;
 
+    expect(schema["x-modellink-schema-version"]).toBe(3);
+
     for (const name of ["Protocol", "ProviderEndpoint", "ProviderLinks", "ReasoningOption"]) {
       expect(definitions[name]).toBeDefined();
     }

@@ -7,7 +7,7 @@ doc = "https://platform.minimaxi.com/docs/token-plan/intro"
 
 [links]
 models = "https://platform.minimaxi.com/docs/token-plan/intro"
-pricing = "https://platform.minimaxi.com/docs/token-plan/intro"
+pricing = "https://platform.minimax.cn/docs/guides/pricing-token-plan"
 api_key = "https://platform.minimaxi.com/docs/token-plan/quickstart"
 console = "https://platform.minimax.cn/user-center/payment/token-plan"
 
@@ -41,6 +41,21 @@ usage = "重度 Agent 工作流与更长时间使用"
 quota_windows = ["5 小时固定窗口", "周窗口"]
 
 [credits_cn]
-points = 1_000
-cny = 7
+points = 4_489
+cny = 30
+valid_days = 365
+
+[[credit_packages_cn]]
+cny = 30
+points = 4_489
+valid_days = 365
+
+[[credit_packages_cn]]
+cny = 150
+points = 22_460
+valid_days = 365
+
+[[credit_packages_cn]]
+cny = 500
+points = 74_900
 valid_days = 365

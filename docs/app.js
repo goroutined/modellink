@@ -27,8 +27,9 @@ const FIELD_LABELS = {
   doc: "模型详情页", models: "模型列表", pricing: "价格与套餐",
   api_key: "API Key 说明", console: "管理控制台",
   plans_cn: "人民币订阅套餐", price_month: "月费", usage: "适用场景",
-  quota_windows: "额度窗口", credits_cn: "预付积分", points: "积分",
+  quota_windows: "额度窗口", credits_cn: "预付积分摘要", points: "积分",
   cny: "人民币价值", valid_days: "有效天数",
+  credit_packages_cn: "预付积分包",
   label: "标签", url: "链接", type: "类型", min: "最小值", max: "最大值",
   tiers: "阶梯价格", when: "生效条件", size: "输入长度阈值",
   days: "星期", start: "开始时间", end: "结束时间", timezone: "时区",
@@ -347,11 +348,12 @@ function pricingUnitNote(models, showPointDetails = true) {
 
 function renderProviderPlans(provider) {
   const plans = provider.plans_cn ?? [];
-  if (!plans.length && !provider.credits_cn) return "";
+  const creditPackages = provider.credit_packages_cn ??
+    (provider.credits_cn ? [provider.credits_cn] : []);
+  if (!plans.length && !creditPackages.length) return "";
   const planCards = plans.map((plan) => `<div class="plan-card"><span>${escapeHtml(plan.name)}</span><strong>¥${formatNumber(plan.price_month)}<small>/月</small></strong>${plan.usage ? `<p>${escapeHtml(plan.usage)}</p>` : ""}${plan.quota_windows?.length ? `<small>${escapeHtml(plan.quota_windows.join(" · "))}</small>` : ""}</div>`).join("");
-  const credits = provider.credits_cn;
-  const creditCard = credits ? `<div class="plan-card credit-card"><span>预付积分</span><strong>${formatNumber(credits.points)}<small>积分 = ¥${formatNumber(credits.cny)}</small></strong>${credits.valid_days ? `<p>有效期 ${formatNumber(credits.valid_days)} 天</p>` : ""}</div>` : "";
-  return `<section class="section provider-plans"><div class="section-heading"><h2>订阅与积分</h2><span>套餐额度与按量 API 余额相互独立</span></div><div class="plan-grid">${planCards}${creditCard}</div></section>`;
+  const creditCards = creditPackages.map((creditPackage) => `<div class="plan-card credit-card"><span>预付积分包</span><strong>${formatNumber(creditPackage.points)}<small>积分 = ¥${formatNumber(creditPackage.cny)}</small></strong>${creditPackage.valid_days ? `<p>有效期 ${formatNumber(creditPackage.valid_days)} 天</p>` : ""}</div>`).join("");
+  return `<section class="section provider-plans"><div class="section-heading"><h2>订阅与积分</h2><span>套餐额度与按量 API 余额相互独立</span></div><div class="plan-grid">${planCards}${creditCards}</div></section>`;
 }
 
 function catalogSummary() {

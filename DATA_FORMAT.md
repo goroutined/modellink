@@ -209,6 +209,7 @@ interface Provider {
   links?: ProviderLinks
   plans_cn?: PlanCN[]
   credits_cn?: CreditsCN
+  credit_packages_cn?: CreditPackageCN[]
   models: Record<string, ProviderModel>
 }
 ```
@@ -225,7 +226,8 @@ interface Provider {
 | `doc` | models.dev 兼容的服务商主要文档入口 |
 | `links` | 按用途区分的模型、价格、API Key 与控制台入口 |
 | `plans_cn` | 人民币订阅套餐 |
-| `credits_cn` | 官方积分与人民币固定兑换关系 |
+| `credits_cn` | 兼容的单档官方积分摘要 |
+| `credit_packages_cn` | 官方可购买积分包完整档位 |
 | `models` | 调用 ID 到完整 Provider Model 的映射 |
 
 ### Provider 官方入口
@@ -490,12 +492,22 @@ interface CreditsCN {
   cny: number
   valid_days?: number
 }
+
+interface CreditPackageCN {
+  cny: number
+  points: number
+  valid_days?: number
+}
 ```
 
 - `price_month` 单位为人民币元/月。
 - `quota_windows` 保留服务商官方窗口描述，不应假设所有套餐都按自然月重置。
-- `credits_cn` 表示 `points` 积分对应 `cny` 元，不代表模型的 Token 价格。
+- `credits_cn` 是兼容摘要，表示 `points` 积分对应 `cny` 元，不代表模型的 Token 价格。
+- `credit_packages_cn` 表示官方提供的多档一次性积分包。新消费者应优先读取它；
+  只有旧数据没有该字段时才回退 `credits_cn`。
 - `valid_days` 仅在官网给出可精确记录的天数时出现。
+- 当两个字段同时存在时，`credits_cn` 必须精确匹配 `credit_packages_cn` 中的一档，
+  包括 `valid_days` 是否存在和具体数值，避免兼容摘要与完整档位漂移。
 
 ## 请求覆盖与实验模式
 
@@ -682,7 +694,7 @@ interface Manifest {
 | `ProviderModel.endpoints` | ModelLink 新增模型级协议白名单 | 过滤 Provider endpoints |
 | `cost_cn` | ModelLink 新增人民币官方价格 | 国内展示优先读取；不要由 `cost` 换算 |
 | `cost_points` | ModelLink 新增订阅积分消耗 | 与人民币价格分开展示 |
-| `plans_cn`、`credits_cn` | ModelLink 新增套餐和兑换关系 | 作为 Provider 信息处理 |
+| `plans_cn`、`credits_cn`、`credit_packages_cn` | ModelLink 新增套餐、积分摘要与积分包档位 | 作为 Provider 信息处理 |
 | `series` | ModelLink 新增同一模型版本系列 | 不要把 `family` 当作版本系列 |
 | `doc`（Provider Model） | ModelLink 增加精确型号文档 | 审计或展示模型详情时优先使用 |
 | `reasoning_options.field/endpoints/default` | ModelLink 增加调用细节 | 按 endpoint 应用，不做协议间推导 |

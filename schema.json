@@ -2231,7 +2231,35 @@
             "points",
             "cny"
           ],
-          "additionalProperties": false
+          "additionalProperties": false,
+          "description": "Legacy single credit package summary retained for Schema v3 readers."
+        },
+        "credit_packages_cn": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "cny": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "points": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "valid_days": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              }
+            },
+            "required": [
+              "cny",
+              "points"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "description": "Purchasable credit packages published for users in China."
         },
         "doc": {
           "type": "string",

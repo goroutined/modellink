@@ -265,7 +265,10 @@ end = "18:00"
 
 积分消耗随输入或输出 Token 数量变化时，使用 `[[cost_points.tiers]]`，边界规则与 `cost_cn.tiers` 完全一致。`cost_points` 顶层填写首个阶梯用于兼容读取，阶梯中不重复填写 `per_tokens`。
 
-Provider 官网直接公布固定人民币月费时，可以通过 `plans_cn` 记录套餐本身；预付积分与人民币存在官方固定兑换关系时使用 `credits_cn`。这两类信息只描述订阅和余额，不替代模型的 `cost_cn` 或 `cost_points`。
+Provider 官网直接公布固定人民币月费时，可以通过 `plans_cn` 记录套餐本身；预付积分包使用
+`credit_packages_cn` 记录全部官方档位。为了兼容已发布客户端，同时保留 `credits_cn`
+单档摘要，并让它精确匹配其中一个积分包；通常选择最小购买档。这些信息只描述订阅和余额，
+不替代模型的 `cost_cn` 或 `cost_points`。
 
 价格只按单一输入长度阈值变化时，继续使用兼容的 `type = "context"` 阶梯。价格同时取决于输入量、输出量或每日时段时，使用 ModelLink 的条件阶梯扩展：
 

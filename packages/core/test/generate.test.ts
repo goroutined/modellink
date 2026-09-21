@@ -169,6 +169,48 @@ describe("catalog generation", () => {
     ).toThrow();
   });
 
+  test("accepts multiple credit packages and keeps the legacy summary aligned", () => {
+    const provider = {
+      id: "example",
+      name: "Example",
+      env: ["EXAMPLE_API_KEY"],
+      npm: "@ai-sdk/openai-compatible",
+      protocol: "openai-compatible",
+      api: "https://api.example.com/v1",
+      doc: "https://docs.example.com/models",
+      models: {},
+      credits_cn: { points: 4_489, cny: 30, valid_days: 365 },
+      credit_packages_cn: [
+        { cny: 30, points: 4_489, valid_days: 365 },
+        { cny: 150, points: 22_460, valid_days: 365 },
+        { cny: 500, points: 74_900, valid_days: 365 },
+      ],
+    };
+
+    expect(Provider.parse(provider).credit_packages_cn).toHaveLength(3);
+    expect(() =>
+      Provider.parse({
+        ...provider,
+        credits_cn: { points: 1_000, cny: 7, valid_days: 365 },
+      }),
+    ).toThrow();
+    expect(() =>
+      Provider.parse({
+        ...provider,
+        credits_cn: { points: 4_489, cny: 30 },
+      }),
+    ).toThrow();
+    expect(() =>
+      Provider.parse({
+        ...provider,
+        credit_packages_cn: [
+          ...provider.credit_packages_cn,
+          { cny: 30, points: 9_000, valid_days: 365 },
+        ],
+      }),
+    ).toThrow();
+  });
+
   test("validates endpoint-scoped reasoning controls and effort defaults", () => {
     expect(
       ReasoningOption.parse({
