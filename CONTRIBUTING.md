@@ -33,6 +33,34 @@ ModelLink 保持 models.dev 核心格式兼容，并通过扩展字段补充中�
 
 `bun run check` 调用 `bun run test`，只运行 `packages/core/test` 和 `scripts` 内的项目测试，不运行独立 Checker。
 
+## 发布前 Go 客户端兼容性验证
+
+`bun run check` 只负责本仓库的数据与构建校验，不要求贡献者同时准备 Go 开发环境。
+维护者发布影响 `@modellink/data` 的变更前，可以额外用本地
+[`modellink-go`](https://github.com/goroutined/modellink-go) 验证未发布 tarball。
+
+先在 ModelLink 仓库构建并打包候选版本：
+
+```bash
+bun run build:data -- --version <candidate-version>
+bun run verify:data
+npm pack .artifacts/npm --pack-destination .artifacts --ignore-scripts
+```
+
+再到本地的 `modellink-go` checkout 中执行：
+
+```bash
+go run ./internal/cmd/verifydata \
+  --tarball /path/to/modellink/modellink-data-<candidate-version>.tgz
+```
+
+该命令会启动只监听 `127.0.0.1` 的临时 npm Registry，用真实 Go 客户端完成元数据解析、
+下载、integrity 与 manifest 哈希校验、类型解码、缓存重载和目录清单比对。需要模拟老用户
+升级时，用 `npm pack @modellink/data@latest --ignore-scripts` 获取已发布包，并传给
+`--baseline-tarball`。合并到 `main` 后的发布工作流会自动执行同一验证。
+自动发布默认使用 `goroutined/modellink-go` 的 `main` 分支作为验证客户端；修改验证命令后，
+应先让对应变更进入远端 `main`，再触发数据包发布。
+
 ## 添加 canonical model
 
 在模型研发组织下创建：

@@ -27,6 +27,16 @@ on:
         required: true
         default: false
         type: boolean
+      go-ref:
+        description: Git ref of goroutined/modellink-go used for compatibility verification
+        required: false
+        default: main
+        type: string
+      strict-go-schema:
+        description: Require the data Schema to exactly match the Go SDK Schema
+        required: false
+        default: false
+        type: boolean
 
 concurrency:
   group: publish-data-package
@@ -84,6 +94,7 @@ jobs:
             --ignore-scripts \
             --json > .artifacts/previous/pack.json
           archive="$(node -e "const p=require('./.artifacts/previous/pack.json'); process.stdout.write(p[0].filename)")"
+          echo "PREVIOUS_DATA_TARBALL=$PWD/.artifacts/previous/$archive" >> "$GITHUB_ENV"
           tar -xOf ".artifacts/previous/$archive" package/manifest.json \
             > .artifacts/previous/manifest.json
 
@@ -127,6 +138,37 @@ jobs:
       - name: Pack npm artifact
         if: steps.plan.outputs.build == 'true'
         run: npm pack .artifacts/npm --pack-destination .artifacts
+      - name: Check out Go client
+        if: steps.plan.outputs.build == 'true'
+        uses: actions/checkout@v6
+        with:
+          repository: goroutined/modellink-go
+          ref: ${{ inputs['go-ref'] || 'main' }}
+          path: modellink-go
+          persist-credentials: false
+      - uses: actions/setup-go@v6
+        if: steps.plan.outputs.build == 'true'
+        with:
+          go-version: '1.24.x'
+          cache: false
+      - name: Verify package with Go client
+        if: steps.plan.outputs.build == 'true'
+        working-directory: modellink-go
+        env:
+          VERSION: ${{ steps.plan.outputs.version }}
+          STRICT_GO_SCHEMA: ${{ inputs['strict-go-schema'] }}
+        run: |
+          args=(
+            --tarball "$GITHUB_WORKSPACE/.artifacts/modellink-data-${VERSION}.tgz"
+            --json
+          )
+          if [[ -n "${PREVIOUS_DATA_TARBALL:-}" ]]; then
+            args+=(--baseline-tarball "$PREVIOUS_DATA_TARBALL")
+          fi
+          if [[ "$STRICT_GO_SCHEMA" == "true" ]]; then
+            args+=(--strict-schema)
+          fi
+          go run ./internal/cmd/verifydata "${args[@]}"
       - uses: actions/upload-artifact@v7
         if: steps.plan.outputs.build == 'true'
         with:
