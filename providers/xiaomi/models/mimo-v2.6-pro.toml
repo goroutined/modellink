@@ -1,12 +1,17 @@
 base_model = "xiaomi/mimo-v2.6-pro"
-endpoints = ["openai", "anthropic"]
+endpoints = ["openai", "responses", "anthropic"]
 doc = "https://mimo.mi.com/models/zh-CN/mimo-v2.6-pro"
-temperature = false
+temperature = true
 
 [[reasoning_options]]
 type = "toggle"
 field = "thinking.type"
 endpoints = ["openai", "anthropic"]
+
+[[reasoning_options]]
+type = "toggle"
+field = "reasoning.effort"
+endpoints = ["responses"]
 
 [interleaved]
 field = "reasoning_content"
