@@ -1,7 +1,7 @@
 base_model = "zhipu/glm-5.3-flash"
 endpoints = ["openai", "responses"]
 doc = "https://ark.volcengine.com/region:cn-beijing/model/detail?name=glm-5-3-flash"
-structured_output = false
+structured_output = true
 temperature = true
 
 [[reasoning_options]]
