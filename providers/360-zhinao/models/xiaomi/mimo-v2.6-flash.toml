@@ -1,0 +1,19 @@
+base_model = "xiaomi/mimo-v2.6-flash"
+base_model_omit = ["tool_call", "structured_output"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ai.360.com/open/zh/models/xiaomi/mimo-v2.6-flash"
+temperature = true
+
+[limit]
+context = 1_000_000
+output = 128_000
+
+[modalities]
+input = ["text", "image", "audio", "video"]
+output = ["text"]
+
+[cost_cn]
+input = 1
+output = 2
+cache_read = 0.02
+cache_write = 1.25

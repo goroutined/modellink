@@ -1,0 +1,19 @@
+base_model = "xiaomi/mimo-v2.6-pro"
+base_model_omit = ["tool_call", "structured_output"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ai.360.com/open/zh/models/xiaomi/mimo-v2.6-pro"
+temperature = true
+
+[limit]
+context = 1_000_000
+output = 128_000
+
+[modalities]
+input = ["text", "image", "audio", "video"]
+output = ["text"]
+
+[cost_cn]
+input = 3
+output = 6
+cache_read = 0.025
+cache_write = 3.75

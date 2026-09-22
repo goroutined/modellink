@@ -1,0 +1,36 @@
+# Chat Completions also supports video input, but Anthropic Messages does not;
+# keep offering-level modalities to the smallest common set.
+base_model = "deepseek/deepseek-v4.1-flash"
+endpoints = ["openai", "anthropic"]
+doc = "https://platform.sensenova.cn/docs#model-deepseek-flash"
+temperature = true
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["openai", "anthropic"]
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["none", "low", "high", "max"]
+default = "high"
+
+[[reasoning_options]]
+type = "effort"
+field = "output_config.effort"
+endpoints = ["anthropic"]
+values = ["none", "low", "high", "max"]
+default = "high"
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 1_000_000
+output = 393_216
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
