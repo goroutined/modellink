@@ -1,9 +1,6 @@
-base_model = "deepseek/deepseek-v4-flash"
-base_model_omit = ["temperature"]
-name = "DeepSeek V4 Flash"
+base_model = "bytedance/doubao-seed-2.1-lite"
 endpoints = ["openai", "responses"]
-doc = "https://ark.volcengine.com/region:cn-beijing/model/detail?Id=deepseek-v4-flash"
-structured_output = false
+doc = "https://ark.volcengine.com/region:cn-beijing/model/detail?Id=doubao-seed-2-1-lite"
 
 [[reasoning_options]]
 type = "toggle"
@@ -14,25 +11,20 @@ endpoints = ["openai", "responses"]
 type = "effort"
 field = "reasoning_effort"
 endpoints = ["openai"]
-values = ["high", "max"]
+values = ["minimal", "low", "medium", "high"]
 default = "high"
 
 [[reasoning_options]]
 type = "effort"
 field = "reasoning.effort"
 endpoints = ["responses"]
-values = ["high", "max"]
+values = ["minimal", "low", "medium", "high"]
 default = "high"
 
 [interleaved]
 field = "reasoning_content"
 
-[limit]
-context = 1_048_576
-input = 1_048_576
-output = 393_216
-
 [cost_cn]
-input = 3
-output = 9
-cache_read = 0.1
+input = 0.8
+output = 2.7
+cache_read = 0.16

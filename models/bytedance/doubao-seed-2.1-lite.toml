@@ -1,0 +1,29 @@
+name = "Doubao Seed 2.1 Lite"
+description = "豆包 Seed 2.1 Lite 多模态理解模型，原生支持文本、视觉与音频理解。"
+family = "doubao-seed"
+release_date = "2026-09-15"
+last_updated = "2026-09-15"
+attachment = true
+reasoning = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 262_144
+input = 262_144
+output = 262_144
+
+[modalities]
+input = ["text", "image", "video", "audio"]
+output = ["text"]
+
+[[links]]
+label = "火山方舟模型列表"
+url = "https://www.volcengine.com/docs/82379/1330310?lang=zh&redirect=1"
+type = "docs"
+
+[[links]]
+label = "火山方舟模型详情"
+url = "https://ark.volcengine.com/region:cn-beijing/model/detail?Id=doubao-seed-2-1-lite"
+type = "model_card"

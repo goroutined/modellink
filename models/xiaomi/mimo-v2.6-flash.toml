@@ -1,0 +1,34 @@
+name = "MiMo V2.6 Flash"
+description = "小米全模态、高智能、低成本的高效推理模型，面向专业办公中的高频调用与规模化任务。"
+family = "mimo-v2.6-flash"
+release_date = "2026-09-22"
+last_updated = "2026-09-22"
+attachment = true
+reasoning = true
+temperature = false
+tool_call = true
+structured_output = true
+open_weights = true
+license = "MIT"
+
+[limit]
+context = 1_048_576
+output = 131_072
+
+[modalities]
+input = ["text", "image", "video", "audio"]
+output = ["text"]
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Flash-RL"
+
+[[links]]
+label = "官方模型详情"
+url = "https://mimo.mi.com/models/zh-CN/mimo-v2.6-flash"
+type = "docs"
+
+[[links]]
+label = "官方发布公告"
+url = "https://mimo.xiaomi.com/zh/mimo-v2-6"
+type = "docs"

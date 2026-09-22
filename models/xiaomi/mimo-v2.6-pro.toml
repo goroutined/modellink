@@ -1,0 +1,34 @@
+name = "MiMo V2.6 Pro"
+description = "小米 MiMo 迄今最强大的全模态旗舰模型，面向专业、长程、复杂工作流，并兼顾科学研究、网络安全等高阶能力。"
+family = "mimo-v2.6-pro"
+release_date = "2026-09-22"
+last_updated = "2026-09-22"
+attachment = true
+reasoning = true
+temperature = false
+tool_call = true
+structured_output = true
+open_weights = true
+license = "MIT"
+
+[limit]
+context = 1_048_576
+output = 131_072
+
+[modalities]
+input = ["text", "image", "video", "audio"]
+output = ["text"]
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL"
+
+[[links]]
+label = "官方模型详情"
+url = "https://mimo.mi.com/models/zh-CN/mimo-v2.6-pro"
+type = "docs"
+
+[[links]]
+label = "官方发布公告"
+url = "https://mimo.xiaomi.com/zh/mimo-v2-6"
+type = "docs"

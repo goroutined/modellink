@@ -1,18 +1,12 @@
-base_model = "xiaomi/mimo-v2.5"
-name = "MiMo V2.5（即将下线）"
-endpoints = ["openai", "responses", "anthropic"]
-doc = "https://mimo.mi.com/docs/zh-CN/quick-start/faq/token-plan"
-temperature = true
+base_model = "xiaomi/mimo-v2.6-pro"
+endpoints = ["openai", "anthropic"]
+doc = "https://mimo.mi.com/docs/zh-CN/tokenplan/Token%20Plan/subscription"
+temperature = false
 
 [[reasoning_options]]
 type = "toggle"
 field = "thinking.type"
 endpoints = ["openai", "anthropic"]
-
-[[reasoning_options]]
-type = "toggle"
-field = "reasoning.effort"
-endpoints = ["responses"]
 
 [interleaved]
 field = "reasoning_content"
@@ -24,15 +18,15 @@ output = 131_072
 [cost_points]
 label = "非高峰"
 per_tokens = 1
-input = 80
-output = 160
-cache_read = 1.6
+input = 240
+output = 480
+cache_read = 2
 
 [[cost_points.tiers]]
-label = "高峰"
-input = 100
-output = 200
-cache_read = 2
+label = "标准"
+input = 300
+output = 600
+cache_read = 2.5
 
 [cost_points.tiers.when]
 type = "conditional"

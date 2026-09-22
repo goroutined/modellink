@@ -13,14 +13,14 @@ endpoints = ["openai", "responses"]
 type = "effort"
 field = "reasoning_effort"
 endpoints = ["openai"]
-values = ["high", "max"]
+values = ["minimal", "low", "high", "max"]
 default = "high"
 
 [[reasoning_options]]
 type = "effort"
 field = "reasoning.effort"
 endpoints = ["responses"]
-values = ["high", "max"]
+values = ["minimal", "low", "high", "max"]
 default = "high"
 
 [interleaved]

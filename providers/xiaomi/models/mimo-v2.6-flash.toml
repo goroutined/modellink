@@ -1,0 +1,21 @@
+base_model = "xiaomi/mimo-v2.6-flash"
+endpoints = ["openai", "anthropic"]
+doc = "https://mimo.mi.com/models/zh-CN/mimo-v2.6-flash"
+temperature = false
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["openai", "anthropic"]
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 1_048_576
+output = 131_072
+
+[cost_cn]
+input = 1
+output = 2
+cache_read = 0.02
