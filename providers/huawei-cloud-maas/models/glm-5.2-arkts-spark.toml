@@ -1,0 +1,35 @@
+base_model = "zhipu/glm-5.2"
+name = "GLM-5.2-ArkTS-SPARK"
+endpoints = ["openai", "anthropic"]
+doc = "https://support.huaweicloud.com/model-list-maas/model_list_0001.html"
+structured_output = false
+
+[[reasoning_options]]
+type = "toggle"
+field = "chat_template_kwargs.thinking"
+endpoints = ["openai"]
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["anthropic"]
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai", "anthropic"]
+values = ["none", "high", "max"]
+default = "max"
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 202_752
+input = 196_608
+output = 131_072
+
+[cost_cn]
+input = 9.6
+output = 33.6
+cache_read = 2.4

@@ -1,5 +1,5 @@
 base_model = "zhipu/glm-5.1"
 base_model_omit = ["temperature"]
-name = "GLM-5.1（即将下线）"
+name = "GLM-5.1（即将下线，glm-5-1）"
 endpoints = ["openai", "anthropic"]
 doc = "https://cloud.tencent.com/document/product/1823/130060"

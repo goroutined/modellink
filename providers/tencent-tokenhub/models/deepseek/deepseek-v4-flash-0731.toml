@@ -1,6 +1,6 @@
 # 2026-09-11：130051 型号表归为原厂直供；130055 价格表采用工作日峰谷、周末全天闲时。
 base_model = "deepseek/deepseek-v4-flash-0731"
-name = "DeepSeek V4 Flash 0731 正式版 原厂直供"
+name = "DeepSeek V4 Flash 0731 正式版 原厂直供（deepseek/deepseek-v4-flash-0731）"
 endpoints = ["openai", "responses", "anthropic"]
 doc = "https://cloud.tencent.com/document/product/1823/132248"
 

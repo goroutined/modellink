@@ -1,4 +1,5 @@
 base_model = "minimax/minimax-m2.7"
 base_model_omit = ["temperature"]
+name = "MiniMax M2.7（minimax-m-2-7）"
 endpoints = ["openai", "anthropic"]
 doc = "https://cloud.tencent.com/document/product/1823/130060"

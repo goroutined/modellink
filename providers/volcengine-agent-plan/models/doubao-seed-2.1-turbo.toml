@@ -1,5 +1,6 @@
 base_model = "bytedance/doubao-seed-2.1-turbo"
 base_model_omit = ["limit.input", "reasoning", "temperature", "tool_call", "structured_output"]
+name = "Doubao Seed 2.1 Turbo（即将下线）"
 doc = "https://www.volcengine.com/docs/82379/2366394?lang=zh"
 
 [limit]

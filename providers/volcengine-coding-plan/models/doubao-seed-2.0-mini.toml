@@ -1,12 +1,11 @@
-base_model = "bytedance/doubao-seed-2.1-turbo"
+base_model = "bytedance/doubao-seed-2.0-mini"
 endpoints = ["openai", "anthropic"]
 base_model_omit = ["temperature", "structured_output", "limit.input"]
-name = "Doubao Seed 2.1 Turbo（即将下线）"
 doc = "https://www.volcengine.com/docs/82379/1925114"
 
 [limit]
 context = 256_000
-output = 65_536
+output = 131_072
 
 [modalities]
 input = ["text", "image"]
