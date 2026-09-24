@@ -3,8 +3,22 @@ description = "腾讯混元新一代生产力旗舰模型，面向 Agent、Codin
 family = "hunyuan"
 release_date = "2026-08-28"
 last_updated = "2026-08-28"
+attachment = false
+reasoning = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 1_048_576
+input = 983_040
+output = 65_536
+
+[modalities]
+input = ["text"]
+output = ["text"]
 
 [[links]]
-label = "SiliconFlow 模型目录"
-url = "https://www.siliconflow.cn/models"
-type = "model_card"
+label = "腾讯云混元调用指南"
+url = "https://cloud.tencent.com/document/product/1823/132252"
+type = "docs"

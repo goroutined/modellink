@@ -1,0 +1,28 @@
+base_model = "tencent/hy4-preview"
+endpoints = ["openai", "responses", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/132252"
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["openai"]
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high"]
+default = "high"
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 1_048_576
+input = 983_040
+output = 65_536
+
+[cost_cn]
+input = 6
+output = 18
+cache_read = 0.3

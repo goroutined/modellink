@@ -1,0 +1,9 @@
+base_model = "tencent/hy4-preview"
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/133811"
+
+[cost_points]
+per_tokens = 1_000_000
+input = 120
+output = 360
+cache_read = 6

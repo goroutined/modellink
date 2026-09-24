@@ -1,6 +1,7 @@
 # 2026-09-12 官方模型目录精确记录：normal、contextLen、functionCallSupport、jsonModeSupport。
 # https://www.siliconflow.cn/models
 base_model = "tencent/hy4-preview"
+base_model_omit = ["reasoning", "limit.input"]
 # Messages 文档的 model 适用范围为完整可用对话模型列表。
 # https://docs.siliconflow.cn/cn/docs/api/messages-post
 endpoints = ["openai", "anthropic"]
