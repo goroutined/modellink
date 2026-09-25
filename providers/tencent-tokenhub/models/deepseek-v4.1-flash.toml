@@ -1,0 +1,47 @@
+# 2026-09-25：130051 语言模型表新增非直供标准 id deepseek-v4.1-flash（与原厂直供斜杠 id
+# deepseek/deepseek-flash 为同一模型不同渠道）；价格见 130055，峰谷 2026-09-26 00:00 起生效。
+base_model = "deepseek/deepseek-v4.1-flash"
+base_model_omit = ["temperature", "reasoning_options", "interleaved"]
+name = "DeepSeek V4.1 Flash"
+doc = "https://cloud.tencent.com/document/product/1823/130051"
+attachment = true
+reasoning = true
+tool_call = true
+structured_output = true
+
+[limit]
+context = 1_000_000
+input = 1_000_000
+output = 393_216
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[cost_cn]
+label = "闲时"
+input = 1
+output = 4
+cache_read = 0.02
+
+[[cost_cn.tiers]]
+label = "高峰时段"
+input = 2
+output = 8
+cache_read = 0.04
+
+[cost_cn.tiers.when]
+type = "conditional"
+
+[cost_cn.tiers.when.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "09:00"
+end = "12:00"
+
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "14:00"
+end = "18:00"

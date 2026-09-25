@@ -29,6 +29,8 @@ input = 4.5
 output = 13.5
 cache_read = 0.15
 
+# 2026-09-24 官网改版：DeepSeek 峰谷规则统一为工作日高峰 + 周末全天空闲，
+# 非直供模型 2026-09-26 00:00 起生效。https://cloud.tencent.com/document/product/1823/130055
 [[cost_cn.tiers]]
 label = "高峰时段"
 input = 9
@@ -42,11 +44,11 @@ type = "conditional"
 timezone = "Asia/Shanghai"
 
 [[cost_cn.tiers.when.time.windows]]
-days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
 start = "09:00"
 end = "12:00"
 
 [[cost_cn.tiers.when.time.windows]]
-days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
 start = "14:00"
 end = "18:00"
