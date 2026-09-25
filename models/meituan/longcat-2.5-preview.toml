@@ -1,0 +1,22 @@
+name = "LongCat-2.5-Preview"
+description = "美团 LongCat 高性能 Agentic 模型，代码生成与理解能力突出，面向编程与智能体任务。"
+family = "longcat"
+release_date = "2026-09-25"
+last_updated = "2026-09-25"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+open_weights = false
+
+[limit]
+context = 1_048_576
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "LongCat-2.5-Preview 上线公告"
+url = "https://longcat.chat/platform/docs/zh/change-log"
+type = "announcement"

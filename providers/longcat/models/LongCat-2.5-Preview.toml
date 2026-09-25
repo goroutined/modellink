@@ -1,0 +1,22 @@
+base_model = "meituan/longcat-2.5-preview"
+base_model_omit = ["structured_output"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://longcat.chat/platform/docs/zh/pricing/longcat-2.5"
+
+[limit]
+context = 1_048_576
+output = 131_072
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+
+[interleaved]
+field = "reasoning_content"
+
+# 折扣价为平台初上线限时优惠，原价：输入 ¥5 / 缓存命中 ¥0.10 / 输出 ¥20。
+# https://longcat.chat/platform/docs/zh/pricing/longcat-2.5
+[cost_cn]
+input = 2
+output = 8
+cache_read = 0.04
