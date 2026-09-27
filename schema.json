@@ -1192,6 +1192,25 @@
                             "type": "string",
                             "const": "conditional"
                           },
+                          "date": {
+                            "type": "object",
+                            "properties": {
+                              "from": {
+                                "type": "string",
+                                "pattern": "^\\d{4}-\\d{2}(-\\d{2})?$"
+                              },
+                              "timezone": {
+                                "type": "string",
+                                "minLength": 1,
+                                "default": "Asia/Shanghai"
+                              },
+                              "to": {
+                                "type": "string",
+                                "pattern": "^\\d{4}-\\d{2}(-\\d{2})?$"
+                              }
+                            },
+                            "additionalProperties": false
+                          },
                           "input": {
                             "type": "object",
                             "properties": {
@@ -1617,6 +1636,25 @@
                             "type": "string",
                             "const": "conditional"
                           },
+                          "date": {
+                            "type": "object",
+                            "properties": {
+                              "from": {
+                                "type": "string",
+                                "pattern": "^\\d{4}-\\d{2}(-\\d{2})?$"
+                              },
+                              "timezone": {
+                                "type": "string",
+                                "minLength": 1,
+                                "default": "Asia/Shanghai"
+                              },
+                              "to": {
+                                "type": "string",
+                                "pattern": "^\\d{4}-\\d{2}(-\\d{2})?$"
+                              }
+                            },
+                            "additionalProperties": false
+                          },
                           "input": {
                             "type": "object",
                             "properties": {
@@ -1998,6 +2036,25 @@
                           "type": {
                             "type": "string",
                             "const": "conditional"
+                          },
+                          "date": {
+                            "type": "object",
+                            "properties": {
+                              "from": {
+                                "type": "string",
+                                "pattern": "^\\d{4}-\\d{2}(-\\d{2})?$"
+                              },
+                              "timezone": {
+                                "type": "string",
+                                "minLength": 1,
+                                "default": "Asia/Shanghai"
+                              },
+                              "to": {
+                                "type": "string",
+                                "pattern": "^\\d{4}-\\d{2}(-\\d{2})?$"
+                              }
+                            },
+                            "additionalProperties": false
                           },
                           "input": {
                             "type": "object",

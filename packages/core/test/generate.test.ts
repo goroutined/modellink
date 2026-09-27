@@ -7,6 +7,47 @@ import { CostTierSelector, Provider, ReasoningOption } from "../src/schema.js";
 const root = path.join(import.meta.dirname, "..", "..", "..");
 
 describe("catalog generation", () => {
+  test("accepts date-range tiers for future effective prices", () => {
+    expect(
+      CostTierSelector.parse({
+        type: "conditional",
+        date: { from: "2026-09-26" },
+      }),
+    ).toEqual({
+      type: "conditional",
+      date: { from: "2026-09-26", timezone: "Asia/Shanghai" },
+    });
+
+    expect(
+      CostTierSelector.parse({
+        type: "conditional",
+        date: { from: "2026-09-26", to: "2026-10-01", timezone: "UTC" },
+      }),
+    ).toEqual({
+      type: "conditional",
+      date: { from: "2026-09-26", to: "2026-10-01", timezone: "UTC" },
+    });
+
+    expect(() =>
+      CostTierSelector.parse({
+        type: "conditional",
+        date: { from: "2026-10-01", to: "2026-09-26" },
+      }),
+    ).toThrow();
+    expect(() =>
+      CostTierSelector.parse({
+        type: "conditional",
+        date: {},
+      }),
+    ).toThrow();
+    expect(() =>
+      CostTierSelector.parse({
+        type: "conditional",
+        date: { from: "2026-9-6" },
+      }),
+    ).toThrow();
+  });
+
   test("accepts timezone-aware weekly price windows", () => {
     expect(
       CostTierSelector.parse({

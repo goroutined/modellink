@@ -411,6 +411,11 @@ type CostTierSelector =
   | { type: "context"; size: number }
   | {
       type: "conditional"
+      date?: {
+        from?: string
+        to?: string
+        timezone?: string
+      }
       input?: TokenRange
       output?: TokenRange
       time?: {
@@ -447,6 +452,7 @@ interface TokenRange {
 - 时间窗口开始时间包含、结束时间不包含；跨午夜窗口可能出现 `start > end`；`end` 可以是 `24:00`。
 - `days` 必须显式列出适用的星期。
 - `holiday = "exclude_cn_statutory"` 表示该窗口仅在中国法定节假日之外匹配。ModelLink 不维护具体节假日日期；调用方需要注入自己的节假日 resolver。resolver 缺失或无法判断当年日期时，应返回“价格未知”，不能静默套用顶层价格。
+- `conditional.date`：按日期生效的档位，`from` / `to` 使用 `YYYY-MM-DD`，构成闭开区间（`from` 当天 00:00 含、`to` 当天 00:00 不含）；`timezone` 缺省为 `Asia/Shanghai`。用于官方已公告但尚未生效的调价：当前价保留在顶层，新价格写成 `date.from` 指向生效日的 tier，生效前的请求自动回退顶层价格。生效日之后的下一轮数据维护应把该 tier 塌缩回顶层并移除 `date` 条件，避免档位堆积。
 - 顶层价格是默认回退价格。顶层 `label` 是该回退档的展示名，例如“闲时”或“非高峰”。存在 `tiers` 时，精确计价应先匹配 `tiers[].when`；未匹配时才使用顶层值。
 - 多个 `tiers` 可以覆盖全部时间。在这种情况下顶层值只是安全兜底，实际计价不会走到。
 

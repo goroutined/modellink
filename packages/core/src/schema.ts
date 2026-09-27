@@ -200,6 +200,74 @@ const TokenRange = z
     }
   });
 
+const DateString = z
+  .string()
+  .regex(/^\d{4}-\d{2}(-\d{2})?$/, {
+    message: "Must be in YYYY-MM or YYYY-MM-DD format",
+  })
+  .refine(
+    (value) => {
+      const [year, month, day] = value.split("-").map(Number);
+      if (month === undefined || month < 1 || month > 12) return false;
+      if (day === undefined) return true;
+
+      const leapYear =
+        year !== undefined &&
+        year % 4 === 0 &&
+        (year % 100 !== 0 || year % 400 === 0);
+      const daysInMonth = [
+        31,
+        leapYear ? 29 : 28,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31,
+      ];
+      return day >= 1 && day <= daysInMonth[month - 1]!;
+    },
+    {
+      message: "Must be a valid calendar date",
+    },
+  );
+
+const ExactDate = DateString.refine((value) => value.length === 10, {
+  message: "Must be in YYYY-MM-DD format",
+});
+
+export const DateRangeCondition = z
+  .object({
+    from: ExactDate.optional(),
+    timezone: z.string().min(1, "Timezone cannot be empty").default("Asia/Shanghai"),
+    to: ExactDate.optional(),
+  })
+  .strict()
+  .superRefine((condition, context) => {
+    if (condition.from === undefined && condition.to === undefined) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Date range must define from or to",
+      });
+      return;
+    }
+    if (
+      condition.from !== undefined &&
+      condition.to !== undefined &&
+      condition.from >= condition.to
+    ) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Date range from must be earlier than to",
+        path: ["from"],
+      });
+    }
+  });
+
 const Weekday = z.enum([
   "monday",
   "tuesday",
@@ -255,6 +323,7 @@ export const CostTierSelector = z.union([
   z
     .object({
       type: z.literal("conditional"),
+      date: DateRangeCondition.optional(),
       input: TokenRange.optional(),
       output: TokenRange.optional(),
       time: DailyTimeCondition.optional(),
@@ -264,8 +333,9 @@ export const CostTierSelector = z.union([
       (tier) =>
         tier.input !== undefined ||
         tier.output !== undefined ||
-        tier.time !== undefined,
-      { message: "Conditional tier must define input, output, or time" },
+        tier.time !== undefined ||
+        tier.date !== undefined,
+      { message: "Conditional tier must define input, output, time, or date" },
     ),
 ]);
 
@@ -312,42 +382,6 @@ const PointCost = PointCostValues.extend({
     per_tokens: z.number().int().positive("Point cost token unit must be positive"),
     tiers: z.array(PointCostTier).optional(),
   }).strict();
-
-const DateString = z
-  .string()
-  .regex(/^\d{4}-\d{2}(-\d{2})?$/, {
-    message: "Must be in YYYY-MM or YYYY-MM-DD format",
-  })
-  .refine(
-    (value) => {
-      const [year, month, day] = value.split("-").map(Number);
-      if (month === undefined || month < 1 || month > 12) return false;
-      if (day === undefined) return true;
-
-      const leapYear =
-        year !== undefined &&
-        year % 4 === 0 &&
-        (year % 100 !== 0 || year % 400 === 0);
-      const daysInMonth = [
-        31,
-        leapYear ? 29 : 28,
-        31,
-        30,
-        31,
-        30,
-        31,
-        31,
-        30,
-        31,
-        30,
-        31,
-      ];
-      return day >= 1 && day <= daysInMonth[month - 1]!;
-    },
-    {
-      message: "Must be a valid calendar date",
-    },
-  );
 
 const Modality = z.enum(["text", "audio", "image", "video", "pdf"]);
 
