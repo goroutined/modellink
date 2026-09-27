@@ -1,5 +1,5 @@
 base_model = "bytedance/doubao-seed-2.0-lite"
-name = "Doubao Seed 2.0 Lite 0215"
+name = "Doubao Seed 2.0 Lite 0215（即将下线）"
 release_date = "2026-02-15"
 last_updated = "2026-02-15"
 endpoints = ["openai", "responses"]

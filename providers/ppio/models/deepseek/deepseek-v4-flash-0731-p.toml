@@ -1,0 +1,17 @@
+# 官方目录同模型双 id：deepseek/deepseek-v4-flash-0731 与本 -p（详情页标注"满血版/全参数"）。
+# 三协议来自模型页服务器渲染的 initialModels 型号级精确数据
+# （endpoints: chat/completions, anthropic, responses；features 含 anthropic-api）。
+base_model = "deepseek/deepseek-v4-flash-0731"
+base_model_omit = ["temperature", "interleaved"]
+name = "DeepSeek V4 Flash 0731（deepseek/deepseek-v4-flash-0731-p）"
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ppio.com/llm/deepseek-deepseek-v4-flash-0731-p"
+
+[limit]
+context = 1_048_576
+output = 393_216
+
+[cost_cn]
+input = 3
+output = 9
+cache_read = 1
