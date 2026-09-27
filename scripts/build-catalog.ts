@@ -65,6 +65,23 @@ await Bun.write(path.join(root, "docs", "api.json"), JSON.stringify(providers, n
 await Bun.write(path.join(root, "docs", "models.json"), JSON.stringify(models, null, 2) + "\n");
 await Bun.write(path.join(root, "docs", "catalog.json"), JSON.stringify(catalog, null, 2) + "\n");
 await Bun.write(path.join(root, "docs", "schema.json"), Bun.file(path.join(root, "schema.json")));
+
+// shields.io endpoint 徽章：README 里的收录规模随数据自动更新，无需人工维护。
+const providerCount = Object.keys(providers).length;
+const modelCount = Object.keys(models).length;
+const offeringCount = Object.values(providers).reduce(
+  (sum, provider) => sum + Object.keys(provider.models).length,
+  0,
+);
+await Bun.write(
+  path.join(root, "docs", "badge.json"),
+  JSON.stringify({
+    schemaVersion: 1,
+    label: "data",
+    message: `${providerCount} providers · ${modelCount} models · ${offeringCount} offerings`,
+    color: "2563eb",
+  }) + "\n",
+);
 const siteData = {
   labs: sortRecord(labs),
   model_providers: sortRecord(modelProviders),
