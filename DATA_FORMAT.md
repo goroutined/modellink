@@ -1,10 +1,10 @@
-# ModelLink 数据格式与迁移指南
+# ModelLink 数据格式说明
 
-本文档面向直接消费 ModelLink JSON 的应用、SDK、命令行工具和数据服务，说明公开文件、字段语义以及从 [models.dev](https://models.dev) 迁移时需要处理的差异。
+本文档面向直接消费 ModelLink JSON 的应用、SDK、命令行工具和数据服务，说明公开文件与字段语义。
 
-ModelLink 的原则是：保留 models.dev 的核心 JSON 结构，在此基础上增加中国区协议、人民币价格、积分与订阅套餐等字段。下游应采用“读取认识的字段、忽略未知字段”的方式解析，以便兼容后续扩展。
+ModelLink 的原则是：保留 [models.dev](https://models.dev) 的核心 JSON 结构，在此基础上增加中国区协议、人民币价格、积分与订阅套餐等字段。下游应采用"读取认识的字段、忽略未知字段"的方式解析，以便兼容后续扩展。
 
-> 重要：可选字段缺失表示“当前没有足够的服务商级证据”或“该字段不适用”，不等于 `false`、`0`、免费或无限制。
+> 重要：可选字段缺失表示"当前没有足够的服务商级证据"或"该字段不适用"，不等于 `false`、`0`、免费或无限制。
 
 ## 公开文件
 
@@ -29,33 +29,21 @@ https://goroutined.github.io/modellink/schema.json
 
 ### ID 与 Map Key
 
-- `api.json` 的 Map Key 是 Provider ID，例如 `deepseek`、`alibaba-cn`。
+- `api.json` 的 Map Key 是 Provider ID，例如 `deepseek`、`alibaba-cn`。规范形式为 `{vendor}-cn` 或 `{vendor}-{plan}-cn`；只有服务商同时存在国际区和中国区语义时才增加地区后缀。
 - `models.json` 的 Map Key 是 canonical model ID，格式通常为 `<lab>/<model>`，例如 `deepseek/deepseek-v4-pro`。
 - `Provider.models` 的 Map Key 是该服务商接受的模型调用 ID。它可能与 canonical model ID 不同，也可能包含 `/`。
 - 每个对象内的 `id` 与它所在 Map 的 Key 相同，下游可以直接以 Map Key 建立索引。
 - Provider Model 是基础模型事实与服务商覆盖合并后的完整结果；源码字段 `base_model` 和 `base_model_omit` 不会出现在 JSON 中。
 
-当前 JSON 不公开 Provider Model 到 canonical model 的结构化反向引用。需要跨服务商聚合时，不应仅凭名称或 `family` 猜测；可以使用 ModelLink 页面内部索引作为展示参考，但不要把它视为稳定 API。
+三种 ID 用途不同，不要混淆：
 
-### `@modellink/data` 0.2.0 Provider ID 迁移
+```ts
+const canonical = catalog.models["deepseek/deepseek-v4-pro"] // 描述模型本身
+const provider = catalog.providers["alibaba-cn"]              // 选择服务
+const offering = provider.models["deepseek-v4-pro-0813"]      // 发给 API 的实际模型名
+```
 
-`0.2.0` 统一中国区 Provider 的地区后缀，并修正了与 models.dev 同名但实际指向
-国际站的问题。使用旧 ID 的下游需要按下表迁移：
-
-| `0.1.x` ID | `0.2.0` ID | models.dev 对应关系 |
-|---|---|---|
-| `alibaba-coding-plan` | `alibaba-coding-plan-cn` | 相同 |
-| `alibaba-token-plan` | `alibaba-token-plan-cn` | 相同 |
-| `minimax` | `minimax-cn` | 相同 |
-| `minimax-token-plan` | `minimax-token-plan-cn` | ModelLink 独有的 Token Plan，不等同于 models.dev 的 `minimax-cn-coding-plan` |
-| `moonshot` | `moonshotai-cn` | 相同 |
-| `siliconflow` | `siliconflow-cn` | 相同 |
-| `xiaomi-mimo` | `xiaomi` | 相同 |
-| `xiaomi-mimo-token-plan` | `xiaomi-token-plan-cn` | 相同 |
-
-Provider ID 的规范形式为 `{vendor}-cn` 或 `{vendor}-{plan}-cn`。只有服务商同时存在
-国际区和中国区语义时才增加地区后缀；中国区是唯一或默认语义时不机械增加 `-cn`。
-Provider ID 的迁移不会改变其模型调用 ID。
+不要把 canonical ID 自动当作调用 ID，也不要假设不同 Provider 使用相同调用 ID。当前 JSON 不公开 Provider Model 到 canonical model 的结构化反向引用；需要跨服务商聚合时，不应仅凭名称或 `family` 猜测。
 
 ## 通用约定
 
@@ -103,6 +91,14 @@ function capability(value: boolean | undefined) {
 - `cost_cn.*` 单位为人民币元/百万 Token，来自中国区官方人民币价格，不由美元换算。
 - `cost_points.*` 使用服务商套餐积分，并由 `per_tokens` 明确每组价格对应的 Token 数量。
 - 缺少任何价格对象不表示免费；免费必须以明确的 `0` 表示。
+
+### 下游解析建议
+
+- 对新增可选字段保持前向兼容，忽略暂不认识的字段。
+- 对枚举使用"已知值 + unknown fallback"，避免新协议或新状态导致整个目录无法读取。
+- 缓存上一次校验通过的数据；网络或完整性校验失败时不要清空目录。
+- 展示布尔能力时区分"是 / 否 / 未知"；展示 Token 限制时只显示实际存在的字段，不通过数学关系补齐缺失值。
+- 自动估价无法完整匹配 tier 时，返回"需按官方规则计算"，不要给出看似精确的错误价格。
 
 ## `models.json`
 
@@ -396,11 +392,24 @@ interface CostCN extends CostCNValues {
 ```
 
 - `input`、`output`：输入与输出单价。
-- `reasoning`：单独计费的推理 Token 单价，不等同于“思考模式价格”。
+- `reasoning`：单独计费的推理 Token 单价，不等同于"思考模式价格"。
 - `cache_read`、`cache_write`：缓存命中读取和缓存写入单价。
 - `input_audio`、`output_audio`：音频 Token 单价。
 - `cost_cn.thinking`：思考模式采用另一整套输入、输出或缓存价格时使用。
 - `context_over_200k`：models.dev 的兼容输出字段；新消费者应优先支持 `tiers`。
+
+三种价格的推荐选择顺序：
+
+```ts
+function priceKind(model: ProviderModel) {
+  if (model.cost_cn) return { kind: "cny", value: model.cost_cn }
+  if (model.cost_points) return { kind: "points", value: model.cost_points }
+  if (model.cost) return { kind: "usd", value: model.cost }
+  return { kind: "unknown" }
+}
+```
+
+不要把三种价格相加，也不要在没有 `credits_cn` 时把积分换算成人民币。
 
 ### 阶梯选择器
 
@@ -451,9 +460,9 @@ interface TokenRange {
 - `time.timezone` 使用 IANA 时区，例如 `Asia/Shanghai`。
 - 时间窗口开始时间包含、结束时间不包含；跨午夜窗口可能出现 `start > end`；`end` 可以是 `24:00`。
 - `days` 必须显式列出适用的星期。
-- `holiday = "exclude_cn_statutory"` 表示该窗口仅在中国法定节假日之外匹配。ModelLink 不维护具体节假日日期；调用方需要注入自己的节假日 resolver。resolver 缺失或无法判断当年日期时，应返回“价格未知”，不能静默套用顶层价格。
-- `conditional.date`：按日期生效的档位，`from` / `to` 使用 `YYYY-MM-DD`，构成闭开区间（`from` 当天 00:00 含、`to` 当天 00:00 不含）；`timezone` 缺省为 `Asia/Shanghai`。用于官方已公告但尚未生效的调价：当前价保留在顶层，新价格写成 `date.from` 指向生效日的 tier，生效前的请求自动回退顶层价格。生效日之后的下一轮数据维护应把该 tier 塌缩回顶层并移除 `date` 条件，避免档位堆积。
-- 顶层价格是默认回退价格。顶层 `label` 是该回退档的展示名，例如“闲时”或“非高峰”。存在 `tiers` 时，精确计价应先匹配 `tiers[].when`；未匹配时才使用顶层值。
+- `holiday = "exclude_cn_statutory"` 表示该窗口仅在中国法定节假日之外匹配。ModelLink 不维护具体节假日日期；调用方需要注入自己的节假日 resolver。resolver 缺失或无法判断当年日期时，应返回"价格未知"，不能静默套用顶层价格。
+- `conditional.date`：按日期生效的档位，`from` / `to` 使用 `YYYY-MM-DD`，构成闭开区间（`from` 当天 00:00 含、`to` 当天 00:00 不含）；`timezone` 缺省为 `Asia/Shanghai`。用于官方已公告但尚未生效的调价：当前价保留在顶层，新价格写成 `date.from` 指向生效日的 tier，生效前的请求自动回退顶层价格。
+- 顶层价格是默认回退价格。顶层 `label` 是该回退档的展示名，例如"闲时"或"非高峰"。存在 `tiers` 时，精确计价应先匹配 `tiers[].when`；未匹配时才使用顶层值。
 - 多个 `tiers` 可以覆盖全部时间。在这种情况下顶层值只是安全兜底，实际计价不会走到。
 
 不要假定数组顺序就是价格高低。对于条件重叠的异常数据，调用方应停止自动估价并展示官方文档，而不是自行选择最便宜的一档。
@@ -509,11 +518,9 @@ interface CreditPackageCN {
 - `price_month` 单位为人民币元/月。
 - `quota_windows` 保留服务商官方窗口描述，不应假设所有套餐都按自然月重置。
 - `credits_cn` 是兼容摘要，表示 `points` 积分对应 `cny` 元，不代表模型的 Token 价格。
-- `credit_packages_cn` 表示官方提供的多档一次性积分包。新消费者应优先读取它；
-  只有旧数据没有该字段时才回退 `credits_cn`。
+- `credit_packages_cn` 表示官方提供的多档一次性积分包。新消费者应优先读取它；只有旧数据没有该字段时才回退 `credits_cn`。
 - `valid_days` 仅在官网给出可精确记录的天数时出现。
-- 当两个字段同时存在时，`credits_cn` 必须精确匹配 `credit_packages_cn` 中的一档，
-  包括 `valid_days` 是否存在和具体数值，避免兼容摘要与完整档位漂移。
+- 当两个字段同时存在时，`credits_cn` 必须精确匹配 `credit_packages_cn` 中的一档，包括 `valid_days` 是否存在和具体数值，避免兼容摘要与完整档位漂移。
 
 ## 请求覆盖与实验模式
 
@@ -545,7 +552,7 @@ interface Experimental {
 - `body`、`headers` 是调用该模型必须附加的静态值。
 - `experimental.modes` 描述命名实验模式；调用方只有显式选择某个 mode 时才应应用其中覆盖。
 
-## `catalog.json`
+## `catalog.json` 与 `schema.json`
 
 `catalog.json` 没有定义新的模型字段，只是组合另两个文件：
 
@@ -556,16 +563,7 @@ interface Catalog {
 }
 ```
 
-以下关系恒成立：
-
-```ts
-catalog.models    // 与 models.json 相同
-catalog.providers // 与 api.json 相同
-```
-
-需要同时搜索基础模型与服务商时使用它；只需要调用目录的客户端优先下载体积更小的 `api.json`。
-
-## `schema.json`
+`catalog.models` 与 `models.json` 相同，`catalog.providers` 与 `api.json` 相同。需要同时搜索基础模型与服务商时使用它；只需要调用目录的客户端优先下载体积更小的 `api.json`。
 
 `schema.json` 是提交在 ModelLink 仓库中并随 GitHub Pages、npm 数据包共同分发的公开结构契约：
 
@@ -573,37 +571,17 @@ catalog.providers // 与 api.json 相同
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://goroutined.github.io/modellink/schema.json",
-  "x-modellink-schema-version": 2,
+  "x-modellink-schema-version": 3,
   "$ref": "#/definitions/Catalog"
 }
 ```
 
-根 `$ref` 默认验证 `catalog.json`。其他文件和可复用对象通过以下引用提供：
+根 `$ref` 默认验证 `catalog.json`。其他文件和可复用对象通过 `#/definitions/...` 引用提供（`Models`、`Providers`、`Catalog`、`Manifest`、`ModelMetadata`、`ProviderModel`、`Provider`、`Protocol`、`ProviderEndpoint`、`ProviderLinks`、`ReasoningOption`、`JsonValue`）。
 
-```text
-schema.json#/definitions/Models
-schema.json#/definitions/Providers
-schema.json#/definitions/Catalog
-schema.json#/definitions/Manifest
-schema.json#/definitions/ModelMetadata
-schema.json#/definitions/ProviderModel
-schema.json#/definitions/Provider
-schema.json#/definitions/Protocol
-schema.json#/definitions/ProviderEndpoint
-schema.json#/definitions/ProviderLinks
-schema.json#/definitions/ReasoningOption
-schema.json#/definitions/JsonValue
-```
+- `x-modellink-schema-version` 表示公开对象结构的兼容级别；Schema 文件的 SHA-256 表示该版本的精确内容。仅新增可选字段等兼容更新只改变哈希不升级版本。
+- `schema.json` 面向数据读取和代码生成，描述公开字段、必填性、可选性与枚举。它不是数据审计规则，不保证价格、日期或能力的真实性——这些由仓库数据、运行时校验和维护流程保证。Schema 验证通过只表示 JSON 可以按当前契约读取。
 
-`x-modellink-schema-version` 表示公开对象结构的兼容级别；Schema 文件的 SHA-256 表示该版本的精确内容。ModelLink 公开对象是严格结构，新增字段也可能要求严格验证器或代码生成客户端重新生成，因此本次加入 `Provider.links` 后版本升级为 `2`。仅描述、注释等不改变可读取结构的更新可以只改变哈希而不升级版本。
-
-`schema.json` 面向数据读取和代码生成，描述公开字段、必填性、可选性、基础类型、对象结构与枚举。它不是 ModelLink 的数据审计规则，不保证价格、日期、模型能力或跨字段关系的真实性；这些内容由仓库数据、运行时 Schema、目录构建校验和维护流程保证。
-
-因此 Schema 验证通过只表示 JSON 可以按照当前公开契约读取，不代表每个字段都已完成最新官网审计。下游不需要复刻仓库的数据审核逻辑，也不应使用 `false`、`0` 或自行推导的值替代缺失的可选字段。
-
-### 验证与复用定义
-
-下面的 TypeScript 示例直接验证完整 Catalog；`addSchema` 后也可以用同一个 `$id` 引用任意独立定义：
+用 Ajv 验证与复用定义的示例：
 
 ```ts
 import Ajv from "ajv"
@@ -624,14 +602,6 @@ const validateProvider = ajv.compile({
 })
 ```
 
-代码生成器可将整个文件作为输入，也可只选择 `Provider`、`ProviderLinks`、`ProviderModel`、`ModelMetadata`、`Protocol`、`ProviderEndpoint` 或 `ReasoningOption` 等定义。`Models` 和 `Providers` 都是以 ID 为键的 Map，而不是固定字段对象。
-
-公开 Schema 的 `$ref` 只指向 `definitions` 下的稳定顶层定义，不依赖某个对象内部属性的 JSON Pointer。这可以避免下游代码生成器把仓库生成过程中的内部复用路径误认为公共类型名。
-
-可选布尔值必须保留三态语义：字段缺失表示“未知”，`false` 表示服务商明确不支持或固定不可调，`true` 表示已有明确支持信息。不要在反序列化时把缺失值默认成 `false`。
-
-### 判断 Schema 是否更新
-
 客户端应同时保存支持的兼容版本和上次使用的 Schema 哈希：
 
 ```ts
@@ -643,7 +613,7 @@ const schemaChanged =
   manifest.files["schema.json"].sha256 !== cachedSchemaSha256
 ```
 
-`schema_version` 变化代表可能存在破坏性修改；版本相同但 SHA-256 变化通常表示新增说明、可选字段或其他兼容更新，代码生成项目可据此提示重新生成类型。
+`schema_version` 变化代表可能存在破坏性修改；版本相同但 SHA-256 变化通常表示兼容更新，代码生成项目可据此提示重新生成类型。
 
 ## `manifest.json`
 
@@ -666,121 +636,36 @@ interface Manifest {
 ```
 
 - `version`：`@modellink/data` 的 SemVer 版本。
-- `schema_version`：与 `schema.json` 的 `x-modellink-schema-version` 相同，当前为 `3`。客户端遇到高于自身支持范围的版本时应停止自动加载并保留旧数据。
+- `schema_version`：与 `schema.json` 的 `x-modellink-schema-version` 相同。客户端遇到高于自身支持范围的版本时应停止自动加载并保留旧数据。
 - `generated_at`：构建时的 ISO 8601 时间，不代表每个模型的更新时间。
 - `source.revision`：生成该包的 Git commit SHA。
 - `files.*.sha256`：文件原始字节的 SHA-256 十六进制值。
 - `files.*.size`：文件原始字节数。
 
-推荐先通过 npm Registry 元数据比较 `version`，变化后再下载 `.tgz`，校验 Registry 的 `dist.integrity`，最后使用 Manifest 逐文件校验。完整更新流程见 [README](./README.md#获取数据)。
+推荐先通过 npm Registry 元数据比较 `version`，变化后再下载 `.tgz`，校验 Registry 的 `dist.integrity`，最后使用 Manifest 逐文件校验。完整更新流程见 [README](./README.md#生态系统)。
 
-## 与 models.dev 对照
+## 与 models.dev 的关系
 
-本节以 models.dev 官方仓库 `dev` 分支在 2026-09-01 的 [`3b0487c`](https://github.com/anomalyco/models.dev/tree/3b0487c2b809973b61c1562885b11782c0b3820c) 为对照基准。models.dev 会持续演进，迁移代码仍应忽略未知字段。
+ModelLink 与 [models.dev](https://models.dev) 保持核心结构兼容：`/api.json`、`/models.json`、`/catalog.json` 同形，Provider 的 `models` 均为调用 ID Map，模型核心能力、日期、模态、限制与 `cost`（美元）、`reasoning_options`、`provider`、`experimental`、`status` 字段保留。
 
-### 保持一致的核心结构
-
-| 项目 | models.dev | ModelLink |
-| --- | --- | --- |
-| `/api.json` | Provider Map | 同形，字段超集 |
-| `/models.json` | canonical model Map | 同形，字段超集 |
-| `/catalog.json` | `{ models, providers }` | 相同 |
-| Provider 的 `models` | 调用 ID Map | 相同 |
-| 模型核心能力、日期、模态、限制 | 支持 | 保留 |
-| `cost` | 美元/百万 Token | 保留兼容，但中国区数据可以缺失 |
-| `reasoning_options` | toggle/effort/budget | 保留并增加协议、字段和默认值信息 |
-| `provider`、`experimental`、`status` | 支持 | 保留 |
-
-### ModelLink 扩展或语义调整
+在此基础上 ModelLink 扩展了以下字段（下游处理建议）：
 
 | 字段/规则 | 差异 | 下游处理建议 |
 | --- | --- | --- |
-| `Provider.protocol` | ModelLink 新增默认协议 | 优先使用，不要从 `npm` 推断 |
-| `Provider.endpoints` | ModelLink 新增多协议 Base URL | 选择 endpoint 后再检查模型 `endpoints` |
-| `ProviderModel.endpoints` | ModelLink 新增模型级协议白名单 | 过滤 Provider endpoints |
-| `cost_cn` | ModelLink 新增人民币官方价格 | 国内展示优先读取；不要由 `cost` 换算 |
-| `cost_points` | ModelLink 新增订阅积分消耗 | 与人民币价格分开展示 |
-| `plans_cn`、`credits_cn`、`credit_packages_cn` | ModelLink 新增套餐、积分摘要与积分包档位 | 作为 Provider 信息处理 |
-| `series` | ModelLink 新增同一模型版本系列 | 不要把 `family` 当作版本系列 |
-| `doc`（Provider Model） | ModelLink 增加精确型号文档 | 审计或展示模型详情时优先使用 |
-| `reasoning_options.field/endpoints/default` | ModelLink 增加调用细节 | 按 endpoint 应用，不做协议间推导 |
-| 条件/分时 tier | ModelLink 扩展 `tiers` 选择器 | 支持 Token 范围与时间窗口 |
-| Provider Model 的部分能力与 `limit.output` | ModelLink 允许缺失 | 缺失按未知处理 |
-| `reasoning_options` | ModelLink 不要求所有 `reasoning=true` 都有控制项 | 能思考不代表可由 API 控制 |
+| `Provider.protocol` | 新增默认协议 | 优先使用，不要从 `npm` 推断 |
+| `Provider.endpoints` | 新增多协议 Base URL | 选择 endpoint 后再检查模型 `endpoints` |
+| `ProviderModel.endpoints` | 新增模型级协议白名单 | 过滤 Provider endpoints |
+| `cost_cn` | 新增人民币官方价格 | 国内展示优先读取；不要由 `cost` 换算 |
+| `cost_points` | 新增订阅积分消耗 | 与人民币价格分开展示 |
+| `plans_cn`、`credits_cn`、`credit_packages_cn` | 新增套餐、积分摘要与积分包档位 | 作为 Provider 信息处理 |
+| `series` | 新增同一模型版本系列 | 不要把 `family` 当作版本系列 |
+| `doc`（Provider Model） | 增加精确型号文档 | 审计或展示模型详情时优先使用 |
+| `reasoning_options.field/endpoints/default` | 增加调用细节 | 按 endpoint 应用，不做协议间推导 |
+| 条件/分时/日期 tier | 扩展 `tiers` 选择器 | 支持 Token 范围、时间窗口与日期生效 |
+| Provider Model 部分能力与 `limit.output` | 允许缺失 | 缺失按未知处理 |
 
-### 不会出现在输出中的源码字段
-
-| 字段 | 作用 |
-| --- | --- |
-| `base_model` | Provider TOML 继承 canonical model |
-| `base_model_omit` | 删除缺少该 Provider 精确证据的继承字段 |
-
-它们属于构建实现，而不是消费端契约。不要等待或依赖这些字段出现在 `api.json`。
-
-## 从 models.dev 迁移
-
-### 最小迁移
-
-如果应用只使用 Provider Map 的核心字段，可以先直接替换地址：
-
-```diff
-- https://models.dev/api.json
-+ https://goroutined.github.io/modellink/api.json
-```
-
-同时完成三项检查：
-
-1. JSON 解码器允许出现未知字段。
-2. 可选布尔字段支持 `undefined`，不会自动变成 `false`。
-3. 缺少 `cost` 时不会显示“免费”，而是尝试 `cost_cn`、`cost_points` 或显示“价格未知”。
-
-### 推荐的价格选择
-
-```ts
-function priceKind(model: ProviderModel) {
-  if (model.cost_cn) return { kind: "cny", value: model.cost_cn }
-  if (model.cost_points) return { kind: "points", value: model.cost_points }
-  if (model.cost) return { kind: "usd", value: model.cost }
-  return { kind: "unknown" }
-}
-```
-
-不要把三种价格相加，也不要在没有 `credits_cn` 时把积分换算成人民币。
-
-### 推荐的接入选择
-
-1. 如果客户端指定协议，在 `provider.endpoints` 中寻找相应协议。
-2. 用 `model.endpoints` 过滤模型未确认支持的入口。
-3. 客户端未指定协议时使用 `default: true` 的 endpoint。
-4. 老数据没有 `endpoints` 时回退到顶层 `protocol` + `api`。
-5. 最后应用 `model.provider` 中的模型级请求覆盖。
-
-### canonical model 与调用 ID
-
-```ts
-const canonical = catalog.models["deepseek/deepseek-v4-pro"]
-const provider = catalog.providers["alibaba-cn"]
-const offering = provider.models["deepseek-v4-pro-0813"]
-```
-
-三者用途不同：
-
-- canonical ID 用于描述模型本身。
-- Provider ID 用于选择服务。
-- Provider Model ID 是发给该服务商 API 的实际模型名。
-
-不要把 canonical ID 自动当作调用 ID，也不要假设不同 Provider 使用相同调用 ID。
-
-## 兼容性建议
-
-- 对新增可选字段保持前向兼容，忽略暂不认识的字段。
-- 对枚举使用“已知值 + unknown fallback”，避免新协议或新状态导致整个目录无法读取。
-- 缓存上一次校验通过的数据；网络或完整性校验失败时不要清空目录。
-- 使用 Manifest `schema_version` 防御未来破坏性变化，使用 npm `version` 判断内容更新。
-- 展示布尔能力时区分“是 / 否 / 未知”。
-- 展示 Token 限制时只显示实际存在的字段，不通过数学关系补齐缺失值。
-- 自动估价无法完整匹配 tier 时，返回“需按官方规则计算”，不要给出看似精确的错误价格。
+源码字段 `base_model` / `base_model_omit` 属于构建实现，不会出现在输出 JSON 中，不要等待或依赖它们。
 
 ## Schema 来源
 
-机器可读契约是仓库根目录的 [`schema.json`](./schema.json)，它由 [`packages/core/src/schema.ts`](./packages/core/src/schema.ts) 和 [`packages/core/src/public-schema.ts`](./packages/core/src/public-schema.ts) 生成。本指南解释消费语义。修改 TypeScript Schema 后运行 `bun run schema` 更新文件，`bun run check:schema` 可以只检查是否过期。贡献或修改源数据时请另见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+机器可读契约是仓库根目录的 [`schema.json`](./schema.json)，它由 [`packages/core/src/schema.ts`](./packages/core/src/schema.ts) 和 [`packages/core/src/public-schema.ts`](./packages/core/src/public-schema.ts) 生成。本指南解释消费语义。修改 TypeScript Schema 后运行 `bun run schema` 更新文件。贡献或修改源数据时请另见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
