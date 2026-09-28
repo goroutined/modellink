@@ -4,7 +4,7 @@ name = "MiniMax M2.1 Highspeed"
 doc = "https://platform.minimaxi.com/docs/guides/text-generation"
 
 [interleaved]
-field = "reasoning_details"
+field = "reasoning_content"
 
 [provider.body]
 reasoning_split = true

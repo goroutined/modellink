@@ -3,7 +3,7 @@ endpoints = ["openai", "anthropic", "responses"]
 doc = "https://platform.minimaxi.com/docs/guides/text-generation"
 
 [interleaved]
-field = "reasoning_details"
+field = "reasoning_content"
 
 [provider.body]
 reasoning_split = true

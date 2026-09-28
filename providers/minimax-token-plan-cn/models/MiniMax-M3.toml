@@ -6,7 +6,7 @@ doc = "https://platform.minimaxi.com/docs/token-plan/quickstart"
 type = "toggle"
 
 [interleaved]
-field = "reasoning_details"
+field = "reasoning_content"
 
 [provider.body]
 reasoning_split = true
