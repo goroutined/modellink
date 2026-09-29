@@ -7,7 +7,7 @@
 
 中国 AI 模型与推理服务商的开源目录：谁家有什么模型、什么能力、怎么调用、多少钱——一份数据源，持续核验。
 
-[数据格式](./DATA_FORMAT.md) · [Go SDK](https://github.com/goroutined/modellink-go) · [参与贡献](./CONTRIBUTING.md)
+[在线浏览](https://goroutined.github.io/modellink/) · [数据格式](./DATA_FORMAT.md) · [Go SDK](https://github.com/goroutined/modellink-go) · [参与贡献](./CONTRIBUTING.md)
 
 ## 为什么需要 ModelLink
 

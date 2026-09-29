@@ -631,12 +631,35 @@ function renderNotFound(kind, id, section) {
   app.innerHTML = `<div class="error-state"><h1>未找到${escapeHtml(kind)}</h1><p><code>${escapeHtml(id ?? "")}</code></p><a class="button-link" href="#/${section}">返回${escapeHtml(kind)}列表</a></div>`;
 }
 
+// 搜索框重渲染后的光标恢复：render() 会重建 DOM，必须把光标放回原位置，
+// 否则每次输入后光标跳到开头，出现 "deepseek" 输成 "keespeed" 的问题。
+// 中文输入法组合期间不重渲染，避免打断 composition。
+let searchComposing = false;
+
+function refreshListFromSearch(input) {
+  state.query = input.value;
+  const caret = input.selectionStart ?? input.value.length;
+  render();
+  const next = document.querySelector("[data-local-search]");
+  if (!next) return;
+  next.focus();
+  const position = Math.min(caret, next.value.length);
+  next.setSelectionRange(position, position);
+}
+
 function bindListControls() {
   const localSearch = document.querySelector("[data-local-search]");
+  localSearch?.addEventListener("compositionstart", () => { searchComposing = true; });
+  localSearch?.addEventListener("compositionend", (event) => {
+    searchComposing = false;
+    refreshListFromSearch(event.target);
+  });
   localSearch?.addEventListener("input", (event) => {
-    state.query = event.target.value;
-    render();
-    document.querySelector("[data-local-search]")?.focus();
+    if (searchComposing) {
+      state.query = event.target.value;
+      return;
+    }
+    refreshListFromSearch(event.target);
   });
   document.querySelectorAll("[data-filter]").forEach((select) => select.addEventListener("change", () => {
     state.modelFilters[select.dataset.filter] = select.value;
