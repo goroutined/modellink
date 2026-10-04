@@ -10,7 +10,7 @@ endpoints = ["openai", "anthropic"]
 
 [[reasoning_options]]
 type = "effort"
-field = "chat_template_kwargs.reasoning_effort"
+field = "reasoning_effort"
 endpoints = ["openai", "anthropic"]
 values = ["low", "high", "max"]
 default = "high"
