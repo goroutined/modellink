@@ -10,5 +10,5 @@ output = 256_000
 [cost_cn]
 input = 6
 output = 30
-cache_read = 0.6
+cache_read = 1.2
 cache_write = 7.5
