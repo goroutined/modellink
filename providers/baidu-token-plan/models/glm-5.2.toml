@@ -7,3 +7,9 @@ doc = "https://cloud.baidu.com/doc/qianfan/s/Smoghsq3g"
 context = 1_000_000
 input = 1_000_000
 output = 131_072
+
+[cost_points]
+per_tokens = 1_000
+input = 8
+output = 28
+cache_read = 2
