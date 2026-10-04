@@ -8,8 +8,8 @@ temperature = false
 field = "reasoning_content"
 
 [limit]
-context = 128_000
-input = 119_000
+context = 248_832
+input = 121_856
 output = 65_536
 
 [cost_cn]

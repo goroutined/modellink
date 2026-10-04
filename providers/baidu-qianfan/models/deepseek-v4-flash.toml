@@ -18,9 +18,9 @@ values = ["high", "max"]
 default = "high"
 
 [limit]
-context = 1_000_000
-input = 1_000_000
-output = 393_216
+context = 1_155_072
+input = 1_024_000
+output = 131_072
 
 [cost_cn]
 input = 1

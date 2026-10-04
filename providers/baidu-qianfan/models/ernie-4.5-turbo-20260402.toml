@@ -4,8 +4,8 @@ endpoints = ["openai", "anthropic"]
 doc = "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
 
 [limit]
-context = 128_000
-input = 123_000
+context = 138_240
+input = 125_952
 output = 12_288
 
 [cost_cn]

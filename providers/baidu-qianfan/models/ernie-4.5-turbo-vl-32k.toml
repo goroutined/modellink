@@ -2,8 +2,8 @@ base_model = "baidu/ernie-4.5-turbo-vl"
 doc = "https://cloud.baidu.com/doc/qianfan-api/s/Dmba8k71y"
 
 [limit]
-context = 32_000
-input = 27_000
+context = 39_936
+input = 27_648
 output = 12_288
 
 [cost_cn]
