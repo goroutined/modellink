@@ -1,0 +1,14 @@
+base_model = "xiaomi/mimo-v2.6-flash"
+base_model_omit = ["temperature", "interleaved"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/130060"
+
+[limit]
+context = 1_000_000
+input = 1_000_000
+output = 131_072
+
+# 套餐成员以 130060 为准；limits 与模态证据同 TokenHub 模型列表（130051）。
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
