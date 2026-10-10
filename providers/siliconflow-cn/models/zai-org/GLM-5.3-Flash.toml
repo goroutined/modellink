@@ -1,0 +1,15 @@
+# 2026-10-10 官方清单与价格页精确记录：发布 2026-08-26，1M 上下文、视觉输入、Tools；
+# 价格页 0.8/2.8/0.23。推理开关/温度/结构化输出/输出上限官方未说明，随 GLM-5.3 惯例省略；
+# 模态继承 canonical（“视觉”badge 佐证，先例同 Kimi-K2.7-Code 不收窄）。
+base_model = "zhipu/glm-5.3-flash"
+base_model_omit = ["reasoning", "temperature", "structured_output", "limit.output"]
+doc = "https://cloud.siliconflow.cn/models?target=zai-org%2FGLM-5.3-Flash"
+tool_call = true
+
+[limit]
+context = 1_048_576
+
+[cost_cn]
+input = 0.8
+output = 2.8
+cache_read = 0.23
