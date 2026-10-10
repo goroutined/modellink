@@ -1,0 +1,38 @@
+name = "MiniMax M Plan"
+env = ["MINIMAX_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://api.minimax.cn/v1"
+doc = "https://platform.minimaxi.com/docs/m-plan/intro"
+
+[links]
+models = "https://platform.minimaxi.com/docs/m-plan/intro"
+pricing = "https://platform.minimaxi.com/docs/m-plan/monthly-offer"
+api_key = "https://platform.minimaxi.com/docs/m-plan/quickstart"
+console = "https://platform.minimax.cn/console/plan"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://api.minimax.cn/v1"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://api.minimax.cn/anthropic"
+
+[[plans_cn]]
+name = "Go"
+price_month = 49
+usage = "入门使用，完成简单调研、轻量写作或小范围的代码修改。"
+
+[[plans_cn]]
+name = "Explore"
+price_month = 119
+usage = "每天使用，日常辅助编程、写作与资料整理，处理多轮任务。"
+
+[[plans_cn]]
+name = "Build"
+price_month = 469
+usage = "高频使用，处理长上下文、复杂的编程任务或大量多模态创作。"

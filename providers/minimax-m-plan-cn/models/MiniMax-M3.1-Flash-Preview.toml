@@ -1,0 +1,43 @@
+# 官方 models-intro 与 OpenAI/Anthropic 兼容文档：
+# 原生多模态（文本/图片/视频输入；图片≤10MB、视频≤50MB，Files API 视频≤512MB）、1M 上下文；
+# thinking 强制开启（disabled 返回 400，无开关）；思考深度可调：OpenAI 协议顶层 reasoning_effort、
+# Anthropic 协议 output_config.effort，取值 low/medium/high/xhigh/max、默认 max；
+# thinking 内容经 reasoning_content 单独提供（reasoning_split=false 暂不支持）。
+# 发布日期官方未公布，按首次随 M Plan 文档收录记录；HF 无仓库，记为非开放权重。
+name = "MiniMax M3.1 Flash Preview"
+description = "MiniMax M Plan 套餐当前唯一的文本模型，Go/Explore/Build 三档均可用。"
+release_date = "2026-10-09"
+last_updated = "2026-10-09"
+attachment = true
+reasoning = true
+tool_call = true
+open_weights = false
+endpoints = ["openai", "anthropic"]
+doc = "https://platform.minimaxi.com/docs/m-plan/intro"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "medium", "high", "xhigh", "max"]
+default = "max"
+
+[[reasoning_options]]
+type = "effort"
+field = "output_config.effort"
+endpoints = ["anthropic"]
+values = ["low", "medium", "high", "xhigh", "max"]
+default = "max"
+
+[limit]
+context = 1_000_000
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[interleaved]
+field = "reasoning_content"
+
+[provider.body]
+reasoning_split = true
