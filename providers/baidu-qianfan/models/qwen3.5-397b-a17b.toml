@@ -27,3 +27,4 @@ output = 18
 type = "conditional"
 [cost_cn.tiers.when.input]
 gt = 128_000
+lte = 256_000

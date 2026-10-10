@@ -19,7 +19,7 @@ default = "high"
 [limit]
 context = 1_155_072
 input = 1_024_000
-output = 131_072
+output = 393_216
 
 [cost_cn]
 input = 12
