@@ -17,4 +17,4 @@ values = ["low", "medium", "high"]
 [cost_cn]
 input = 7
 output = 20
-cache_read = 0.35
+cache_read = 0.70
