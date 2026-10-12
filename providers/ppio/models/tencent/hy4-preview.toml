@@ -1,0 +1,18 @@
+# 2026-10-12 PPIO 官方模型详情页精确记录：tencent/hy4-preview 在线，
+# 6/18/0.3 每 Mt，1M 上下文、64K 最大输出，Text 输入输出，
+# Function Calling/结构化输出/reasoning/Anthropic API 官方标注支持；
+# 输入上限与温度支持官方未说明，随 PPIO 惯例省略；
+# limits 用目录 JSON 十进制值（context_size=1000000、max_output_tokens=64000），不取 canonical 二进制值。
+base_model = "tencent/hy4-preview"
+base_model_omit = ["temperature", "limit.input"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ppio.com/model/tencent/hy4-preview"
+
+[limit]
+context = 1_000_000
+output = 64_000
+
+[cost_cn]
+input = 6
+output = 18
+cache_read = 0.3
