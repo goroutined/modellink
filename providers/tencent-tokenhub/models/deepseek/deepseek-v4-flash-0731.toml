@@ -3,6 +3,7 @@ base_model = "deepseek/deepseek-v4-flash-0731"
 name = "DeepSeek V4 Flash 0731 正式版 原厂直供（deepseek/deepseek-v4-flash-0731）"
 endpoints = ["openai", "responses", "anthropic"]
 doc = "https://cloud.tencent.com/document/product/1823/132248"
+attachment = true
 
 [[reasoning_options]]
 type = "toggle"
@@ -51,3 +52,8 @@ end = "12:00"
 days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
 start = "14:00"
 end = "18:00"
+
+# 2026-10-13 官方模型列表为原厂直供行新增“图片理解”能力。
+[modalities]
+input = ["image", "text"]
+output = ["text"]

@@ -3,6 +3,12 @@ base_model_omit = ["temperature"]
 name = "DeepSeek V4 Flash 0731（deepseek/deepseek-v4-flash-0731）"
 endpoints = ["openai", "anthropic"]
 doc = "https://cloud.tencent.com/document/product/1823/130060"
+attachment = true
 
 [limit]
 output = 393_216
+
+# 2026-10-13 官方模型列表为原厂直供行新增“图片理解”能力。
+[modalities]
+input = ["image", "text"]
+output = ["text"]
