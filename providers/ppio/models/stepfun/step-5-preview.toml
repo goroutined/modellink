@@ -1,0 +1,18 @@
+# 2026-10-14 PPIO 官方模型详情页与目录 JSON 精确记录：stepfun/step-5-preview 在线，
+# 7/20/0.7 每 Mt，context_size=1000000、max_output_tokens=64000（目录十进制值），
+# 输入模态 Text/Image/Video（与 canonical 一致直接继承），Function Calling/结构化输出/
+# reasoning/Anthropic API 官方标注支持；endpoints 仅 chat/completions + anthropic（无 responses）。
+# 输入上限与温度支持官方未说明，随 PPIO 惯例省略。
+base_model = "stepfun/step-5-preview"
+base_model_omit = ["temperature", "limit.input"]
+endpoints = ["openai", "anthropic"]
+doc = "https://ppio.com/model/stepfun/step-5-preview"
+
+[limit]
+context = 1_000_000
+output = 64_000
+
+[cost_cn]
+input = 7
+output = 20
+cache_read = 0.7
