@@ -7,7 +7,7 @@ doc = "https://platform.stepfun.com/docs/zh/step-plan/overview"
 
 [links]
 models = "https://platform.stepfun.com/docs/zh/step-plan/overview"
-pricing = "https://platform.stepfun.com/docs/zh/step-plan/overview"
+pricing = "https://platform.stepfun.com/docs/zh/step-plan/pricing"
 api_key = "https://platform.stepfun.com/docs/zh/step-plan/quick-start"
 console = "https://platform.stepfun.com/interface-key"
 
@@ -23,21 +23,21 @@ protocol = "anthropic-compatible"
 api = "https://api.stepfun.com/step_plan"
 
 [[plans_cn]]
-name = "Flash Mini"
+name = "Mini"
 price_month = 49
 usage = "每月 400M Credits"
 
 [[plans_cn]]
-name = "Flash Plus"
+name = "Plus"
 price_month = 99
 usage = "每月 1,600M Credits"
 
 [[plans_cn]]
-name = "Flash Pro"
+name = "Pro"
 price_month = 199
 usage = "每月 8,000M Credits"
 
 [[plans_cn]]
-name = "Flash Max"
+name = "Max"
 price_month = 699
 usage = "每月 40,000M Credits"
