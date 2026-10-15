@@ -1,0 +1,21 @@
+# Token Plan 个人版套餐成员（模型 ID 用官方原始大小写，调用也支持全小写）；
+# 能力与长度同 MaaS 按量版本，纯订阅无按 token 计价。
+base_model = "zhipu/glm-5.3"
+base_model_omit = ["structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://support.huaweicloud.com/Token-plan-maas/tokenplan-maas-0001.html"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai", "anthropic"]
+values = ["low", "high", "max"]
+default = "max"
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 1_048_576
+input = 1_048_576
+output = 131_072

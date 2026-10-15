@@ -1,0 +1,49 @@
+name = "华为云 MaaS Token Plan"
+env = ["HUAWEI_CLOUD_MAAS_TOKEN_PLAN_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+protocol = "openai-compatible"
+api = "https://api.modelarts-maas.com/plan/v2"
+doc = "https://support.huaweicloud.com/Token-plan-maas/tokenplan-maas-0001.html"
+
+[links]
+models = "https://support.huaweicloud.com/Token-plan-maas/tokenplan-maas-0001.html"
+pricing = "https://support.huaweicloud.com/price-maas/price-maas-0035.html"
+api_key = "https://support.huaweicloud.com/console-functions-maas/maas_0001.html"
+console = "https://console.huaweicloud.com/modelarts/?#/model-studio/resourcePlanManagement"
+
+[[endpoints]]
+id = "openai"
+protocol = "openai-compatible"
+api = "https://api.modelarts-maas.com/plan/v2"
+default = true
+
+[[endpoints]]
+id = "anthropic"
+protocol = "anthropic-compatible"
+api = "https://api.modelarts-maas.com/plan/anthropic"
+
+# 官方限制：仅西南-贵阳一区域、仅个人开发者、每日限量发售、仅支持升配不支持降配；
+# 额度仅在 AI 工具中生效，不可用于 API 调用（官方警告滥用可能封号）。
+[[plans_cn]]
+name = "Lite"
+price_month = 59
+usage = "适合用于首次体验 AI 能力。"
+quota_windows = ["每订阅月：5,000万 Tokens"]
+
+[[plans_cn]]
+name = "Standard"
+price_month = 149
+usage = "适合用于日常办公和轻量开发。"
+quota_windows = ["每订阅月：1.3亿 Tokens"]
+
+[[plans_cn]]
+name = "Pro"
+price_month = 399
+usage = "适合每天高频使用 AI 的开发者和效率达人。"
+quota_windows = ["每订阅月：3.8亿 Tokens"]
+
+[[plans_cn]]
+name = "Max"
+price_month = 799
+usage = "适合把 AI 当核心生产力工具的重度用户。"
+quota_windows = ["每订阅月：8.8亿 Tokens"]
