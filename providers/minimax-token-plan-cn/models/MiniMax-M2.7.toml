@@ -1,9 +1,0 @@
-base_model = "minimax/minimax-m2.7"
-endpoints = ["openai", "anthropic"]
-doc = "https://platform.minimaxi.com/docs/token-plan/intro"
-
-[interleaved]
-field = "reasoning_content"
-
-[provider.body]
-reasoning_split = true
