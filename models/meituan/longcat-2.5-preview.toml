@@ -1,3 +1,4 @@
+# 官方 chat 文档：temperature 固定（思考开启 1.0 / 关闭 0.7），传入其他值被覆盖，不可调。
 name = "LongCat-2.5-Preview"
 description = "美团 LongCat 高性能 Agentic 模型，代码生成与理解能力突出，面向编程与智能体任务。"
 family = "longcat"
@@ -5,7 +6,7 @@ release_date = "2026-09-25"
 last_updated = "2026-09-25"
 attachment = false
 reasoning = true
-temperature = true
+temperature = false
 tool_call = true
 open_weights = false
 
