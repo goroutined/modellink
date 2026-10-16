@@ -1,0 +1,43 @@
+# 2026-10-16 官方目录与价格页精确记录：发布 2026-09-10，多模态（图像+文本输入）、
+# 工具调用、1024K 上下文；价格页分时段：其余时间 2/8/0.04、闲时（02:00-08:00）1/4/0.02。
+# effort 取 DeepSeek 官方 V4.1-Flash 三档（low/high/max，默认 high），兼容平台透传。
+base_model = "deepseek/deepseek-v4.1-flash"
+base_model_omit = ["temperature"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.siliconflow.cn/models?target=deepseek-ai%2FDeepSeek-V4.1-Flash"
+
+[limit]
+context = 1_048_576
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high", "max"]
+default = "high"
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+label = "其他时间"
+input = 2
+output = 8
+cache_read = 0.04
+
+[[cost_cn.tiers]]
+label = "闲时"
+input = 1
+output = 4
+cache_read = 0.02
+
+[cost_cn.tiers.when]
+type = "conditional"
+
+[cost_cn.tiers.when.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+start = "02:00"
+end = "08:00"
