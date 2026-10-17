@@ -14,5 +14,5 @@ output = ["text"]
 [cost_cn]
 input = 12
 output = 36
-cache_read = 1.2
+cache_read = 1.5
 cache_write = 15
