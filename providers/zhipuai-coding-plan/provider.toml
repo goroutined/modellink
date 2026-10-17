@@ -7,9 +7,9 @@ doc = "https://docs.bigmodel.cn/cn/coding-plan/overview"
 
 [links]
 models = "https://docs.bigmodel.cn/cn/coding-plan/overview"
-pricing = "https://bigmodel.cn/coding-plan/personal/overview"
+pricing = "https://bigmodel.cn/apikey/coding-plan-per"
 api_key = "https://docs.bigmodel.cn/cn/coding-plan/quick-start"
-console = "https://bigmodel.cn/coding-plan/personal/overview"
+console = "https://bigmodel.cn/apikey/coding-plan-per"
 
 [[endpoints]]
 id = "openai"
