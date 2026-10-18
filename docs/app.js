@@ -314,8 +314,15 @@ function formatPointCost(cost, firstKey, secondKey) {
       cost: tier,
     })),
     ];
-    return `<span class="tier-prices">${rows.map(({ label, detail, cost: tierCost }, index) => `<span><small class="price-tier-summary"><span>${escapeHtml(label ?? `阶梯 ${index + 1}`)}</span>${priceHelp(detail)}</small>${formatPointCost({ ...tierCost, per_tokens: cost.per_tokens }, firstKey, secondKey)}</span>`).join("")}</span>`;
+    return `<span class="tier-prices">${rows.map(({ label, detail, cost: tierCost }, index) => `<span><small class="price-tier-summary"><span>${escapeHtml(label ?? `阶梯 ${index + 1}`)}</span>${priceHelp(detail)}</small>${formatPointModes({ ...tierCost, per_tokens: cost.per_tokens }, firstKey, secondKey)}</span>`).join("")}</span>`;
   }
+  return formatPointModes(cost, firstKey, secondKey);
+}
+
+// 只渲染单个档位的价格对，不处理 tiers；与 formatCnyModes 对称。
+// formatPointCost 的基准档行传入的是外层 cost 本体（仍带 tiers），
+// 若在阶梯分支里自递归会无限调用导致爆栈。
+function formatPointModes(cost, firstKey, secondKey) {
   const first = cost[firstKey];
   const second = cost[secondKey];
   const pair = `<span class="price-pair"><span>${first == null ? "-" : formatNumber(first)}</span><span class="price-separator">/</span><span>${second == null ? "-" : formatNumber(second)}</span></span>`;
