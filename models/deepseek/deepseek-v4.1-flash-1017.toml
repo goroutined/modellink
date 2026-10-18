@@ -1,0 +1,20 @@
+# DeepSeek 官方 API 的 deepseek-flash 当前服务版本，能力与 V4.1 Flash 一致。
+name = "DeepSeek V4.1 Flash 1017"
+description = "DeepSeek V4.1 Flash 的 1017 版本快照，支持文本与图片输入，面向编程、推理与视觉 Agent 任务。"
+family = "deepseek-flash"
+series = "deepseek-v4.1-flash"
+release_date = "2026-10-17"
+last_updated = "2026-10-17"
+attachment = true
+reasoning = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 1_000_000
+output = 393_216
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
