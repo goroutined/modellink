@@ -1,5 +1,6 @@
-# V4.1 Flash 官方当前推荐调用 ID。
-base_model = "deepseek/deepseek-v4.1-flash"
+# V4.1 Flash 官方当前推荐调用 ID（滚动更新）。
+# 官方定价页模型版本列标注当前服务 DeepSeek-V4.1-Flash-1017，故指向 1017 快照。
+base_model = "deepseek/deepseek-v4.1-flash-1017"
 name = "DeepSeek Flash"
 endpoints = ["openai", "anthropic", "responses"]
 doc = "https://api-docs.deepseek.com/zh-cn/quick_start/pricing"
