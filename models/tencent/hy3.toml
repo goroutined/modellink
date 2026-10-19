@@ -1,6 +1,6 @@
 name = "Hy3"
 description = "腾讯推出的混元旗舰语言模型，面向编程、长文理解、复杂推理与 Agent 工作流。"
-family = "hy3"
+family = "hunyuan"
 release_date = "2026-07-06"
 last_updated = "2026-07-06"
 attachment = false

@@ -1,6 +1,6 @@
 name = "MiMo V2.6 Flash"
 description = "小米全模态、高智能、低成本的高效推理模型，面向专业办公中的高频调用与规模化任务。"
-family = "mimo-v2.6-flash"
+family = "mimo"
 release_date = "2026-09-22"
 last_updated = "2026-09-22"
 attachment = true

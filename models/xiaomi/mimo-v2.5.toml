@@ -1,6 +1,6 @@
 name = "MiMo V2.5"
 description = "小米推出的原生全模态长上下文模型，面向多模态理解、复杂推理、工具调用与智能体任务。"
-family = "mimo-v2.5"
+family = "mimo"
 release_date = "2026-04-23"
 last_updated = "2026-07"
 attachment = true
