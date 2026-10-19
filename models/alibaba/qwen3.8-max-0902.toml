@@ -1,6 +1,6 @@
 name = "Qwen3.8 Max 0902"
 description = "Qwen3.8 Max 的升级快照，增强复杂工程编程、协作智能体、工具编排与多模态理解能力。"
-family = "qwen3.8-max"
+family = "qwen"
 series = "qwen3.8-max"
 release_date = "2026-09-02"
 last_updated = "2026-09-02"

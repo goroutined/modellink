@@ -54,13 +54,6 @@ export const ModelFamilyValues = [
 
   // Alibaba Qwen
   "qwen",
-  "qwen3.5",
-  "qwen3.6",
-  "qwen3.7-plus",
-  "qwen3.7-max",
-  "qwen3.7-flash",
-  "qwen3.8-max",
-  "qwen-free",
 
   // DeepReinforce
   "ornith",
@@ -137,13 +130,6 @@ export const ModelFamilyValues = [
 
   // MiniMax
   "minimax",
-  "minimax-m2",
-  "minimax-m2.1",
-  "minimax-m2.5",
-  "minimax-m2.7",
-  "minimax-m3",
-  "minimax-m3-free",
-  "minimax-free",
 
   // Hunyuan
   "hunyuan",

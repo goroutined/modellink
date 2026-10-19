@@ -1,6 +1,6 @@
 name = "MiniMax M2"
 description = "MiniMax 专为端到端编程与 Agent 工作流推出的开放权重 MoE 模型。"
-family = "minimax-m2"
+family = "minimax"
 release_date = "2025-10-27"
 last_updated = "2025-10-27"
 attachment = false

@@ -1,6 +1,6 @@
 name = "Qwen3.6 35B A3B"
 description = "通义千问推出的原生多模态 MoE 模型，以约 3B 激活参数支持推理、编程、工具调用与智能体任务。"
-family = "qwen3.6"
+family = "qwen"
 release_date = "2026-04-17"
 last_updated = "2026-04-17"
 attachment = true

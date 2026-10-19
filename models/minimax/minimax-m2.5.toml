@@ -1,6 +1,6 @@
 name = "MiniMax M2.5"
 description = "MiniMax 面向编程、工具调用、搜索与办公生产力推出的开放权重 Agent 模型。"
-family = "minimax-m2.5"
+family = "minimax"
 release_date = "2026-02-12"
 last_updated = "2026-02-12"
 attachment = false

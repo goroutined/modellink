@@ -1,6 +1,6 @@
 name = "Qwen3.5 35B A3B"
 description = "通义千问推出的开放权重原生多模态 MoE 模型，以较低激活参数支持推理、编程与 Agent。"
-family = "qwen3.5"
+family = "qwen"
 release_date = "2026-02"
 last_updated = "2026-02"
 attachment = true

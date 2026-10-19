@@ -1,6 +1,6 @@
 name = "Qwen3.5 Plus"
 description = "阿里巴巴推出的原生多模态 Plus 模型，面向编码智能体、生产工作流与高吞吐场景。"
-family = "qwen3.5"
+family = "qwen"
 release_date = "2026-02-15"
 last_updated = "2026-02-15"
 attachment = true

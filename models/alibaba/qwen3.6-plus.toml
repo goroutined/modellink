@@ -1,6 +1,6 @@
 name = "Qwen3.6 Plus"
 description = "阿里巴巴推出的原生多模态 Plus 模型，重点增强 Agentic Coding、视觉理解与工具使用能力。"
-family = "qwen3.6"
+family = "qwen"
 release_date = "2026-04-02"
 last_updated = "2026-04-02"
 attachment = true

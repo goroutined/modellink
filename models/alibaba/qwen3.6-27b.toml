@@ -1,6 +1,6 @@
 name = "Qwen3.6 27B"
 description = "通义千问推出的原生多模态稠密模型，重点增强代码生成、仓库级推理、工具调用与智能体工作流。"
-family = "qwen3.6"
+family = "qwen"
 release_date = "2026-04-23"
 last_updated = "2026-04-23"
 attachment = true

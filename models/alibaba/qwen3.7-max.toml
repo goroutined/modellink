@@ -1,6 +1,6 @@
 name = "Qwen3.7 Max"
 description = "通义千问面向智能体时代推出的旗舰文本模型，强化复杂推理、编程、办公与长周期自主执行。"
-family = "qwen3.7-max"
+family = "qwen"
 release_date = "2026-05-20"
 last_updated = "2026-05-20"
 attachment = false
