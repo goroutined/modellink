@@ -1,0 +1,18 @@
+# 2026-10-09 随 M Plan 以 Preview 名首发，2026-10-19 官方公告转正（API 文档已统一为 MiniMax-M3.1-Flash）。
+# 深度思考强制开启（thinking disabled / effort none 返回 400），思考深度五档可调，默认 max。
+name = "MiniMax M3.1 Flash"
+description = "MiniMax 最新 M 系列语言模型，原生多模态、1M 上下文的 Frontier Coding 模型，思考深度可调。"
+family = "minimax"
+release_date = "2026-10-09"
+last_updated = "2026-10-19"
+attachment = true
+reasoning = true
+tool_call = true
+open_weights = false
+
+[limit]
+context = 1_000_000
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]

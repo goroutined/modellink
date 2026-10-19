@@ -1,0 +1,29 @@
+# 2026-10-19 官方公告：M Plan 与 Token Plan 用户的 M2.5、M2.7 系列请求统一路由至 M3.1 Flash，
+# 原模型名保留为兼容入口；OpenAI/Anthropic 兼容文档示例已从 MiniMax-M3.1-Flash-Preview
+# 改为 MiniMax-M3.1-Flash（M Plan 专属文档仍写 Preview 名，属官方滞后）。
+# 深度思考强制开启（disabled 返回 400，无开关），思考深度五档可调，默认 max；
+# thinking 内容经 reasoning_content 单独提供（reasoning_split=false 暂不支持）。
+base_model = "minimax/minimax-m3.1-flash"
+description = "M Plan 套餐当前唯一的文本模型，Go/Explore/Build 三档均可用。"
+endpoints = ["openai", "anthropic"]
+doc = "https://platform.minimaxi.com/docs/m-plan/intro"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "medium", "high", "xhigh", "max"]
+default = "max"
+
+[[reasoning_options]]
+type = "effort"
+field = "output_config.effort"
+endpoints = ["anthropic"]
+values = ["low", "medium", "high", "xhigh", "max"]
+default = "max"
+
+[interleaved]
+field = "reasoning_content"
+
+[provider.body]
+reasoning_split = true

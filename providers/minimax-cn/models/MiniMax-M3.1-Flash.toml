@@ -1,0 +1,31 @@
+# 定价页暂无 M3.1-Flash 价格行，cost 先省略，待官方公布后补录。
+base_model = "minimax/minimax-m3.1-flash"
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://platform.minimaxi.com/docs/guides/text-generation"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "medium", "high", "xhigh", "max"]
+default = "max"
+
+[[reasoning_options]]
+type = "effort"
+field = "output_config.effort"
+endpoints = ["anthropic"]
+values = ["low", "medium", "high", "xhigh", "max"]
+default = "max"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning.effort"
+endpoints = ["responses"]
+values = ["low", "medium", "high", "xhigh", "max"]
+default = "max"
+
+[interleaved]
+field = "reasoning_content"
+
+[provider.body]
+reasoning_split = true
