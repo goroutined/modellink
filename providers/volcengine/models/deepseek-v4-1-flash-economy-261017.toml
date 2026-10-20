@@ -1,0 +1,62 @@
+# 经济版：价格页独立「deepseek-v4-1-flash经济版」行，常规版 8 折；能力与限流按模型清单与常规版同构。
+base_model = "deepseek/deepseek-v4.1-flash-1017"
+name = "DeepSeek V4.1 Flash 1017 Economy"
+endpoints = ["openai", "responses"]
+doc = "https://ark.volcengine.com/region:cn-beijing/model/detail?name=deepseek-v4-1-flash-economy"
+structured_output = true
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["openai", "responses"]
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high", "max"]
+default = "high"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning.effort"
+endpoints = ["responses"]
+values = ["low", "high", "max"]
+default = "high"
+
+[limit]
+context = 1_048_576
+input = 1_048_576
+output = 393_216
+
+[modalities]
+input = ["text", "image", "video", "pdf"]
+output = ["text"]
+
+[cost_cn]
+label = "空闲时段"
+input = 0.8
+output = 3.2
+cache_read = 0.016
+
+[[cost_cn.tiers]]
+label = "高峰时段"
+input = 1.6
+output = 6.4
+cache_read = 0.032
+
+[cost_cn.tiers.when]
+type = "conditional"
+
+[cost_cn.tiers.when.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "09:00"
+end = "12:00"
+
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "14:00"
+end = "18:00"
