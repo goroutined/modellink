@@ -2,6 +2,9 @@ base_model = "minimax/minimax-m3"
 endpoints = ["openai", "anthropic", "responses"]
 doc = "https://platform.minimaxi.com/docs/guides/text-generation"
 
+# MiniMax 平台固定 temperature=1、top_p=0.95，传入不生效；转售商各自网关可调。
+temperature = false
+
 [[reasoning_options]]
 type = "toggle"
 

@@ -1,0 +1,14 @@
+base_model = "minimax/minimax-m3.1-flash"
+base_model_omit = ["temperature", "interleaved"]
+endpoints = ["openai", "responses", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/130051"
+
+[limit]
+context = 1_000_000
+input = 1_000_000
+output = 524_288
+
+[cost_cn]
+input = 1
+output = 4
+cache_read = 0.1

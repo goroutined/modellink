@@ -1,0 +1,14 @@
+base_model = "minimax/minimax-m3.1-flash"
+base_model_omit = ["structured_output"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ai.360.com/open/zh/models/minimax/MiniMax-M3.1-Flash"
+
+[limit]
+context = 1_000_000
+output = 524_288
+
+[cost_cn]
+input = 0.9
+output = 3.6
+cache_read = 0.09
+cache_write = 1.125

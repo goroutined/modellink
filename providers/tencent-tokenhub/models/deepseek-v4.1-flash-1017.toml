@@ -1,0 +1,47 @@
+# 2026-10-21：型号能力见 130051，原厂直供峰谷价格见 130055。
+base_model = "deepseek/deepseek-v4.1-flash-1017"
+base_model_omit = ["temperature", "reasoning_options", "interleaved"]
+name = "DeepSeek V4.1 Flash 1017 原厂直供"
+endpoints = ["openai", "responses", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/130051"
+attachment = true
+reasoning = true
+tool_call = true
+structured_output = true
+
+[limit]
+context = 1_000_000
+input = 1_000_000
+output = 393_216
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[cost_cn]
+label = "闲时"
+input = 1
+output = 4
+cache_read = 0.02
+
+[[cost_cn.tiers]]
+label = "高峰时段"
+input = 2
+output = 8
+cache_read = 0.04
+
+[cost_cn.tiers.when]
+type = "conditional"
+
+[cost_cn.tiers.when.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "09:00"
+end = "12:00"
+
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "14:00"
+end = "18:00"

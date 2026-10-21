@@ -1,7 +1,8 @@
-# 定价页暂无 M3.1-Flash 价格行，cost 先省略，待官方公布后补录。
 base_model = "minimax/minimax-m3.1-flash"
 endpoints = ["openai", "anthropic", "responses"]
 doc = "https://platform.minimaxi.com/docs/guides/text-generation"
+# MiniMax 平台固定 temperature=1、top_p=0.95，传入不生效；转售商各自网关可调。
+temperature = false
 
 [[reasoning_options]]
 type = "effort"
@@ -29,3 +30,9 @@ field = "reasoning_content"
 
 [provider.body]
 reasoning_split = true
+
+# 标准层按量价；优先层（service_tier=priority）为标准层 1.5 倍，schema 无服务层级维度不入库。
+[cost_cn]
+input = 1
+output = 4
+cache_read = 0.1
