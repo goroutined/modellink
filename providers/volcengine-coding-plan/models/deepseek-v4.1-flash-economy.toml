@@ -1,0 +1,18 @@
+# 官方说明：与标准版完全相同的模型权重、能力与效果一致；经济版价格更低、生成速度略慢。
+# 深度思考默认开启、支持手动关闭；限时抵扣折扣活动不入库。
+base_model = "deepseek/deepseek-v4.1-flash-1017"
+endpoints = ["openai", "anthropic"]
+base_model_omit = ["temperature", "structured_output"]
+name = "DeepSeek V4.1 Flash Economy"
+doc = "https://www.volcengine.com/docs/82379/1925114"
+
+[[reasoning_options]]
+type = "toggle"
+
+[limit]
+context = 1_049_000
+output = 384_000
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
