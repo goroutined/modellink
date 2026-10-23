@@ -8,7 +8,7 @@ context = 1_000_000
 output = 128_000
 
 [cost_cn]
-input = 7.6
-output = 26.6
-cache_read = 1.9
-cache_write = 9.5
+input = 8
+output = 28
+cache_read = 2
+cache_write = 10
