@@ -15,3 +15,5 @@ field = "reasoning_content"
 input = 20
 output = 100
 cache_read = 2
+# 缓存写入取默认 5min 档；1h 档（¥40）TTL 维度暂不入库。
+cache_write = 20
