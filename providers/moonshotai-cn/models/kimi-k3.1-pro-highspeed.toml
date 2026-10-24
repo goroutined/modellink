@@ -1,0 +1,19 @@
+base_model = "moonshot/kimi-k3.1-pro"
+doc = "https://platform.moonshot.cn/docs/guide/kimi-k3.1-pro-highspeed-quickstart"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high", "max"]
+default = "max"
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 26
+output = 136
+cache_read = 1.3
+# 缓存写入取默认 5min 档；1h 档（¥52）TTL 维度暂不入库。
+cache_write = 26

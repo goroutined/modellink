@@ -75,6 +75,7 @@ export const ModelFamilyValues = [
   "kimi",
   "kimi-k2",
   "kimi-k3",
+  "kimi-k3.1",
   "kimi-free",
   "kimi-thinking",
 
