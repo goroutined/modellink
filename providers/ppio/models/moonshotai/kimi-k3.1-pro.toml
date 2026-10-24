@@ -1,0 +1,16 @@
+base_model = "moonshot/kimi-k3.1-pro"
+base_model_omit = ["temperature", "interleaved"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ppio.com/llm/moonshotai-kimi-k3.1-pro"
+
+[limit]
+context = 1_048_576
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[cost_cn]
+input = 13
+output = 68
+cache_read = 1.3

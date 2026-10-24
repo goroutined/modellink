@@ -1,0 +1,13 @@
+base_model = "minimax/minimax-m3.1-flash"
+base_model_omit = ["temperature", "interleaved"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ppio.com/llm/minimax-minimax-m3.1-flash"
+structured_output = true
+
+[limit]
+context = 1_000_000
+
+[cost_cn]
+input = 1
+output = 4
+cache_read = 0.1
