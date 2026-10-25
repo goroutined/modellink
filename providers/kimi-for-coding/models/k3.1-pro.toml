@@ -7,7 +7,7 @@ type = "effort"
 field = "reasoning_effort"
 endpoints = ["openai"]
 values = ["low", "high", "max"]
-default = "max"
+default = "high"
 
 [interleaved]
 field = "reasoning_content"
