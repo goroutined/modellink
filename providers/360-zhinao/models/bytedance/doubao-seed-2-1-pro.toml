@@ -11,4 +11,3 @@ output = 256_000
 input = 6
 output = 30
 cache_read = 1.2
-cache_write = 7.5

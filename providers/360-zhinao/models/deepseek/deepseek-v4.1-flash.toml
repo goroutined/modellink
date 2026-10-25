@@ -19,4 +19,3 @@ output = ["text"]
 input = 2
 output = 8
 cache_read = 0.04
-cache_write = 2.5

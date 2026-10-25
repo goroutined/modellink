@@ -7,4 +7,3 @@ doc = "https://ai.360.com/open/zh/models/deepseek/deepseek-v4-flash"
 input = 3
 output = 9
 cache_read = 0.3
-cache_write = 3.75

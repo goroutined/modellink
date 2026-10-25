@@ -7,4 +7,3 @@ doc = "https://ai.360.com/open/zh/models/deepseek/deepseek-v4-pro"
 input = 9
 output = 27
 cache_read = 0.9
-cache_write = 11.25

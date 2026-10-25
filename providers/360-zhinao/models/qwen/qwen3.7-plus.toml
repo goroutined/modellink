@@ -10,5 +10,3 @@ output = 65_536
 [cost_cn]
 input = 2
 output = 8
-cache_read = 0.2
-cache_write = 2.5

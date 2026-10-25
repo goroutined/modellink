@@ -14,7 +14,6 @@ output = 256_000
 input = 0.8
 output = 2.7
 cache_read = 0.16
-cache_write = 1
 
 [modalities]
 input = ["text", "image", "video", "audio"]
