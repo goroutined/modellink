@@ -1,0 +1,10 @@
+base_model = "moonshot/kimi-k3.1-pro"
+base_model_omit = ["reasoning", "temperature", "tool_call", "structured_output", "limit.input", "limit.output"]
+doc = "https://www.volcengine.com/docs/82379/2366394?lang=zh"
+
+[limit]
+context = 1_024_000
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]

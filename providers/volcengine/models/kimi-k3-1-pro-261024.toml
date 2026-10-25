@@ -1,0 +1,19 @@
+base_model = "moonshot/kimi-k3.1-pro"
+name = "Kimi K3.1 Pro 1024"
+endpoints = ["openai", "responses"]
+doc = "https://ark.volcengine.com/region:cn-beijing/model/detail?name=kimi-k3-1-pro"
+structured_output = true
+
+[modalities]
+input = ["text", "image", "video", "pdf"]
+output = ["text"]
+
+[limit]
+context = 1_048_576
+input = 1_048_576
+output = 131_072
+
+[cost_cn]
+input = 13
+output = 68
+cache_read = 1.3

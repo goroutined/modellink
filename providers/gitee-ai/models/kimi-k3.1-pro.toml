@@ -1,0 +1,12 @@
+base_model = "moonshot/kimi-k3.1-pro"
+base_model_omit = ["structured_output", "limit.output"]
+doc = "https://ai.gitee.com/serverless-api?service=30618"
+
+[limit]
+context = 1_000_000
+
+[cost_cn]
+input = 13
+output = 68
+cache_read = 1.3
+cache_write = 13
