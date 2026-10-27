@@ -1,0 +1,15 @@
+# serverless 服务 30883；operations 计费策略 prompt_cache_tokens 给出完整四价（与 kimi 系列入库数据源一致）。
+# multi-modal 标签无法确认 video 输入，按 MiniMax-M3 同款先例收敛为 text+image；tools 参数在列，tool_call 继承基模。
+base_model = "minimax/minimax-m3.1-flash"
+base_model_omit = ["structured_output"]
+doc = "https://ai.gitee.com/serverless-api?service=30883"
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[cost_cn]
+input = 1
+output = 4
+cache_read = 0.1
+cache_write = 1
