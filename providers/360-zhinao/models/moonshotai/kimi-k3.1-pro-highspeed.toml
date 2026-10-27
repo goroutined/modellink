@@ -1,0 +1,21 @@
+# 2026-10-24 上线，同智能高速版（输出速度约 2~3 倍），价格为标准版 2 倍，缓存读取价不变。
+# 与腾讯/Gitee 高速版一致共用主 canonical；页面"支持的参数"含 temperature，按 kimi-k2.7-code-highspeed 先例写实。
+base_model = "moonshot/kimi-k3.1-pro"
+base_model_omit = ["structured_output"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ai.360.com/open/zh/models/moonshotai/kimi-k3.1-pro-highspeed"
+temperature = true
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[limit]
+context = 1_000_000
+output = 1_000_000
+
+[cost_cn]
+input = 26
+output = 136
+cache_read = 1.3
+cache_write = 32.5

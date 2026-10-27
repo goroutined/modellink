@@ -1,0 +1,24 @@
+# 2026-10-23 上线的自部署无审查版，规格与 censored 版一致；页面明确"可切换推理"故写实 reasoning。
+# tool_call / structured_output / 切换推理的具体参数字段官方未提供，与 censored 版保持同样的省略策略。
+# 缓存写入官方为 "-"（未配置），与 2026-10-25 批次 360 缓存价空置处理一致，不写 cache_write。
+base_model = "deepseek/deepseek-v4.1-flash"
+base_model_omit = ["reasoning_options", "interleaved", "tool_call", "structured_output", "limit.input"]
+name = "DeepSeek V4.1 Flash Uncensored"
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ai.360.com/open/zh/models/deepseek/deepseek-v4.1-flash-uncensored"
+attachment = true
+temperature = true
+reasoning = true
+
+[limit]
+context = 1_000_000
+output = 384_000
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[cost_cn]
+input = 2
+output = 8
+cache_read = 0.04
