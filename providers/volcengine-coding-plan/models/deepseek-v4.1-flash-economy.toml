@@ -10,7 +10,7 @@ doc = "https://www.volcengine.com/docs/82379/1925114"
 type = "toggle"
 
 [limit]
-context = 1_049_000
+context = 1_024_000
 output = 384_000
 
 [modalities]

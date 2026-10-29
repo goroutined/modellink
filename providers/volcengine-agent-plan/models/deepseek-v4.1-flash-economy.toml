@@ -6,7 +6,7 @@ name = "DeepSeek V4.1 Flash Economy"
 doc = "https://www.volcengine.com/docs/82379/2366394?lang=zh"
 
 [limit]
-context = 1_049_000
+context = 1_024_000
 output = 384_000
 
 [modalities]
