@@ -1,0 +1,27 @@
+# Token Plan 个人版套餐成员（2026-10-29 套餐表由 2 款变 3 款新增）；
+# 能力与长度同 MaaS 按量版本，纯订阅无按 token 计价；1017 的 reasoning_effort
+# 比旧版 Flash 多一档 none（接口文档 021/022 逐字档位表）。
+base_model = "deepseek/deepseek-v4.1-flash-1017"
+base_model_omit = ["structured_output"]
+endpoints = ["openai", "anthropic"]
+doc = "https://support.huaweicloud.com/Token-plan-maas/tokenplan-maas-0001.html"
+
+[[reasoning_options]]
+type = "toggle"
+field = "chat_template_kwargs.thinking"
+endpoints = ["openai", "anthropic"]
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai", "anthropic"]
+values = ["none", "low", "high", "max"]
+default = "high"
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 1_048_576
+input = 1_048_576
+output = 393_216
