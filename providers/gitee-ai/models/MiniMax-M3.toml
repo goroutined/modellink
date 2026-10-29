@@ -1,3 +1,4 @@
+# 缓存价（读 0.84 / 写 4.2）来自 operations billing_policy，与 kimi 系列入库数据源一致。
 base_model = "minimax/minimax-m3"
 base_model_omit = ["structured_output"]
 doc = "https://ai.gitee.com/serverless-api?service=12943"
@@ -9,3 +10,5 @@ output = ["text"]
 [cost_cn]
 input = 4.2
 output = 16.8
+cache_read = 0.84
+cache_write = 4.2
