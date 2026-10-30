@@ -11,7 +11,7 @@ output = ["text"]
 [limit]
 context = 1_048_576
 input = 1_048_576
-output = 131_072
+output = 1_048_576
 
 [cost_cn]
 input = 13
