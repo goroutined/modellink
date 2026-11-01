@@ -18,6 +18,6 @@ input = ["text", "image"]
 output = ["text"]
 
 [cost_cn]
-input = 2
-output = 8
-cache_read = 0.04
+input = 1
+output = 4
+cache_read = 0.02
