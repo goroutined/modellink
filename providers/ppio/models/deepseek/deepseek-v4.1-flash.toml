@@ -17,7 +17,8 @@ output = 393_216
 input = ["text", "image"]
 output = ["text"]
 
+# 2026-11-01 曾限时五折 1/4/0.02，2026-11-02 目录已恢复原价。
 [cost_cn]
-input = 1
-output = 4
-cache_read = 0.02
+input = 2
+output = 8
+cache_read = 0.04
