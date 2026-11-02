@@ -1,0 +1,24 @@
+# 2026-11-02 正式版上线（chat 文档"目前支持 LongCat-2.5"）；
+# 转正延续 Preview 期折扣价（注释原价 5/0.10/20 未生效）。
+# 输出上限 256K 取模型参数参考页"max_tokens 上限 262,144"（chat 文档自身声明以该页为权威）；
+# 使用指南页另写"最大输出长度128K Tokens"与之矛盾，两处来源并存备查，与 Preview 条目同值。
+base_model = "meituan/longcat-2.5"
+base_model_omit = ["structured_output"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://longcat.chat/platform/docs/zh/pricing/longcat-2.5"
+
+[limit]
+context = 1_048_576
+output = 262_144
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 2
+output = 8
+cache_read = 0.04
