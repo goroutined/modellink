@@ -9,7 +9,7 @@ doc = "https://support.huaweicloud.com/model-list-maas/model_list_0001.html"
 models = "https://support.huaweicloud.com/model-list-maas/model_list_0001.html"
 pricing = "https://support.huaweicloud.com/price-maas/price-maas-0002.html"
 api_key = "https://support.huaweicloud.com/qs-maas/qs-maas-0001.html"
-console = "https://console.huaweicloud.com/modelarts/#/model-studio/authmanage"
+console = "https://console.huaweicloud.com/maas/#/model-studio/authmanage"
 
 [[endpoints]]
 id = "openai"
