@@ -1,0 +1,27 @@
+# 2026-11-03 首次见于官方文档收录；官方未公布精确发布日期，release_date 取观察日期。
+# 响应示例中思考内容经 reasoning 字段返回（不同于 flash-lite 的 reasoning_content），
+# 现有 interleaved.field 枚举不含该值，故暂省略 interleaved。
+name = "SenseNova 6.8 Flash"
+description = "日日新推出的新一代多模态智能体模型，面向办公智能与持续任务，支持跨会话协作与动态创作场景。"
+family = "sensenova"
+release_date = "2026-11-03"
+last_updated = "2026-11-03"
+attachment = true
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 1_000_000
+output = 131_072
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[[links]]
+label = "SenseNova API 文档"
+url = "https://platform.sensenova.cn/docs#model-sensenova-68-flash"
+type = "docs"

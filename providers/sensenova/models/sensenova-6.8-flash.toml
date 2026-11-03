@@ -1,0 +1,12 @@
+# 官方文档仅给出 Chat Completions 接口；Anthropic 兼容端点章节示例均用 flash-lite，
+# 无 6.8-flash 直接证据，暂不启用，待运行时核验。
+base_model = "sensetime/sensenova-6.8-flash"
+endpoints = ["openai"]
+doc = "https://platform.sensenova.cn/docs#model-sensenova-68-flash"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["minimal", "low", "medium", "high", "xhigh", "max"]
+default = "high"
