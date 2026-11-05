@@ -1,0 +1,21 @@
+# 2026-11-05 官方文档（bundle 2582-dd77c8c1375f8339.js）核验：
+# Text only、思考常开（thinking.type 仅 enabled，disabled 报错），
+# reasoning_effort 仅 low/high/max 默认 max，响应 reasoning_content 逐字证据。
+# 章节无 Anthropic 端点证据，仅落 openai。
+base_model = "zhipu/glm-5.3"
+endpoints = ["openai"]
+doc = "https://platform.sensenova.cn/docs#model-glm-5-3"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high", "max"]
+default = "max"
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 1_000_000
+output = 131_072
