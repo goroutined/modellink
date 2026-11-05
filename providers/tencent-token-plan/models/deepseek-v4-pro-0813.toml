@@ -1,0 +1,9 @@
+# 2026-11-05 官方 130060 新增非直供行「DeepSeek-V4-Pro 0813 正式版」。
+base_model = "deepseek/deepseek-v4-pro-0813"
+base_model_omit = ["temperature"]
+name = "DeepSeek V4 Pro 0813 正式版"
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/130060"
+
+[limit]
+output = 393_216

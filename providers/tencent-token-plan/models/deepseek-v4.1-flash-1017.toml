@@ -1,0 +1,5 @@
+# 2026-11-05 官方 130060 新增非直供行「DeepSeek-V4.1-Flash-1017」。
+base_model = "deepseek/deepseek-v4.1-flash-1017"
+base_model_omit = ["temperature"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/130060"
