@@ -1,0 +1,5 @@
+# 2026-11-05 官方 130060（2026-11-04 12:13 更新）：通用与 Hy Token Plan 可用模型
+# 均新增 Hy4。133811 仅有套餐容量表且为限时优惠口径，积分单价无公开数据，省略。
+base_model = "tencent/hy4"
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/130060"

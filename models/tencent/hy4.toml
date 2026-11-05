@@ -1,0 +1,26 @@
+# 2026-11-05 首次见于官方模型列表（130051，2026-11-04 12:13 更新）；
+# 官方未公布精确发布日期，release_date 取观察日期。
+name = "Hy4"
+description = "Hy4 正式版整体相比 Hy4 preview 实现了全面大幅提升，尤其强化了 Agent 能力和各类长程和真实生产力任务的能力，并首次引入了视觉理解。"
+family = "hunyuan"
+release_date = "2026-11-05"
+last_updated = "2026-11-05"
+attachment = true
+reasoning = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 1_048_576
+input = 983_040
+output = 65_536
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[[links]]
+label = "腾讯云 TokenHub 模型列表"
+url = "https://cloud.tencent.com/document/product/1823/130051"
+type = "docs"
