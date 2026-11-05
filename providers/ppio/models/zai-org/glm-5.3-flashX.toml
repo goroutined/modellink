@@ -1,0 +1,25 @@
+# 2026-11-05 PPIO 目录 flight data：zai-org/glm-5.3-flashX 在线（status=1），
+# 2/7/0.57 每 Mt，context_size=1048576、max_output_tokens=131072，
+# 输入 text+image+video，chat/anthropic/responses 三端点，无折扣。
+# FlashX 为 GLM-5.3-Flash 提速版，按仓库惯例共享 flash canonical，不建独立实体。
+base_model = "zhipu/glm-5.3-flash"
+name = "GLM-5.3-FlashX"
+base_model_omit = ["temperature", "interleaved", "limit.input"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ppio.com/model/zai-org/glm-5.3-flashX"
+reasoning = true
+tool_call = true
+structured_output = true
+
+[limit]
+context = 1_048_576
+output = 131_072
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[cost_cn]
+input = 2
+output = 7
+cache_read = 0.57

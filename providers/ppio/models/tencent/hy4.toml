@@ -1,0 +1,18 @@
+# 2026-11-05 PPIO 目录 flight data 精确记录：tencent/hy4 在线（status=1），
+# 6/18/0.3 每 Mt，context_size=1000000、max_output_tokens=64000，
+# 输入 text+image（正式版新增视觉理解），chat/anthropic/responses 三端点，
+# features 含 function-calling/structured-outputs/reasoning，无折扣。
+# limits 用目录 JSON 十进制值，不取 canonical 二进制值。
+base_model = "tencent/hy4"
+base_model_omit = ["limit.input"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ppio.com/model/tencent/hy4"
+
+[limit]
+context = 1_000_000
+output = 64_000
+
+[cost_cn]
+input = 6
+output = 18
+cache_read = 0.3
