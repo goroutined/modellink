@@ -1,4 +1,8 @@
+# 官方模型表（platform.kimi.com/docs/models，2026-11-05 核验）：已停止向新注册用户提供，
+# 11 月 1 日前注册的用户仍可继续使用，预计于 2026 年 12 月底全面下线。
+# 运行时仍在线，存量用户可用，故保留条目仅加状态标记，全面下线后再删除。
 base_model = "moonshot/kimi-k2.6"
+name = "Kimi K2.6（不可注册）"
 doc = "https://platform.kimi.com/docs/guide/kimi-k2-6-quickstart"
 
 [[reasoning_options]]
