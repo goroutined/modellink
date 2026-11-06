@@ -1,8 +1,9 @@
 # 2026-11-05 PPIO 目录 flight data 精确记录：tencent/hy4 在线（status=1），
-# 6/18/0.3 每 Mt，context_size=1000000、max_output_tokens=64000，
 # 输入 text+image（正式版新增视觉理解），chat/anthropic/responses 三端点，
-# features 含 function-calling/structured-outputs/reasoning，无折扣。
+# features 含 function-calling/structured-outputs/reasoning。
 # limits 用目录 JSON 十进制值，不取 canonical 二进制值。
+# 2026-11-06 目录价下调为半价 3/9/0.15（pricePerMDecimal），原价 6/18/0.3
+# 仍由 originPricePerMDecimal 标出；同日 hy4-preview 未降价（6/18/0.3）。
 base_model = "tencent/hy4"
 base_model_omit = ["limit.input"]
 endpoints = ["openai", "anthropic", "responses"]
@@ -13,6 +14,6 @@ context = 1_000_000
 output = 64_000
 
 [cost_cn]
-input = 6
-output = 18
-cache_read = 0.3
+input = 3
+output = 9
+cache_read = 0.15
