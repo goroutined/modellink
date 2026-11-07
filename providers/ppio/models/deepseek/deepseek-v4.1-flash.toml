@@ -17,8 +17,34 @@ output = 393_216
 input = ["text", "image"]
 output = ["text"]
 
-# 2026-11-01 曾限时五折 1/4/0.02，2026-11-02 目录已恢复原价。
+# 2026-11-01 曾限时五折 1/4/0.02，2026-11-02 目录恢复固定原价 2/8/0.04，
+# 2026-11-07 目录改为峰谷时间价（time_window_pricing，Asia/Shanghai）：
+# 闲时（工作日 00-09、12-14、18-24 及周六周日全天）1/4/0.02，
+# 高峰（工作日 09-12、14-18）2/8/0.04。
 [cost_cn]
+label = "闲时"
+input = 1
+output = 4
+cache_read = 0.02
+
+[[cost_cn.tiers]]
+label = "高峰时段"
 input = 2
 output = 8
 cache_read = 0.04
+
+[cost_cn.tiers.when]
+type = "conditional"
+
+[cost_cn.tiers.when.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "09:00"
+end = "12:00"
+
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "14:00"
+end = "18:00"
