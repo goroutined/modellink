@@ -2,7 +2,7 @@
 # multi-modal 标签无法确认 video 输入，按 MiniMax-M3 同款先例收敛为 text+image；tools 参数在列，tool_call 继承基模。
 base_model = "minimax/minimax-m3.1-flash"
 base_model_omit = ["structured_output"]
-doc = "https://ai.gitee.com/serverless-api?service=30883"
+doc = "https://moark.com/serverless-api?service=30883"
 
 [modalities]
 input = ["text", "image"]

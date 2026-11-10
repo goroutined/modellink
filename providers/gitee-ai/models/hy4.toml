@@ -5,7 +5,7 @@
 # 无思考控制参数，reasoning/structured_output 按 Gitee 无证据惯例 omit。
 base_model = "tencent/hy4"
 base_model_omit = ["reasoning", "structured_output", "limit.input", "limit.output"]
-doc = "https://ai.gitee.com/serverless-api?service=32032"
+doc = "https://moark.com/serverless-api?service=32032"
 attachment = false
 temperature = true
 tool_call = true

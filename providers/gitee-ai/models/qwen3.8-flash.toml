@@ -1,6 +1,6 @@
 base_model = "alibaba/qwen3.8-flash"
 base_model_omit = ["reasoning", "structured_output", "limit.input", "limit.output"]
-doc = "https://ai.gitee.com/serverless-api?service=25284"
+doc = "https://moark.com/serverless-api?service=25284"
 
 [limit]
 context = 1_000_000

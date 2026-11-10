@@ -1,6 +1,6 @@
 base_model = "moonshot/kimi-k3.1-pro"
 base_model_omit = ["structured_output", "limit.output"]
-doc = "https://ai.gitee.com/serverless-api?service=30613"
+doc = "https://moark.com/serverless-api?service=30613"
 
 [limit]
 context = 1_000_000

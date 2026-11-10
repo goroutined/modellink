@@ -1,6 +1,6 @@
 base_model = "deepseek/deepseek-v4.1-flash"
 base_model_omit = ["structured_output", "limit.output"]
-doc = "https://ai.gitee.com/serverless-api?service=26870"
+doc = "https://moark.com/serverless-api?service=26870"
 
 [limit]
 context = 1_000_000
