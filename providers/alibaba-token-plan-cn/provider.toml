@@ -27,22 +27,24 @@ id = "responses"
 protocol = "openai-responses"
 api = "https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1"
 
+# 2026-11-09 20:00 起官方上调四档额度并下调 Pro 目录价（见官方《套餐降价通知》）；
+# 新用户限时价（Lite 19.5 / Essential 39.5）按政策不入库。
 [[plans_cn]]
 name = "Lite"
 price_month = 39
-quota_windows = ["订阅月：11,500 Credits"]
+quota_windows = ["订阅月：20,000 Credits"]
 
 [[plans_cn]]
 name = "Essential"
 price_month = 79
-quota_windows = ["订阅月：25,500 Credits"]
+quota_windows = ["订阅月：45,000 Credits"]
 
 [[plans_cn]]
 name = "Standard"
 price_month = 139
-quota_windows = ["订阅月：45,000 Credits"]
+quota_windows = ["订阅月：80,000 Credits"]
 
 [[plans_cn]]
 name = "Pro"
-price_month = 499
-quota_windows = ["订阅月：180,000 Credits"]
+price_month = 312
+quota_windows = ["订阅月：200,000 Credits"]
