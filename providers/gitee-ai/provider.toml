@@ -3,13 +3,15 @@ env = ["GITEE_AI_API_KEY"]
 npm = "@ai-sdk/openai-compatible"
 protocol = "openai-compatible"
 api = "https://ai.gitee.com/v1"
-doc = "https://ai.gitee.com/serverless-api"
+# 2026-11-10 官方展示域名由 ai.gitee.com 迁移至 moark.com（模力方舟）；
+# API 调用端点官方未要求切换，暂保持 ai.gitee.com/v1。
+doc = "https://moark.com/serverless-api"
 
 [links]
-models = "https://ai.gitee.com/serverless-api"
-pricing = "https://ai.gitee.com/serverless-api"
-api_key = "https://ai.gitee.com/docs/products/apis"
-console = "https://ai.gitee.com/dashboard/tokens"
+models = "https://moark.com/serverless-api"
+pricing = "https://moark.com/serverless-api"
+api_key = "https://moark.com/docs/products/apis"
+console = "https://moark.com/dashboard/tokens"
 
 [[endpoints]]
 id = "openai"
