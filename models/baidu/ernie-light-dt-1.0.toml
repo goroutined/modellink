@@ -1,0 +1,24 @@
+# 2026-11-11 见于千帆模型列表（页面同日更新），官方无单独发布日期公告，
+# release_date 取上线观察日期。limit 用列表页 1M/1M/128k 口径（十进制）。
+# temperature 等参数官方未提及，不推导。
+name = "ERNIE Light DT 1.0"
+description = "ERNIE-Light-DT-1.0 基于开源 GLM 模型构建，结合百度搜索闪电大模型研发成果，引入百度文心独创的 BSA（Baidu Sparse Attention）稀疏注意力机制，通过反馈式历史压缩，优化历史信息的存储与索引计算，在保持模型效果的同时，大幅降低 KV 存储与计算开销。"
+family = "ernie"
+release_date = "2026-11-11"
+last_updated = "2026-11-11"
+attachment = false
+open_weights = false
+
+[limit]
+context = 1_000_000
+input = 1_000_000
+output = 128_000
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "千帆模型列表"
+url = "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+type = "docs"

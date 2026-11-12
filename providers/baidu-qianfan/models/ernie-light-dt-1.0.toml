@@ -1,0 +1,23 @@
+# 2026-11-11 千帆模型列表新增行逐字：1M/1M/128k，RPM=60 TPM=1000000。
+# /v2/models（checker 鉴权证据，我方匿名 403）：status=new、type=chat、
+# features=[function_call, structured_output]、text 输入输出、
+# context_length=1179648、prompt_tokens=1048576、max_completions_tokens=131072、
+# endpoints=[/v2/chat/completions]，limit 用 API 精确值、端点仅落 openai。
+# 价格 prompt=0.008/completion=0.028/cache=0.0008，按千帆计价惯例（元/千 tokens，
+# 参见刊例价调整公告单位）换算为 8/28/0.8 元/百万；刊例价总表（11-03 更新）尚无该行，
+# 待官方补录后复核。
+base_model = "baidu/ernie-light-dt-1.0"
+endpoints = ["openai"]
+doc = "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+tool_call = true
+structured_output = true
+
+[limit]
+context = 1_179_648
+input = 1_048_576
+output = 131_072
+
+[cost_cn]
+input = 8
+output = 28
+cache_read = 0.8
