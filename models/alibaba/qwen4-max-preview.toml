@@ -1,0 +1,27 @@
+# 2026-11-11 首发，官方预览期 2026-11-11 10:00 至 11-25 24:00（UTC+8），
+# 预览结束后官方下线，届时删除本条目。
+# 官方模型页：上下文 1M Token、最大输出 393,216（思考与回答共享预算）、
+# 文本+图片+视频输入；temperature 等参数官方未提及，不推导。
+name = "Qwen4 Max Preview"
+description = "通义千问新一代旗舰多模态模型，融合文本生成、图片与视频理解及深度思考能力，适用于编程开发、办公、前端设计与复杂智能体任务。"
+family = "qwen"
+release_date = "2026-11-11"
+last_updated = "2026-11-11"
+attachment = true
+reasoning = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 1_000_000
+output = 393_216
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[[links]]
+label = "Qwen4-Max-Preview 官方文档"
+url = "https://help.aliyun.com/zh/model-studio/qwen4-max-preview"
+type = "docs"

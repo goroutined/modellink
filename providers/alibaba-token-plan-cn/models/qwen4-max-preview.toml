@@ -1,0 +1,19 @@
+# 2026-11-11 首发收录，仅支持 Token Plan 不支持按量计费；预览期 11-11 10:00 至
+# 11-25 24:00（UTC+8）结束后官方下线，届时删除。
+# 预览权益官方逐字：限时活动期间 Credits 消耗低至 2 折（相当于增加 5 倍用量），
+# 每晚 22:00 - 次日 08:00 再享 4 折（即原标准的 0.8 折）——活动价按政策不入库，注释留痕。
+# 别名官方逐字：qwen4-max-preview 的别名为 qwen4.0-max-preview，两个 ID 均可调用；
+# 账单中统一显示为 qwen4.0-max-preview。
+base_model = "alibaba/qwen4-max-preview"
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://help.aliyun.com/zh/model-studio/qwen4-max-preview"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "medium", "xhigh"]
+default = "xhigh"
+
+[interleaved]
+field = "reasoning_content"
