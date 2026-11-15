@@ -1,5 +1,5 @@
 base_model = "deepseek/deepseek-v4-pro-0813"
-endpoints = ["openai", "anthropic", "responses"]
+endpoints = ["openai", "responses"]
 doc = "https://help.aliyun.com/zh/model-studio/token-plan-personal-overview"
 
 [limit]

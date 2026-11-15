@@ -5,7 +5,7 @@
 # 别名官方逐字：qwen4-max-preview 的别名为 qwen4.0-max-preview，两个 ID 均可调用；
 # 账单中统一显示为 qwen4.0-max-preview。
 base_model = "alibaba/qwen4-max-preview"
-endpoints = ["openai", "anthropic", "responses"]
+endpoints = ["openai", "responses"]
 doc = "https://help.aliyun.com/zh/model-studio/qwen4-max-preview"
 
 [[reasoning_options]]

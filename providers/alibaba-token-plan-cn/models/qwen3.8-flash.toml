@@ -1,5 +1,5 @@
 base_model = "alibaba/qwen3.8-flash"
-endpoints = ["openai", "anthropic"]
+endpoints = ["openai"]
 doc = "https://help.aliyun.com/zh/model-studio/qwen3-8-flash"
 attachment = true
 tool_call = true

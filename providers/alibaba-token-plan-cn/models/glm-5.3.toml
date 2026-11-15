@@ -1,5 +1,5 @@
 base_model = "zhipu/glm-5.3"
-endpoints = ["openai", "anthropic", "responses"]
+endpoints = ["openai", "responses"]
 doc = "https://help.aliyun.com/zh/model-studio/token-plan-personal-overview"
 reasoning = true
 

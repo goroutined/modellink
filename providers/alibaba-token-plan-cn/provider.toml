@@ -17,11 +17,8 @@ protocol = "openai-compatible"
 api = "https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1"
 default = true
 
-[[endpoints]]
-id = "anthropic"
-protocol = "anthropic-compatible"
-api = "https://token-plan.cn-beijing.maas.aliyuncs.com/apps/anthropic"
-
+# 2026-11-15 官方撤下 Token Plan Anthropic 入口：overview/quick-start/harness-tool/codex
+# 四个官方页面均不再发布 Anthropic Base URL（用户决策：官方撤下即视为下线）。
 [[endpoints]]
 id = "responses"
 protocol = "openai-responses"
