@@ -1,0 +1,27 @@
+# 2026-11-15 首次见于官方模型列表收录；官方未公布精确发布日期，release_date 取观察日期。
+# 官方描述逐字见 model_list_0001；structured_output 无证据记 false（同 2.0 先例）。
+name = "openPangu 2.1 Pro"
+description = "华为开源盘古最新一代模型，在 Agent、代码生成以及吞吐能力上有显著提升。擅长鸿蒙 APP 开发和昇腾算子生成，在深度研究、PPT 自动生成等通用办公场景和金融行业垂直场景中表现出色。"
+family = "openpangu"
+release_date = "2026-11-15"
+last_updated = "2026-11-15"
+attachment = false
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = false
+open_weights = true
+
+[limit]
+context = 524_288
+input = 512_000
+output = 393_216
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[[links]]
+label = "华为云 MaaS 模型列表"
+url = "https://support.huaweicloud.com/model-list-maas/model_list_0001.html"
+type = "docs"

@@ -1,0 +1,32 @@
+# 2026-11-15 收录。OpenAI 兼容表（model-call-021）与 Anthropic 兼容表（model-call-022）
+# 均逐字列出 openPangu-2.1-Pro（西南-贵阳一）；思考开关表同行 2.0 系列
+# 「chat_template_kwargs.thinking」可开关；工具调用表支持 none/auto/指定函数；
+# temperature 官方注明默认 1.0；思维链经 reasoning_content 返回（max_completion_tokens 说明）。
+# 规格行：512K/500K/384K（思维链 256K）、TPM 2,000,000 RPM 100；
+# 价格行「否 | - | - | 0.016 | 0.8 | 3.2」，表头为 输入(缓存命中)/输入/输出 元每百万。
+base_model = "huawei/openpangu-2.1-pro"
+endpoints = ["openai", "anthropic"]
+doc = "https://support.huaweicloud.com/model-list-maas/model_list_0001.html"
+
+[[reasoning_options]]
+type = "toggle"
+field = "chat_template_kwargs.thinking"
+endpoints = ["openai"]
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["anthropic"]
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 524_288
+input = 512_000
+output = 393_216
+
+[cost_cn]
+input = 0.8
+output = 3.2
+cache_read = 0.016
