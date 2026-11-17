@@ -11,7 +11,8 @@ temperature = true
 tool_call = true
 
 [limit]
-context = 1_048_576
+# 2026-11-17 官方服务记录 context 由 1024k 二进制口径改为十进制 1,000,000。
+context = 1_000_000
 
 [modalities]
 input = ["text"]
