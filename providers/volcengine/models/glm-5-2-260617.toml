@@ -9,19 +9,21 @@ type = "toggle"
 field = "thinking.type"
 endpoints = ["openai", "responses"]
 
+# 2026-11-17 官方深度思考文档（82379/1449737）：glm-5-2-260617 与
+# glm-5-3-flash-260828 合并行，effort 默认取值由 high 改为 max。
 [[reasoning_options]]
 type = "effort"
 field = "reasoning_effort"
 endpoints = ["openai"]
 values = ["high", "max"]
-default = "high"
+default = "max"
 
 [[reasoning_options]]
 type = "effort"
 field = "reasoning.effort"
 endpoints = ["responses"]
 values = ["high", "max"]
-default = "high"
+default = "max"
 
 [interleaved]
 field = "reasoning_content"
