@@ -1,0 +1,25 @@
+# 2026-11-17 首见于 PPIO 目录（Qwen4 Max 正式版），官方未单独发布日期公告，
+# release_date 取观察日期。阿里官方文档暂未发布，能力以 PPIO 目录官方描述
+# 与结构化数据为准（原生视觉、深度思考、工具调用、结构化输出）。
+name = "Qwen4 Max"
+description = "新一代 2.4 万亿参数 MoE 旗舰模型，百万 Token 上下文。编程办公能力全面跃升，支持长周期项目自主推进，十数天交付完整项目；覆盖法律、金融、设计、科研等数百专业场景，端到端产出生产级成果。原生视觉贯穿规划、执行、验证全链路，深度解析超长文档与长视频。"
+family = "qwen"
+release_date = "2026-11-17"
+last_updated = "2026-11-17"
+attachment = true
+reasoning = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 1_000_000
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[[links]]
+label = "PPIO 模型目录"
+url = "https://ppio.com/model/qwen/qwen4-max"
+type = "docs"

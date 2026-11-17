@@ -1,0 +1,19 @@
+# 2026-11-17 PPIO 目录 flight data 精确记录：qwen/qwen4-max 在线（status=1），
+# context_size=1000000、max_output_tokens=131000（十进制，非 131072），
+# 输入 text+image+video，chat/anthropic/responses 三端点，
+# features 含 function-calling/structured-outputs/reasoning；
+# 价格 10/30/0.5，缓存写入 5 分钟档 12.5 元每百万（1 小时档 20，注释留痕）。
+base_model = "alibaba/qwen4-max"
+base_model_omit = ["temperature", "interleaved", "limit.input"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ppio.com/model/qwen/qwen4-max"
+
+[limit]
+context = 1_000_000
+output = 131_000
+
+[cost_cn]
+input = 10
+output = 30
+cache_read = 0.5
+cache_write = 12.5
