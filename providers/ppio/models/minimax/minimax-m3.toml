@@ -1,6 +1,7 @@
 base_model = "minimax/minimax-m3"
 base_model_omit = ["temperature", "interleaved"]
-endpoints = ["openai", "anthropic"]
+# 2026-11-18 官方目录为 minimax-m3 新增 Responses 协议端点。
+endpoints = ["openai", "anthropic", "responses"]
 doc = "https://ppio.com/llm/minimax-minimax-m3"
 structured_output = true
 
