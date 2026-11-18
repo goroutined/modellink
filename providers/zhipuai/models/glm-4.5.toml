@@ -1,0 +1,12 @@
+# 官方页面标注 GLM-4.5 与 GLM-4.5-X 即将下线，按惯例展示名加后缀，实际下线后删除。
+# 定价页为动态页面未能取证，cost 省略待补；temperature 页面未提及省略。
+base_model = "zhipu/glm-4.5"
+name = "GLM-4.5（即将下线）"
+endpoints = ["openai"]
+doc = "https://docs.bigmodel.cn/cn/guide/models/text/glm-4.5"
+
+[[reasoning_options]]
+type = "toggle"
+
+[interleaved]
+field = "reasoning_content"
