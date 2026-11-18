@@ -5,6 +5,36 @@ doc = "https://moark.com/serverless-api?service=29912"
 [limit]
 context = 1_000_000
 
+# 2026-11-18 官方计费新增闲时峰谷（time_of_use，北京时间口径，时段未区分星期即全周生效）：
+# 闲时（每日 00:00-09:00、12:00-14:00、18:00-24:00）1/4/0.02，标准时段 2/8/0.04。
 [cost_cn]
 input = 2
 output = 8
+cache_read = 0.04
+
+[[cost_cn.tiers]]
+label = "闲时"
+input = 1
+output = 4
+cache_read = 0.02
+
+[cost_cn.tiers.when]
+type = "conditional"
+
+[cost_cn.tiers.when.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+start = "00:00"
+end = "09:00"
+
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+start = "12:00"
+end = "14:00"
+
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+start = "18:00"
+end = "24:00"

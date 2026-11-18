@@ -2,6 +2,26 @@ base_model = "deepseek/deepseek-v4-pro-0813"
 base_model_omit = ["structured_output", "limit.output"]
 doc = "https://moark.com/serverless-api?service=21706"
 
+# 2026-11-18 官方计费新增闲时峰谷（time_of_use，北京时间口径，全周生效）：
+# 闲时（每日 00:00-08:00）4.5/13.5/0.15，标准时段 9/27/0.3。
 [cost_cn]
 input = 9
 output = 27
+cache_read = 0.3
+
+[[cost_cn.tiers]]
+label = "闲时"
+input = 4.5
+output = 13.5
+cache_read = 0.15
+
+[cost_cn.tiers.when]
+type = "conditional"
+
+[cost_cn.tiers.when.time]
+timezone = "Asia/Shanghai"
+
+[[cost_cn.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+start = "00:00"
+end = "08:00"
