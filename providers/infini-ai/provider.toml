@@ -17,6 +17,13 @@ protocol = "openai-compatible"
 api = "https://cloud.infini-ai.com/maas/v1"
 default = true
 
+# 2026-11-19 官方 Kimi Code 配置给出 Responses 接入（base_url 同 maas/v1，
+# type=openai_responses），补充端点定义。
+[[endpoints]]
+id = "responses"
+protocol = "openai-responses"
+api = "https://cloud.infini-ai.com/maas/v1"
+
 [[endpoints]]
 id = "anthropic"
 protocol = "anthropic-compatible"

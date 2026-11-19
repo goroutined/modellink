@@ -1,0 +1,32 @@
+# 2026-11-19 收录。官方 Kimi Code 配置页逐字：Chat Completions 与 Responses 两种
+# 接入（base_url 均为 cloud.infini-ai.com/maas/v1）；capabilities =
+# ["thinking","always_thinking","tool_use","image_in"]，kimi-k3 始终推理不可关闭；
+# support_efforts = ["low","high","max"]，default_effort = "max"（Chat Completions
+# 经 thinking.effort、Responses 经 reasoning.effort 发送档位）；
+# max_context_size = 1048576；请求 ID kimi-k3。图片输入有 image_in 证据，
+# 视频输入官方未提按条目覆盖；结构化输出与温度官方未提及，按本 provider
+# 先例 omit/记 false；推理内容会回传但响应字段名无直接证据，interleaved 省略。
+# 价格官方页未发布，省略。
+base_model = "moonshot/kimi-k3"
+base_model_omit = ["temperature", "structured_output"]
+endpoints = ["openai", "responses"]
+doc = "https://docs.infini-ai.com/shared/gen-studio/coding-tools/gs-use-kimi-code.html"
+structured_output = false
+
+[[reasoning_options]]
+type = "effort"
+field = "thinking.effort"
+endpoints = ["openai"]
+values = ["low", "high", "max"]
+default = "max"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning.effort"
+endpoints = ["responses"]
+values = ["low", "high", "max"]
+default = "max"
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
