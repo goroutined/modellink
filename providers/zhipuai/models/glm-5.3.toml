@@ -1,5 +1,7 @@
 base_model = "zhipu/glm-5.3"
-endpoints = ["openai", "anthropic"]
+# 2026-11-20 补 Response API 端点：官方文档推理/函数调用/图像理解示例均以
+# glm-5.3 演示（model="glm-5.3"）。其余型号官方未逐型号确认，暂不补。
+endpoints = ["openai", "anthropic", "responses"]
 doc = "https://docs.bigmodel.cn/cn/guide/models/text/glm-5.3"
 
 [[reasoning_options]]
@@ -7,6 +9,15 @@ type = "effort"
 field = "reasoning_effort"
 endpoints = ["openai"]
 values = ["low", "high", "max"]
+default = "max"
+
+# Responses 侧接受全部 7 档（官方映射：none/minimal 放弃思考、low/medium 映射为
+# high、xhigh 映射为 max），默认 max。
+[[reasoning_options]]
+type = "effort"
+field = "reasoning.effort"
+endpoints = ["responses"]
+values = ["none", "minimal", "low", "medium", "high", "xhigh", "max"]
 default = "max"
 
 [interleaved]

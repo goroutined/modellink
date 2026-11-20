@@ -17,6 +17,13 @@ protocol = "openai-compatible"
 api = "https://open.bigmodel.cn/api/paas/v4"
 default = true
 
+# 2026-11-20 官方发布 Response API 兼容（独立协议，与 Chat Completions 并存），
+# 基址 api/v1 与对话补全 paas/v4 分开；默认 store=false、流式不发 [DONE]、暂无 cancel。
+[[endpoints]]
+id = "responses"
+protocol = "openai-responses"
+api = "https://open.bigmodel.cn/api/v1"
+
 [[endpoints]]
 id = "anthropic"
 protocol = "anthropic-compatible"
