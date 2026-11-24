@@ -1,0 +1,27 @@
+# 2026-11-24 收录：130051 模型列表新增 Hy4 flash 行（1M/960k/64k，
+# 能力同 Hy4：保留式思考、结构化输出、Function Calling、Cache、图片理解）。
+# 官方未公布发布日期，release_date 取观察日期。
+name = "Hy4 Flash"
+description = "腾讯混元 Hy4 系列高速版模型，1M 上下文，支持图片理解与保留式思考。"
+family = "hunyuan"
+release_date = "2026-11-24"
+last_updated = "2026-11-24"
+attachment = true
+reasoning = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 1_048_576
+input = 983_040
+output = 65_536
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[[links]]
+label = "腾讯云 TokenHub 模型列表"
+url = "https://cloud.tencent.com/document/product/1823/130051"
+type = "docs"

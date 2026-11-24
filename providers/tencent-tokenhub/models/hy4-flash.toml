@@ -1,0 +1,37 @@
+# 2026-11-24 收录：130051 规格行 1M/960k/64k（能力同 Hy4 含图片理解），
+# 130079 三协议端点全支持，130055 按量价 0.5/2/0.02 无峰谷；
+# 官方限时折扣（至 11-30 12:00 按目录价 50% 结算）按政策不入库，注释留痕。
+# effort 档位沿用全平台保留式思考口径（low/high 默认 high），与 hy4 一致。
+base_model = "tencent/hy4-flash"
+endpoints = ["openai", "responses", "anthropic"]
+# 132252 为 Hy 系列专属调用指南（精确 k 值与思考默认值），130055 仅价格行。
+doc = "https://cloud.tencent.com/document/product/1823/132252"
+
+[[reasoning_options]]
+type = "toggle"
+field = "thinking.type"
+endpoints = ["openai"]
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high"]
+default = "high"
+
+[interleaved]
+field = "reasoning_content"
+
+[limit]
+context = 1_048_576
+input = 983_040
+output = 65_536
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[cost_cn]
+input = 0.5
+output = 2
+cache_read = 0.02

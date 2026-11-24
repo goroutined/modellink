@@ -1,0 +1,11 @@
+# 2026-11-24 收录：133811 通用表新增行，刊例价 10/40/0.4 积分每百万
+#（0.5/2/0.02 元），无峰谷拆分；限时优惠行（5/20/0.2）按政策不入库。
+base_model = "tencent/hy4-flash"
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/133811"
+
+[cost_points]
+per_tokens = 1_000_000
+input = 10
+output = 40
+cache_read = 0.4
