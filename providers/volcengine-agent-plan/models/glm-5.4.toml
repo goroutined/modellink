@@ -1,0 +1,18 @@
+# 2026-11-23 收录：Agent Plan 支持模型表新增行「文本生成（进阶）」，
+# 上下文 1024K、最大输出 128K（换算同 glm-5.3 条目既有惯例）。
+# 该行未标注思考与多模态能力（对照 glm-5.3 行有「默认开启思考」标注），
+# 按 glm-5.3-flash 条目先例 omit attachment/reasoning，不从智谱模型页反推。
+base_model = "zhipu/glm-5.4"
+base_model_omit = ["reasoning", "temperature", "tool_call", "structured_output"]
+# attachment 合并层必填且不可 omit（glm-5.3-flash 条目先例同样未 omit），
+# 该行无多模态标注，按无证据记 false 覆盖。
+attachment = false
+doc = "https://www.volcengine.com/docs/82379/2366394?lang=zh"
+
+[limit]
+context = 1_024_000
+output = 131_072
+
+[modalities]
+input = ["text"]
+output = ["text"]

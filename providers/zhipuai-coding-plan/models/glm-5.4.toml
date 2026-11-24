@@ -1,0 +1,57 @@
+# 2026-11-23 收录：Coding Plan 全量用户（Max & Pro & Lite）开放，别名 glm-5.4[1m]。
+# 官方建议客户端上下文窗口 512000；Claude Code 经 output_config.effort 传档位，
+# 兼容映射 none/minimal/light/low→low、medium/high→high、xhigh/max/ultra→max。
+# 抵扣系数表逐字 GLM-5.4 = 4.6/1.1/16（与 glm-5.3 高峰档同列同构，6.9/1.7/24）；
+# 非高峰减半有官方明文（overview 逐字）：「非高峰时段内，模型调用按基础积分
+# 消耗的 50% 抵扣」，非高峰取 2.3/0.55/8。
+base_model = "zhipu/glm-5.4"
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://docs.bigmodel.cn/cn/coding-plan/latest-model"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high", "max"]
+default = "max"
+
+[[reasoning_options]]
+type = "effort"
+field = "output_config.effort"
+endpoints = ["anthropic"]
+values = ["low", "high", "max"]
+default = "max"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning.effort"
+endpoints = ["responses"]
+values = ["low", "high", "max"]
+default = "max"
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_points]
+label = "非高峰"
+per_tokens = 10_000
+input = 2.3
+cache_read = 0.55
+output = 8
+
+[[cost_points.tiers]]
+label = "高峰"
+input = 4.6
+cache_read = 1.1
+output = 16
+
+[cost_points.tiers.when]
+type = "conditional"
+
+[cost_points.tiers.when.time]
+timezone = "Asia/Shanghai"
+
+[[cost_points.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "14:00"
+end = "18:00"

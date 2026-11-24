@@ -1,0 +1,27 @@
+# 2026-11-23 收录：智谱新一代旗舰多模态模型（750B Loop Transformer，28 层两轮循环）。
+# 官方模型页逐字：输入「视频、图像、文本、文件」、输出「文本」、上下文 1M、
+# 最大输出 128K；能力支持思考模式/Function Calling/结构化输出/上下文缓存；
+# 「文件」按仓库模态枚举映射为 pdf。release_date 取观察日期（官方未公布发布日）。
+name = "GLM-5.4"
+description = "智谱新一代旗舰多模态模型，采用 750B Loop Transformer 架构（28 层两轮循环），融合文本、图像与视频理解及深度思考能力，面向编程与长程智能体任务。"
+family = "glm"
+release_date = "2026-11-23"
+last_updated = "2026-11-23"
+attachment = true
+reasoning = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 1_048_576
+output = 131_072
+
+[modalities]
+input = ["text", "image", "video", "pdf"]
+output = ["text"]
+
+[[links]]
+label = "智谱模型详情"
+url = "https://docs.bigmodel.cn/cn/guide/models/glm-5.4"
+type = "docs"
