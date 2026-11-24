@@ -3,3 +3,34 @@ base_model = "deepseek/deepseek-v4.1-flash-1017"
 base_model_omit = ["temperature"]
 endpoints = ["openai", "anthropic"]
 doc = "https://cloud.tencent.com/document/product/1823/130060"
+
+# 2026-11-24 补 133811 峰谷积分（2026-10-30 22:30 起峰谷计费）：
+# 闲时 (20, 80, 0.4)、高峰 (40, 160, 0.8) 积分每百万。
+[cost_points]
+label = "闲时"
+per_tokens = 1_000_000
+input = 20
+output = 80
+cache_read = 0.4
+
+[[cost_points.tiers]]
+label = "高峰时段"
+input = 40
+output = 160
+cache_read = 0.8
+
+[cost_points.tiers.when]
+type = "conditional"
+
+[cost_points.tiers.when.time]
+timezone = "Asia/Shanghai"
+
+[[cost_points.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "09:00"
+end = "12:00"
+
+[[cost_points.tiers.when.time.windows]]
+days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+start = "14:00"
+end = "18:00"
