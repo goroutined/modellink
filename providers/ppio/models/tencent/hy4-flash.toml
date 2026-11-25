@@ -1,0 +1,18 @@
+# 2026-11-25 PPIO 目录 flight data 精确记录：tencent/hy4-flash 在线（status=1），
+# context_size=1000000、max_output_tokens=64000（十进制），输入 text+image，
+# 三端点，features 含 function-calling/structured-outputs/reasoning。
+# 当前价 0.25/1/0.01（pricePerMDecimal），原价 0.5/2/0.02 仍由
+# originPricePerMDecimal 标出（与腾讯官方限时五折口径一致）。
+base_model = "tencent/hy4-flash"
+base_model_omit = ["temperature", "limit.input"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ppio.com/model/tencent/hy4-flash"
+
+[limit]
+context = 1_000_000
+output = 64_000
+
+[cost_cn]
+input = 0.25
+output = 1
+cache_read = 0.01
