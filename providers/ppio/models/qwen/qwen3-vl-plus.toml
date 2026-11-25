@@ -1,0 +1,60 @@
+# 2026-11-25 PPIO 目录 flight data 精确记录：qwen/qwen3-vl-plus 在线（status=1），
+# context_size=262000、max_output_tokens=32000（十进制），输入 text+image+video，
+# 三端点，features 含 function-calling/structured-outputs/reasoning。
+# 三档阶梯计价（按输入 token 数）：1-32K 1.008/10.038/0.098、
+# 32K-128K 1.512/15.057/0.154、128K-256K 3.017/30.107/0.301（顶层兜底档）。
+base_model = "alibaba/qwen3-vl-plus"
+base_model_omit = ["temperature", "interleaved", "limit.input"]
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://ppio.com/model/qwen/qwen3-vl-plus"
+
+[limit]
+context = 262_000
+output = 32_000
+
+# 三档阶梯计价（按输入 token 数，边界同 minimax-m3 惯例：首档 gte/lte、后续 gt/lte）：
+# 1-32K 1.008/10.038/0.098、32K-128K 1.512/15.057/0.154、128K-256K 3.017/30.107/0.301。
+[cost_cn]
+input = 1.008
+output = 10.038
+cache_read = 0.098
+cache_write = 1.26
+
+[[cost_cn.tiers]]
+input = 1.008
+output = 10.038
+cache_read = 0.098
+cache_write = 1.26
+
+[cost_cn.tiers.when]
+type = "conditional"
+
+[cost_cn.tiers.when.input]
+gte = 1
+lte = 32_000
+
+[[cost_cn.tiers]]
+input = 1.512
+output = 15.057
+cache_read = 0.154
+cache_write = 1.89
+
+[cost_cn.tiers.when]
+type = "conditional"
+
+[cost_cn.tiers.when.input]
+gt = 32_000
+lte = 128_000
+
+[[cost_cn.tiers]]
+input = 3.017
+output = 30.107
+cache_read = 0.301
+cache_write = 3.773
+
+[cost_cn.tiers.when]
+type = "conditional"
+
+[cost_cn.tiers.when.input]
+gt = 128_000
+lte = 256_000

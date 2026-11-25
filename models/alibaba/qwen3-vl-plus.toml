@@ -1,0 +1,25 @@
+# 2026-11-25 首见于 PPIO 目录，官方未发布独立文档页，能力以 PPIO 目录
+# 官方描述与结构化数据为准；release_date 取观察日期。
+name = "Qwen3 VL Plus"
+description = "Qwen3 系列 VL 模型有效融合了思考模式与非思考模式，在 OS World 等公开基准数据集上取得了全球领先的视觉智能体能力表现。本版本在视觉编程、空间感知、多模态推理等方面进行了全面升级，显著增强了视觉感知与识别能力，并支持超长视频理解。"
+family = "qwen"
+release_date = "2026-11-25"
+last_updated = "2026-11-25"
+attachment = true
+reasoning = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 262_000
+output = 32_000
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[[links]]
+label = "PPIO 模型目录"
+url = "https://ppio.com/model/qwen/qwen3-vl-plus"
+type = "docs"
