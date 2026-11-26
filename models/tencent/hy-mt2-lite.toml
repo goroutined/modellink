@@ -1,8 +1,11 @@
-name = "Hy-MT2-Lite"
+# 2026-11-26 价格表（130055）已重命名为 Hy-MT3-Lite（新 ID hy-mt3-lite、旧 ID 兼容），
+# 但模型清单（130051）暂未同步仍列 hy-mt2-lite，ID 保持 hy-mt2-lite，展示名取价格表新名，
+# 等清单更新后再改 ID。
+name = "Hy-MT3-Lite"
 description = "腾讯混元轻量翻译模型，面向低延迟多语种翻译场景。"
 family = "hunyuan"
 release_date = "2026-06-12"
-last_updated = "2026-06-12"
+last_updated = "2026-11-26"
 attachment = false
 reasoning = false
 tool_call = false
