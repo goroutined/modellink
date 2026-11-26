@@ -1,0 +1,17 @@
+# 2026-11-26 收录：Coding Plan 支持模型表新增行，逐字「GLM-5.4 长度限制如下：
+# 上下文窗口 1024K、最大输出长度 128K」。该行无多模态与思考标注
+#（对照 glm-5.3-flash 行有「原生多模态」说明），输入模态按表内实际证据
+# 仅文本，attachment 显式 false，reasoning 按 glm-5.3-flash 先例 omit。
+base_model = "zhipu/glm-5.4"
+base_model_omit = ["reasoning", "temperature", "tool_call", "structured_output", "reasoning_options", "interleaved"]
+endpoints = ["openai", "anthropic"]
+doc = "https://www.volcengine.com/docs/82379/1925114"
+attachment = false
+
+[limit]
+context = 1_024_000
+output = 131_072
+
+[modalities]
+input = ["text"]
+output = ["text"]
