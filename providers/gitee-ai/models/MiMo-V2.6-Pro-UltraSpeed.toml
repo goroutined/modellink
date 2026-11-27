@@ -1,0 +1,21 @@
+# 2026-11-25 上架（服务 33853）。小米 V2.6 系列速度版（官方最高 20 倍
+# 输出速度）。operations prompt_cache_tokens 四价（specified 口径
+# 30/60/0.25/30，与小米官方人民币价一致）；params 含
+# temperature/top_p/top_k/tools；tags 1M/128K 十进制换算。
+# tags 无多模态标记、params 无视觉参数，模态口径沿用同家族 MiMo-V2.5-Pro
+# 旧条目先例：不覆盖、继承 canonical（小米官方全模态口径；该先例在 Gitee
+# 同样无多模态标签时选择继承，MiMo 家族以先例为准）；无思考与结构化
+# 输出参数，按同先例 omit。
+base_model = "xiaomi/mimo-v2.6-pro-ultraspeed"
+base_model_omit = ["reasoning", "structured_output"]
+doc = "https://moark.com/serverless-api?service=33853"
+
+[limit]
+context = 1_000_000
+output = 128_000
+
+[cost_cn]
+input = 30
+output = 60
+cache_read = 0.25
+cache_write = 30

@@ -1,0 +1,23 @@
+# 2026-11-24 上架（服务 33811）。operations 计费 prompt_cache_tokens
+# 四价（specified 口径 8/28/2/8）；params 含 temperature/top_p/top_k/tools；
+# tags 1M/128K 按十进制换算。remark 逐字「新增视觉理解能力」，输入收敛
+# text+image（video/pdf 无 Gitee 证据，按 MiniMax-M3.1-Flash 先例）；
+# tags 无多模态标记；无思考与结构化输出参数，按 Gitee 无证据惯例 omit。
+base_model = "zhipu/glm-5.4"
+base_model_omit = ["reasoning", "structured_output"]
+doc = "https://moark.com/serverless-api?service=33811"
+temperature = true
+
+[limit]
+context = 1_000_000
+output = 128_000
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[cost_cn]
+input = 8
+output = 28
+cache_read = 2
+cache_write = 8

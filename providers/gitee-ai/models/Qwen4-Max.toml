@@ -1,0 +1,20 @@
+# 2026-11-16 上架（服务 33047）。operations 计费 prompt_cache_tokens
+# 四价（specified 口径 10/30/0.5/10，与阿里按量目录价一致）；
+# params 含 temperature/top_p/top_k/tools；remark 逐字「融合文本生成、
+# 图片与视频理解及深度思考能力…模型支持联网搜索、工具调用和结构化输出」，
+# 工具调用/结构化输出/深度思考有明文，模态与能力继承 canonical；
+# tags 1M/384K 按十进制换算（无输入上限标签，limit.input 按 hy4-flash 先例 omit）。
+base_model = "alibaba/qwen4-max"
+base_model_omit = ["limit.input"]
+doc = "https://moark.com/serverless-api?service=33047"
+temperature = true
+
+[limit]
+context = 1_000_000
+output = 384_000
+
+[cost_cn]
+input = 10
+output = 30
+cache_read = 0.5
+cache_write = 10

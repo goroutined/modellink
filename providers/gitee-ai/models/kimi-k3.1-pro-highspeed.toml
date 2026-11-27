@@ -1,3 +1,6 @@
+# 2026-11-27 复核修正：Gitee remark「多模态理解」+ tags 多模态，且
+# canonical moonshot/kimi-k3.1-pro 与腾讯 130051（Kimi K3.1 Pro HighSpeed
+# 图片、视频理解）均含 image，原条目 ["text","video"] 缺 image，补齐。
 base_model = "moonshot/kimi-k3.1-pro"
 base_model_omit = ["structured_output", "limit.output"]
 doc = "https://moark.com/serverless-api?service=30613"
@@ -6,7 +9,7 @@ doc = "https://moark.com/serverless-api?service=30613"
 context = 1_000_000
 
 [modalities]
-input = ["text", "video"]
+input = ["text", "image", "video"]
 output = ["text"]
 
 [cost_cn]

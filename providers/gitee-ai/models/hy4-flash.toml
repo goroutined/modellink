@@ -1,0 +1,20 @@
+# 2026-11-16 上架（服务 33070，今日清单 total 259→262 出现）。
+# operations 计费 prompt_cache_tokens 四价（specified 口径 0.5/2/0.02/0.5，
+# 与腾讯官方目录价一致，无 time_of_use 窗口）；params 仅 stream/max_tokens，
+# params 仅 stream/max_tokens，tool_call 无参数记录按 Gitee 无证据惯例 omit
+#（canonical tencent/hy4-flash 的 tool_call=true 被去除；temperature canonical 无字段无需 omit）；
+# tags 多模态+1M，按 MiniMax-M3.1-Flash 先例输入收敛 text+image
+#（与 canonical tencent/hy4-flash 一致）；无 128K 标签，
+# limit.output 按同目录 hy4 先例 omit。
+base_model = "tencent/hy4-flash"
+base_model_omit = ["reasoning", "tool_call", "structured_output", "limit.input", "limit.output"]
+doc = "https://moark.com/serverless-api?service=33070"
+
+[limit]
+context = 1_000_000
+
+[cost_cn]
+input = 0.5
+output = 2
+cache_read = 0.02
+cache_write = 0.5

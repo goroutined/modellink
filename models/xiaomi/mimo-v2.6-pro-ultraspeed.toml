@@ -1,0 +1,36 @@
+# 2026-09-22 随 MiMo-V2.6 系列全球发布（官方公告列名 MiMo-V2.6-Pro-Ultraspeed，
+# 兼顾 V2.6-Pro 旗舰性能、最高 20 倍输出速度）。官方模型页：输入
+# 「文本、图像、视频、音频」输出「文本」，上下文 1M、最大输出 128K
+#（API 示例 max_completion_tokens 131072）；能力含全模态理解、深度思考、
+# 工具调用、流式输出、联网搜索、结构化输出、上下文缓存。速度版未开源
+#（HuggingFace XiaomiMiMo 无对应权重），open_weights 记 false。
+# 人民币价格输入（缓存命中）0.25 / 未命中 30、输出 60 元每百万。
+name = "MiMo V2.6 Pro UltraSpeed"
+description = "小米 MiMo V2.6 系列速度版模型，保留 V2.6-Pro 旗舰性能，输出速度最高 20 倍，服务强实时交互与对响应速度敏感的生产场景。"
+family = "mimo"
+release_date = "2026-09-22"
+last_updated = "2026-11-27"
+attachment = true
+reasoning = true
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[limit]
+context = 1_048_576
+output = 131_072
+
+[modalities]
+input = ["text", "image", "video", "audio"]
+output = ["text"]
+
+[[links]]
+label = "官方模型详情"
+url = "https://mimo.mi.com/models/zh-CN/mimo-v2.6-pro-ultraspeed"
+type = "docs"
+
+[[links]]
+label = "官方发布公告"
+url = "https://mimo.xiaomi.com/zh/mimo-v2-6"
+type = "docs"
