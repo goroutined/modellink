@@ -1,4 +1,7 @@
 base_model = "tencent/hy4-preview"
+name = "Hy4 Preview（即将下线）"
+# 2026-11-27 官方 130051/130060/133811 三页标注「将于 2026-12-07 下线」，
+# 按 2026-11-05 用户政策加展示名后缀，行消失后再删条目。
 endpoints = ["openai", "anthropic"]
 doc = "https://cloud.tencent.com/document/product/1823/133811"
 
