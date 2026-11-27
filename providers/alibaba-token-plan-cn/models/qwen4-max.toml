@@ -1,0 +1,27 @@
+# 2026-11-27 收录：Token Plan 个人版模型列表（overview）新增 qwen4-max
+#（产品动态：2026-11-16 正式上线，个人版和团队版均支持；预览版
+# qwen4-max-preview 已于 11-25 下线、ID 自动路由至 qwen4-max）。
+# 官方型号页思考强度：OpenAI/DashScope reasoning_effort 与 Responses
+# reasoning.effort 档位 low/high/xhigh、默认 high（minimal→low、
+# medium→high、max→xhigh 兼容映射）；thinking_budget 默认 131072。
+# Token Plan 为订阅制无型号级积分单价，cost 省略（同目录既有惯例）。
+base_model = "alibaba/qwen4-max"
+endpoints = ["openai", "responses"]
+doc = "https://help.aliyun.com/zh/model-studio/qwen4-max"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high", "xhigh"]
+default = "high"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning.effort"
+endpoints = ["responses"]
+values = ["low", "high", "xhigh"]
+default = "high"
+
+[interleaved]
+field = "reasoning_content"

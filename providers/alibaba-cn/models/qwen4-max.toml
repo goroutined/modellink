@@ -1,0 +1,56 @@
+# 2026-11-16 正式上线（今日按量渠道补录）。官方型号页思考强度表：
+# OpenAI/DashScope reasoning_effort、Responses reasoning.effort、
+# Anthropic output_config.effort 档位均为 low/high/xhigh、默认 high
+#（minimal→low、medium→high、max→xhigh 兼容映射）；thinking_budget
+# 默认 131072、最大思维链 262144（budget max 取 262144）；
+# max_completion_tokens 思考 262144 / 非思考 131072，limits 沿用
+# canonical 的 qwen 系口径（1M/983,616/131,072）。
+# 价格（model-pricing + 显式缓存计费页 explicit-cache-qwen4#billing）：
+# 10/30 元每百万、缓存命中 0.5；显式缓存写入 5m 档为输入单价 125%
+#（12.5 元）入库，1h 档 200%（20 元）注释留痕；Batch File 5/15 与
+# Batch Chat 限时 5 折（原价 10/30）按政策不入库。
+base_model = "alibaba/qwen4-max"
+endpoints = ["openai", "anthropic", "responses"]
+doc = "https://bailian.console.aliyun.com/cn-beijing/?tab=model#/model-market/detail/qwen4-max"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning_effort"
+endpoints = ["openai"]
+values = ["low", "high", "xhigh"]
+default = "high"
+
+[[reasoning_options]]
+type = "effort"
+field = "output_config.effort"
+endpoints = ["anthropic"]
+values = ["low", "high", "xhigh"]
+default = "high"
+
+[[reasoning_options]]
+type = "effort"
+field = "reasoning.effort"
+endpoints = ["responses"]
+values = ["low", "high", "xhigh"]
+default = "high"
+
+[[reasoning_options]]
+type = "budget_tokens"
+field = "thinking_budget"
+endpoints = ["openai"]
+max = 262_144
+
+[[reasoning_options]]
+type = "budget_tokens"
+field = "thinking.budget_tokens"
+endpoints = ["anthropic"]
+max = 262_144
+
+[interleaved]
+field = "reasoning_content"
+
+[cost_cn]
+input = 10
+output = 30
+cache_read = 0.5
+cache_write = 12.5

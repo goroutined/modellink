@@ -1,23 +1,36 @@
-# 2026-11-17 首见于 PPIO 目录（Qwen4 Max 正式版），官方未单独发布日期公告，
-# release_date 取观察日期。阿里官方文档暂未发布，能力以 PPIO 目录官方描述
-# 与结构化数据为准（原生视觉、深度思考、工具调用、结构化输出）。
+# 2026-11-16 Qwen4-Max 正式上线（百炼 Token Plan 产品动态），11-17 首见于
+# PPIO 目录时官方文档未发布、按 PPIO 口径收录；2026-11-27 官方型号页已发布，
+# 按官方页对齐：输入「文本、图像、视频」输出「文本」，上下文 1M、
+# 最大输入 983,616（思考模式）/991,808（非思考）、最大输出 131,072（非思考，
+# 思考模式 262,144 思维链+回答）、最大思维链 262,144；深度思考、并行工具调用、
+# 结构化输出、联网搜索、显式/隐式缓存支持；temperature 官方有默认值（思考 1.0、
+# 非思考 0.7）。limits 换算口径同 qwen3.8-max 条目先例。
 name = "Qwen4 Max"
-description = "新一代 2.4 万亿参数 MoE 旗舰模型，百万 Token 上下文。编程办公能力全面跃升，支持长周期项目自主推进，十数天交付完整项目；覆盖法律、金融、设计、科研等数百专业场景，端到端产出生产级成果。原生视觉贯穿规划、执行、验证全链路，深度解析超长文档与长视频。"
+description = "Qwen4-Max 是通义千问新一代旗舰多模态模型，融合文本生成、图片与视频理解及深度思考能力，适用于编程开发、办公、前端设计与复杂智能体任务。模型支持联网搜索、工具调用和结构化输出，兼容 OpenAI 与 Anthropic API，帮助开发者构建具备多模态理解与任务执行能力的智能应用。"
 family = "qwen"
-release_date = "2026-11-17"
-last_updated = "2026-11-17"
+series = "qwen4-max"
+release_date = "2026-11-16"
+last_updated = "2026-11-27"
 attachment = true
 reasoning = true
+temperature = true
 tool_call = true
 structured_output = true
 open_weights = false
 
 [limit]
 context = 1_000_000
+input = 983_616
+output = 131_072
 
 [modalities]
 input = ["text", "image", "video"]
 output = ["text"]
+
+[[links]]
+label = "Qwen4-Max 官方文档"
+url = "https://help.aliyun.com/zh/model-studio/qwen4-max"
+type = "docs"
 
 [[links]]
 label = "PPIO 模型目录"
