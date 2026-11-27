@@ -9,6 +9,14 @@ input = 1_000_000
 output = 131_072
 
 # 套餐成员以 130060 为准；limits 与模态证据同 TokenHub 模型列表（130051）。
+# 2026-11-27 复核 133811：个人版刊例价已发布（20/40/0.4 积分每百万，
+# 即 1/2/0.02 元），补录 cost_points。
 [modalities]
 input = ["text", "image", "video"]
 output = ["text"]
+
+[cost_points]
+per_tokens = 1_000_000
+input = 20
+output = 40
+cache_read = 0.4

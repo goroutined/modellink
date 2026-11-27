@@ -1,5 +1,12 @@
 # 2026-11-05 官方 130060（2026-11-04 12:13 更新）：通用与 Hy Token Plan 可用模型
-# 均新增 Hy4。133811 仅有套餐容量表且为限时优惠口径，积分单价无公开数据，省略。
+# 均新增 Hy4。2026-11-27 复核 133811：刊例价 120/360/6 积分每百万（6/18/0.3 元）
+# 已发布，补录 cost_points；限时优惠行（30/90/1.5）按政策不入库。
 base_model = "tencent/hy4"
 endpoints = ["openai", "anthropic"]
-doc = "https://cloud.tencent.com/document/product/1823/130060"
+doc = "https://cloud.tencent.com/document/product/1823/133811"
+
+[cost_points]
+per_tokens = 1_000_000
+input = 120
+output = 360
+cache_read = 6

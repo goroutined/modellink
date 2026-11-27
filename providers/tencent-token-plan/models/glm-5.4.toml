@@ -1,0 +1,14 @@
+# 2026-11-27 收录：130060 可用模型清单新增 GLM-5.4。
+# 刊例价（133811）160/560/40 积分每百万（8/28/2 元），与 GLM-5.3 同价，
+# 无峰谷拆分；无 cache_write 行。130060 该行无模态与长度说明，
+# 模态与限制继承 canonical（智谱官方口径）。
+base_model = "zhipu/glm-5.4"
+base_model_omit = ["temperature"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/133811"
+
+[cost_points]
+per_tokens = 1_000_000
+input = 160
+output = 560
+cache_read = 40

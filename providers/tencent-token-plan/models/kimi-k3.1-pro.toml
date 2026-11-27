@@ -1,0 +1,20 @@
+# 2026-11-27 收录：130060 可用模型清单新增 Kimi K3.1 Pro。
+# 刊例价（133811）260/1360/26 积分每百万（13/68/1.3 元），无峰谷拆分。
+# 缓存写入官方两档：5m 260 积分（13 元）/1h 520 积分（26 元）；
+# cost_points 结构不支持 cache_write 字段，两档均注释留痕不入库。
+# 长度参考腾讯 Kimi 精确型号指南（132232）：kimi-k3/k3.1-pro 组
+# max_completion_tokens 最大 1048576、上下文 1M；视觉/视频支持
+#（「仅思考（不可关闭）」），模态继承 canonical。
+base_model = "moonshot/kimi-k3.1-pro"
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/133811"
+
+[limit]
+context = 1_000_000
+output = 1_048_576
+
+[cost_points]
+per_tokens = 1_000_000
+input = 260
+output = 1360
+cache_read = 26

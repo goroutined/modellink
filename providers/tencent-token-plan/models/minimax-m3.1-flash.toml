@@ -1,0 +1,19 @@
+# 2026-11-27 收录：130060 可用模型清单新增 MiniMax-M3.1-Flash。
+# 刊例价（133811）20/80/2 积分每百万（1/4/0.1 元），无峰谷拆分、
+# 无 cache_write 行。limits 与模态证据同 TokenHub 模型列表（130051）：
+# 1M/1M/512k，多模态理解。
+base_model = "minimax/minimax-m3.1-flash"
+base_model_omit = ["temperature", "interleaved"]
+endpoints = ["openai", "anthropic"]
+doc = "https://cloud.tencent.com/document/product/1823/133811"
+
+[limit]
+context = 1_000_000
+input = 1_000_000
+output = 524_288
+
+[cost_points]
+per_tokens = 1_000_000
+input = 20
+output = 80
+cache_read = 2

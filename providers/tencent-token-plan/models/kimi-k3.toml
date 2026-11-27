@@ -8,7 +8,10 @@ reasoning = true
 # 套餐成员、模态和协议以以上套餐页为准；长度参考腾讯精确型号指南：
 # https://cloud.tencent.com/document/product/1823/132232
 # 指南明确 max_completion_tokens 最大 1048576，不使用示例中的默认值。
-# 个人版积分抵扣表尚未公布此型号，不复用 TokenHub 或企业版价格。
+# 2026-11-27 复核 133811：个人版刊例价已发布（400/2000/40 积分每百万，
+# 即 20/100/2 元），补录 cost_points；缓存写入官方两档 5m 400 积分（20 元）
+# /1h 800 积分（40 元），cost_points 结构不支持 cache_write，注释留痕；
+# 限时优惠行（300/1500/30）不入库。
 [limit]
 context = 1_000_000
 output = 1_048_576
@@ -16,3 +19,9 @@ output = 1_048_576
 [modalities]
 input = ["text", "image", "video"]
 output = ["text"]
+
+[cost_points]
+per_tokens = 1_000_000
+input = 400
+output = 2000
+cache_read = 40
