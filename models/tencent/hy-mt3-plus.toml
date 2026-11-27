@@ -1,11 +1,12 @@
-# 2026-11-26 价格表（130055）已重命名为 Hy-MT3-Plus（新 ID hy-mt3-plus、旧 ID 兼容），
-# 但模型清单（130051）暂未同步仍列 hy-mt2-plus，ID 保持 hy-mt2-plus，展示名取价格表新名，
-# 等清单更新后再改 ID。
+# 2026-11-26 价格表（130055）重命名为 Hy-MT3-Plus（新 ID hy-mt3-plus），
+# 模型清单（130051）当日暂未同步故保持旧 ID；2026-11-27 清单已同步
+# （行文「hy-mt3-plus hy-mt2-plus …」，新 ID 在前、旧 ID 为兼容别名），
+# ID 改为 hy-mt3-plus，展示名沿用价格表新名。
 name = "Hy-MT3-Plus"
 description = "腾讯混元通用翻译模型，兼顾翻译质量与指令遵循能力。"
 family = "hunyuan"
 release_date = "2026-06-12"
-last_updated = "2026-11-26"
+last_updated = "2026-11-27"
 attachment = false
 reasoning = false
 tool_call = false
