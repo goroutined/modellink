@@ -1,4 +1,5 @@
 base_model = "moonshot/kimi-k3"
+name = "Kimi K3（即将下线）"
 base_model_omit = ["reasoning", "temperature", "tool_call", "structured_output"]
 doc = "https://www.volcengine.com/docs/82379/2366394?lang=zh"
 
@@ -6,6 +7,8 @@ doc = "https://www.volcengine.com/docs/82379/2366394?lang=zh"
 context = 1_024_000
 output = 131_072
 
+# 2026-11-27 官方表新增「输入模态」列：文本、图片、视频；
+# 同表该行标注「即将下线」。
 [modalities]
-input = ["text", "image"]
+input = ["text", "image", "video"]
 output = ["text"]

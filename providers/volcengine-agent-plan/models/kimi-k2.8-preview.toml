@@ -1,12 +1,14 @@
 base_model = "moonshot/kimi-k2.8-preview"
 base_model_omit = ["reasoning", "temperature", "tool_call", "structured_output"]
-attachment = false
 doc = "https://www.volcengine.com/docs/82379/2366394?lang=zh"
 
+# 2026-11-27 官方表该行「最大输出：128k」按十进制口径记 128_000（原 1_024_000
+# 为旧口径遗留，修正）。
 [limit]
 context = 1_024_000
-output = 1_024_000
+output = 128_000
 
+# 2026-11-27 官方表新增「输入模态」列：文本、图片、视频。
 [modalities]
-input = ["text"]
+input = ["text", "image", "video"]
 output = ["text"]
